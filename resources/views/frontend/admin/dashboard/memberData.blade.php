@@ -2,10 +2,7 @@
 
 @section('content')
 
-<div class="content-wrapper">
-    <div class="content-header row">
-    </div>
-    <div class="content-body">
+
         <form action="{{url('/')}}/edit/{{$user->id}}" method="POST">
             @csrf
             <div class="form-group">
@@ -44,8 +41,8 @@
             </div>
 
             <div class="form-group">
-                <label for="pincode">Zipcode</label>
-                <input type="text" class="form-control" id="pincode" name="pincode" value="{{$user->pincode}}" {{($route=='edit')?'':'readonly'}}>
+                <label for="zipcode">Zipcode</label>
+                <input type="text" class="form-control" id="zipcode" name="zipcode" value="{{$user->zipcode}}" {{($route=='edit')?'':'readonly'}}>
             </div>
 
             <div class="form-group">
@@ -76,6 +73,4 @@
             <a href="{{url()->previous()}}" class="btn btn-primary">Back</a>
             
         </form>
-    </div>
-</div>
 @endsection

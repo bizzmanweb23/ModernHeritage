@@ -65,7 +65,7 @@ class DashboardController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'state' => 'required',
-            'pincode' => 'required',
+            'zipcode' => 'required',
             'country' => 'required',
         ]);
 
@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $user->phone = $request->phone;
         $user->address = $request->address;
         $user->state = $request->state;
-        $user->zipcode = $request->pincode;
+        $user->zipcode = $request->zipcode;
         $user->country = $request->country;
         $user->device_id = $request->device_id;
         $user->device_name = $request->device_name;

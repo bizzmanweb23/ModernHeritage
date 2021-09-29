@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CrmController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,15 +51,11 @@ Route::get('/user', [DashboardController::class, 'userDetails'])->name('user');
 Route::get('/details/{id}', [DashboardController::class, 'memberData']);
 Route::get('/edit/{id}', [DashboardController::class, 'memberData']);
 Route::post('/edit/{id}', [DashboardController::class, 'editUser']);
-Route::get('/userstatus/{id}/{status}', [
-    DashboardController::class,
-    'userStatus',
-]);
+Route::get('/userstatus/{id}/{status}', [DashboardController::class,'userStatus',]);
 
 //admin--role
-Route::get('/role', [DashboardController::class, 'createRole'])->name(
-    'createRole'
-);
-Route::post('/role', [DashboardController::class, 'saveRole'])->name(
-    'saveRole'
-);
+Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
+Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole');
+
+//admin--CRM
+Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');

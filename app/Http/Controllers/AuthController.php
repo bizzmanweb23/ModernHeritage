@@ -62,14 +62,14 @@ class AuthController extends Controller
     {
         $unique_id = Client::orderBy('id', 'desc')->first();
         if ($unique_id) {
-            $number = str_replace('MHI', '', $unique_id->unique_id);
+            $number = str_replace('MH', '', $unique_id->unique_id);
         } else {
             $number = 0;
         }
         if ($number == 0) {
-            $number = 'MHI000001';
+            $number = 'MH000001';
         } else {
-            $number = 'MHI' . sprintf('%06d', $number + 1);
+            $number = 'MH' . sprintf('%06d', $number + 1);
         }
         $phone = $request->country_code . $request->phone;
         if ($path == 'employee') {

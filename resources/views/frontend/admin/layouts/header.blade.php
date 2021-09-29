@@ -1,39 +1,39 @@
 <!-- BEGIN: Head-->
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="Frest admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-    <meta name="keywords" content="admin template, Frest admin template, dashboard template, flat admin template, responsive admin template, web app">
-    <meta name="author" content="PIXINVENT">
-    <title>Dashboard Ecommerce - Frest - Bootstrap HTML admin template</title>
-    <!-- <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
-    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico"> -->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500,600%7CIBM+Plex+Sans:300,400,500,600,700" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <title>
+    Modern Heritage
+  </title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="{{ url('/') }}/assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="{{ url('/') }}/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link href="{{ url('/') }}/assets/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="{{ url('/') }}/assets/css/soft-ui-dashboard.css?v=1.0.3" rel="stylesheet" />
 
-    <!-- BEGIN: Vendor CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/vendors/vendors.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/vendors/apexcharts.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/vendors/swiper.min.css">
-    <!-- END: Vendor CSS-->
+  <!--BEGIN: Multiselect CSS-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
+  <!-- END: Multiselect CSS-->
 
-    <!-- BEGIN: Theme CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/bootstrap-extended.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/colors.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/components.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/themes/dark-layout.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/themes/semi-dark-layout.css">
-    <!-- END: Theme CSS-->
+  <!--BEGIN: Multiselect JS-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+  <!-- END: Multiselect JS-->
 
-    <!-- BEGIN: Page CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/vertical-menu.css">
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/pages/dashboard-ecommerce.css">
-    <!-- END: Page CSS-->
+  <!-- BEGIN: kanban CSS-->
+  <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/kanban.css">
+  <!-- END: kanban CSS--> 
 
-    <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/style.css">
-    <!-- END: Custom CSS-->
-
+  <!--BEGIN: kanban JS-->
+     <script src="{{ url('/') }}/assets/js/kanban.js"></script>
+  <!-- END: kanban JS-->
 </head>
 <!-- END: Head-->
