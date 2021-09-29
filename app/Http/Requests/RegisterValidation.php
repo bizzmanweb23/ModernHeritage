@@ -26,10 +26,10 @@ class RegisterValidation extends FormRequest
         return [
             'firstname' => 'required|min:3',
             'lastname' => 'required',
-            'email' => 'required|email:rfc,dns|unique:users',
+            'email' => 'required|email:rfc,dns|unique:clients',
             'password' => 'required',
-            // 'phone' => 'required|numeric',
-            // 'country_code' => 'required',
+            'phone' => 'required|numeric',
+            'country_code' => 'required',
             //'register-agree' => 'required',
         ];
     }
@@ -40,7 +40,7 @@ class RegisterValidation extends FormRequest
             'lastname' => 'Last Name',
             'email' => 'Email',
             'password' => 'Password',
-            //'phone' => 'Phone',
+            'phone' => 'Phone',
             //'register-agree' => 'Aggree'
         ];
     }
@@ -51,8 +51,8 @@ class RegisterValidation extends FormRequest
             'lastname.required' => 'Please Enter Last Name',
             'email.required' => 'Please Enter Valid Email Id',
             'password.required' => 'Please Enter Password',
-            // 'phone.required' => 'Please Enter Phone No',
-            // 'phone.size' => 'Maximum Phone No 10 Digit',
+            'phone.required' => 'Please Enter Phone No',
+            'phone.size' => 'Maximum Phone No 10 Digit',
             //'register-agree.required' => 'Please Select Privacy Policy'
         ];
     }

@@ -73,7 +73,7 @@
 
             @endif
 
-            <a href="{{route('users')}}" class="btn btn-primary">Back</a>
+            <a href="{{url()->previous()}}" class="btn btn-primary">Back</a>
             
         </form>
     </div>

@@ -22,35 +22,43 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
 //Auth::routes();
-
-
 
 //login
 Route::get('/login', [AuthController::class, 'login'])->name('userlogin');
 Route::post('/login', [AuthController::class, 'userlogin'])->name('userlogin');
 
 //register
-Route::get('/register', [AuthController::class, 'getRegister'])->name('getregister');
-Route::post('/register', [AuthController::class, 'register'])->name('adduser');
+Route::get('/register/{path?}', [AuthController::class, 'getRegister']);
+Route::post('/register/{path?}', [AuthController::class, 'register']);
 
 //logout
-Route::post('/logout', [AuthController::class,'logoutUser'])->name('userLogout');
+Route::post('/logout', [AuthController::class, 'logoutUser'])->name(
+    'userLogout'
+);
 
 //admin
-Route::get('/admindashboard', [DashboardController::class, 'index'])->name('admindashboard');
+Route::get('/admindashboard', [DashboardController::class, 'index'])->name(
+    'admindashboard'
+);
 
 //admin--userDetails
-Route::get('/users', [DashboardController::class,'allUsersDetails'])->name('users');
-Route::get('/user', [DashboardController::class,'userDetails'])->name('user');
-Route::get('/details/{id}', [DashboardController::class,'memberData']);
-Route::get('/edit/{id}', [DashboardController::class,'memberData']);
-Route::post('/edit/{id}', [DashboardController::class,'editUser']);
-Route::get('/userstatus/{id}/{role_id}', [DashboardController::class,'userStatus']);
+Route::get('/users', [DashboardController::class, 'allUsersDetails'])->name(
+    'users'
+);
+Route::get('/user', [DashboardController::class, 'userDetails'])->name('user');
+Route::get('/details/{id}', [DashboardController::class, 'memberData']);
+Route::get('/edit/{id}', [DashboardController::class, 'memberData']);
+Route::post('/edit/{id}', [DashboardController::class, 'editUser']);
+Route::get('/userstatus/{id}/{status}', [
+    DashboardController::class,
+    'userStatus',
+]);
 
 //admin--role
-Route::get('/role', [DashboardController::class,'createRole'])->name('createRole');
-Route::post('/role', [DashboardController::class,'saveRole'])->name('saveRole');
-
-
+Route::get('/role', [DashboardController::class, 'createRole'])->name(
+    'createRole'
+);
+Route::post('/role', [DashboardController::class, 'saveRole'])->name(
+    'saveRole'
+);

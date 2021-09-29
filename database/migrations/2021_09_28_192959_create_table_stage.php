@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDeviceName extends Migration
+class CreateTableStage extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddDeviceName extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('device_name')->nullable();
+        Schema::create('stage', function (Blueprint $table) {
+            $table->id();
+            $table->string('stage_name');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddDeviceName extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('stage');
     }
 }

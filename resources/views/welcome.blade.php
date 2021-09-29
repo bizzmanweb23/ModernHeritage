@@ -29,9 +29,7 @@
                     @else
                         <a href="{{ route('userlogin') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
-                        @if (Route::has('getregister'))
-                            <a href="{{ route('getregister') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
+                        <a href="{{url('/')}}/register/client" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
                     @endauth
                 </div>
             @endif

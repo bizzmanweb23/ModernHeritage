@@ -22,7 +22,7 @@
         <br>
         <br>
         <div>
-            <a href="{{route('getregister')}}" class="btn btn-primary">Add User</a> 
+            <a href="{{url('/')}}/register/client" class="btn btn-primary">Add User</a> 
             
             <a href="{{route('createRole')}}" class="btn btn-primary">Create Role</a> 
         </div>
@@ -50,10 +50,10 @@
                         <td>{{$u->phone}}</td>
                         <td><a href="{{url('/')}}/details/{{$u->id}}">Details</a>
                             <a href="{{url('/')}}/edit/{{$u->id}}">Edit</a>
-                            @if($u->role_id==0)
-                                <a href="{{url('/')}}/userstatus/{{$u->id}}/-1">active</a>
+                            @if($u->status==1)
+                                <a href="{{url('/')}}/userstatus/{{$u->id}}/0">active</a>
                             @else
-                                <a href="{{url('/')}}/userstatus/{{$u->id}}/0">inactive</a>
+                                <a href="{{url('/')}}/userstatus/{{$u->id}}/1">inactive</a>
                             @endif
                         </td>
                     </tr>
