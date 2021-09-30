@@ -59,3 +59,5 @@ Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole')
 
 //admin--CRM
 Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
+Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
+Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');

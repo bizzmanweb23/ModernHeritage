@@ -1,5 +1,8 @@
 @extends('frontend.admin.layouts.master')
 
+@section('page')
+  <h6 class="font-weight-bolder mb-0">Client Data</h6>
+@endsection
 @section('content')
 
 

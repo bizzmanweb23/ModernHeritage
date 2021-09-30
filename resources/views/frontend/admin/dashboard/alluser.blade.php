@@ -1,5 +1,8 @@
 @extends('frontend.admin.layouts.master')
 
+@section('page')
+  <h6 class="font-weight-bolder mb-0">Clients</h6>
+@endsection
 @section('content')
 
         <form action="{{route('user')}}" method="GET">
@@ -24,8 +27,6 @@
             <a href="{{route('createRole')}}" class="btn btn-primary">Create Role</a> 
         </div>
         <br>
-        <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive p-0">
             <table class="table mb-0">
                 <thead>
                     <tr>
@@ -60,7 +61,5 @@
                     @endforeach
                 </tbody>
             </table>
-            </div>
-        </div>
 
 @endsection
