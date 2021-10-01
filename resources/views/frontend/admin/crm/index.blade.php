@@ -17,19 +17,19 @@
                     <div class="items border border-light">
                     @foreach($lead as $l)
                         @if($l->stage_id==$s->id)
-                        <div class="card draggable shadow-sm" id="cd1" draggable="true" ondragstart="drag(event)">
+                        <div class="card draggable shadow-sm" id="cd1" draggable="false" ondragstart="drag(event)">
                             <div class="card-body p-2">
                                 <div class="card-title">
-                                <p class="text-m font-weight-bold mb-0">{{$l->opportunity}}</p>
+                                <p class="text-s font-weight-bolder mb-0">{{$l->opportunity}}</p>
                                 <p class="text-s font-weight-bold mb-0">{{$l->client_name}}</p>
-                                <p class="text-s font-weight-bold mb-0">{{$l->expected_price}}</p>
+                                <p class="text-s font-weight-bold mb-0">₹ {{$l->expected_price}}</p>
                                 </div>
-                                <button class="btn btn-primary btn-sm">View</button>                               
+                                <a class="btn btn-primary btn-sm" href="{{ url('/') }}/viewrequest/{{ $l->id }}">View</a>                               
                             </div>
                         </div>
                         @endif
                     @endforeach
-                        <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
+                    <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"> &nbsp; </div>
                     </div>
                 </div>
             </div>

@@ -105,6 +105,7 @@ class AuthController extends Controller
         return view('register', [
             'countryCodes' => $countryCodes,
             'roles' => $roles,
+            'path' => $path
         ]);
     }
 

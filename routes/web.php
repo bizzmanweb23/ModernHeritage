@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
+use App\Http\Controllers\QuotationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,8 @@ Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole')
 //admin--CRM
 Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
 Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
+Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
 Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
+Route::get('/viewrequest/{id}', [CrmController::class,'viewRequest']);
+Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
+Route::get('/newquotation', [QuotationController::class,'addQuotation'])->name('newquotation');
