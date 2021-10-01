@@ -65,4 +65,4 @@ Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('sear
 Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
 Route::get('/viewrequest/{id}', [CrmController::class,'viewRequest']);
 Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
-Route::get('/newquotation', [QuotationController::class,'addQuotation'])->name('newquotation');
+Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);

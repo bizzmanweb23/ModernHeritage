@@ -10,7 +10,13 @@
       <div class="card">
         <form action="#" method="post">
             @csrf
-            
+            <div class="card-body pt-4 p-3">
+                <div class="d-flex flex-column">
+                    <span class="mb-2 text-xs">Contact Name: 
+                        <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span">{{ $lead->client_name }}</span>
+                        <input type="text" name="client_name" id="client_name" value="{{ $lead->client_name }}" placeholder="Contact Name"/>
+                    </span>                   
+                </div>
                 <div class="ms-auto text-end">
                     <a class="btn btn-link text-dark px-3 mb-0" id="edit" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                     <a class="btn btn-link text-dark px-3 mb-0" id="back" href="{{ route('getRequest') }}"><i class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
@@ -25,14 +31,14 @@
 
 <script>
     $(document).ready(function() {
-        $('input').hide();
         $('#tag').hide();
-        $('#edit').hide();;
+        $('#edit').hide();
+        $('#client_name_span').hide();
         $('#save').click(function() {
             $('#opportunity_span').hide();
             $('#expected_price_span').hide();
+            $('#client_name_span').show();           
             $('#probability_span').hide();
-            $('#client_name_span').hide();
             $('#email_span').hide();
             $('#mobile_no_span').hide();
             $('#priority_span').hide();

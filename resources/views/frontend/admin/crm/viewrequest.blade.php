@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<a class="btn btn-primary" href="{{ route('newquotation')}}">New Quatation</a>
+<a class="btn btn-primary" href="{{ url('/') }}/newquotation/{{ $lead->id  }}">New Quatation</a>
 <div class="row">
     <div class="col-md-12 mt-3">
       <div class="card">
