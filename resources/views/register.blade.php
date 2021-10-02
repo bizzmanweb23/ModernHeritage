@@ -1,144 +1,92 @@
-@extends('layouts.app')
-
+@extends('layouts.master')
+@section('title','Sign Up')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{url('/')}}/register/client">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="firstname"
-                                class="col-md-4 col-form-label text-md-right">{{ __('FirstName') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="firstname" type="text"
-                                    class="form-control @error('firstname') is-invalid @enderror" name="firstname"
-                                    value="{{ old('firstname') }}" required autocomplete="firstname" autofocus>
-
-                                @error('firstname')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+{{-- <main class="main-content  mt-0"> --}}
+{{-- <section> --}}
+<div class="page-header min-vh-75">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+                <div class="card card-plain mt-4">
+                    <div class="card-header pb-0 text-left bg-transparent">
+                        <h3 class="font-weight-bolder text-info text-gradient">Register Here</h3>
+                        <p class="mb-0">Fast and hassle free registration</p>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{{ url('/') }}/register/client">
+                            @csrf
+                            <label>First Name</label>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="firstname" id="firstname" required
+                                    placeholder="First Name" aria-label="First Name"
+                                    aria-describedby="first-name-addon">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="lastname"
-                                class="col-md-4 col-form-label text-md-right">{{ __('LastName') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="lastname" type="text"
-                                    class="form-control @error('lastname') is-invalid @enderror" name="lastname"
-                                    value="{{ old('lastname') }}" required autocomplete="lastname" autofocus>
-
-                                @error('lastname')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                            <label>Last Name</label>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="lastname" id="lastname" required
+                                    placeholder="Last Name" aria-label="Last Name" aria-describedby="last-name-addon">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email"
-                                class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                            <label>Email</label>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" name="email" id="email" required
+                                    placeholder="Email" aria-label="Email" aria-describedby="email-addon">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password"
-                                    class="form-control @error('password') is-invalid @enderror" name="password"
-                                    required autocomplete="new-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                            <label>Password</label>
+                            <div class="mb-3">
+                                <input type="password" class="form-control" name="password" id="password" required
+                                    placeholder="Password" aria-label="Password" aria-describedby="password-addon">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="phone"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Phone No') }}</label>
-                            <div style="display: flex" class="col-12">
-                                <select name="country_code" class="form-control col-3" id="country_code">
-                                    <option value="">{{__('select')}}</option>
+                            <label>Phone No</label>
+                            <div class="mb-3 d-flex">
+                                <select name="country_code" class="form-control" style="width: 30em" id="country_code">
+                                    <option value="">{{ __('select') }}</option>
                                     @foreach($countryCodes as $c)
-                                    <option value="+{{$c->code}}">+{{$c->code}}({{$c->name}})</option>
+                                        <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})</option>
                                     @endforeach
                                 </select>
-                                <input type="text" class="form-control" id="Phone" name="phone"
-                                    value="{{ old('phone') }}">
+                                <input type="text" class="form-control" style="width: 70em" name="phone" id="phone"
+                                    required placeholder="Phone No" aria-label="Phone No"
+                                    aria-describedby="phone-no-addon">
                             </div>
-                            @error('phone')
-                            <span style="color: red">{{ $message }}</span>
-                            <br>
-                            @enderror
-                            @error('country_code')
-                            <span style="color: red">{{ $message }}</span>
-                            @enderror
-
-                            <br>
                             @if(Auth::check() && $path=='any')
-                            <div class="form-group row">
-                                <label for="role"
-                                    class="col-md-4 col-form-label text-md-right">{{ __('Role') }}</label>
-                                <div style="display: flex" class="col-12">
-                                    <select name="role" class="form-control col-3" id="role">
-                                        <option value="">{{__('select')}}</option>
+                                <label for="role">Role</label>
+                                <div class="mb-3">
+                                    <select name="role" class="form-control" id="role">
+                                        <option value="">{{ __('select') }}</option>
                                         @foreach($roles as $r)
-                                        <option value="{{$r->name}}">{{$r->name}}</option>
+                                            <option value="{{ $r->name }}">{{ $r->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 @error('role')
-                                <span style="color: red">{{ $message }}</span>
-                                <br>
+                                    <span style="color: red">{{ $message }}</span>
+                                    <br>
                                 @enderror
-                            </div>
                             @endif
-
-                            {{--    <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <div class="text-center">
+                                <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign up</button>
                             </div>
-                        </div> --}}
-                                <br>
-                                <br>
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Register') }}
-                                        </button>
-                                    </div>
-                                </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                        <p class="mb-4 text-sm mx-auto">
+                            Already have an account?
+                            <a href="{{ route('userlogin') }}"
+                                class="text-info text-gradient font-weight-bold">Sign in</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                    <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"
+                        style="background-image:url('{{ url('/') }}/assets/img/curved-images/curved6.jpg')">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{{-- </section> --}}
+{{-- </main> --}}
 @endsection

@@ -23,6 +23,9 @@ class AuthController extends Controller
         if (Auth::check() && Auth::user()->isAdmin()) {
             return redirect(route('admindashboard'));
         }
+        elseif(Auth::check() && Auth::user()->isClient()){
+            return redirect(route('home'));
+        }
 
         return view('login');
     }
@@ -92,7 +95,12 @@ class AuthController extends Controller
         ]);
 
         // Mail::to($request->email)->send(new RegisterNotification($request->firstname,$request->lastname));
-        return redirect(route('userlogin'))->with(
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            $route = 'users';
+        } else {
+            $route = 'userlogin';
+        }
+        return redirect(route($route))->with(
             'registerMsg',
             'Register Successfully'
         );
@@ -102,7 +110,13 @@ class AuthController extends Controller
     {
         $countryCodes = CountryCode::get();
         $roles = Role::get();
-        return view('register', [
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            $view = 'frontend.admin.dashboard.adduser';
+        } else {
+            $view = 'register';
+        }
+        
+        return view($view, [
             'countryCodes' => $countryCodes,
             'roles' => $roles,
             'path' => $path

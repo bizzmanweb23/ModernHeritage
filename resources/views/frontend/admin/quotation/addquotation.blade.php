@@ -35,24 +35,24 @@
                     <br>
                     <br>
                     <input type="hidden" name="product_id" value="" id="product_id">
-                    <table class="table mb-0">
+                    <table class="table mb-0 table-responsive">
                         <thead>
                             <tr>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Product</p></th>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Description</p></th>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Quantity</p></th>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Unit Price</p></th>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Taxes</p></th>
-                                <th class="text-uppercase" scope="col"><p class="mb-2 text-xs font-weight-bolder">Subtotal</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Product</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Description</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Quantity</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Unit Price</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Taxes</p></th>
+                                <th class="text-uppercase" scope="col"><p class="mb-0 mt-0 text-xs font-weight-bolder">Subtotal</p></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <td><input type="text" name="product_name" id="product_name"></td>
-                            <td><input type="text" name="description" id="description"></td>
-                            <td><input type="text" name="quantity" id="quantity"></td>
-                            <td><input type="text" name="price" id="price"></td>
-                            <td><input type="text" name="tax" id="tax"></td>
-                            <td><input type="text" name="subtotal" id="subtotal"></td>
+                            <td><input type="text" class="form-control" name="product_name" id="product_name"></td>
+                            <td><input type="text" class="form-control" name="description" id="description"></td>
+                            <td><input type="text" class="form-control" name="quantity" id="quantity"></td>
+                            <td><input type="text" class="form-control" name="price" id="price"></td>
+                            <td><input type="text" class="form-control" name="tax" id="tax"></td>
+                            <td><input type="text" class="form-control" name="subtotal" id="subtotal"></td>
                         </tbody>
                     </table>
 

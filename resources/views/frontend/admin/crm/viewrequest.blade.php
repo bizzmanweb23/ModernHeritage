@@ -18,7 +18,7 @@
             <div class="card-header pb-0 px-3">
                 <div class="d-flex flex-column">
                     <h6 class="mb-0" id="opportunity_span">{{ $lead->opportunity }}</h6>
-                    <input type="text" name="opportunity" id="opportunity" value="{{ $lead->opportunity }}" placeholder="Opportunity"/>
+                    <input type="text" name="opportunity" id="opportunity" value="{{ $lead->opportunity }}" style="width: 40em" placeholder="Opportunity"/>
                 </div>
                 <span class="mb-2 text-xs">
                     <span class="text-dark font-weight-bold ms-sm-2">₹</span>

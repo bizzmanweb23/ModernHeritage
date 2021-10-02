@@ -27,37 +27,38 @@
                 </div>       
                 <!-- Modal body -->
                 <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4"><label for="client_name">Client Name</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required></div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="client_name">Client Name</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="opportunity">Opportunity</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" id="opportunity" name="opportunity" placeholder="opportunity" required></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"> <label for="email">Email</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="Email"></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="mobile_no">Mobile No</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile No"></div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"> <label for="expected_price">Expected Price</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="expected_price" name="expected_price" placeholder="₹ "></div>
+                    </div>
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4"><label for="opportunity">Opportunity</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="opportunity" name="opportunity" placeholder="opportunity" required></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4"> <label for="email">Email</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder=""></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4"><label for="mobile_no">Mobile No</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder=""></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4"> <label for="expected_price">₹ Expected Price</label></div>
-                    <div class="col-md-8"><input type="text" class="form-control" id="expected_price" name="expected_price" placeholder=""></div>
-                </div>
-                </div>
-  
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-            </form>
+        </form>
       </div>
     </div>
-  </div>
+</div>
 
 <div class="container-fluid pt-3">
     <div class="row flex-row flex-sm-nowrap py-3">

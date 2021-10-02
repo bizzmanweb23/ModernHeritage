@@ -44,8 +44,8 @@ class QuotationController extends Controller
 
     public function searchProduct(Request $request)
     {
-       
-        $product = Product::get();
+        $product = Product::where('product_name', 'LIKE', '%'.$request->term.'%')
+                            ->get();
         if ($product->count() > 0) {
             foreach ($product as $item) {
                 if($item->available_quantity >= 1){

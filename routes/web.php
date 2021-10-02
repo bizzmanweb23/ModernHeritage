@@ -20,34 +20,28 @@ use App\Http\Controllers\QuotationController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/", function () {
+    return view("welcome");
 });
 
-//Auth::routes();
+Route::get("/home", [HomeController::class, "index"])->name("home");
 
 //login
-Route::get('/login', [AuthController::class, 'login'])->name('userlogin');
-Route::post('/login', [AuthController::class, 'userlogin'])->name('userlogin');
+Route::get("/login", [AuthController::class, "login"])->name("userlogin");
+Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
 
 //register
-Route::get('/register/{path?}', [AuthController::class, 'getRegister']);
-Route::post('/register/{path?}', [AuthController::class, 'register']);
+Route::get("/register/{path?}", [AuthController::class, "getRegister"]);
+Route::post("/register/{path?}", [AuthController::class, "register"]);
 
 //logout
-Route::post('/logout', [AuthController::class, 'logoutUser'])->name(
-    'userLogout'
-);
+Route::post("/logout", [AuthController::class, "logoutUser"])->name("userLogout");
 
 //admin
-Route::get('/admindashboard', [DashboardController::class, 'index'])->name(
-    'admindashboard'
-);
+Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
 //admin--userDetails
-Route::get('/users', [DashboardController::class, 'allUsersDetails'])->name(
-    'users'
-);
+Route::get("/users", [DashboardController::class, "allUsersDetails"])->name("users");
 Route::get('/user', [DashboardController::class, 'userDetails'])->name('user');
 Route::get('/details/{id}', [DashboardController::class, 'memberData']);
 Route::get('/edit/{id}', [DashboardController::class, 'memberData']);
@@ -61,6 +55,7 @@ Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole')
 //admin--CRM
 Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
 Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
+
 // Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
 Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
 Route::get('/viewrequest/{id}', [CrmController::class,'viewRequest']);

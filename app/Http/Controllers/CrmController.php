@@ -25,7 +25,9 @@ class CrmController extends Controller
     public function searchRequest(Request $request)
     {
        
-        $client = Client::where('role_id', '!=',1)->get();
+        $client = Client::where('role_id', '!=',1)
+                        ->where('firstname', 'LIKE', '%'.$request->term.'%')
+                        ->get();
         if ($client->count() > 0) {
             foreach ($client as $item) {
                 $data[] = [
@@ -46,7 +48,9 @@ class CrmController extends Controller
     {       
         $data = $request->validate([
             'client_name' => 'required',
-            
+            'email' => 'email:rfc,dns',
+            'mobile_no' => 'numeric',
+            'expected_price' => 'numeric',
         ]);
         // $unique_id = CRM::orderBy('id', 'desc')->first();
         // if($unique_id)
@@ -95,6 +99,15 @@ class CrmController extends Controller
 
     public function updateRequest(Request $request)
     {
+        $data = $request->validate([
+            'client_name' => 'required',
+            'email' => 'email:rfc,dns',
+            'mobile_no' => 'numeric',
+            'expected_price' => 'numeric',
+            'probability' => 'numeric',
+            'priority' => 'numeric',
+        ]);
+
         $id = $request->id;
         $lead = Lead::findOrFail($id);
 
