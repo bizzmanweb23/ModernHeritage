@@ -6,6 +6,9 @@
 
 @section('content')
 <a class="btn btn-primary" href="{{ url('/') }}/newquotation/{{ $lead->id  }}">New Quatation</a>
+<div class="ms-auto text-end">
+    <a href="#" class="btn btn-link text-dark px-3 mb-0">Quotation</a>
+</div>
 <div class="row">
     <div class="col-md-12 mt-3">
       <div class="card">

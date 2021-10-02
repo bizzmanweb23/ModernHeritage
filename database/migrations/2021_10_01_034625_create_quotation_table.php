@@ -15,6 +15,18 @@ class CreateQuotationTable extends Migration
     {
         Schema::create('quotation', function (Blueprint $table) {
             $table->id();
+            $table->string('customer_id')->requied();
+            $table->string('gst_treatment')->nullable();
+            $table->string('quotation_template')->nullable();
+            $table->string('expiration')->nullable();
+            $table->string('payment_terms')->nullable();
+            $table->string('product_id')->nullable();            
+            $table->string('quantity')->nullable();            
+            $table->string('tax')->nullable();            
+            $table->string('total')->nullable();            
+            $table->string('terms')->nullable();            
+            $table->string('sales_id')->nullable();            
+            $table->string('leads_id')->required();            
             $table->timestamps();
         });
     }

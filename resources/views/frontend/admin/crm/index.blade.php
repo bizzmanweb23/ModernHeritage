@@ -5,7 +5,59 @@
 @endsection
 
 @section('content')
-<a href= "{{ route('addrequest')}}" class="btn btn-primary">Create</a>
+<style>
+    .ui-front {
+    z-index: 9999999 !important;
+}
+</style>
+<a href= "#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Create</a>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form action="{{ route('saverequest')}}" method="POST">
+            @csrf
+
+            <input type="hidden" name="client_id" id="client_id">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Add leads</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>       
+                <!-- Modal body -->
+                <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4"><label for="client_name">Client Name</label></div>
+                    <div class="col-md-8"><input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label for="opportunity">Opportunity</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="opportunity" name="opportunity" placeholder="opportunity" required></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"> <label for="email">Email</label></div>
+                    <div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder=""></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"><label for="mobile_no">Mobile No</label></div>
+                    <div class="col-md-8"><input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder=""></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"> <label for="expected_price">₹ Expected Price</label></div>
+                    <div class="col-md-8"><input type="text" class="form-control" id="expected_price" name="expected_price" placeholder=""></div>
+                </div>
+                </div>
+  
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
 
 <div class="container-fluid pt-3">
     <div class="row flex-row flex-sm-nowrap py-3">
@@ -37,4 +89,32 @@
         @endforeach
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#client_name').autocomplete({
+             source: function(request, response) {
+                 $.ajax({
+                     type: 'get',
+                     url: "{{ route('searchrequest') }}",
+                     dataType: "json",
+                     data: {
+                         term: $('#client_name').val()
+                     },
+                     success: function(data) {
+                         response(data);
+                         console.log(data)
+                     },
+                 });
+             },
+             select: function(event, ui) {
+                 if (ui.item.id != 0) {
+                     $('#client_id').val(ui.item.id)
+                     $('#email').val(ui.item.email)
+                     $('#mobile_no').val(ui.item.phone);
+                     $('#opportunity').val(ui.item.opportunity);
+                 }
+             },
+             minLength: 1,
+         });
+ </script>
 @endsection

@@ -60,9 +60,11 @@ Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole')
 
 //admin--CRM
 Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
-Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
 Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
+// Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
 Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
 Route::get('/viewrequest/{id}', [CrmController::class,'viewRequest']);
 Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
 Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
+Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
+Route::get('/searchproduct', [QuotationController::class,'searchProduct'])->name('searchproduct');
