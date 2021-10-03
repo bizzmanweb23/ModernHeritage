@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Client;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +21,7 @@ class DashboardController extends Controller
 
     public function allUsersDetails()
     {
-        $allUser = Client::where('role_id', '!=', 1)->get();
+        $allUser = User::where('role_id', '!=', 1)->get();
 
         return view('frontend.admin.dashboard.alluser', [
             'allUser' => $allUser,
@@ -38,14 +37,14 @@ class DashboardController extends Controller
             $col_name = 'firstname';
             $col_value = $request->firstname;
         }
-        $user = Client::where($col_name, $col_value)->get();
+        $user = User::where($col_name, 'LIKE', '%'.$col_value.'%')->get();
 
         return view('frontend.admin.dashboard.alluser', ['allUser' => $user]);
     }
 
     public function memberData(Request $request, $id)
     {
-        $user = Client::findOrFail($id);
+        $user = User::findOrFail($id);
         $route = explode('/', $request->path())[0];
 
         return view('frontend.admin.dashboard.memberData', [
@@ -56,7 +55,7 @@ class DashboardController extends Controller
 
     public function editUser(Request $request, $id)
     {
-        $user = Client::findOrFail($id);
+        $user = User::findOrFail($id);
 
         $data = $request->validate([
             'firstname' => 'required',
@@ -87,7 +86,7 @@ class DashboardController extends Controller
 
     public function userStatus($id, $status)
     {
-        $user = Client::findOrFail($id);
+        $user = User::findOrFail($id);
 
         $user->status = $status;
 

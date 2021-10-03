@@ -7,7 +7,7 @@ use App\Models\Lead;
 use App\Models\Stage;
 use App\Models\Tag;
 use App\Models\GST;
-use App\Models\Client;
+use App\Models\User;
 use App\Models\Quotation;
 use App\Models\Product;
 use App\Models\Tax;

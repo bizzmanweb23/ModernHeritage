@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Lead;
 use App\Models\Stage;
 use App\Models\Tag;
-use App\Models\Client;
+use App\Models\User;
 
 class CrmController extends Controller
 {
@@ -25,7 +25,7 @@ class CrmController extends Controller
     public function searchRequest(Request $request)
     {
        
-        $client = Client::where('role_id', '!=',1)
+        $client = User::where('role_id', '!=',1)
                         ->where('firstname', 'LIKE', '%'.$request->term.'%')
                         ->get();
         if ($client->count() > 0) {

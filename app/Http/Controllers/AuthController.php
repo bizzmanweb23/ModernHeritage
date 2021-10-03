@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\User;
 use App\Models\CountryCode;
 use App\Models\Role;
 use App\Http\Requests\LoginValidation;
@@ -63,7 +63,7 @@ class AuthController extends Controller
     // register logic
     public function register(RegisterValidation $request, $path = '')
     {
-        $unique_id = Client::orderBy('id', 'desc')->first();
+        $unique_id = User::orderBy('id', 'desc')->first();
         if ($unique_id) {
             $number = str_replace('MH', '', $unique_id->unique_id);
         } else {
@@ -83,7 +83,7 @@ class AuthController extends Controller
             $role = $request->role;
         }
 
-        Client::create([
+        User::create([
             'unique_id' => $number,
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
