@@ -63,3 +63,4 @@ Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('upd
 Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
 Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
 Route::get('/searchproduct', [QuotationController::class,'searchProduct'])->name('searchproduct');
+Route::post('/addproduct', [QuotationController::class,'addProduct'])->name('addproduct');

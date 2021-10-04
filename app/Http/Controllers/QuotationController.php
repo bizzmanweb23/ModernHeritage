@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Models\GST;
 use App\Models\User;
 use App\Models\Quotation;
+use App\Models\Quotation_product;
 use App\Models\Product;
 use App\Models\Tax;
 
@@ -19,7 +20,8 @@ class QuotationController extends Controller
         $lead = Lead::findOrFail($id);
         $gst = GST::get();
         $tax = Tax::get();
-        return view('frontend.admin.quotation.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax]);   
+        $product = Product::get();
+        return view('frontend.admin.quotation.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'product' => $product]);   
     }
 
     public function saveQuotation(Request $request)
@@ -35,11 +37,22 @@ class QuotationController extends Controller
         $quotation->leads_id = $request->leads_id;
         $quotation->gst_treatment = $request->gst_treatment;
         $quotation->expiration = $request->expiration;
-        $quotation->product_id = $request->product_id;
         $quotation->save();
 
-        return redirect()->back();
-        //return redirect('/viewrequest/'.$request->leads_id);
+        $quotation_product = new Quotation_product;
+        $quotation_product->quotation_id = $quotation->id;
+        $quotation_product->product_id = $request->product_id;
+        $quotation_product->quantity = $request->quantity;
+        $quotation_product->total = $request->total;
+        $quotation_product->save();
+
+        $product = Product::where('unique_id', $request->product_id)
+                            ->first();
+        $product->available_quantity =  intval($product->available_quantity) - intval($request->quantity);
+        $product->save();
+
+        // return redirect()->back();
+        return redirect('/viewrequest/'.$request->leads_id);
     }
 
     public function searchProduct(Request $request)
@@ -65,4 +78,14 @@ class QuotationController extends Controller
         }
         echo json_encode($data);
     }
+
+    // public function addProduct(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'product_id' => 'required',
+            
+    //     ]);
+
+
+    // }
 }
