@@ -213,22 +213,28 @@
 
     $('#add_product').click(function () {
         $('tbody').append(`
-                        <tr>
-                            <td>
-                                <select name="product_name" id="product_name" class="form-control select">
-                                    <option value="">select</option>
-                                        @foreach($product as $p)
-                                            <option value="{{ $p }}">{{ $p->product_name }}</option>
-                                        @endforeach
-                                </select>
-                            </td>
-                            <td><input type="text" class="form-control" name="description" id="description">
-                            </td>
-                            <td><input type="text" class="form-control" name="quantity" id="quantity"></td>
-                            <td><input type="text" class="form-control" name="price" id="price"></td>
-                            <td><input type="text" class="form-control" name="tax" id="tax"></td>
-                            <td><input type="text" class="form-control" name="subtotal" id="subtotal"></td>
-                        </tr>
+                                <tr>
+                                    <td>
+                                        <select name="product_name" id="product_name" class="form-control select">
+                                            <option value="">select</option>
+                                            @foreach($product as $p)
+                                                <option value="{{ $p }}">{{ $p->product_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type="text" class="form-control" name="description" id="description">
+                                    </td>
+                                    <td><input type="number" class="form-control" name="quantity" id="quantity" min="1"></td>
+                                    <td><input type="number" class="form-control" name="unitPrice" id="unitPrice" readonly></td>
+                                    <td>
+                                        <select multiple="multiple" name="tax[]" id="tax" class="form-control">
+                                            @foreach($tax as $t)
+                                                <option value="{{$t}}">{{$t->tax_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td><input type="number" class="form-control" name="subtotal" id="subtotal" readonly></td>
+                                </tr>
         `);
     });
     $('tbody').on('change', '#product_name', function () {
