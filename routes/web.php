@@ -58,9 +58,11 @@ Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('sear
 
 // Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
 Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
-Route::get('/viewrequest/{id}', [CrmController::class,'viewRequest']);
+Route::get('/viewrequest/{lead_id}', [CrmController::class,'viewRequest']);
 Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
 Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
 Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
 Route::get('/searchproduct', [QuotationController::class,'searchProduct'])->name('searchproduct');
 Route::post('/addproduct', [QuotationController::class,'addProduct'])->name('addproduct');
+Route::get('/confirmquotation/{id}', [QuotationController::class,'confirmQuotation']);
+Route::post('/confirmquotation/{id}', [QuotationController::class,'postConfirmQuotation']);

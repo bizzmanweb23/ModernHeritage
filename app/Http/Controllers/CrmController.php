@@ -7,6 +7,8 @@ use App\Models\Lead;
 use App\Models\Stage;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\Quotation;
+
 
 class CrmController extends Controller
 {
@@ -80,10 +82,11 @@ class CrmController extends Controller
         return redirect(route('getRequest'));
     }
 
-    public function viewRequest($id)
+    public function viewRequest($lead_id)
     { 
-        $lead = Lead::findOrFail($id);
+        $lead = Lead::findOrFail($lead_id);
         $tag = Tag::get();
+        $quotation_count = Quotation::where('leads_id', '=' , $lead_id)->get()->count();
         $selected_tags = json_decode($lead->tag);
         $selected_tags_name = [];
         if(isset($selected_tags)){
@@ -94,7 +97,7 @@ class CrmController extends Controller
             }
         }
         return view('frontend.admin.crm.viewrequest',['lead' => $lead, 'tag' => $tag,
-                    'selected_tags' => $selected_tags, 'selected_tags_name' => $selected_tags_name]);   
+                    'selected_tags' => $selected_tags, 'selected_tags_name' => $selected_tags_name,'quotation_count' => $quotation_count]);   
     }
 
     public function updateRequest(Request $request)

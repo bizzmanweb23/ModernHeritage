@@ -31,6 +31,15 @@ class QuotationController extends Controller
             'leads_id' => 'required',
             
         ]);
+       
+        $tax = $request->tax;
+        $tax_arr = [];
+
+        foreach ($tax as $t) 
+        {
+            $val = json_decode($t)->id;
+            array_push($tax_arr, $val);
+        }
 
         $quotation = new Quotation;
         $quotation->customer_id = $request->client_id;
@@ -44,6 +53,7 @@ class QuotationController extends Controller
         $quotation_product->product_id = $request->product_id;
         $quotation_product->quantity = $request->quantity;
         $quotation_product->total = $request->total;
+        $quotation_product->tax = json_encode($tax_arr);
         $quotation_product->save();
 
         $product = Product::where('unique_id', $request->product_id)
@@ -52,7 +62,7 @@ class QuotationController extends Controller
         $product->save();
 
         // return redirect()->back();
-        return redirect('/viewrequest/'.$request->leads_id);
+        return redirect('/confirmquotation/'.$quotation->id);
     }
 
     public function searchProduct(Request $request)
@@ -79,13 +89,66 @@ class QuotationController extends Controller
         echo json_encode($data);
     }
 
-    // public function addProduct(Request $request)
-    // {
-    //     $data = $request->validate([
-    //         'product_id' => 'required',
-            
-    //     ]);
+    public function confirmQuotation($id)
+    {
+        $quotation_id = $id;
+        $gst = GST::get();
+        $tax = Tax::get();
+        $quotation = Quotation::leftjoin('leads','quotations.leads_id', '=' , 'leads.id')
+                                    ->leftjoin('gst', 'quotations.gst_treatment', '=', 'gst.id')
+                                    ->where('quotations.id',$quotation_id)
+                                    ->select('quotations.*',
+                                            'gst.gst_treatment as gst_treatment_name',
+                                            'leads.stage_id',
+                                            'leads.client_id',
+                                            'leads.client_name',
+                                            'leads.opportunity',
+                                            'leads.email',
+                                            'leads.mobile_no',
+                                            'leads.expected_price',
+                                            'leads.probability',
+                                            'leads.tag',
+                                            'leads.expected_closing',
+                                        )
+                                    ->first();
 
+        $quotation_product = Quotation_product::leftjoin('products',  'quotation_products.product_id', '=', 'products.unique_id')
+                                                ->where('quotation_products.quotation_id',$quotation_id)
+                                                ->get(['quotation_products.*',
+                                                        'products.product_name',
+                                                        'products.price',
+                                                        'products.description'
+                                                ]);
+        foreach ($quotation_product as $q) {
+            $selected_taxs = json_decode($q->tax);
+            $selected_taxs_name = [];
+            if(isset($selected_taxs)){
+                foreach($tax as $t){
+                    if(in_array($t->id,$selected_taxs)){
+                        array_push($selected_taxs_name, $t->tax_name);
+                    }
+                }
+                // selected_taxs_name not present in table, added selected_taxs_name only to show in view.
+                $q->selected_taxs_name = $selected_taxs_name;
+            }
+        }
 
-    // }
+        return view('frontend.admin.quotation.confirmquotation', ['quotation' => $quotation,
+                                                                    'quotation_product' => $quotation_product,
+                                                                    'gst' => $gst,
+                                                                    'tax' => $tax,
+                                                            ]);    
+    } 
+
+    public function postConfirmQuotation($id)
+    {
+        $quotation_id = $id;
+        $sales_id = "S" . sprintf("%05d", $quotation_id);
+        
+        $quotation = Quotation::findOrFail($quotation_id);
+        $quotation->sales_id = $sales_id;
+        $quotation->save();
+
+        return redirect('/confirmquotation/'.$quotation_id);
+    }
 }

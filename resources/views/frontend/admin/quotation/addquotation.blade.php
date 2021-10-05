@@ -84,6 +84,7 @@
                             class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a> --}}
                     <button type="submit" class="btn btn-link text-dark px-3 mb-0" id="save"><i
                             class="fas fa-save text-dark me-2" aria-hidden="true"></i>Save</button>
+                            
                     <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="javascript:;"><i
                             class="far fa-trash-alt me-2"></i>Discard</a>
                 </div>
@@ -156,30 +157,14 @@
                                     <td><input type="number" class="form-control" name="quantity" id="quantity" min="1"></td>
                                     <td><input type="number" class="form-control" name="unitPrice" id="unitPrice" readonly></td>
                                     <td>
-                                        {{-- <select multiple="multiple" name="tax[]" id="tax">
+                                        <select multiple="multiple" name="tax[]" id="tax" class="form-control">
                                             @foreach($tax as $t)
-                                                <option value="{{$t->id}}">{{$t->tax_name}}</option>
-                                            @endforeach
-                                        </select> --}}
-                                    </td>
-                                    <td><input type="number" class="form-control" name="subtotal" id="subtotal" readonly></td>
-                                </tr>
-                                {{-- <tr>
-                                    <td>
-                                        <select name="product_name" id="product_name" class="form-control select">
-                                            <option value="">select</option>
-                                            @foreach($product as $p)
-                                                <option value="{{ $p->unique_id }}">{{ $p->product_name }}</option>
+                                                <option value="{{$t}}">{{$t->tax_name}}</option>
                                             @endforeach
                                         </select>
                                     </td>
-                                    <td><input type="text" class="form-control" name="description" id="description">
-                                    </td>
-                                    <td><input type="text" class="form-control" name="quantity" id="quantity"></td>
-                                    <td><input type="text" class="form-control" name="unitPrice" id="unitPrice"></td>
-                                    <td><input type="text" class="form-control" name="tax" id="tax"></td>
-                                    <td><input type="text" class="form-control" name="subtotal" id="subtotal"></td>
-                                </tr> --}}
+                                    <td><input type="number" class="form-control" name="subtotal" id="subtotal" readonly></td>
+                                </tr>
                             </tbody>
                         </table>
                         <div>
@@ -246,7 +231,7 @@
                         </tr>
         `);
     });
-    $('tbody').on('change', 'select', function () {
+    $('tbody').on('change', '#product_name', function () {
         $('#product_id').val(JSON.parse(this.value).unique_id)
         $('#description').val(JSON.parse(this.value).description)
         $('#unitPrice').val(JSON.parse(this.value).price)
@@ -258,12 +243,21 @@
         $('#total').val(JSON.parse(this.value).price)
         // alert(this.value)
     });
-    $('#quantity').on('change',null,function(){
+
+    $('tbody').on('change','#quantity',function(){
         var qty = parseInt(this.value)
         var u_price = parseFloat($('#unitPrice').val());
         var sub = qty*u_price
         $('#subtotal').val(sub)
         $('#total').val(sub)
+
+    });
+    $('tbody').on('change','#tax',function(){
+        var total = parseFloat($('#total').val());
+        var tax = JSON.parse(this.value).tax_value;
+        var total = total+(tax/100);
+
+        $('#total').val(total)
 
     });
 
@@ -297,18 +291,14 @@
     // });
     //end-- ajax for getting products
 
-    // $(document).ready(function () {
-    //     $('#edit').hide();
-    //     $('#back').hide();
         $('#discard').click(function () {
             window.history.back();
         });
-        // $('#tax').select2({
-        //         width: '100%',
-        //         placeholder: "",
-        //         allowClear: true
-        //  });
-    // });
+        $('#tax').select2({
+                width: '100%',
+                placeholder: "select tax",
+                allowClear: true
+         });
 
 </script>
 @endsection
