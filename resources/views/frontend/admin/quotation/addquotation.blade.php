@@ -143,7 +143,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {{-- <tr>
                                     <td>
                                         <select name="product_name" id="product_name" class="form-control select">
                                             <option value="">select</option>
@@ -164,7 +164,7 @@
                                         </select>
                                     </td>
                                     <td><input type="number" class="form-control" name="subtotal" id="subtotal" readonly></td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                         <div>
@@ -211,53 +211,107 @@
         minLength: 1,
     });
 
+    window.count = 1;
     $('#add_product').click(function () {
+        console.log(window.count);
         $('tbody').append(`
-                                <tr>
-                                    <td>
-                                        <select name="product_name" id="product_name" class="form-control select">
-                                            <option value="">select</option>
-                                            @foreach($product as $p)
-                                                <option value="{{ $p }}">{{ $p->product_name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td><input type="text" class="form-control" name="description" id="description">
-                                    </td>
-                                    <td><input type="number" class="form-control" name="quantity" id="quantity" min="1"></td>
-                                    <td><input type="number" class="form-control" name="unitPrice" id="unitPrice" readonly></td>
-                                    <td>
-                                        <select multiple="multiple" name="tax[]" id="tax" class="form-control">
-                                            @foreach($tax as $t)
-                                                <option value="{{$t}}">{{$t->tax_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td><input type="number" class="form-control" name="subtotal" id="subtotal" readonly></td>
-                                </tr>
-        `);
+                            <tr>
+                                <td>
+                                    <select name="product_name" id="product_name${window.count}" class="form-control select" onchange="getproduct(${window.count})">
+                                        <option value="">select</option>
+                                        @foreach($product as $p)
+                                            <option value="{{ $p }}">{{ $p->product_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="text" class="form-control" name="description" id="description${window.count}">
+                                </td>
+                                <td><input type="number" class="form-control" name="quantity" id="quantity${window.count}" onchange="onqtychange()" min="1"></td>
+                                <td><input type="number" class="form-control" name="unitPrice" id="unitPrice${window.count}" readonly></td>
+                                <td>
+                                    <select multiple="multiple" name="tax[]" id="tax${window.count}" class="form-control" onchange="ontaxchange(${window.count})">
+                                        @foreach($tax as $t)
+                                            <option value="{{$t}}">{{$t->tax_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td><input type="number" class="form-control" name="subtotal" id="subtotal${window.count}" readonly></td>
+                            </tr>
+                        `);
+        
+        $(`#tax${window.count}`).select2({
+                width: '10em',
+                placeholder: "select tax",
+                allowClear: true
+        });
+        window.count++;
     });
-    $('tbody').on('change', '#product_name', function () {
-        $('#product_id').val(JSON.parse(this.value).unique_id)
-        $('#description').val(JSON.parse(this.value).description)
-        $('#unitPrice').val(JSON.parse(this.value).price)
-        $('#subtotal').val(JSON.parse(this.value).price)
-        $('#quantity').val(1)
-        $('#quantity').attr({
-            "max" : JSON.parse(this.value).available_quantity
+
+    function getproduct(count)
+    {
+        var val = JSON.parse($('#product_name'+count).val());
+        console.log('getproduct - '+count);
+
+        // $('#product_id'+count).val(JSON.parse($('#product_name'+count).value).unique_id)
+        $('#description'+count).val(val.description)
+        $('#unitPrice'+count).val(val.price)
+        $('#subtotal'+count).val(val.price)
+        $('#quantity'+count).val(1)
+        $('#quantity'+count).attr({
+            "max" : val.available_quantity
         })
-        $('#total').val(JSON.parse(this.value).price)
-        // alert(this.value)
-    });
+        // console.log('here - '+$('#total').val());
+        if($('#total').val() === NaN || $('#total').val() === null || $('#total').val() === ''){
+            var total = parseFloat(val.price);
+        } else {
+            var total = parseFloat($('#total').val()) + parseFloat(val.price);
+        }
+        $('#total').val(total);
+    }
 
-    $('tbody').on('change','#quantity',function(){
-        var qty = parseInt(this.value)
-        var u_price = parseFloat($('#unitPrice').val());
-        var sub = qty*u_price
-        $('#subtotal').val(sub)
-        $('#total').val(sub)
+    function onqtychange(){
+        console.log('onqtychange - '+$('#total').val());
+        var total = 0; 
+        
+        for(var i = 1; i<window.count; i++)
+        {
+            var sub = 0;
+            var qty = parseInt($('#quantity'+i).val())
+            var u_price = parseFloat($('#unitPrice'+i).val());
+            sub = (qty*u_price);
+            total = total + sub
+            $('#subtotal'+i).val(sub)
+        }
+        $('#total').val(total)
+    }
 
-    });
+    function ontaxchange(){
+        // console.log('ontaxchange - '+$('#total').val());
+        var total = 0; 
+        var sub_total = 0;
+        // console.log('here'+window.count)
+        for(var i = 1; i<window.count; i++)
+        {
+            var sub = parseFloat($('#subtotal'+i).val());
+            var sub_tax = 0;
+            var tax = $('#tax'+i).val();
+            var taxLength = Object.keys(tax).length;
+            var taxValues = Object.values(tax);
+            for(var j=0; j<taxLength; j++){
+                var tax_value = parseFloat(JSON.parse(taxValues[j]).tax_value);
+                sub_tax = sub_tax + (tax_value / 100)
+                console.log('subtax - '+sub_tax);
+            }
+            sub_total = sub + sub_tax;
+            total = total + sub_total;
+            console.log('sub_total - '+sub_total);
+            // console.log('ontaxchange - '+Object.keys(tax).length);
+            // console.log('ontaxchange - '+Object.values(tax)[0]);
+        }
+        console.log('total - '+total);
+        $('#total').val(total.toFixed(2));
+    }
+
     $('tbody').on('change','#tax',function(){
         var total = parseFloat($('#total').val());
         var tax = JSON.parse(this.value).tax_value;
@@ -267,44 +321,9 @@
 
     });
 
-    //start-- ajax for getting products
-    // $('#product_name').autocomplete({
-    //     source: function (request, response) {
-    //         $.ajax({
-    //             type: 'get',
-    //             url: "{{ route('searchproduct') }}",
-    //             dataType: "json",
-    //             data: {
-    //                 term: $('#product_name').val()
-    //             },
-    //             success: function (data) {
-    //                 response(data);
-    //                 console.log(data)
-    //             },
-    //         });
-    //     },
-    //     select: function (event, ui) {
-    //         if (ui.item.id != 0) {
-    //             $('#product_id').val(ui.item.id)
-    //             $('#description').val(ui.item.description)
-    //             $('#quantity').val(ui.item.quantity)
-    //             $('#unitPrice').val(ui.item.price);
-    //             $('#subtotal').val(ui.item.subtotal);
-
-    //         }
-    //     },
-    //     minLength: 1,
-    // });
-    //end-- ajax for getting products
-
-        $('#discard').click(function () {
-            window.history.back();
-        });
-        $('#tax').select2({
-                width: '100%',
-                placeholder: "select tax",
-                allowClear: true
-         });
+    $('#discard').click(function () {
+        window.history.back();
+    });
 
 </script>
 @endsection
