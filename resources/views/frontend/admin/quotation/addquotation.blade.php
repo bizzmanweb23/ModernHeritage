@@ -115,10 +115,7 @@
                         </span>
                         <br>
                         <br>
-                        <input type="hidden" name="product_id" id="product_id">
-                        {{-- <div style={display: "none"}>
-                            <select name="product_id" id="product_id" multiple></select>
-                        </div> --}}
+                        <input type="hidden" name="product_row_count" id="product_row_count">
                         <table class="table mb-0 table-responsive">
                             <thead>
                                 <tr>
@@ -214,28 +211,30 @@
     window.count = 1;
     $('#add_product').click(function () {
         console.log(window.count);
+        $('#product_row_count').val(window.count);
         $('tbody').append(`
                             <tr>
+                                <input type="hidden" name="product_id${window.count}" id="product_id${window.count}">
                                 <td>
-                                    <select name="product_name" id="product_name${window.count}" class="form-control select" onchange="getproduct(${window.count})">
+                                    <select name="product_name${window.count}" id="product_name${window.count}" class="form-control select" onchange="getproduct(${window.count})">
                                         <option value="">select</option>
                                         @foreach($product as $p)
                                             <option value="{{ $p }}">{{ $p->product_name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td><input type="text" class="form-control" name="description" id="description${window.count}">
+                                <td><input type="text" class="form-control" name="description${window.count}" id="description${window.count}">
                                 </td>
-                                <td><input type="number" class="form-control" name="quantity" id="quantity${window.count}" onchange="onqtychange()" min="1"></td>
-                                <td><input type="number" class="form-control" name="unitPrice" id="unitPrice${window.count}" readonly></td>
+                                <td><input type="number" class="form-control" name="quantity${window.count}" id="quantity${window.count}" onchange="onqtychange()" min="1"></td>
+                                <td><input type="number" class="form-control" name="unitPrice${window.count}" id="unitPrice${window.count}" readonly></td>
                                 <td>
-                                    <select multiple="multiple" name="tax[]" id="tax${window.count}" class="form-control" onchange="ontaxchange(${window.count})">
+                                    <select multiple="multiple" name="tax${window.count}[]" id="tax${window.count}" class="form-control" onchange="ontaxchange(${window.count})">
                                         @foreach($tax as $t)
                                             <option value="{{$t}}">{{$t->tax_name}}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td><input type="number" class="form-control" name="subtotal" id="subtotal${window.count}" readonly></td>
+                                <td><input type="number" class="form-control" name="subtotal${window.count}" id="subtotal${window.count}" readonly></td>
                             </tr>
                         `);
         
@@ -252,7 +251,7 @@
         var val = JSON.parse($('#product_name'+count).val());
         console.log('getproduct - '+count);
 
-        // $('#product_id'+count).val(JSON.parse($('#product_name'+count).value).unique_id)
+        $('#product_id'+count).val(val.unique_id)
         $('#description'+count).val(val.description)
         $('#unitPrice'+count).val(val.price)
         $('#subtotal'+count).val(val.price)
@@ -260,13 +259,7 @@
         $('#quantity'+count).attr({
             "max" : val.available_quantity
         })
-        // console.log('here - '+$('#total').val());
-        if($('#total').val() === NaN || $('#total').val() === null || $('#total').val() === ''){
-            var total = parseFloat(val.price);
-        } else {
-            var total = parseFloat($('#total').val()) + parseFloat(val.price);
-        }
-        $('#total').val(total);
+        ontaxchange();
     }
 
     function onqtychange(){
@@ -282,7 +275,7 @@
             total = total + sub
             $('#subtotal'+i).val(sub)
         }
-        $('#total').val(total)
+        ontaxchange();
     }
 
     function ontaxchange(){

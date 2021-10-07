@@ -31,15 +31,8 @@ class QuotationController extends Controller
             'leads_id' => 'required',
             
         ]);
-       
-        $tax = $request->tax;
-        $tax_arr = [];
-
-        foreach ($tax as $t) 
-        {
-            $val = json_decode($t)->id;
-            array_push($tax_arr, $val);
-        }
+        
+        $product_row_count = $request->product_row_count;
 
         $quotation = new Quotation;
         $quotation->customer_id = $request->client_id;
@@ -48,20 +41,33 @@ class QuotationController extends Controller
         $quotation->expiration = $request->expiration;
         $quotation->save();
 
-        $quotation_product = new Quotation_product;
-        $quotation_product->quotation_id = $quotation->id;
-        $quotation_product->product_id = $request->product_id;
-        $quotation_product->quantity = $request->quantity;
-        $quotation_product->total = $request->total;
-        $quotation_product->tax = json_encode($tax_arr);
-        $quotation_product->save();
+        for ($i=1; $i <= $product_row_count ; $i++) { 
+            $req_tax = 'tax'.strval($i);
+            $req_product_id = 'product_id'.strval($i);
+            $req_quantity = 'quantity'.strval($i);
 
-        $product = Product::where('unique_id', $request->product_id)
-                            ->first();
-        $product->available_quantity =  intval($product->available_quantity) - intval($request->quantity);
-        $product->save();
+            $tax = $request->$req_tax;
+            $tax_arr = [];
 
-        // return redirect()->back();
+            foreach ($tax as $t) 
+            {
+                $val = json_decode($t)->id;
+                array_push($tax_arr, $val);
+            }
+            $quotation_product = new Quotation_product;
+            $quotation_product->quotation_id = $quotation->id;
+            $quotation_product->product_id = $request->$req_product_id;
+            $quotation_product->quantity = $request->$req_quantity;
+            $quotation_product->total = $request->total;
+            $quotation_product->tax = json_encode($tax_arr);
+            $quotation_product->save();
+
+            $product = Product::where('unique_id', $request->$req_product_id)
+                                ->first();
+            $product->available_quantity =  intval($product->available_quantity) - intval($request->$req_quantity);
+            $product->save();
+        }
+
         return redirect('/confirmquotation/'.$quotation->id);
     }
 
