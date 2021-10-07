@@ -31,6 +31,19 @@ class QuotationController extends Controller
             'leads_id' => 'required',
             
         ]);
+
+        $quotation_unique_id = Quotation::orderBy('id', 'desc')->first();
+        //dd($quotation_unique_id);
+        if ($quotation_unique_id) {
+            $number = str_replace('MHQ', '', $quotation_unique_id->quotation_unique_id);
+        } else {
+            $number = 0;
+        }
+        if ($number == 0 || $number == "") {
+            $number = 'MHQ000001';
+        } else {
+            $number = 'MHQ' . sprintf('%06d', $number + 1);
+        }
         
         $product_row_count = $request->product_row_count;
 
@@ -39,6 +52,7 @@ class QuotationController extends Controller
         $quotation->leads_id = $request->leads_id;
         $quotation->gst_treatment = $request->gst_treatment;
         $quotation->expiration = $request->expiration;
+        $quotation->quotation_unique_id = $number;
         $quotation->save();
 
         for ($i=1; $i <= $product_row_count ; $i++) { 

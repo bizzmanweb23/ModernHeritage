@@ -25,7 +25,10 @@
                 <input type="hidden" name="quotation_id" value="{{ $quotation->id }}" id="quotation_id">
                 <div class="card-header pb-0 px-3">
                     <div class="d-flex flex-column">
-                    <h5 class="mb-0" id="sales_id">{{ $quotation->sales_id }}</h5>
+                    @if (isset($quotation->sales_id))
+                        <h5 class="mb-0" id="sales_id">Sales Id : {{ $quotation->sales_id }}</h5>   
+                    @endif                   
+                    <h5 class="mb-0" id="quotation_unique_id">Quotation Id : {{ $quotation->quotation_unique_id }}</h5>
                     </div>
                 </div>
                 <div class="card-body pt-4 p-3">

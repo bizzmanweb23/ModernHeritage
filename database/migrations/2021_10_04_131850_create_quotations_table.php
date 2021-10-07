@@ -23,6 +23,7 @@ class CreateQuotationsTable extends Migration
             $table->string('terms_condition')->nullable();            
             $table->string('sales_id')->nullable();            
             $table->string('leads_id')->required();            
+            $table->string('quotation_unique_id')->required();            
             $table->timestamps();
         });
     }
