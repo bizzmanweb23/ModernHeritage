@@ -171,4 +171,16 @@ class QuotationController extends Controller
 
         return redirect('/confirmquotation/'.$quotation_id);
     }
+
+    public function viewQuotation($lead_id)
+    {
+        $quotation = Quotation::leftjoin('leads','quotations.leads_id', '=' , 'leads.id')
+                                    ->where('quotations.leads_id',$lead_id)
+                                    ->select('quotations.*',              
+                                            'leads.stage_id',
+                                            'leads.client_name',
+                                        )->get();
+
+        return view('frontend.admin.quotation.viewquotation',['quotation' => $quotation]);
+    }
 }
