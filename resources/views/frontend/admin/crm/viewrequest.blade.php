@@ -5,9 +5,20 @@
 @endsection
 
 @section('content')
-<a class="btn btn-primary" href="{{ url('/') }}/newquotation/{{ $lead->id  }}">New Quatation</a>
+<a class="btn btn-primary" href="{{ url('/') }}/admin/newquotation/{{ $lead->id  }}">New Quatation</a>
+<a class="btn btn-primary" href="{{ url('/') }}/admin/updatestage/{{ $lead->id }}/4">Mark Won</a>
+<a class="btn btn-primary" href="{{ url('/') }}/admin/updatestage/{{ $lead->id  }}/0">Mark Lost</a>
 <div class="ms-auto text-end">
-    <a href="{{ url('/') }}/viewquotation/{{ $lead->id }}" class="btn btn-link text-dark px-3 mb-0">Quotation : {{ $quotation_count }}</a>
+    @foreach ($stage as $st)
+        @if ($lead->stage_id == $st->id)
+            <a href="{{ url('/') }}/admin/updatestage/{{ $lead->id }}/{{ $st->id }}" class="btn btn-link px-2 mb-0">{{ $st->stage_name }}</a>
+        @else
+            <a href="{{ url('/') }}/admin/updatestage/{{ $lead->id }}/{{ $st->id }}" class="btn btn-link text-dark px-2 mb-0">{{ $st->stage_name }}</a>
+        @endif
+    @endforeach
+</div>
+<div class="ms-auto text-end">
+    <a href="{{ url('/') }}/admin/viewquotation/{{ $lead->id }}" class="btn btn-link text-dark px-3 mb-0">Quotation : {{ $quotation_count }}</a>
 </div>
 <div class="row">
     <div class="col-md-12 mt-3">
@@ -16,6 +27,15 @@
             @csrf
             <input type="hidden" name="id" id="id" value={{ $lead->id }}>
             <div class="card-header pb-0 px-3">
+                <div class="ms-auto text-end">
+                    @if ($lead->stage_id == 4)
+                        <h2 class="font-weight-bolder text-success text-gradient px-4">WON</h2>
+                    @elseif($lead->stage_id == 0)
+                    {
+                        <h2 class="font-weight-bolder text-danger text-gradient px-4">LOST</h2>
+                    }
+                    @endif
+                </div>
                 <div class="d-flex flex-column">
                     <h6 class="mb-0" id="opportunity_span">{{ $lead->opportunity }}</h6>
                     <input type="text" name="opportunity" id="opportunity" value="{{ $lead->opportunity }}" style="width: 40em" placeholder="Opportunity"/>

@@ -27,7 +27,7 @@ class CrmController extends Controller
     public function searchRequest(Request $request)
     {
        
-        $client = User::where('role_id', '!=',1)
+        $client = User::where('role_id', '=',2)
                         ->where('firstname', 'LIKE', '%'.$request->term.'%')
                         ->get();
         if ($client->count() > 0) {
@@ -86,6 +86,7 @@ class CrmController extends Controller
     { 
         $lead = Lead::findOrFail($lead_id);
         $tag = Tag::get();
+        $stage = Stage::get();
         $quotation_count = Quotation::where('leads_id', '=' , $lead_id)->get()->count();
         $selected_tags = json_decode($lead->tag);
         $selected_tags_name = [];
@@ -96,8 +97,16 @@ class CrmController extends Controller
                 }
             }
         }
-        return view('frontend.admin.crm.viewrequest',['lead' => $lead, 'tag' => $tag,
+        return view('frontend.admin.crm.viewrequest',['lead' => $lead, 'tag' => $tag, 'stage' => $stage,
                     'selected_tags' => $selected_tags, 'selected_tags_name' => $selected_tags_name,'quotation_count' => $quotation_count]);   
+    }
+
+    public function updateStage($lead_id, $stage_id)
+    {
+        $lead = Lead::findOrFail($lead_id);
+        $lead->stage_id = $stage_id;
+        $lead->save();
+        return redirect()->back();
     }
 
     public function updateRequest(Request $request)
