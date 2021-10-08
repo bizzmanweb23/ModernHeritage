@@ -22,7 +22,7 @@
         <br>
         <br>
         <div>
-            <a href="{{url('/')}}/register/any" class="btn btn-primary">Add User</a> 
+            <a href="{{url('/')}}/register/client" class="btn btn-primary">Add Client</a> 
             
             <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Create Role</a> 
         </div>
@@ -48,12 +48,12 @@
                     <td><p class="text-s font-weight-bold mb-0">{{$u->email}}</p></td>
                     <td><p class="text-s font-weight-bold mb-0">{{$u->phone}}</p></td>
                     <td><p class="text-s font-weight-bold mb-0">
-                        <a href="{{url('/')}}/details/{{$u->id}}">Details</a>
-                        <a href="{{url('/')}}/edit/{{$u->id}}">Edit</a>
+                        <a href="{{ url('/') }}/admin/details/{{$u->id}}">Details</a>
+                        <a href="{{ url('/') }}/admin/edit/{{$u->id}}">Edit</a>
                         @if($u->status==1)
-                            <a href="{{url('/')}}/userstatus/{{$u->id}}/0">active</a>
+                            <a href="{{ url('/') }}/admin/userstatus/{{$u->id}}/0">active</a>
                         @else
-                            <a href="{{url('/')}}/userstatus/{{$u->id}}/1">inactive</a>
+                            <a href="{{ url('/') }}/admin/userstatus/{{$u->id}}/1">inactive</a>
                         @endif
                         </p>
                     </td>

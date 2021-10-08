@@ -6,7 +6,7 @@
 @section('content')
 
 
-        <form action="{{url('/')}}/edit/{{$user->id}}" method="POST">
+        <form action="{{ url('/') }}/admin/edit/{{$user->id}}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="unique_id">Unique Id</label>

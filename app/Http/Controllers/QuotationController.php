@@ -82,7 +82,7 @@ class QuotationController extends Controller
             $product->save();
         }
 
-        return redirect('/confirmquotation/'.$quotation->id);
+        return redirect('/admin/confirmquotation/'.$quotation->id);
     }
 
     public function searchProduct(Request $request)
@@ -169,7 +169,7 @@ class QuotationController extends Controller
         $quotation->sales_id = $sales_id;
         $quotation->save();
 
-        return redirect('/confirmquotation/'.$quotation_id);
+        return redirect('/admin/confirmquotation/'.$quotation_id);
     }
 
     public function viewQuotation($lead_id)

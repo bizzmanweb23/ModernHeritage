@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card">
-            <form action="{{ url('/') }}/confirmquotation/{{ $quotation->id }}" method="post">
+            <form action="{{ url('/') }}/admin/confirmquotation/{{ $quotation->id }}" method="post">
                 @csrf
                 <div class="ms-auto text-end">
                     @if(isset($quotation->sales_id))

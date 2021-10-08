@@ -77,7 +77,7 @@
                                 <p class="text-s font-weight-bold mb-0">{{$l->client_name}}</p>
                                 <p class="text-s font-weight-bold mb-0">₹ {{$l->expected_price}}</p>
                                 </div>
-                                <a class="btn btn-primary btn-sm" href="{{ url('/') }}/viewrequest/{{ $l->id }}">View</a>                               
+                                <a class="btn btn-primary btn-sm" href="{{ url('/') }}/admin/viewrequest/{{ $l->id }}">View</a>                               
                             </div>
                         </div>
                         @endif

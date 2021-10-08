@@ -1,6 +1,6 @@
 @extends('frontend.admin.layouts.master')
 @section('page')
-  <h6 class="font-weight-bolder mb-0">Add User</h6>
+  <h6 class="font-weight-bolder mb-0">Add Client</h6>
 @endsection
 @section('content')
 {{-- <main class="main-content  mt-0"> --}}

@@ -79,6 +79,8 @@ class AuthController extends Controller
             $role = 3;
         } elseif ($path == 'client') {
             $role = 2;
+        }elseif ($path == 'user') {
+                $role = 4;
         } else {
             $role = $request->role;
         }

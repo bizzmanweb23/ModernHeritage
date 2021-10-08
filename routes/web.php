@@ -25,48 +25,50 @@ Route::get("/", function () {
 });
 
 Route::get("/home", [HomeController::class, "index"])->name("home");
-
-//login
-Route::get("/login", [AuthController::class, "login"])->name("userlogin");
-Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
+//logout
+Route::post("/logout", [AuthController::class, "logoutUser"])->name("userLogout");
 
 //register
 Route::get("/register/{path?}", [AuthController::class, "getRegister"]);
 Route::post("/register/{path?}", [AuthController::class, "register"]);
 
-//logout
-Route::post("/logout", [AuthController::class, "logoutUser"])->name("userLogout");
+Route::group(['prefix' => 'admin'], function () {
 
-//admin
-Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
+    //login
+    Route::get("/login", [AuthController::class, "login"])->name("userlogin");
+    Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
 
-//admin--userDetails
-Route::get("/users", [DashboardController::class, "allUsersDetails"])->name("users");
-Route::get('/user', [DashboardController::class, 'userDetails'])->name('user');
-Route::get('/details/{id}', [DashboardController::class, 'memberData']);
-Route::get('/edit/{id}', [DashboardController::class, 'memberData']);
-Route::post('/edit/{id}', [DashboardController::class, 'editUser']);
-Route::get('/userstatus/{id}/{status}', [DashboardController::class,'userStatus',]);
+    //admin--dashboard
+    Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
-//admin--role
-Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
-Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole');
+    //admin--userDetails
+    Route::get("/users", [DashboardController::class, "allUsersDetails"])->name("users");
+    Route::get('/user', [DashboardController::class, 'userDetails'])->name('user');
+    Route::get('/details/{id}', [DashboardController::class, 'memberData']);
+    Route::get('/edit/{id}', [DashboardController::class, 'memberData']);
+    Route::post('/edit/{id}', [DashboardController::class, 'editUser']);
+    Route::get('/userstatus/{id}/{status}', [DashboardController::class,'userStatus',]);
 
-//admin--CRM
-Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
-Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
+    //admin--role
+    Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
+    Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole');
 
-// Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
-Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
-Route::get('/viewrequest/{lead_id}', [CrmController::class,'viewRequest']);
-Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
+    //admin--CRM
+    Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
+    Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
+    // Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
+    Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
+    Route::get('/viewrequest/{lead_id}', [CrmController::class,'viewRequest']);
+    Route::get('/updatestage/{lead_id}/{stage_id}', [CrmController::class,'updateStage']);
+    Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
 
-//admin--quotation
-Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
-Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
-Route::get('/searchproduct', [QuotationController::class,'searchProduct'])->name('searchproduct');
-Route::post('/addproduct', [QuotationController::class,'addProduct'])->name('addproduct');
-Route::get('/confirmquotation/{id}', [QuotationController::class,'confirmQuotation']);
-Route::post('/confirmquotation/{id}', [QuotationController::class,'postConfirmQuotation']);
-Route::get('/viewquotation/{lead_id}', [QuotationController::class,'viewQuotation']);
+    //admin--quotation
+    Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
+    Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
+    Route::get('/searchproduct', [QuotationController::class,'searchProduct'])->name('searchproduct');
+    Route::post('/addproduct', [QuotationController::class,'addProduct'])->name('addproduct');
+    Route::get('/confirmquotation/{id}', [QuotationController::class,'confirmQuotation']);
+    Route::post('/confirmquotation/{id}', [QuotationController::class,'postConfirmQuotation']);
+    Route::get('/viewquotation/{lead_id}', [QuotationController::class,'viewQuotation']);
+});
 

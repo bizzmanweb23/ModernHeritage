@@ -26,12 +26,12 @@
             <td><p class="text-s font-weight-bold mb-0">{{$q->created_at}}</p></td>
             <td><p class="text-s font-weight-bold mb-0">{{$q->expiration}}</p></td>
             <td><p class="text-s font-weight-bold mb-0">
-                <a href="{{url('/')}}/confirmquotation/{{$q->id}}">Details</a>
-                {{-- <a href="{{url('/')}}/edit/{{$u->id}}">Edit</a>
+                <a href="{{ url('/') }}/admin/confirmquotation/{{$q->id}}">Details</a>
+                {{-- <a href="{{ url('/') }}/admin/edit/{{$u->id}}">Edit</a>
                 @if($u->status==1)
-                    <a href="{{url('/')}}/userstatus/{{$u->id}}/0">active</a>
+                    <a href="{{ url('/') }}/admin/userstatus/{{$u->id}}/0">active</a>
                 @else
-                    <a href="{{url('/')}}/userstatus/{{$u->id}}/1">inactive</a>
+                    <a href="{{ url('/') }}/admin/userstatus/{{$u->id}}/1">inactive</a>
                 @endif --}} 
                 </p>
             </td>
