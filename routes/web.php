@@ -21,7 +21,7 @@ use App\Http\Controllers\QuotationController;
 */
 
 Route::get("/", function () {
-    return view("welcome");
+    return view("frontend.user.home.index");
 });
 
 Route::get("/home", [HomeController::class, "index"])->name("home");
