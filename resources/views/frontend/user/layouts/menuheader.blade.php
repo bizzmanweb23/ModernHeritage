@@ -31,9 +31,15 @@
                 <div class="col-lg-5">
                     <div class="header-right-content">
                         <ul>
-                            <li>
-                                <a href="#">My Account</a>
-                            </li>
+                            @if(Auth::check() && Auth::user()->isClient())
+                                <li>
+                                    <a href="#">My Account</a>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="#">Login/SignUp</a>
+                                </li>
+                            @endif
                             <li>
                                 <div class="usd">
                                     <select>
