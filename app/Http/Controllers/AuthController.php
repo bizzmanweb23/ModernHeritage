@@ -50,7 +50,16 @@ class AuthController extends Controller
                 'email' => 'User is inactive',
             ]);
         }
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            Auth::logout();
 
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+            throw ValidationException::withMessages([
+                'lemail' => __('auth.failed'),
+            ]);
+        }
         Session::put('username', Auth::user()->firstname);
         Session::put('userid', Auth::user()->unique_id);
         $request->session()->regenerate();

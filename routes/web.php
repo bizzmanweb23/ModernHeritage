@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\InventoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,12 +33,13 @@ Route::post("/logout", [AuthController::class, "logoutUser"])->name("userLogout"
 Route::get("/register/{path?}", [AuthController::class, "getRegister"]);
 Route::post("/register/{path?}", [AuthController::class, "register"]);
 
+//login
+Route::get("/login", [AuthController::class, "login"])->name("userlogin");
+Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
+
 Route::group(['prefix' => 'admin'], function () {
 
-    //login
-    Route::get("/login", [AuthController::class, "login"])->name("userlogin");
-    Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
-
+    
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
@@ -70,5 +72,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/confirmquotation/{id}', [QuotationController::class,'confirmQuotation']);
     Route::post('/confirmquotation/{id}', [QuotationController::class,'postConfirmQuotation']);
     Route::get('/viewquotation/{lead_id}', [QuotationController::class,'viewQuotation']);
+
+    //admin---inventory
+    Route::get('/inventory', [InventoryController::class,'getinventory'])->name('inventory');
+
 });
 

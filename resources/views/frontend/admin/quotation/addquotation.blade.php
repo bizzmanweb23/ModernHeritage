@@ -5,70 +5,6 @@
 @endsection
 
 @section('content')
-{{-- <style>
-    .ui-front {
-    z-index: 9999999 !important;
-}
-</style> --}}
-
-{{-- <!-- The Modal -->
-<div class="modal" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="#" method="POST">
-@csrf
-
-                <input type="hidden" name="product_id" id="product_id">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Add Product</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body">
-                    <div class="row mb-2">
-                        <div class="col-md-4"><label for="product_name">Product</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control typeahead" id="product_name"
-                                name="product_name" placeholder="Product Name" required></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-4"><label for="description">Description</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="description"
-                                name="description" placeholder="description" required></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-4"> <label for="quantity">Quantity</label></div>
-                        <div class="col-md-8"><input type="number" class="form-control" id="quantity" name="quantity"
-                                placeholder=""></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-4"><label for="unitPrice">Unit Price</label></div>
-                        <div class="col-md-8"><input type="number" class="form-control" id="unitPrice" name="unitPrice"
-                                placeholder="₹" readonly></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-4"> <label for="expected_price">Taxes</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="taxes" name="taxes"
-                                placeholder=""></div>
-                    </div>
-                    <div class="row mb-2">
-                        <div class="col-md-4"> <label for="subtotal">Subtotal</label></div>
-                        <div class="col-md-8"><input type="number" class="form-control" id="subtotal" name="subtotal"
-                                placeholder="" readonly></div>
-                    </div>
-                </div>
-
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" id="save_product">Save</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
-        </div>
-        </form>
-    </div>
-</div>
-</div> --}}
-
 
 <div class="row">
     <div class="col-md-12 mt-3">
@@ -93,26 +29,36 @@
                 <input type="hidden" name="leads_id" value="{{ $lead->id }}" id="leads_id">
                 <div class="card-body pt-4 p-3">
                     <div class="d-flex flex-column">
-                        <span class="mb-2 text-xs">Contact Name:
-                            {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span">{{ $lead->client_name }}</span>
-                        --}}
-                        <input type="text" name="client_name" id="client_name" value="{{ $lead->client_name }}"
-                            placeholder="Contact Name" />
-                        </span>
-
-                        <span class="mb-2 text-xs">GST Treatment:
-                            {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span"></span> --}}
-                            <select name="gst_treatment" id="gst_treatment">
-                                @foreach($gst as $gt)
-                                    <option value="{{ $gt->id }}">{{ $gt->gst_treatment }}</option>
-                                @endforeach
-                            </select>
-                        </span>
-
-                        <span class="mb-2 text-xs">Expiration:
-                            {{-- <span class="text-dark font-weight-bold ms-sm-2" id="expiration_span"></span> --}}
-                            <input type="date" name="expiration" id="expiration" placeholder="" />
-                        </span>
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <span class="mb-2">Contact Name:
+                                    {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span">{{ $lead->client_name }}</span>
+                                --}}
+                                <input type="text" name="client_name" id="client_name" value="{{ $lead->client_name }}"
+                                    placeholder="Contact Name" class="form-control"/>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="mb-2">Expiration:
+                                    {{-- <span class="text-dark font-weight-bold ms-sm-2" id="expiration_span"></span> --}}
+                                    <input type="date" name="expiration" id="expiration" placeholder="" class="form-control" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <span class="mb-2">GST Treatment:
+                                    {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span"></span> --}}
+                                    <select name="gst_treatment" id="gst_treatment"  class="form-control" >
+                                        @foreach($gst as $gt)
+                                            <option value="{{ $gt->id }}">{{ $gt->gst_treatment }}</option>
+                                        @endforeach
+                                    </select>
+                                </span>
+        
+                            </div>
+                        </div>
+                       
                         <br>
                         <br>
                         <input type="hidden" name="product_row_count" id="product_row_count">
@@ -170,8 +116,10 @@
                         </div>
 
                         <div class="ms-auto text-end row">
-                            <label for="total">Total :</label>
-                            <input class="form-control" type="number" name="total" id="total" readonly>
+                            <span id="untaxed_total_span" class="font-weight-bolder"></span>
+                            <span id="tax_total_span" class="font-weight-bolder"></span>
+                            <span id="total_span" class="font-weight-bolder"></span>
+                            <input hidden type="number" name="total" id="total" readonly>
                         </div>
                         
                     </div>                   
@@ -282,6 +230,7 @@
         // console.log('ontaxchange - '+$('#total').val());
         var total = 0; 
         var sub_total = 0;
+        var untaxed_total = 0;
         // console.log('here'+window.count)
         for(var i = 1; i<window.count; i++)
         {
@@ -292,10 +241,11 @@
             var taxValues = Object.values(tax);
             for(var j=0; j<taxLength; j++){
                 var tax_value = parseFloat(JSON.parse(taxValues[j]).tax_value);
-                sub_tax = sub_tax + (tax_value / 100)
+                sub_tax = sub_tax + ((sub*tax_value) / 10000)
                 console.log('subtax - '+sub_tax);
             }
             sub_total = sub + sub_tax;
+            untaxed_total = untaxed_total + sub;
             total = total + sub_total;
             console.log('sub_total - '+sub_total);
             // console.log('ontaxchange - '+Object.keys(tax).length);
@@ -303,16 +253,11 @@
         }
         console.log('total - '+total);
         $('#total').val(total.toFixed(2));
+        $('#untaxed_total_span').text('Untaxed total :   ₹ ' + untaxed_total.toFixed(2));
+        var tax_amt = total.toFixed(2) - untaxed_total.toFixed(2);
+        $('#tax_total_span').text('Tax :   ₹ ' + tax_amt.toFixed(2));
+        $('#total_span').text('Total :   ₹ ' + total.toFixed(2));
     }
-
-    $('tbody').on('change','#tax',function(){
-        var total = parseFloat($('#total').val());
-        var tax = JSON.parse(this.value).tax_value;
-        var total = total+(tax/100);
-
-        $('#total').val(total)
-
-    });
 
     $('#discard').click(function () {
         window.history.back();

@@ -84,7 +84,11 @@ class CrmController extends Controller
 
     public function viewRequest($lead_id)
     { 
-        $lead = Lead::findOrFail($lead_id);
+        // $lead = Lead::findOrFail($lead_id);
+        $lead = Lead::leftjoin('users', 'leads.client_id', '=', 'users.id')
+                    ->where('leads.id', $lead_id)
+                    ->select('leads.*', 'users.address', 'users.state', 'users.zipcode', 'users.country')
+                    ->first();
         $tag = Tag::get();
         $stage = Stage::get();
         $quotation_count = Quotation::where('leads_id', '=' , $lead_id)->get()->count();
@@ -117,7 +121,7 @@ class CrmController extends Controller
             'mobile_no' => 'numeric',
             'expected_price' => 'numeric',
             'probability' => 'numeric',
-            'priority' => 'numeric',
+            'priority' => '',
         ]);
 
         $id = $request->id;
@@ -133,6 +137,13 @@ class CrmController extends Controller
         $lead->expected_closing = $request->expected_closing; 
         $lead->tag = json_encode($request->tag);  
         $lead->save();
+
+        $user = User::findOrFail($lead->client_id);
+        $user->address = $request->address;
+        $user->state = $request->state;
+        $user->zipcode = $request->zipcode;
+        $user->country = $request->country;
+        $user->save();
 
         return redirect()->back();
     }
