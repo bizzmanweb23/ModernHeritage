@@ -22,7 +22,7 @@
           <a class="nav-link" href="#">Configaration</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Oprations</a>
+          <a class="nav-link" href="#">Operations</a>
         </li>
       </ul>
     </div>

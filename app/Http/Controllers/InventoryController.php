@@ -22,5 +22,10 @@ class InventoryController extends Controller
         $products = Product::get();
         return view('frontend.admin.inventory.products.allproducts',['products' => $products]);
     }
+    public function addproduct()
+    {
+       
+        return view('frontend.admin.inventory.products.addproduct');
+    }
     
 }

@@ -1,8 +1,8 @@
 @extends('frontend.admin.inventory.index')
 
 @section('inventory_content')   
-<h4 class="mb-2 mt-2">Products</h4> 
-<a href="#" class="btn btn-primary">Create</a>
+<h4 class="font-weight-bolder mb-2 mt-2">Products</h4> 
+<a href="{{ route('addproduct') }}" class="btn btn-primary">Create</a>
 <div class="container-fluid d-flex flex-row flex-wrap">
     @foreach ($products as $p )
     <div class="card m-2" style="width: 23rem">

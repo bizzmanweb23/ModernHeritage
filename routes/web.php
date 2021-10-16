@@ -79,6 +79,7 @@ Route::group(['prefix' => 'admin'], function () {
     //admin---inventory
     Route::get('/inventory', [InventoryController::class,'getinventory'])->name('inventory');
     Route::get('/allproducts', [InventoryController::class,'allProducts'])->name('allproducts');
+    Route::get('/addproduct', [InventoryController::class,'addProduct'])->name('addproduct');
 
 
 });
