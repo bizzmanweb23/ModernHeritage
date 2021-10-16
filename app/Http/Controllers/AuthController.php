@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\URL;
 class AuthController extends Controller
 {
     //showing login page
-    public function login()
+    public function login(Request $request)
     {
         if (Auth::check() && Auth::user()->isAdmin()) {
             return redirect(route('admindashboard'));
@@ -27,7 +27,14 @@ class AuthController extends Controller
             return redirect(route('home'));
         }
 
-        return view('login');
+        if($request->path()=='login')
+        {
+            return view('frontend.user.auth.login');
+        }
+        else {
+            return view('login');
+        }
+
     }
 
     //login logic
@@ -50,14 +57,14 @@ class AuthController extends Controller
                 'email' => 'User is inactive',
             ]);
         }
-        if (Auth::check() && Auth::user()->isAdmin()) {
+        if (Auth::check() && Auth::user()->isAdmin() && $request->path()=='login') {
             Auth::logout();
 
             $request->session()->invalidate();
 
             $request->session()->regenerateToken();
             throw ValidationException::withMessages([
-                'lemail' => __('auth.failed'),
+                'email' => __('auth.failed'),
             ]);
         }
         Session::put('username', Auth::user()->firstname);

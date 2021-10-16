@@ -12,6 +12,10 @@ use App\Models\Quotation;
 
 class CrmController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function getRequest()
     {
         $stage = Stage::get();
