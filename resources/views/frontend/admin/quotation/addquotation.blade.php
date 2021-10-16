@@ -45,7 +45,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-4">
                             <div class="col-md-4">
                                 <span class="mb-2">GST Treatment:
                                     {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span"></span> --}}
