@@ -21,7 +21,7 @@ class QuotationController extends Controller
         $gst = GST::get();
         $tax = Tax::get();
         $product = Product::get();
-        return view('frontend.admin.quotation.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'product' => $product]);   
+        return view('frontend.admin.quotation.addquotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'product' => $product]);   
     }
 
     public function saveQuotation(Request $request)
