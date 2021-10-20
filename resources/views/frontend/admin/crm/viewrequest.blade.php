@@ -42,8 +42,9 @@
                     </div>
                     <div class="d-flex flex-column">
                         <h4 class="mb-4" id="opportunity_span">{{ $lead->opportunity }}</h4>
-                        <input type="text" name="opportunity" id="opportunity" value="{{ $lead->opportunity }} required"
-                            style="width: 40em" placeholder="Opportunity" class="form-control mb-4" />
+                        <input type="text" name="opportunity" id="opportunity"
+                            value="{{ $lead->opportunity }} required" style="width: 40em" placeholder="Opportunity"
+                            class="form-control mb-4" />
                     </div>
                     <h6>
                         <span class="mb-2 mt-4">
@@ -54,7 +55,7 @@
                                         id="expected_price_span">{{ $lead->expected_price }}</span>
                                     <input type="text" name="expected_price" id="expected_price"
                                         value="{{ $lead->expected_price }}" placeholder="Expected Price"
-                                        class="form-control" required/>
+                                        class="form-control" required />
                                 </div>
                                 <div class="col-md-6">
                                     <span>&nbsp at </span>
@@ -78,7 +79,8 @@
                                 <span class="text-dark font-weight-bold ms-sm-2"
                                     id="client_name_span">{{ $lead->client_name }}</span>
                                 <input type="text" name="client_name" id="client_name"
-                                    value="{{ $lead->client_name }}" placeholder="Contact Name"  class="form-control" required/>
+                                    value="{{ $lead->client_name }}" placeholder="Contact Name" class="form-control"
+                                    required />
                             </span>
                         </div>
                         <div class="col-md-4">
@@ -86,7 +88,7 @@
                                 <span class="text-dark ms-sm-2 font-weight-bold"
                                     id="email_span">{{ $lead->email }}</span>
                                 <input type="text" name="email" id="email" value="{{ $lead->email }}"
-                                    placeholder="Email" class="form-control" required/>
+                                    placeholder="Email" class="form-control" required />
                             </span>
                         </div>
                         <div class="col-md-4">
@@ -94,7 +96,7 @@
                                 <span class="text-dark ms-sm-2 font-weight-bold"
                                     id="mobile_no_span">{{ $lead->mobile_no }}</span>
                                 <input type="text" name="mobile_no" id="mobile_no" value="{{ $lead->mobile_no }}"
-                                    placeholder="Mobile No" class="form-control" required/>
+                                    placeholder="Mobile No" class="form-control" required />
                             </span>
                         </div>
                     </div>
@@ -106,7 +108,7 @@
                                     <span class="text-dark ms-sm-2 font-weight-bold"
                                         id="priority_span">{{ $lead->priority }}</span>
                                     <input type="text" name="priority" id="priority" value="{{ $lead->priority }}"
-                                        placeholder="Priority" class="form-control"/>
+                                        placeholder="Priority" class="form-control" />
                                 </span>
                             </div>
                             <div class="col-md-6">
@@ -114,7 +116,8 @@
                                     <span class="text-dark ms-sm-2 font-weight-bold"
                                         id="expected_closing_span">{{ $lead->expected_closing }}</span>
                                     <input type="date" name="expected_closing" id="expected_closing"
-                                        value="{{ $lead->expected_closing }}" placeholder="Expected Closing" class="form-control"/>
+                                        value="{{ $lead->expected_closing }}" placeholder="Expected Closing"
+                                        class="form-control" />
                                 </span>
                             </div>
                         </div>
@@ -139,55 +142,55 @@
                           <a class="nav-link active" data-bs-toggle="tab" href="#internal_notes">Internal Notes</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" data-bs-toggle="tab" href="#information">Extra Information</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#information">Extra Information</a>
                         </li>
-                      </ul>
-                    
-                      <!-- Tab panes -->
-                      <div class="tab-content mb-3">
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content mb-3">
                         <div id="internal_notes" class="container tab-pane active"><br>
-                          <h5>Internal Notes</h5>
+                            <h5>Internal Notes</h5>
                         </div>
                         <div id="information" class="container tab-pane fade"><br>
-                          <h5>Contact Information</h5>
-                          <div class="row">
-                            <div class="col-md-6">
-                                <span class="mb-2 ">Address:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="address_span">{{ $lead->address }}</span>
-                                    <input type="text" name="address" id="address" value="{{ $lead->address }}"
-                                        placeholder="Address" class="form-control"/>
-                                </span>
+                            <h5>Contact Information</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="mb-2 ">Address:
+                                        <span class="text-dark ms-sm-2 font-weight-bold"
+                                            id="address_span">{{ $lead->address }}</span>
+                                        <input type="text" name="address" id="address" value="{{ $lead->address }}"
+                                            placeholder="Address" class="form-control" />
+                                    </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="mb-2 ">State:
+                                        <span class="text-dark ms-sm-2 font-weight-bold"
+                                            id="state_span">{{ $lead->state }}</span>
+                                        <input type="text" name="state" id="state" value="{{ $lead->state }}"
+                                            placeholder="State" class="form-control" />
+                                    </span>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <span class="mb-2 ">State:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="state_span">{{ $lead->state }}</span>
-                                    <input type="text" name="state" id="state" value="{{ $lead->state }}"
-                                        placeholder="State" class="form-control"/>
-                                </span>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="mb-2 ">Country:
+                                        <span class="text-dark ms-sm-2 font-weight-bold"
+                                            id="country_span">{{ $lead->country }}</span>
+                                        <input type="text" name="country" id="country" value="{{ $lead->country }}"
+                                            placeholder="Country" class="form-control" />
+                                    </span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="mb-2 ">Zipcode:
+                                        <span class="text-dark ms-sm-2 font-weight-bold"
+                                            id="zipcode_span">{{ $lead->zipcode }}</span>
+                                        <input type="text" name="zipcode" id="zipcode" value="{{ $lead->zipcode }}"
+                                            placeholder="Zipcode" class="form-control" />
+                                    </span>
+                                </div>
                             </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                                <span class="mb-2 ">Country:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="country_span">{{ $lead->country }}</span>
-                                    <input type="text" name="country" id="country" value="{{ $lead->country }}"
-                                        placeholder="Country" class="form-control"/>
-                                </span>
-                            </div>
-                            <div class="col-md-6">
-                                <span class="mb-2 ">Zipcode:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="zipcode_span">{{ $lead->zipcode }}</span>
-                                    <input type="text" name="zipcode" id="zipcode" value="{{ $lead->zipcode }}"
-                                        placeholder="Zipcode" class="form-control"/>
-                                </span>
-                            </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                     <div class="ms-auto text-end">
                         <a class="btn btn-link text-dark px-3 mb-0" id="edit" href="javascript:;"><i
                                 class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
