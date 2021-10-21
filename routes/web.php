@@ -80,7 +80,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/inventory', [InventoryController::class,'getinventory'])->name('inventory');
     Route::get('/allproducts', [InventoryController::class,'allProducts'])->name('allproducts');
     Route::get('/addproduct', [InventoryController::class,'addProduct'])->name('addproduct');
-
-
+    Route::get('/allwarehouse', [InventoryController::class,'allWarehouse'])->name('allwarehouse');
+    Route::get('/allproductcategory', [InventoryController::class,'allProductCategory'])->name('allproductcategory');
+    Route::get('/addproductcategory', [InventoryController::class,'addProductCategory'])->name('addproductcategory');
+    Route::post('/addproductcategory', [InventoryController::class,'saveProductCategory'])->name('addproductcategory');
+    Route::get('/allattributes', [InventoryController::class,'allAttributes'])->name('allattributes');
+    Route::get('/addattributes', [InventoryController::class,'addAttributes'])->name('addattributes');
+    Route::post('/addattributes', [InventoryController::class,'saveAttributes'])->name('addattributes');
 });
 

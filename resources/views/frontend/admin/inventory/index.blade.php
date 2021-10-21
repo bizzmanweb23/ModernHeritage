@@ -18,8 +18,18 @@
             <a class="dropdown-item" href="#">Product variants</a>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Configaration</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="comfigureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Configaration</a>
+          <ul class="dropdown-menu" aria-labelledby="comfigureDropdown">
+            <a class="dropdown-item" href="{{ route('allwarehouse') }}">Warehouses</a>
+            <a class="dropdown-item" href="#">location</a>
+            <a class="dropdown-item" href="{{ route('allproductcategory') }}">Product Categories</a>
+            <a class="dropdown-item" href="{{ route('allattributes') }}">Attributes</a>
+            <a class="dropdown-item" href="#">UoM Categories</a>
+            <a class="dropdown-item" href="#">UoM</a>
+            {{-- <a class="dropdown-item" href="#">location</a>
+            <a class="dropdown-item" href="#">location</a> --}}
+          </ul>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Operations</a>

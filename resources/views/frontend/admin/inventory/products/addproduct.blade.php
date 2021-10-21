@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-8">
                 <span class="mb-2 ">Product Name:
-                    <input type="text" name="client_name" id="client_name"
+                    <input type="text" name="product_name" id="product_name"
                         value="" placeholder="Add Product Name"  class="form-control" required/>
                 </span>
             </div>
@@ -69,6 +69,9 @@
         <div class="tab-content mb-3">
             <div id="general_information" class="container tab-pane active">
                 @include('frontend.admin.inventory.products.general_information')
+            </div>
+            <div id="sales" class="container tab-pane active">
+                @include('frontend.admin.inventory.products.sales')
             </div>
         </div>
     </div> 
