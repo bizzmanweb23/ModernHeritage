@@ -37,6 +37,9 @@ class DashboardController extends Controller
             $col_name = 'firstname';
             $col_value = $request->firstname;
         }
+        else{
+            return redirect()->back();
+        }
         $user = User::where($col_name, 'LIKE', '%'.$col_value.'%')->get();
 
         return view('frontend.admin.dashboard.alluser', ['allUser' => $user]);
