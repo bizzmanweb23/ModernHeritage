@@ -87,5 +87,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/allattributes', [InventoryController::class,'allAttributes'])->name('allattributes');
     Route::get('/addattributes', [InventoryController::class,'addAttributes'])->name('addattributes');
     Route::post('/addattributes', [InventoryController::class,'saveAttributes'])->name('addattributes');
+    Route::get('/allUOMcategory', [InventoryController::class,'allUOMcategory'])->name('allUOMcategory');
+    Route::post('/saveUOMcategory', [InventoryController::class,'saveUOMcategory'])->name('UOMcategory');
+    Route::get('/allUOM', [InventoryController::class,'allUOM'])->name('allUOM');
+    Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
+    
+
 });
 

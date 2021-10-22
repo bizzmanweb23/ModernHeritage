@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Attributes;
+use App\Models\UomCategory;
+use App\Models\UOM;
 
 
 class InventoryController extends Controller
@@ -82,4 +84,62 @@ class InventoryController extends Controller
         return redirect(route('allattributes'));
     }
     
+    public function allUOMcategory()
+    {
+        $uom_category = UomCategory::get();
+        return view('frontend.admin.inventory.configuration.allUOMcategory',['uom_category' => $uom_category]);
+    }
+
+    public function saveUOMcategory(Request $request)
+    {
+        $data = $request->validate([
+            'uom_category_name' => 'required',
+        ]);
+        $uom_category = new UomCategory;
+        $uom_category->uom_category_name = $request->uom_category_name;
+        $uom_category->save();
+
+        return redirect(route('allUOMcategory'));
+    }
+
+    public function allUOM()
+    {
+        $uom_category = UomCategory::get();
+        $alluom = UOM::leftjoin('uom_categories','uom_categories.id','=','uom.category')
+                        ->where('uom.active','=','1')
+                        ->select('uom_categories.uom_category_name','uom.*')
+                        ->get();
+        return view('frontend.admin.inventory.configuration.allUOM',['uom_category' => $uom_category, 'alluom' => $alluom]);
+    }
+
+    public function saveUom(Request $request)
+    {
+        $data = $request->validate([
+            'uom' => 'required',
+            'category' => 'required',
+            'rounding_precision' => 'required',
+            'gst_uqc' => 'required',
+            'uom_type' => 'required',
+        ]);
+
+        if(isset($request->active)){
+            $active = 1;
+        } else {
+            $active = 0;
+        }
+
+        $uom = new UOM;
+
+        $uom->uom = $request->uom;
+        $uom->active = $active;
+        $uom->category = $request->category;
+        $uom->rounding_precision = $request->rounding_precision;
+        $uom->gst_uqc = $request->gst_uqc;
+        $uom->uom_type = $request->uom_type;
+        $uom->ratio = $request->ratio;
+        $uom->save();
+
+        return redirect(route('allUOM'));
+
+    }
 }
