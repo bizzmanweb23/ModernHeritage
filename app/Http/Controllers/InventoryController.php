@@ -8,6 +8,7 @@ use App\Models\ProductCategory;
 use App\Models\Attributes;
 use App\Models\UomCategory;
 use App\Models\UOM;
+use App\Models\Tax;
 
 
 class InventoryController extends Controller
@@ -28,8 +29,10 @@ class InventoryController extends Controller
     }
     public function addproduct()
     {
-       
-        return view('frontend.admin.inventory.products.addproduct');
+       $product_categories = ProductCategory::get();
+        $tax = Tax::get();
+        $uom = UOM::get();
+        return view('frontend.admin.inventory.products.addproduct',['product_categories' => $product_categories,'tax' => $tax,'uom' => $uom]);
     }
     public function allwarehouse()
     {

@@ -17,6 +17,9 @@
             <a class="dropdown-item" href="{{ route('allproducts') }}">Products</a>
             <a class="dropdown-item" href="#">Product variants</a>
           </ul>
+        </li>       
+        <li class="nav-item">
+          <a class="nav-link" href="#">Operations</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="comfigureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Configaration</a>
@@ -30,9 +33,6 @@
             {{-- <a class="dropdown-item" href="#">location</a>
             <a class="dropdown-item" href="#">location</a> --}}
           </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Operations</a>
         </li>
       </ul>
     </div>

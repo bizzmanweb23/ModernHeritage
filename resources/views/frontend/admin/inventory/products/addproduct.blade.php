@@ -70,7 +70,7 @@
             <div id="general_information" class="container tab-pane active">
                 @include('frontend.admin.inventory.products.general_information')
             </div>
-            <div id="sales" class="container tab-pane active">
+            <div id="sales" class="container tab-pane">
                 @include('frontend.admin.inventory.products.sales')
             </div>
         </div>
