@@ -41,26 +41,34 @@
                         @endif
                     </div>
                     <div class="d-flex flex-column">
-                        <h4 class="mb-4" id="opportunity_span">{{ $lead->opportunity }}</h4>
+                        <h4 class="mb-3" id="opportunity_span">{{ $lead->opportunity }}</h4>
                         <input type="text" name="opportunity" id="opportunity"
-                            value="{{ $lead->opportunity }} required" style="width: 40em" placeholder="Opportunity"
+                            value="{{ $lead->opportunity }}" required style="width: 40em" placeholder="Opportunity"
                             class="form-control mb-4" />
                     </div>
                     <h6>
-                        <span class="mb-2 mt-4">
-                            <div class="row">
-                                <div class="col-md-6">
+                        {{-- <span class="mb-2 mt-2"> --}}
+                            <div class="row" id="span_div">
+                                <div class="col-md-1">
                                     <span class="text-dark font-weight-bold ">₹</span>
                                     <span class="text-dark font-weight-bold "
                                         id="expected_price_span">{{ $lead->expected_price }}</span>
+                                </div>
+                                <div class="col-md-1">
+                                    <span>&nbsp at </span>
+                                    <span class="text-dark font-weight-bold ms-sm-2"
+                                        id="probability_span">{{ $lead->probability }} %</span>
+                                </div>
+                            </div>
+                            <div class="row" id="input_div">
+                                <div class="col-md-3">
+                                    <span class="text-dark font-weight-bold ">₹</span>
                                     <input type="text" name="expected_price" id="expected_price"
                                         value="{{ $lead->expected_price }}" placeholder="Expected Price"
                                         class="form-control" required />
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <span>&nbsp at </span>
-                                    <span class="text-dark font-weight-bold ms-sm-2"
-                                        id="probability_span">{{ $lead->probability }} %</span>
                                     <input type="text" name="probability" id="probability"
                                         value="{{ $lead->probability }}" placeholder="Probability"
                                         class="form-control" required />
@@ -68,22 +76,34 @@
                             </div>
 
 
-                        </span>
+                        {{-- </span> --}}
                     </h6>
 
                 </div>
                 <div class="card-body pt-4 p-3">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <span class="mb-2 ">Contact Name:
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <span class="mb-2 ">Customer:
                                 <span class="text-dark font-weight-bold ms-sm-2"
                                     id="client_name_span">{{ $lead->client_name }}</span>
                                 <input type="text" name="client_name" id="client_name"
-                                    value="{{ $lead->client_name }}" placeholder="Contact Name" class="form-control"
+                                    value="{{ $lead->client_name }}" placeholder="Customer" class="form-control"
                                     required />
                             </span>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <span class="mb-2">Expected Closing:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    id="expected_closing_span">{{ $lead->expected_closing }}</span>
+                                <input type="date" name="expected_closing" id="expected_closing"
+                                    value="{{ $lead->expected_closing }}" placeholder="Expected Closing"
+                                    class="form-control" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
                             <span class="mb-2 ">Email Address:
                                 <span class="text-dark ms-sm-2 font-weight-bold"
                                     id="email_span">{{ $lead->email }}</span>
@@ -91,7 +111,18 @@
                                     placeholder="Email" class="form-control" required />
                             </span>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
+                            <span class="mb-2">Priority:
+                                <span class="text-dark ms-sm-2 font-weight-bold"
+                                    id="priority_span">{{ $lead->priority }}</span>
+                                <input type="text" name="priority" id="priority" value="{{ $lead->priority }}"
+                                    placeholder="Priority" class="form-control" />
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-6">
                             <span class="mb-2 ">Mobile Number:
                                 <span class="text-dark ms-sm-2 font-weight-bold"
                                     id="mobile_no_span">{{ $lead->mobile_no }}</span>
@@ -99,44 +130,24 @@
                                     placeholder="Mobile No" class="form-control" required />
                             </span>
                         </div>
-                    </div>
-
-                    <div class="d-flex flex-column mt-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <span class="mb-2">Priority:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="priority_span">{{ $lead->priority }}</span>
-                                    <input type="text" name="priority" id="priority" value="{{ $lead->priority }}"
-                                        placeholder="Priority" class="form-control" />
+                        <div class="col-md-6">
+                            <span class="mb-2 mt-4">Tags:
+                                <span class="text-dark ms-sm-2 font-weight-bold" id="tag_span">
+                                    @foreach($selected_tags_name as $st)
+                                        {{ $st }} &nbsp;
+                                    @endforeach
                                 </span>
-                            </div>
-                            <div class="col-md-6">
-                                <span class="mb-2">Expected Closing:
-                                    <span class="text-dark ms-sm-2 font-weight-bold"
-                                        id="expected_closing_span">{{ $lead->expected_closing }}</span>
-                                    <input type="date" name="expected_closing" id="expected_closing"
-                                        value="{{ $lead->expected_closing }}" placeholder="Expected Closing"
-                                        class="form-control" />
-                                </span>
-                            </div>
-                        </div>
-
-                        <span class="mb-2 mt-4">Tags:
-                            <span class="text-dark ms-sm-2 font-weight-bold" id="tag_span">
-                                @foreach($selected_tags_name as $st)
-                                    {{ $st }} &nbsp;
-                                @endforeach
+                                <select multiple="multiple" name="tag[]" id="tag" class="form-control">
+                                    @foreach($tag as $t)
+                                        <option value="{{ $t->id }}"
+                                            {{ (isset($selected_tags)&&in_array($t->id,$selected_tags))?'selected':'' }}>
+                                            {{ $t->tag_name }}</option>
+                                    @endforeach
+                                </select>
                             </span>
-                            <select multiple="multiple" name="tag[]" id="tag">
-                                @foreach($tag as $t)
-                                    <option value="{{ $t->id }}"
-                                        {{ (isset($selected_tags)&&in_array($t->id,$selected_tags))?'selected':'' }}>
-                                        {{ $t->tag_name }}</option>
-                                @endforeach
-                            </select>
-                        </span>
+                        </div>
                     </div>
+
                     <ul class="nav nav-tabs mt-4" role="tablist">
                         <li class="nav-item">
                           <a class="nav-link active" data-bs-toggle="tab" href="#internal_notes">Internal Notes</a>
@@ -211,10 +222,12 @@
 <script>
     $(document).ready(function () {
         $('input').hide();
+        $('#input_div').hide();
         $('#tag').hide();
         $('#save').hide();
         $('#discard').hide();
         $('#edit').click(function () {
+            $('#span_div').hide();
             $('#opportunity_span').hide();
             $('#expected_price_span').hide();
             $('#probability_span').hide();
@@ -233,8 +246,9 @@
             $('#edit').hide();
             $('#back').hide();
             $('input').show();
+            $('#input_div').show();
             $('#tag').select2({
-                width: '50%',
+                // width: '50%',
                 placeholder: "Select a tag",
                 allowClear: true
             });

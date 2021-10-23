@@ -12,6 +12,15 @@
 </style>
 <a href= "#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Create</a>
 
+<!-- The Add Client Modal -->
+<div class="modal" id="addClientModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        @include('frontend.admin.crm.addClientModal')
+      </div>
+    </div>
+</div>
+
 <!-- The Modal -->
 <div class="modal" id="myModal">
     <div class="modal-dialog">
@@ -29,7 +38,14 @@
                 <div class="modal-body">
                     <div class="row mb-2">
                         <div class="col-md-4"><label for="client_name">Client Name</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required></div>
+                        <div class="col-md-7">
+                            <input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required>
+                        </div>
+                        <div class="col-md-1">
+                            <a href="#" class="btn btn-link px-2 mb-0" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#addClientModal">
+                                <i class="fas fa-sign-out-alt fa-lg"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="row mb-2">
                         <div class="col-md-4"><label for="opportunity">Opportunity</label></div>

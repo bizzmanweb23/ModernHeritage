@@ -7,6 +7,7 @@ use App\Models\Lead;
 use App\Models\Stage;
 use App\Models\Tag;
 use App\Models\User;
+use App\Models\CountryCode;
 use App\Models\Quotation;
 
 
@@ -20,7 +21,9 @@ class CrmController extends Controller
     {
         $stage = Stage::get();
         $lead = Lead::get();
-        return view('frontend.admin.crm.index',['stage' => $stage,'lead' => $lead]);
+        $countryCodes = CountryCode::get();
+        $path = 'client';
+        return view('frontend.admin.crm.index',['stage' => $stage,'lead' => $lead, 'countryCodes' => $countryCodes, 'path' => $path]);
     }
 
     public function addRequest()
