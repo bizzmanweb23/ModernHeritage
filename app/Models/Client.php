@@ -20,23 +20,7 @@ class Client extends Authenticatable
      */
 
     protected $table = 'clients';
-    protected $fillable = [
-        'unique_id',
-        'device_id',
-        'device_name',
-        'firstname',
-        'lastname',
-        'email',
-        'password',
-        'phone',
-        'address',
-        'state',
-        'zipcode',
-        'country',
-        'picture',
-        'role_id',
-        'status',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -54,18 +38,4 @@ class Client extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function isAdmin()
-    {
-        return $this->role_id == 1 ? true : false;
-    }
-
-    public function isClient()
-    {
-        return $this->role_id == 2 ? true : false;
-    }
-
-    public function isInactive()
-    {
-        return $this->status == 0 ? true : false;
-    }
 }

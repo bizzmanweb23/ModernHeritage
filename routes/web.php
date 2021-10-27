@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LogisticController;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +93,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/allUOM', [InventoryController::class,'allUOM'])->name('allUOM');
     Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
     
+    //admin--logistic
+    Route::get("/allclients", [LogisticController::class, "allClients"])->name("allclients");
+    Route::get("/saveclient", [LogisticController::class, "addClient"])->name("saveclient");
+    Route::post("/saveclient", [LogisticController::class, "saveClient"])->name("saveclient");
 
 });
 
