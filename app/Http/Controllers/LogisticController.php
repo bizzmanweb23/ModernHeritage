@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\CountryCode;
+use App\Models\LogisticStage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -84,5 +85,19 @@ class LogisticController extends Controller
         $client->save();
 
         return redirect(route('allclients'));
+    }
+
+    public function getRequest()
+    {
+        $logistic_stage = LogisticStage::get();
+        //$lead = Lead::get();
+        //$countryCodes = CountryCode::get();
+        //$path = 'client';
+        return view('frontend.admin.logisticManagement.logistic_crm.index',['logistic_stage' => $logistic_stage]);
+    }
+
+    public function addRequest()
+    {
+        return view('frontend.admin.logisticManagement.logistic_crm.addLead');
     }
 }

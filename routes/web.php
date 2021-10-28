@@ -94,9 +94,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
     
     //admin--logistic
-    Route::get("/allclients", [LogisticController::class, "allClients"])->name("allclients");
-    Route::get("/saveclient", [LogisticController::class, "addClient"])->name("saveclient");
-    Route::post("/saveclient", [LogisticController::class, "saveClient"])->name("saveclient");
+    Route::group(['prefix' => 'logistic'], function () {
 
+        //admin--logistic--client
+        Route::get("/allclients", [LogisticController::class, "allClients"])->name("allclients");
+        Route::get("/saveclient", [LogisticController::class, "addClient"])->name("saveclient");
+        Route::post("/saveclient", [LogisticController::class, "saveClient"])->name("saveclient");
+
+        //admin--logistic--crm
+        Route::get('/crm', [LogisticController::class,'getRequest'])->name('logistic_crm');
+        Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
+    });
+    
 });
 

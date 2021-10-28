@@ -17,6 +17,7 @@ class CrmController extends Controller
     {
         $this->middleware('auth');
     }
+    
     public function getRequest()
     {
         $stage = Stage::get();
