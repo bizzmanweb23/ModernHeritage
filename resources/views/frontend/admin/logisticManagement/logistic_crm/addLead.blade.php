@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('saverequest') }}" method="POST">
+<form action="{{ route('addLogisticLead') }}" method="POST">
     @csrf
 
     <input type="hidden" name="client_id" id="client_id">
@@ -26,14 +26,14 @@
             </div>
             <div class="col-md-4">
                 <span>
-                    <label for="customer_name">Contact Person</label>
-                    <input type="text" class="form-control" id="customer_name" name="customer_name"
+                    <label for="contact_name">Contact Person</label>
+                    <input type="text" class="form-control" id="contact_name" name="contact_name"
                         placeholder="Contact Person" required>
                 </span>
             </div>
             <div class="col-md-4">
                 <span>
-                    <label for="client_name">Phone No</label>
+                    <label for="contact_phone">Phone No</label>
                     <input type="text" class="form-control" id="contact_phone" name="contact_phone"
                         placeholder="Contact Person Phone No" required>
                 </span>
@@ -220,7 +220,7 @@
         source: function (request, response) {
             $.ajax({
                 type: 'get',
-                url: "{{ route('searchrequest') }}",
+                url: "{{ route('searchclientrequest') }}",
                 dataType: "json",
                 data: {
                     term: $('#client_name').val()
@@ -234,9 +234,8 @@
         select: function (event, ui) {
             if (ui.item.id != 0) {
                 $('#client_id').val(ui.item.id)
-                $('#email').val(ui.item.email)
-                $('#mobile_no').val(ui.item.phone);
-                $('#opportunity').val(ui.item.opportunity);
+                $('#pickup_email').val(ui.item.email)
+                $('#pickup_phone').val(ui.item.phone);
             }
         },
         minLength: 1,

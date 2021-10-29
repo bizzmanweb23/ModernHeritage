@@ -67,7 +67,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/viewrequest/{lead_id}', [CrmController::class,'viewRequest']);
     Route::get('/updatestage/{lead_id}/{stage_id}', [CrmController::class,'updateStage']);
     Route::post('/updaterequest', [CrmController::class,'updateRequest'])->name('updaterequest');
-
+    
     //admin--quotation
     Route::get('/newquotation/{id}', [QuotationController::class,'addQuotation']);
     Route::post('/savequotation', [QuotationController::class,'saveQuotation'])->name('savequotation');
@@ -76,7 +76,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/confirmquotation/{id}', [QuotationController::class,'confirmQuotation']);
     Route::post('/confirmquotation/{id}', [QuotationController::class,'postConfirmQuotation']);
     Route::get('/viewquotation/{lead_id}', [QuotationController::class,'viewQuotation']);
-
+    
     //admin---inventory
     Route::get('/inventory', [InventoryController::class,'getinventory'])->name('inventory');
     Route::get('/allproducts', [InventoryController::class,'allProducts'])->name('allproducts');
@@ -95,15 +95,17 @@ Route::group(['prefix' => 'admin'], function () {
     
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
-
+        
         //admin--logistic--client
         Route::get("/allclients", [LogisticController::class, "allClients"])->name("allclients");
         Route::get("/saveclient", [LogisticController::class, "addClient"])->name("saveclient");
         Route::post("/saveclient", [LogisticController::class, "saveClient"])->name("saveclient");
-
+        
         //admin--logistic--crm
         Route::get('/crm', [LogisticController::class,'getRequest'])->name('logistic_crm');
         Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
+        Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
+        Route::get('/searchclientrequest', [LogisticController::class,'searchClientRequest'])->name('searchclientrequest');
     });
     
 });
