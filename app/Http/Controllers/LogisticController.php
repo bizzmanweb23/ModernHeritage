@@ -221,4 +221,19 @@ class LogisticController extends Controller
 
         return redirect(route('logistic_crm'));
     }
+
+    public function updateLogisticStage($lead_id, $stage_id)
+    {
+        $lead = LogisticLead::findOrFail($lead_id);
+        $lead->stage_id = $stage_id;
+        $lead->save();
+
+        return redirect()->back();
+    }
+
+    public function viewRequest($lead_id)
+    {
+        $lead = LogisticLead::findOrFail($lead_id); 
+        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead]);
+    }
 }

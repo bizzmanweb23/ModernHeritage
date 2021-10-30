@@ -25,7 +25,7 @@
                                 <p class="text-s font-weight-bold mb-0">Contact Person: {{$l->contact_name}}</p>
                                 <p class="text-s font-weight-bold mb-0">Delivered To: {{$l->delivered_to}}</p>
                                 </div>
-                                <a class="btn btn-primary btn-sm" href="#">View</a>                               
+                                <a class="btn btn-primary btn-sm" href="{{ url('/') }}/admin/logistic/viewrequest/{{ $l->id }}">View</a>                               
                             </div>
                         </div>
                         @endif

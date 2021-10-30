@@ -106,6 +106,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
         Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
         Route::get('/searchclientrequest', [LogisticController::class,'searchClientRequest'])->name('searchclientrequest');
+        Route::get('/viewrequest/{lead_id}', [LogisticController::class,'viewRequest']);
+        Route::get('/update-stage/{lead_id}/{stage_id}', [LogisticController::class,'updateLogisticStage']);
+        
     });
     
 });
