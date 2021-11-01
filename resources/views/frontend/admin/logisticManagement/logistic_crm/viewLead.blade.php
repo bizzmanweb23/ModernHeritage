@@ -6,7 +6,12 @@
 
 @section('content')
 @if ($lead->stage_id == 1)
-    <a class="btn btn-primary" href="{{ url('/') }}/admin/newquotation/{{ $lead->id }}">New Quatation</a>
+    {{-- @if ()
+        
+    @else
+        
+    @endif --}}
+    <a class="btn btn-primary" href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quatation</a>
     <a class="btn btn-success" href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/2">Qualified for Logistic</a>
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success" href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Add Assignee</a>
@@ -14,7 +19,7 @@
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card">
-            <form action="#" method="post">
+            <form action="{{ url('/') }}/admin/logistic/updaterequest/{{$lead->id}}" method="post">
                 @csrf
                 <input type="hidden" name="lead_id" id="lead_id" value={{ $lead->id }}>
                 <input type="hidden" name="client_id" id="client_id" value={{ $lead->client_id }}>
@@ -80,6 +85,15 @@
                                     id="contact_phone_span">{{ $lead->contact_phone }}</span>
                                 <input type="text" name="contact_phone" id="contact_phone"
                                     value="{{ $lead->contact_phone }}" placeholder="Contact phone"
+                                    class="form-control" />
+                            </span>
+                        </div>
+                        <div class="col-md-6">
+                            <span class="mb-2">Delivery Phone No:
+                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                    id="delivery_phone_span">{{ $lead->delivery_phone }}</span>
+                                <input type="text" name="delivery_phone" id="delivery_phone"
+                                    value="{{ $lead->delivery_phone }}" placeholder="Delivery phone no"
                                     class="form-control" />
                             </span>
                         </div>

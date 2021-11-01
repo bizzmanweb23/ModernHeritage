@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\GST;
+use App\Models\Tax;
 use App\Models\CountryCode;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
@@ -235,5 +237,36 @@ class LogisticController extends Controller
     {
         $lead = LogisticLead::findOrFail($lead_id); 
         return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead]);
+    }
+
+    public function updateRequest(Request $request, $lead_id)
+    {
+        
+        $data = $request->validate([
+            'client_name' => 'required',
+            'delivered_to' => 'required',
+            'contact_name' => 'required',
+            'delivery_location' => 'required',
+            'contact_phone' => 'required|numeric',
+            'delivery_phone' => 'required|numeric',          
+        ]);
+        $logistic_lead = LogisticLead::findOrFail($lead_id);
+        $logistic_lead->client_name = $data['client_name'];
+        $logistic_lead->delivered_to = $data['delivered_to'];
+        $logistic_lead->contact_name = $data['contact_name'];
+        $logistic_lead->delivery_location = $data['delivery_location'];
+        $logistic_lead->contact_phone = $data['contact_phone'];
+        $logistic_lead->delivery_phone = $data['delivery_phone'];
+        $logistic_lead->save();
+
+        return redirect()->back();
+    }
+
+    public function addQuotation($lead_id)
+    {
+        $lead = LogisticLead::findOrFail($lead_id);
+        $gst = GST::get();
+        $tax = Tax::get();
+        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax]);
     }
 }
