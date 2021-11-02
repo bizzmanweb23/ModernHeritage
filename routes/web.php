@@ -112,6 +112,7 @@ Route::group(['prefix' => 'admin'], function () {
         
         //admin--logistic-quotation
         Route::get('/newquotation/{lead_id}', [LogisticController::class,'addQuotation']);
+        Route::post('/newquotation/{lead_id}', [LogisticController::class,'saveQuotation']);
     });
     
 });

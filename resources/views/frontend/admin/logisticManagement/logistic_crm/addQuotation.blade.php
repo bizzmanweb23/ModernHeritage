@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card container container-fluid">
-            <form action="#" method="post">
+            <form action="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}" method="post">
                 @csrf
                 <div class="ms-auto text-end">
 
@@ -20,7 +20,7 @@
                     <button type="submit" class="btn btn-link text-dark px-3 mb-0" id="save"><i
                             class="fas fa-save text-dark me-2" aria-hidden="true"></i>Save</button>
                             
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="javascript:;"><i
+                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="{{ url()->previous() }}"><i
                             class="far fa-trash-alt me-2"></i>Discard</a>
                 </div>
 
@@ -104,7 +104,6 @@
                         </div>
                         <br>
                         <br>
-                        <input type="hidden" name="product_row_count" id="product_row_count">
                         <table class="table mb-0 table-responsive">
                             <thead>
                                 <tr>
@@ -150,7 +149,7 @@
                             <span id="untaxed_total_span" class="font-weight-bolder"></span>
                             <span id="tax_total_span" class="font-weight-bolder"></span>
                             <span id="total_span" class="font-weight-bolder"></span>
-                            <input hidden type="number" name="total" id="total" readonly>
+                            <input hidden type="text" name="total" id="total" readonly>
                         </div>
                         
                     </div>                   

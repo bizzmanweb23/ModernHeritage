@@ -10,7 +10,8 @@ use App\Models\Tax;
 use App\Models\CountryCode;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
-use App\Models\LogisticLeadsproduct;
+use App\Models\LogisticLeadsProduct;
+use App\Models\LogisticLeadsQuotation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -235,7 +236,11 @@ class LogisticController extends Controller
 
     public function viewRequest($lead_id)
     {
-        $lead = LogisticLead::findOrFail($lead_id); 
+        $lead = LogisticLead::leftjoin('logistic_leads_quotations','logistic_leads.id','=','logistic_leads_quotations.lead_id')
+                                ->where('logistic_leads.id',$lead_id)
+                                ->select('logistic_leads.*',
+                                        'logistic_leads_quotations.quotation_id')
+                                ->first(); 
         return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead]);
     }
 
@@ -248,7 +253,24 @@ class LogisticController extends Controller
             'contact_name' => 'required',
             'delivery_location' => 'required',
             'contact_phone' => 'required|numeric',
-            'delivery_phone' => 'required|numeric',          
+            'delivery_phone' => 'required|numeric',
+            'pickup_email' => 'required',
+            'pickup_phone' => 'required',
+            'pickup_from' => 'required',
+            'pickup_add_1' => 'required',
+            'pickup_add_2' => 'required',
+            'pickup_add_3' => 'required',
+            'pickup_pin' => 'required',
+            'pickup_state' => 'required',
+            'pickup_country' => 'required',   
+            'pickup_location' => 'required',   
+            'delivery_add_1' => 'required',
+            'delivery_add_2' => 'required',
+            'delivery_add_3' => 'required',
+            'delivery_pin' => 'required',
+            'delivery_state' => 'required',
+            'delivery_country' => 'required',
+            'delivery_email' => 'required|email:rfc,dns',       
         ]);
         $logistic_lead = LogisticLead::findOrFail($lead_id);
         $logistic_lead->client_name = $data['client_name'];
@@ -257,6 +279,24 @@ class LogisticController extends Controller
         $logistic_lead->delivery_location = $data['delivery_location'];
         $logistic_lead->contact_phone = $data['contact_phone'];
         $logistic_lead->delivery_phone = $data['delivery_phone'];
+        $logistic_lead->pickup_from = $data['pickup_from'];
+        $logistic_lead->pickup_add_1 = $data['pickup_add_1'];
+        $logistic_lead->pickup_add_2 = $data['pickup_add_2'];
+        $logistic_lead->pickup_add_3 = $data['pickup_add_3'];
+        $logistic_lead->pickup_pin = $data['pickup_pin'];
+        $logistic_lead->pickup_state = $data['pickup_state'];
+        $logistic_lead->pickup_country = $data['pickup_country'];
+        $logistic_lead->pickup_email = $data['pickup_email'];
+        $logistic_lead->pickup_phone = $data['pickup_phone'];
+        $logistic_lead->pickup_location = $data['pickup_location'];
+        $logistic_lead->delivery_add_1 = $data['delivery_add_1'];
+        $logistic_lead->delivery_add_2 = $data['delivery_add_2'];
+        $logistic_lead->delivery_add_3 = $data['delivery_add_3'];
+        $logistic_lead->delivery_pin = $data['delivery_pin'];
+        $logistic_lead->delivery_state = $data['delivery_state'];
+        $logistic_lead->delivery_country = $data['delivery_country'];
+        $logistic_lead->delivery_location = $data['delivery_location'];
+        $logistic_lead->delivery_email = $data['delivery_email'];
         $logistic_lead->save();
 
         return redirect()->back();
@@ -268,5 +308,47 @@ class LogisticController extends Controller
         $gst = GST::get();
         $tax = Tax::get();
         return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax]);
+    }
+
+    public function saveQuotation(Request $request,$lead_id)
+    {
+
+        $quotation_unique_id = LogisticLeadsQuotation::orderBy('id', 'desc')->first();       
+        if ($quotation_unique_id) {
+            $number = str_replace('MHLQ', '', $quotation_unique_id->quotation_id);
+        } else {
+            $number = 0;
+        }
+        if ($number == 0 || $number == "") {
+            $number = 'MHlQ000001';
+        } else {
+            $number = 'MHLQ' . sprintf('%06d', $number + 1);
+        }
+
+        $tax = $request->tax;
+        $tax_arr = [];
+
+        foreach ($tax as $t) 
+        {
+            $val = json_decode($t)->id;
+            array_push($tax_arr, $val);
+        }
+        
+        $quotation = new LogisticLeadsQuotation;
+        $quotation->lead_id = $request->leads_id;
+        $quotation->gst_treatment = $request->gst_treatment;
+        $quotation->expiration = $request->expiration;
+        $quotation->quotation_template = $request->quotation_template;
+        $quotation->payment_terms = $request->payment_terms;
+        $quotation->product = $request->product_name;
+        $quotation->description = $request->description;
+        $quotation->quantity = $request->quantity;
+        $quotation->unit_price = $request->unitPrice;
+        $quotation->tax = json_encode($tax_arr);
+        $quotation->total_price = $request->total;
+        $quotation->quotation_id = $number;
+        $quotation->save();
+
+        return redirect('admin/logistic/viewrequest/'.$lead_id);
     }
 }
