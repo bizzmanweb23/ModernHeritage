@@ -248,11 +248,11 @@
         $('tbody').append(`
                             <tr>
                                 <td><input type="text" class="form-control" name="product_name${window.count}" id="product_name${window.count}" required></td>
-                                <td><input type="text" class="form-control" name="dimension${window.count}" id="dimension${window.count}" required></td>
+                                <td><input type="text" class="form-control" name="dimension${window.count}" id="dimension${window.count}"></td>
                                 <td><input type="number" class="form-control" name="quantity${window.count}" id="quantity${window.count}" min="1" required></td>
                                 <td><input type="text" class="form-control" name="uom${window.count}" id="uom${window.count}" required></td>
-                                <td><input type="text" class="form-control" name="area${window.count}" id="area${window.count}" required></td>
-                                <td><input type="text" class="form-control" name="weight${window.count}" id="weight${window.count}" required></td>
+                                <td><input type="text" class="form-control" name="area${window.count}" id="area${window.count}"></td>
+                                <td><input type="text" class="form-control" name="weight${window.count}" id="weight${window.count}"></td>
                             </tr>
                         `);
             window.count++;

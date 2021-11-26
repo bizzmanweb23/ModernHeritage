@@ -21,9 +21,18 @@
                             <div class="card-body p-2">
                                 <div class="card-title">
                                 <p class="text-s font-weight-bolder mb-0">{{$l->unique_id}}</p>
-                                <p class="text-s font-weight-bold mb-0">Client Name: {{$l->client_name}}</p>
-                                <p class="text-s font-weight-bold mb-0">Contact Person: {{$l->contact_name}}</p>
-                                <p class="text-s font-weight-bold mb-0">Delivered To: {{$l->delivered_to}}</p>
+                                <p class="text-s font-weight-bold mb-0">
+                                    <label for="" class="mb-0">Client Name: </label>
+                                   {{$l->client_name}}
+                                </p>
+                                <p class="text-s font-weight-bold mb-0">
+                                    <label for="" class="mb-0">Contact: </label>
+                                    {{$l->contact_name}}
+                                </p>
+                                <p class="text-s font-weight-bold mb-0">
+                                    <label for="" class="mb-0">Delivered To: </label>
+                                    {{$l->delivered_to}}
+                                </p>
                                 </div>
                                 <a class="btn btn-primary btn-sm" href="{{ url('/') }}/admin/logistic/viewrequest/{{ $l->id }}">View</a>                               
                             </div>

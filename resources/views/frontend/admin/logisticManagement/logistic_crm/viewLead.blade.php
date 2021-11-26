@@ -265,7 +265,47 @@
                                     </span>
                                 </div>
                             </div>
-                            
+                            <input type="hidden" name="product_row_count" id="product_row_count" value="{{ count($lead_products) }}">
+                            <div>
+                                <a class="btn btn-link text-dark px-3 mb-0" id="add_product" href="#"><i
+                                        class="fas fa-plus text-dark me-2" aria-hidden="true"></i>Add Product</a>
+                            </div>
+                            <table class="table mb-0 table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Product Name</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Dimension</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Quantity</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">UOM</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Area</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Weight</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for ($i = 0; $i < count($lead_products); $i++)
+                                    <tr>
+                                        <td><input type="text" class="form-control" value={{ $lead_products[$i]->product_name }} name="product_name{{ $i }}" id="product_name{{ $i }}" required></td>
+                                        <td><input type="text" class="form-control" value={{ $lead_products[$i]->dimension }} name="dimension{{ $i }}" id="dimension{{ $i }}"></td>
+                                        <td><input type="number" class="form-control" value={{ $lead_products[$i]->quantity }} name="quantity{{ $i }}" id="quantity{{ $i }}" min="1" required></td>
+                                        <td><input type="text" class="form-control" value={{ $lead_products[$i]->uom }} name="uom{{ $i }}" id="uom{{ $i }}" required></td>
+                                        <td><input type="text" class="form-control" value={{ $lead_products[$i]->area }} name="area{{ $i }}" id="area{{ $i }}"></td>
+                                        <td><input type="text" class="form-control" value={{ $lead_products[$i]->weight }} name="weight{{ $i }}" id="weight{{ $i }}"></td>
+                                    </tr>
+                                    @endfor
+                                </tbody>
+                            </table>
                         @endif
                     </div>
 
@@ -306,6 +346,24 @@
 
     $('#discard').click(function () {
         location.reload();
+    });
+
+    window.count = $('#product_row_count').val();
+    $('#add_product').click(function () {
+        console.log('add product')
+        console.log(window.count);
+        $('#product_row_count').val(window.count);
+        $('tbody').append(`
+                            <tr>
+                                <td><input type="text" class="form-control" name="product_name${window.count}" id="product_name${window.count}" required></td>
+                                <td><input type="text" class="form-control" name="dimension${window.count}" id="dimension${window.count}"></td>
+                                <td><input type="number" class="form-control" name="quantity${window.count}" id="quantity${window.count}" min="1" required></td>
+                                <td><input type="text" class="form-control" name="uom${window.count}" id="uom${window.count}" required></td>
+                                <td><input type="text" class="form-control" name="area${window.count}" id="area${window.count}"></td>
+                                <td><input type="text" class="form-control" name="weight${window.count}" id="weight${window.count}"></td>
+                            </tr>
+                        `);
+            window.count++;
     });
 
 </script>

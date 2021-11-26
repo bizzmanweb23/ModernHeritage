@@ -240,8 +240,10 @@ class LogisticController extends Controller
                                 ->where('logistic_leads.id',$lead_id)
                                 ->select('logistic_leads.*',
                                         'logistic_leads_quotations.quotation_id')
-                                ->first(); 
-        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead]);
+                                ->first();
+        $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
+                                            ->get();
+        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead, 'lead_products' => $lead_products]);
     }
 
     public function updateRequest(Request $request, $lead_id)
@@ -320,7 +322,7 @@ class LogisticController extends Controller
             $number = 0;
         }
         if ($number == 0 || $number == "") {
-            $number = 'MHlQ000001';
+            $number = 'MHLQ000001';
         } else {
             $number = 'MHLQ' . sprintf('%06d', $number + 1);
         }
