@@ -6,7 +6,12 @@ use App\Models\CountryCode;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\GST;
+use App\Models\Tag;
 use App\Models\Customer;
+use App\Models\PaymentTerms;
+use App\Models\SalesPerson;
+use App\Models\DeliveryMethod;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -145,13 +150,24 @@ class DashboardController extends Controller
         $customer =  Customer::where($col_name,$col_value)
                            ->get();
         
-        return view('frontend.admin.customer.allcustomer',['allcustomer' => $customer]);  
+        return view('frontend.admin.customer.allCustomer',['allCustomer' => $customer]);  
     }
 
     public function addcustomer(Request $request)
     {
         $countryCodes = CountryCode::get();
-        return view('frontend.admin.customer.addcustomer',['countryCodes' => $countryCodes]);   
+        $gst = GST::get();
+        $tag = Tag::get();
+        $paymentTerms = PaymentTerms::get();
+        $salesPerson = SalesPerson::get();
+        $deliveryMethod = DeliveryMethod::get();
+        return view('frontend.admin.customer.addCustomer',['countryCodes' => $countryCodes,
+                                                            'gst' => $gst, 
+                                                            'tag' => $tag, 
+                                                            'paymentTerms' => $paymentTerms, 
+                                                            'salesPerson' => $salesPerson,
+                                                            'deliveryMethod' => $deliveryMethod
+                                                        ]);   
     }
 
 
@@ -164,6 +180,12 @@ class DashboardController extends Controller
             'mobile' => 'required',
             'email' => 'required|email:rfc,dns|unique:customers,email',
         ]);
+        if ($request->customer_type=='company') 
+        {
+            $request->validate([
+                'gst_treatment' => 'required'
+            ]);
+        }
         $unique_id = customer::orderBy('id', 'desc')->first();
         if($unique_id)
         {
@@ -197,12 +219,29 @@ class DashboardController extends Controller
         $customer->state = $request->state;
         $customer->zipcode = $request->zipcode;
         $customer->country = $request->country;
-        $customer->gst = $request->gst;
+        $customer->gst = $request->gst_treatment;
+        $customer->gst_no = $request->gst_no;
         $customer->mobile = $request->country_code_m . $data['mobile'];
         $customer->email = $data['email'];
         $customer->website = $request->website;
         $customer->customer_image = $file_path;
         $customer->status = 1;
+        $customer->tags = json_encode($request->tag);  
+        $customer->salesperson = $request->salesperson;  
+        $customer->deliveryMethod = $request->deliveryMethod; 
+        $customer->payment_terms = $request->paymentTerms; 
+        $customer->contact_type = $request->contact_type;  
+        $customer->contact_name = $request->contact_name;  
+        $customer->contact_email = $request->contact_email;  
+        $customer->contact_title = $request->contact_title;  
+        $customer->contact_address = $request->contact_address;  
+        $customer->contact_phone = $request->contact_phone;  
+        $customer->contact_job_position = $request->contact_job_position;  
+        $customer->contact_state = $request->contact_state;  
+        $customer->contact_zipcode = $request->contact_zipcode;  
+        $customer->contact_country = $request->contact_country;  
+        $customer->contact_mobile = $request->contact_mobile;  
+        $customer->contact_notes = $request->contact_notes;  
         $customer->save();
 
         return redirect(route('allcustomer'));
@@ -212,9 +251,7 @@ class DashboardController extends Controller
     {
         $customer = customer::findOrFail($id);
         $route = explode("/",$request->path())[0];
-        $service = Service::get();
-        $v_service = json_decode($customer->service_id);
-        return view('frontend.admin.customer.customerData', ['customer' => $customer, 'route' => $route, 'service' => $service, 'v_service' => $v_service]);
+        return view('frontend.admin.customer.customerData', ['customer' => $customer, 'route' => $route]);
     }
 
     public function editcustomer(Request $request, $id)
@@ -245,7 +282,6 @@ class DashboardController extends Controller
         $customer->mobile = $request->country_code_m . $data['mobile'];
         $customer->email = $data['email'];
         $customer->website = $request->website;
-        $customer->service_id = json_encode($request->service);
         $customer->customer_image = $file_path;
         $customer->save();
 

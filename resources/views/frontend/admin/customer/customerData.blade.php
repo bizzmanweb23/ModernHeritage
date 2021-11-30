@@ -48,20 +48,6 @@
             {{ ($route=='customeredit')?'':'readonly' }}>
     </div>
 
-
-    <div class="form-group">
-        <label for="service">Service</label>
-        <select multiple="multiple" name="service[]" id="service" class="form-control"
-            {{ ($route=='customeredit')?'':'disabled' }}>
-            @foreach($service as $s)
-                <option value="{{ $s->id }}"
-                    {{ (isset($service)&&in_array($s->id,$v_service))?'selected':'' }}>
-                    {{ $s->s_name }}</option>
-            @endforeach
-        </select>
-    </div>
-
-
     <div class="form-group">
         <label for="mobile">Mobile</label>
         <input type="text" class="form-control" id="mobile" name="mobile" value="{{ $customer->mobile }}"

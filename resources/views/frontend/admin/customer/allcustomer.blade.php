@@ -3,56 +3,45 @@
 @section('content')
 <form action="{{ route('customer') }}" method="GET">
     @csrf
-    <div class="form-group">
-        <label for="unique_id">Unique Id</label>
-        <input type="text" class="form-control" id="unique_id" placeholder="Enter unique id" name="unique_id">
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{{ route('addcustomer') }}" class="btn btn-primary">Add customer</a>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-5">       
+            <div style="display: flex; flex-wrap: no-wrap">
+                <input type="text" class="form-control mr-1" id="customer_name" placeholder="Search..." name="customer_name"> 
+                <div>
+                    <button type="submit" style="border-radius: 10px">
+                        <i class="fas fa-search fa-2x"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="customer_name">Name</label>
-        <input type="text" class="form-control" id="customer_name" placeholder="Enter customer name" name="customer_name">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Search</button>
 </form>
-<br>
-<br>
-<div>
-    <a href="{{ route('addcustomer') }}" class="btn btn-primary">Add customer</a>
-</div>
-<br>
-<div>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Unique Id</th>
-                <th scope="col">customername</th>
-                <th scope="col">Email</th>
-                <th scope="col">Mobile No</th>
-                <th scope="col">Operate</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($allCustomer as $c)
-                <tr>
-                    <td>{{ $c->unique_id }}</td>
-                    <td>{{ $c->customer_name }}</td>
-                    <td>{{ $c->email }}</td>
-                    <td>{{ $c->mobile }}</td>
-
-                    <td><a href="{{ url('/') }}/admin/customerdetails/{{ $c->id }}">Details</a>
-                        <a href="{{ url('/') }}/admin/customeredit/{{ $c->id }}">Edit</a>
-                        @if($c->status==1)
-                            <a href="{{ url('/') }}/admin/customerstatus/{{ $c->id }}/0">active</a>
-                        @else
-                            <a
-                                href="{{ url('/') }}/admin/customerstatus/{{ $c->id }}/1">inactive</a>
-                        @endif
-                    </td>
-
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+<div class="container-fluid d-flex flex-row flex-wrap">
+    @foreach ($allCustomer as $c )
+    <div class="card m-2" style="width: 23rem">
+        <div class="card-body p-2">
+            <div class="row">
+                <div class="col-sm-4">
+                    @if (isset($c->customer_image))
+                       <img src="{{ asset($c->customer_image) }}" alt="Product" style="height: 7rem; width:7rem">
+                    @else
+                       <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 7rem; width:7rem"> 
+                    @endif
+                </div>
+                <div class="col-sm-8">
+                    <p class="mb-0">{{ $c->customer_name }}</p>
+                    <p class="mb-0">{{ $c->address }}</p>
+                    <p class="mb-0">{{ $c->email }}</p>
+                    <p class="mb-0">{{ $c->mobile }}</p>
+                </div>
+            </div>
+           
+        </div>
+    </div>    
+    @endforeach
 </div>
 @endsection
