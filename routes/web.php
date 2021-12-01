@@ -61,7 +61,7 @@ Route::group(['prefix' => 'admin'], function () {
        Route::get('/customers', [DashboardController::class,'addCustomer'])->name('addcustomer');
        Route::post('/customers', [DashboardController::class,'saveCustomer'])->name('savecustomer');
        Route::get('/customerdetails/{id}', [DashboardController::class,'customerData']);
-       Route::get('/customeredit/{id}', [DashboardController::class,'customerData']);
+    //    Route::get('/customeredit/{id}', [DashboardController::class,'customerData']);
        Route::post('/customeredit/{id}', [DashboardController::class,'editCustomer']);
        Route::get('/customerstatus/{id}/{status}', [DashboardController::class,'customerStatus']);
 

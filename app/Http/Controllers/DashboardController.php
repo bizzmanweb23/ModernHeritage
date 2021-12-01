@@ -211,6 +211,16 @@ class DashboardController extends Controller
             $file_path = null;
         }
 
+        if($request->file('contact_image')){
+            $file_type_contact = $request->file('contact_image')->extension();
+            $file_path_contact = $request->file('contact_image')->storeAs('images/contact',$number.'.'.$file_type_contact,'public');
+            $request->file('contact_image')->move(public_path('images/contact'),$number.'.'.$file_type_contact);
+        }
+        else
+        {
+            $file_path_contact = null;
+        }
+
         $customer = new customer;
         $customer->customer_type = $data['customer_type'];
         $customer->unique_id = $number;
@@ -225,6 +235,7 @@ class DashboardController extends Controller
         $customer->email = $data['email'];
         $customer->website = $request->website;
         $customer->customer_image = $file_path;
+        $customer->contact_image = $file_path_contact;
         $customer->status = 1;
         $customer->tags = json_encode($request->tag);  
         $customer->salesperson = $request->salesperson;  
@@ -251,7 +262,32 @@ class DashboardController extends Controller
     {
         $customer = customer::findOrFail($id);
         $route = explode("/",$request->path())[0];
-        return view('frontend.admin.customer.customerData', ['customer' => $customer, 'route' => $route]);
+        $countryCodes = CountryCode::get();
+        $gst = GST::get();
+        $tag = Tag::get();
+        $salesperson = SalesPerson::get();
+        $deliveryMethod = DeliveryMethod::get();
+        $paymentTerms = PaymentTerms::get();
+        $selected_tags = json_decode($customer->tags);
+        $selected_tags_name = [];
+        if(isset($selected_tags)){
+            foreach($tag as $t){
+                if(in_array($t->id,$selected_tags)){
+                    array_push($selected_tags_name, $t->tag_name);
+                }
+            }
+        }
+        return view('frontend.admin.customer.customerData', ['customer' => $customer, 
+                                                            'route' => $route,
+                                                            'countryCodes' => $countryCodes,
+                                                            'gst' => $gst,
+                                                            'tag' => $tag,
+                                                            'selected_tags' => $selected_tags,
+                                                            'selected_tags_name' => $selected_tags_name,
+                                                            'salesperson' => $salesperson,
+                                                            'deliveryMethod' => $deliveryMethod,
+                                                            'paymentTerms' => $paymentTerms
+                                                        ]);
     }
 
     public function editcustomer(Request $request, $id)
@@ -260,10 +296,18 @@ class DashboardController extends Controller
             'customer_name' => 'required',
             'address' => 'required',
             'mobile' => 'required',
+            'customer_type' => 'required',
             'email' => 'required|email:rfc,dns',
         ]);
 
-        $customer = customer::findOrFail($id);
+        if ($request->customer_type=='company') 
+        {
+            $request->validate([
+                'gst_treatment' => 'required'
+            ]);
+        }
+
+        $customer = Customer::findOrFail($id);
         if($request->file('customer_image')){
             $file_type = $request->file('customer_image')->extension();
             $file_path = $request->file('customer_image')->storeAs('images/customers',$customer->unique_id.'.'.$file_type,'public');
@@ -273,16 +317,47 @@ class DashboardController extends Controller
         {
             $file_path = $customer->customer_image;
         }
+
+        if($request->file('contact_image')){
+            $file_type_contact = $request->file('contact_image')->extension();
+            $file_path_contact = $request->file('contact_image')->storeAs('images/contact',$customer->unique_id.'.'.$file_type_contact,'public');
+            $request->file('contact_image')->move(public_path('images/contact'),$customer->unique_id.'.'.$file_type_contact);
+        }
+        else
+        {
+            $file_path_contact = $customer->contact_image;
+        }
+
+        $customer->customer_type = $data['customer_type'];
         $customer->customer_name = $data['customer_name'];
         $customer->address = $data['address'];
         $customer->state = $request->state;
         $customer->zipcode = $request->zipcode;
         $customer->country = $request->country;
-        $customer->gst = $request->gst;
+        $customer->gst = $request->gst_treatment;
+        $customer->gst_no = $request->gst_no;
         $customer->mobile = $request->country_code_m . $data['mobile'];
         $customer->email = $data['email'];
         $customer->website = $request->website;
         $customer->customer_image = $file_path;
+        $customer->contact_image = $file_path_contact;
+        $customer->status = 1;
+        $customer->tags = json_encode($request->tag);  
+        $customer->salesperson = $request->salesperson;  
+        $customer->deliveryMethod = $request->deliveryMethod; 
+        $customer->payment_terms = $request->paymentTerms; 
+        $customer->contact_type = $request->contact_type;  
+        $customer->contact_name = $request->contact_name;  
+        $customer->contact_email = $request->contact_email;  
+        $customer->contact_title = $request->contact_title;  
+        $customer->contact_address = $request->contact_address;  
+        $customer->contact_phone = $request->contact_phone;  
+        $customer->contact_job_position = $request->contact_job_position;  
+        $customer->contact_state = $request->contact_state;  
+        $customer->contact_zipcode = $request->contact_zipcode;  
+        $customer->contact_country = $request->contact_country;  
+        $customer->contact_mobile = $request->contact_mobile;  
+        $customer->contact_notes = $request->contact_notes;  
         $customer->save();
 
         return redirect(route('allcustomer'));
