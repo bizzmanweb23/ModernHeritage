@@ -15,16 +15,11 @@
                     <div class="card-body">
                         <form method="POST" action="{{ url('/') }}/register/client">
                             @csrf
-                            <label>First Name</label>
+                            <label>User Name</label>
                             <div class="mb-3">
-                                <input type="text" class="form-control" name="firstname" id="firstname" required
-                                    placeholder="First Name" aria-label="First Name"
+                                <input type="text" class="form-control" name="user_name" id="user_name" required
+                                    placeholder="First Name" aria-label="User Name"
                                     aria-describedby="first-name-addon">
-                            </div>
-                            <label>Last Name</label>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="lastname" id="lastname" required
-                                    placeholder="Last Name" aria-label="Last Name" aria-describedby="last-name-addon">
                             </div>
                             <label>Email</label>
                             <div class="mb-3">

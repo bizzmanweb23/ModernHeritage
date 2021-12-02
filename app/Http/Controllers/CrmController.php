@@ -36,16 +36,16 @@ class CrmController extends Controller
     {
        
         $client = User::where('role_id', '=',2)
-                        ->where('firstname', 'LIKE', '%'.$request->term.'%')
+                        ->where('user_name', 'LIKE', '%'.$request->term.'%')
                         ->get();
         if ($client->count() > 0) {
             foreach ($client as $item) {
                 $data[] = [
-                    'label' => $item->firstname.' '.$item->lastname,
+                    'label' => $item->user_name.' '.$item->lastname,
                     'id' => $item->id,
                     'email' => $item->email,
                     'phone' => $item->phone,
-                    'opportunity' => $item->firstname.'\'s opportunity'
+                    'opportunity' => $item->user_name.'\'s opportunity'
                 ];
             }
         } else {

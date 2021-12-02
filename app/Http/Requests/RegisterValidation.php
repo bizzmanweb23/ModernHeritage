@@ -24,7 +24,7 @@ class RegisterValidation extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required|min:3',
+            'user_name' => 'required|min:3',
             'lastname' => 'required',
             'email' => 'required|email:rfc,dns|unique:users',
             'password' => 'required',
@@ -36,7 +36,7 @@ class RegisterValidation extends FormRequest
     public function attributes()
     {
         return [
-            'firstname' => 'First Name',
+            'user_name' => 'First Name',
             'lastname' => 'Last Name',
             'email' => 'Email',
             'password' => 'Password',
@@ -47,7 +47,7 @@ class RegisterValidation extends FormRequest
     public function messages()
     {
         return [
-            'firstname.required' => 'Please Enter First Name',
+            'user_name.required' => 'Please Enter First Name',
             'lastname.required' => 'Please Enter Last Name',
             'email.required' => 'Please Enter Valid Email Id',
             'password.required' => 'Please Enter Password',

@@ -25,6 +25,13 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
+                <div class="ms-auto text-end">
+                    <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
+                            aria-hidden="true"></i>Save</button>
+                    <a class="btn btn-link text-dark px-3 mb-0" id="back"
+                        href="{{ url()->previous() }}"><i
+                            class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
+                </div>
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
@@ -330,13 +337,6 @@
             </div>
         </div>
     </div>
-    <br> <br>
-
-
-    <button type="submit" class="btn btn-primary">Save</button>
-
-    <a href="{{ route('allcustomer') }}" class="btn btn-primary">Back</a>
-
 </form>
 <script>
     $(document).ready(function () {

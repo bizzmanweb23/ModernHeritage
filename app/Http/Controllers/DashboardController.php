@@ -13,6 +13,7 @@ use App\Models\PaymentTerms;
 use App\Models\SalesPerson;
 use App\Models\DeliveryMethod;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -24,6 +25,116 @@ class DashboardController extends Controller
     public function index()
     {
         return view('frontend.admin.dashboard.index');
+    }
+
+    // User - Management
+    public function indexView()
+    {
+        return view('frontend.admin.user.index');
+    }
+
+    public function addUser()
+    {
+        return view('frontend.admin.user.addUser');
+    }
+
+    public function saveUser(Request $request)
+    {
+        $data = $request->validate([
+            'user_name' => 'required',
+            'email' => 'required|email:rfc,dns',
+            'password' => 'required',
+            'user_type' => 'required',            
+        ]);
+
+        if ($request->user_type == 'employee')
+        {
+            $request->validate([
+                'website' => 'required'            
+            ]);
+
+            // TODO: add in employee table
+        }
+        elseif ($request->user_type == 'customer')
+        {
+            $unique_id = Customer::orderBy('id', 'desc')->first();
+            if($unique_id)
+            {
+                $number = str_replace('MHC', '', $unique_id->unique_id);
+            }
+            else
+            {
+                $number = 0;
+            }
+            if ($number == 0) {
+                $number = 'MHC00001';
+            } else {
+                $number = "MHC" . sprintf("%05d", $number + 1);
+            }
+            
+            if($request->file('user_image')){
+                $file_type = $request->file('user_image')->extension();
+                $file_path = $request->file('user_image')->storeAs('images/customers',$number.'.'.$file_type,'public');
+                $request->file('user_image')->move(public_path('images/customers'),$number.'.'.$file_type);
+            }
+            else
+            {
+                $file_path = null;
+            }
+            
+            $customer = new customer;
+            $customer->customer_type = $request->customer_type;
+            $customer->unique_id = $number;
+            $customer->customer_name = $data['user_name'];
+            $customer->email = $data['email'];
+            $customer->customer_image = $file_path;
+            $customer->status = 1;
+            $customer->save();
+        }
+
+        $unique_id = User::orderBy('id', 'desc')->first();
+        if($unique_id)
+        {
+            $number = str_replace('MHU', '', $unique_id->unique_id);
+        }
+        else
+        {
+            $number = 0;
+        }
+        if ($number == 0) {
+            $number = 'MHU00001';
+        } else {
+            $number = "MHU" . sprintf("%05d", $number + 1);
+        }
+
+        $user = new User;
+        $user->unique_id = $number;
+        $user->user_name = $data['user_name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->user_type = $data['user_type'];
+        if ($request->user_type == 'customer')
+        {
+            $user->user_id = $customer->unique_id;
+            $user->sales = $request->sales;
+            $user->project = $request->project;
+            $user->inventory = $request->inventory;
+            $user->purchase = $request->purchase;
+            $user->employees = $request->employees;
+            $user->bom_purchase_request = $request->bom_purchase_request;
+            $user->invoicing = $request->invoicing;
+            $user->administration = $request->administration;
+        }
+        elseif ($request->user_type == 'employee')
+        {
+            // TODO: employee unique id needs to be stored 
+            $user->website = $request->website;
+        }
+        $user->status = 1;
+        
+        $user->save();
+
+        return redirect(route('index'));
     }
 
     public function allUsersDetails()
@@ -40,9 +151,9 @@ class DashboardController extends Controller
         if ($request->unique_id) {
             $col_name = 'unique_id';
             $col_value = $request->unique_id;
-        } elseif ($request->firstname) {
-            $col_name = 'firstname';
-            $col_value = $request->firstname;
+        } elseif ($request->user_name) {
+            $col_name = 'user_name';
+            $col_value = $request->user_name;
         }
         else{
             return redirect()->back();
@@ -68,7 +179,7 @@ class DashboardController extends Controller
         $user = User::findOrFail($id);
 
         $data = $request->validate([
-            'firstname' => 'required',
+            'user_name' => 'required',
             'lastname' => 'required',
             'email' => 'required|email:rfc,dns',
             'phone' => 'required',
@@ -78,7 +189,7 @@ class DashboardController extends Controller
             'country' => 'required',
         ]);
 
-        $user->firstname = $request->firstname;
+        $user->user_name = $request->user_name;
         $user->lastname = $request->lastname;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -186,7 +297,7 @@ class DashboardController extends Controller
                 'gst_treatment' => 'required'
             ]);
         }
-        $unique_id = customer::orderBy('id', 'desc')->first();
+        $unique_id = Customer::orderBy('id', 'desc')->first();
         if($unique_id)
         {
             $number = str_replace('MHC', '', $unique_id->unique_id);

@@ -67,7 +67,7 @@ class AuthController extends Controller
                 'email' => __('auth.failed'),
             ]);
         }
-        Session::put('username', Auth::user()->firstname);
+        Session::put('username', Auth::user()->user_name);
         Session::put('userid', Auth::user()->unique_id);
         $request->session()->regenerate();
         if (!empty(session('url.intended'))) {
@@ -103,8 +103,7 @@ class AuthController extends Controller
 
         User::create([
             'unique_id' => $number,
-            'firstname' => $request->firstname,
-            'lastname' => $request->lastname,
+            'user_name' => $request->user_name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => $role,
@@ -112,7 +111,7 @@ class AuthController extends Controller
             'status' => 1,
         ]);
 
-        // Mail::to($request->email)->send(new RegisterNotification($request->firstname,$request->lastname));
+        // Mail::to($request->email)->send(new RegisterNotification($request->user_name,$request->lastname));
         if (Auth::check() && Auth::user()->isAdmin()) {
             $route = 'users';
         } else {
