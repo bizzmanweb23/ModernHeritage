@@ -448,9 +448,10 @@
         $('#save').hide();
         $('#discard').hide();
         $('.edit_input').hide();
-        if ($('#customer_type_span').text().trim() === 'individual') {
+        if ($('#customer_type_span').text().trim() !== 'company') {
             $('.company').hide();
         }
+
         if ($('#contact_type').text().trim() === 'contact') {
             $('.notcontact').hide();
         }

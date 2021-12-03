@@ -84,9 +84,6 @@
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#access_rights">Access Rights</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#preferences">Preferences</a>
-                    </li>
                 </ul>
 
                 {{-- Tab Panes --}}
@@ -249,26 +246,6 @@
                         </div>
                     </div>
 
-                    {{-- Preferences --}}
-                    <div id="preferences" class="container tab-pane fade"><br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="language">Language:</label>
-                                <select name="language" id="language" class="form-control">
-                                    <option value="English(US)">English(US)</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="timezone">Timezone:</label>
-                                <select name="timezone" id="timezone" class="form-control">
-                                    <option>--Select--</option>
-                                    <option value="Asia/Kolkata">Asia/Kolkata</option>
-                                    <option value="Asia/Kolkata">Singapore</option>
-                                    <option value="Asia/Kolkata">Universal</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
