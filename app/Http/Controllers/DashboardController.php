@@ -28,9 +28,13 @@ class DashboardController extends Controller
     }
 
     // User - Management
-    public function indexView()
+
+    public function allUser()
     {
-        return view('frontend.admin.user.index');
+        $allUser = User::where('role_id', '!=', 1)->get();
+        return view('frontend.admin.user.index', [
+            'allUser' => $allUser,
+        ]);
     }
 
     public function addUser()
@@ -83,7 +87,6 @@ class DashboardController extends Controller
             }
             
             $customer = new customer;
-            $customer->customer_type = $request->customer_type;
             $customer->unique_id = $number;
             $customer->customer_name = $data['user_name'];
             $customer->email = $data['email'];
@@ -137,105 +140,97 @@ class DashboardController extends Controller
         return redirect(route('index'));
     }
 
-    public function allUsersDetails()
-    {
-        $allUser = User::where('role_id', '!=', 1)->get();
 
-        return view('frontend.admin.dashboard.alluser', [
-            'allUser' => $allUser,
-        ]);
-    }
+    // public function userDetails(Request $request)
+    // {
+    //     if ($request->unique_id) {
+    //         $col_name = 'unique_id';
+    //         $col_value = $request->unique_id;
+    //     } elseif ($request->user_name) {
+    //         $col_name = 'user_name';
+    //         $col_value = $request->user_name;
+    //     }
+    //     else{
+    //         return redirect()->back();
+    //     }
+    //     $user = User::where($col_name, 'LIKE', '%'.$col_value.'%')->get();
 
-    public function userDetails(Request $request)
-    {
-        if ($request->unique_id) {
-            $col_name = 'unique_id';
-            $col_value = $request->unique_id;
-        } elseif ($request->user_name) {
-            $col_name = 'user_name';
-            $col_value = $request->user_name;
-        }
-        else{
-            return redirect()->back();
-        }
-        $user = User::where($col_name, 'LIKE', '%'.$col_value.'%')->get();
+    //     return view('frontend.admin.dashboard.alluser', ['allUser' => $user]);
+    // }
 
-        return view('frontend.admin.dashboard.alluser', ['allUser' => $user]);
-    }
+    // public function memberData(Request $request, $id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     $route = explode('/', $request->path())[0];
 
-    public function memberData(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-        $route = explode('/', $request->path())[0];
+    //     return view('frontend.admin.dashboard.memberData', [
+    //         'user' => $user,
+    //         'route' => $route,
+    //     ]);
+    // }
 
-        return view('frontend.admin.dashboard.memberData', [
-            'user' => $user,
-            'route' => $route,
-        ]);
-    }
+    // public function editUser(Request $request, $id)
+    // {
+    //     $user = User::findOrFail($id);
 
-    public function editUser(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
+    //     $data = $request->validate([
+    //         'user_name' => 'required',
+    //         'lastname' => 'required',
+    //         'email' => 'required|email:rfc,dns',
+    //         'phone' => 'required',
+    //         'address' => 'required',
+    //         'state' => 'required',
+    //         'zipcode' => 'required',
+    //         'country' => 'required',
+    //     ]);
 
-        $data = $request->validate([
-            'user_name' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email:rfc,dns',
-            'phone' => 'required',
-            'address' => 'required',
-            'state' => 'required',
-            'zipcode' => 'required',
-            'country' => 'required',
-        ]);
+    //     $user->user_name = $request->user_name;
+    //     $user->lastname = $request->lastname;
+    //     $user->email = $request->email;
+    //     $user->phone = $request->phone;
+    //     $user->address = $request->address;
+    //     $user->state = $request->state;
+    //     $user->zipcode = $request->zipcode;
+    //     $user->country = $request->country;
+    //     $user->device_id = $request->device_id;
+    //     $user->device_name = $request->device_name;
 
-        $user->user_name = $request->user_name;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->address = $request->address;
-        $user->state = $request->state;
-        $user->zipcode = $request->zipcode;
-        $user->country = $request->country;
-        $user->device_id = $request->device_id;
-        $user->device_name = $request->device_name;
+    //     $user->save();
 
-        $user->save();
+    //     return redirect(route('users'));
+    // }
 
-        return redirect(route('users'));
-    }
+    // public function userStatus($id, $status)
+    // {
+    //     $user = User::findOrFail($id);
 
-    public function userStatus($id, $status)
-    {
-        $user = User::findOrFail($id);
+    //     $user->status = $status;
 
-        $user->status = $status;
+    //     $user->save();
 
-        $user->save();
+    //     return redirect(route('users'));
+    // }
 
-        return redirect(route('users'));
-    }
+    // public function createRole()
+    // {
+    //     return view('frontend.admin.role.createRole');
+    // }
 
-    public function createRole()
-    {
-        return view('frontend.admin.role.createRole');
-    }
+    // public function saveRole(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'role_name' => 'required|unique:roles,name',
+    //     ]);
 
-    public function saveRole(Request $request)
-    {
-        $data = $request->validate([
-            'role_name' => 'required|unique:roles,name',
-        ]);
+    //     $role = new Role();
 
-        $role = new Role();
+    //     $role->name = $data['role_name'];
+    //     $role->guard_name = '0';
 
-        $role->name = $data['role_name'];
-        $role->guard_name = '0';
+    //     $role->save();
 
-        $role->save();
-
-        return redirect(route('users'));
-    }
+    //     return redirect(route('users'));
+    // }
 
     //customer management
 

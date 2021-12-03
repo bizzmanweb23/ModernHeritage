@@ -96,31 +96,29 @@
                     <div id="access_rights" class="container tab-pane active"><br>
                         <div style="display: flex; flex-wrap: no-wrap;">
                             <div class="form-check mr-2">
+                                <input class="form-check-input" type="radio" name="user_type" id="employee"
+                                    value="employee" checked>
+                                <label class="form-check-label" for="user_type">
+                                    Employee
+                                </label>
+                            </div>
+                            <div class="form-check mr-2">
                                 <input class="form-check-input" type="radio" name="user_type" id="customer"
-                                    value="customer" checked>
+                                    value="customer">
                                 <label class="form-check-label" for="user_type">
                                     Customer
                                 </label>
                             </div>
                             <div class="form-check mr-2">
-                                <input class="form-check-input" type="radio" name="user_type" id="employee"
-                                    value="employee">
+                                <input class="form-check-input" type="radio" name="user_type" id="others"
+                                    value="others">
                                 <label class="form-check-label" for="user_type">
-                                    Employee
+                                    Others
                                 </label>
                             </div>
                         </div>
 
-                        <div class="row mt-2 mb-2 customer">
-                            <div class="col-md-6">
-                                <label for="customer_type">Customer Type</label>
-                                <select name="customer_type" id="customer_type" class="form-control">
-                                    <option value="Individual">Individual</option>
-                                    <option value="Company">Company</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row mt-2 customer">
+                        <div class="row mt-2 employee">
                             <div class="col-md-6">
                                 <h5>Sales</h5>
                                 <div class="row mt-1">
@@ -150,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2 customer">
+                        <div class="row mt-2 employee">
                             <div class="col-md-6">
                                 <h5>Services</h5>
                                 <div class="row mt-1">
@@ -180,7 +178,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2 customer">
+                        <div class="row mt-2 employee">
                             <div class="col-md-6">
                                 <h5>Inventory</h5>
                                 <div class="row mt-1">
@@ -219,7 +217,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2 customer">
+                        <div class="row mt-2 employee">
                             <div class="col-md-6">
                                 <h5>Administration</h5>
                                 <div class="row mt-1">
@@ -235,7 +233,7 @@
                             </div>
                         </div>
 
-                        <div class="row mt-2 employee">
+                        <div class="row mt-2 customer">
                             <div class="col-md-6">
                                 <h5>Website</h5>
                                 <div class="row mt-1">
@@ -279,7 +277,7 @@
 
 <script>
     $(document).ready(function (){
-        $('.employee').hide();
+        $('.customer').hide();
     });
 
     $('#customer').click(function (){
@@ -288,6 +286,10 @@
     });
 
     $('#employee').click(function (){
+        $('.customer').hide();
+        $('.employee').show();
+    });
+    $('#others').click(function (){
         $('.customer').hide();
         $('.employee').show();
     });
