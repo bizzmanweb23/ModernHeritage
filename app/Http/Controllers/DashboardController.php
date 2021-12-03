@@ -39,7 +39,8 @@ class DashboardController extends Controller
 
     public function addUser()
     {
-        return view('frontend.admin.user.addUser');
+        $countryCodes = CountryCode::get();
+        return view('frontend.admin.user.addUser', ['countryCodes' => $countryCodes]);
     }
 
     public function saveUser(Request $request)
@@ -47,6 +48,8 @@ class DashboardController extends Controller
         $data = $request->validate([
             'user_name' => 'required',
             'email' => 'required|email:rfc,dns',
+            'country_code_m' => 'required',
+            'mobile' => 'required',
             'password' => 'required',
             'user_type' => 'required',            
         ]);
@@ -90,6 +93,7 @@ class DashboardController extends Controller
             $customer->unique_id = $number;
             $customer->customer_name = $data['user_name'];
             $customer->email = $data['email'];
+            $customer->mobile = $request->country_code_m . $data['mobile'];
             $customer->customer_image = $file_path;
             $customer->status = 1;
             $customer->save();
@@ -116,6 +120,7 @@ class DashboardController extends Controller
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
         $user->user_type = $data['user_type'];
+        $user->phone = $request->country_code_m . $data['mobile'];
         if ($request->user_type == 'customer')
         {
             $user->user_id = $customer->unique_id;
@@ -283,6 +288,7 @@ class DashboardController extends Controller
             'customer_type' => 'required',
             'customer_name' => 'required',
             'address' => 'required',
+            'country_code_m' => 'required',
             'mobile' => 'required',
             'email' => 'required|email:rfc,dns|unique:customers,email',
         ]);

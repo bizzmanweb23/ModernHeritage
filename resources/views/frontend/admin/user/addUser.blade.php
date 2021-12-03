@@ -63,6 +63,26 @@
                     </div>
                 </div>
                 <div class="row mt-1">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <label for="mobile">Mobile</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select name="country_code_m" class="form-control"  id="country_code_m">
+                                        <option value="">--Select--</option>
+                                        @foreach($countryCodes as $c)
+                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="password">Password:</label>
