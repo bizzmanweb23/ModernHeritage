@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/addUser', [DashboardController::class,'addUser'])->name('addUser');
     Route::post('/saveUser', [DashboardController::class,'saveUser'])->name('saveUser');
     Route::get('/userdetails/{id}', [DashboardController::class,'userData']);
+    Route::post('/useredit/{id}', [DashboardController::class,'editUser']);
 
     //admin--role
     Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');

@@ -61,16 +61,12 @@ class DashboardController extends Controller
             'user_type' => 'required',            
         ]);
 
-        if ($request->user_type == 'employee')
+        if ($request->user_type == 'customer')
         {
             $request->validate([
                 'website' => 'required'            
             ]);
 
-            // TODO: add in employee table
-        }
-        elseif ($request->user_type == 'customer')
-        {
             $unique_id = Customer::orderBy('id', 'desc')->first();
             if($unique_id)
             {
@@ -95,8 +91,8 @@ class DashboardController extends Controller
             {
                 $file_path = null;
             }
-            
-            $customer = new customer;
+
+            $customer = new Customer;
             $customer->unique_id = $number;
             $customer->customer_name = $data['user_name'];
             $customer->email = $data['email'];
@@ -104,6 +100,43 @@ class DashboardController extends Controller
             $customer->customer_image = $file_path;
             $customer->status = 1;
             $customer->save();
+            
+        }
+        elseif ($request->user_type == 'employee')
+        {
+            // $unique_id = Employee::orderBy('id', 'desc')->first();
+            // if($unique_id)
+            // {
+            //     $number = str_replace('MHC', '', $unique_id->unique_id);
+            // }
+            // else
+            // {
+            //     $number = 0;
+            // }
+            // if ($number == 0) {
+            //     $number = 'MHC00001';
+            // } else {
+            //     $number = "MHC" . sprintf("%05d", $number + 1);
+            // }
+            
+            // if($request->file('user_image')){
+            //     $file_type = $request->file('user_image')->extension();
+            //     $file_path = $request->file('user_image')->storeAs('images/employees',$number.'.'.$file_type,'public');
+            //     $request->file('user_image')->move(public_path('images/employees'),$number.'.'.$file_type);
+            // }
+            // else
+            // {
+            //     $file_path = null;
+            // }
+            
+            // $employee = new employee;
+            // $employee->unique_id = $number;
+            // $employee->employee_name = $data['user_name'];
+            // $employee->email = $data['email'];
+            // $employee->mobile = $request->country_code_m . $data['mobile'];
+            // $employee->employee_image = $file_path;
+            // $employee->status = 1;
+            // $employee->save();
         }
 
         $unique_id = User::orderBy('id', 'desc')->first();
@@ -127,9 +160,10 @@ class DashboardController extends Controller
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
         $user->user_type = $data['user_type'];
-        if ($request->user_type == 'customer')
+        if ($request->user_type == 'employee')
         {
-            $user->user_id = $customer->unique_id;
+            // TODO: employee unique id needs to be stored 
+            // $user->user_id = $employee->unique_id;
             $user->sales = $request->sales;
             $user->project = $request->project;
             $user->inventory = $request->inventory;
@@ -139,9 +173,9 @@ class DashboardController extends Controller
             $user->invoicing = $request->invoicing;
             $user->administration = $request->administration;
         }
-        elseif ($request->user_type == 'employee')
+        elseif ($request->user_type == 'customer')
         {
-            // TODO: employee unique id needs to be stored 
+            $user->user_id = $customer->unique_id;
             $user->website = $request->website;
         }
         $user->status = 1;
@@ -164,6 +198,95 @@ class DashboardController extends Controller
                         ->first();
         }
         return view('frontend.admin.user.userData',['user' => $user, 'countryCodes' => $countryCodes]);
+    }
+
+    public function editUser(Request $request, $id)
+    {
+        $data = $request->validate([
+            'user_name' => 'required',
+            'email' => 'required|email:rfc,dns',
+            'country_code_m' => 'required',
+            'mobile' => 'required',
+            'password' => 'required',
+            'user_type' => 'required',            
+        ]);
+
+        if ($request->user_type == 'customer')
+        {
+            $request->validate([
+                'website' => 'required'            
+            ]);
+
+            $user = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
+                        ->where('users.id', $id)
+                        ->select('users.*','customers.customer_image', 'customers.mobile')
+                        ->first();
+            
+            if($request->file('user_image')){
+                $file_type = $request->file('user_image')->extension();
+                $file_path = $request->file('user_image')->storeAs('images/customers',$user->user_id.'.'.$file_type,'public');
+                $request->file('user_image')->move(public_path('images/customers'),$user->user_id.'.'.$file_type);
+            }
+            else
+            {
+                $file_path = null;
+            }
+
+            $customer = Customer::where('unique_id', $user->user_id)->first();
+            $customer->customer_name = $data['user_name'];
+            $customer->email = $data['email'];
+            $customer->mobile = $request->country_code_m . $data['mobile'];
+            $customer->customer_image = $file_path;
+            $customer->save();
+            
+        }
+        elseif ($request->user_type == 'employee')
+        {
+            // $user = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
+            //             ->where('users.id', $id)
+            //             ->select('users.*','employees.employee_image', 'employees.mobile')
+            //             ->first();
+            
+            // if($request->file('user_image')){
+            //     $file_type = $request->file('user_image')->extension();
+            //     $file_path = $request->file('user_image')->storeAs('images/employees',$user->user_id.'.'.$file_type,'public');
+            //     $request->file('user_image')->move(public_path('images/employees'),$user->user_id.'.'.$file_type);
+            // }
+            // else
+            // {
+            //     $file_path = null;
+            // }
+            
+            // $employee = Employee::where('unique_id', $user->user_id)->first();
+            // $employee->employee_name = $data['user_name'];
+            // $employee->email = $data['email'];
+            // $employee->mobile = $request->country_code_m . $data['mobile'];
+            // $employee->employee_image = $file_path;
+            // $employee->save();
+        }
+
+        $user->user_name = $data['user_name'];
+        $user->email = $data['email'];
+        $user->user_type = $data['user_type'];
+        if ($request->user_type == 'employee')
+        {
+            $user->sales = $request->sales;
+            $user->project = $request->project;
+            $user->inventory = $request->inventory;
+            $user->purchase = $request->purchase;
+            $user->employees = $request->employees;
+            $user->bom_purchase_request = $request->bom_purchase_request;
+            $user->invoicing = $request->invoicing;
+            $user->administration = $request->administration;
+        }
+        elseif ($request->user_type == 'customer')
+        {
+            $user->website = $request->website;
+        }
+        
+        $user->save();
+
+        return redirect(route('index'));
     }
 
     // public function createRole()
@@ -283,7 +406,7 @@ class DashboardController extends Controller
             $file_path_contact = null;
         }
 
-        $customer = new customer;
+        $customer = new Customer;
         $customer->customer_type = $data['customer_type'];
         $customer->unique_id = $number;
         $customer->customer_name = $data['customer_name'];

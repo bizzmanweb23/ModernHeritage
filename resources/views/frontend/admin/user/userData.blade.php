@@ -21,7 +21,7 @@
     }
 
 </style>
-<form action="" method="POST" enctype="multipart/form-data">
+<form action="{{ url('/') }}/admin/useredit/{{ $user->id }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="card">
@@ -30,7 +30,7 @@
                     <a class="btn btn-link text-dark px-3 mb-0" id="edit" href="javascript:;"><i
                             class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ url()->previous() }}"><i
+                        href="{{ route('index') }}"><i
                             class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
                     <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
                             aria-hidden="true"></i>Save</button>
@@ -40,16 +40,27 @@
                 <div class="row mt-1">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="user_name">Name</label>
-                            <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name"
+                            <label for="user_name">Name:</label>
+                            <span class="view_span">{{ $user->user_name }}</span>
+                            <input type="text" class="form-control edit_input" id="user_name" name="user_name" placeholder="Name"
                               value="{{ $user->user_name }}"  required>
                         </div>
                     </div>
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
-                        <div class="upload">
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
-                                style="height: 100px; width:100px">
+                        <div class="upload view_span">
+                            @if (isset($user->customer_image))
+                                <img src="{{ asset($user->customer_image) }}" alt="Product" style="height: 100px; width:100px">
+                            @else
+                                <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 100px; width:100px">
+                            @endif
+                        </div>
+                        <div class="upload edit_input">
+                            @if (isset($user->customer_image))
+                                <img src="{{ asset($user->customer_image) }}" alt="Product" style="height: 100px; width:100px">
+                            @else
+                                <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 100px; width:100px">
+                            @endif
                             <label for="user_image" class="edit">
                                 <i class="fas fa-pencil-alt"></i>
                                 <input id="user_image" type="file" style="display: none" name="user_image" value="{{ $user->customer_image }}">
@@ -60,8 +71,9 @@
                 <div class="row mt-1">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                            <label for="email">Email:</label>
+                            <span class="view_span">{{ $user->email }}</span>
+                            <input type="email" class="form-control edit_input" id="email" name="email" placeholder="Email"
                                value="{{ $user->email }}" required>
                         </div>
                     </div>
@@ -69,8 +81,9 @@
                 <div class="row mt-1">
                     <div class="col-md-10">
                         <div class="form-group">
-                            <label for="mobile">Mobile</label>
-                            <div class="row">
+                            <label for="mobile">Mobile:</label>
+                            <span class="view_span">{{ $user->mobile }}</span>
+                            <div class="row edit_input">
                                 <div class="col-md-3">
                                     <select name="country_code_m" class="form-control"  id="country_code_m">
                                         <option value="">--Select--</option>
@@ -88,22 +101,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- <div class="row mt-1">
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                                required>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group">
-                            <label for="confirm_password">Confirm Password:</label>
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                placeholder="Confirm Password" required>
-                        </div>
-                    </div>
-                </div> --}}
 
                 {{-- Tab lists --}}
                 <ul class="nav nav-tabs mt-4" role="tablist">
@@ -117,7 +114,11 @@
 
                     {{-- Access rights --}}
                     <div id="access_rights" class="container tab-pane active"><br>
-                        <div style="display: flex; flex-wrap: no-wrap;">
+                        <div class="view_span">
+                            <label for="user_type">User Type:</label>
+                            <span class="text-uppercase" id="user_type_span">{{ $user->user_type }}</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: no-wrap;" class="edit_input">
                             <div class="form-check mr-2">
                                 <input class="form-check-input" type="radio" name="user_type" id="employee"
                                     value="employee" {{ $user->user_type == "employee" ? "checked" : ""}}>
@@ -146,12 +147,13 @@
                                 <h5>Sales</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="sales">Sales</label>
-                                        <select name="sales" id="sales" class="form-control">
+                                        <label for="sales">Sales:</label>
+                                        <span class="view_span">{{ $user->sales }}</span>
+                                        <select name="sales" id="sales" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="User: Own Documents only">User: Own Documents only</option>
-                                            <option value="User: All Documents">User: All Documents</option>
+                                            <option value="Administrator" {{ $user->sales == "Administrator" ? "selected" : "" }}>Administrator</option>
+                                            <option value="User: Own Documents only" {{ $user->sales == "User: Own Documents only" ? "selected" : "" }}>User: Own Documents only</option>
+                                            <option value="User: All Documents" {{ $user->sales == "User: All Documents" ? "selected" : "" }}>User: All Documents</option>
                                         </select>
                                     </div>
                                 </div>
@@ -160,11 +162,12 @@
                                 <h5>Purchase</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="bom_purchase_request">BOM Purchase Request</label>
-                                        <select name="bom_purchase_request" id="bom_purchase_request" class="form-control">
+                                        <label for="bom_purchase_request">BOM Purchase Request:</label>
+                                        <span class="view_span">{{ $user->bom_purchase_request }}</span>
+                                        <select name="bom_purchase_request" id="bom_purchase_request" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="BOM Request User">BOM Request User</option>
-                                            <option value="BOM Request Manager">BOM Request Manager</option>
+                                            <option value="BOM Request User" {{ $user->bom_purchase_request == "BOM Request User" ? "selected" : "" }}>BOM Request User</option>
+                                            <option value="BOM Request Manager" {{ $user->bom_purchase_request == "BOM Request Manager" ? "selected" : "" }}>BOM Request Manager</option>
                                         </select>
                                     </div>
                                 </div>
@@ -176,11 +179,12 @@
                                 <h5>Services</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="project">Project</label>
-                                        <select name="project" id="project" class="form-control">
+                                        <label for="project">Project:</label>
+                                        <span class="view_span">{{ $user->project }}</span>
+                                        <select name="project" id="project" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="User">User</option>
+                                            <option value="Administrator" {{ $user->project == "Administrator" ? "selected" : "" }}>Administrator</option>
+                                            <option value="User" {{ $user->project == "User" ? "selected" : "" }}>User</option>
                                         </select>
                                     </div>
                                 </div>
@@ -189,12 +193,13 @@
                                 <h5>Accounting</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="invoicing">Invoicing</label>
-                                        <select name="invoicing" id="invoicing" class="form-control">
+                                        <label for="invoicing">Invoicing:</label>
+                                        <span class="view_span">{{ $user->invoicing }}</span>
+                                        <select name="invoicing" id="invoicing" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Billing">Billing</option>
-                                            <option value="Accountant">Accountant</option>
-                                            <option value="Billing Administrator">Billing Administrator</option>
+                                            <option value="Billing" {{ $user->invoicing == "Billing" ? "selected" : "" }}>Billing</option>
+                                            <option value="Accountant" {{ $user->invoicing == "Accountant" ? "selected" : "" }}>Accountant</option>
+                                            <option value="Billing Administrator" {{ $user->invoicing == "Billing Administrator" ? "selected" : "" }}>Billing Administrator</option>
                                         </select>
                                     </div>
                                 </div>
@@ -206,21 +211,23 @@
                                 <h5>Inventory</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="inventory">Inventory</label>
-                                        <select name="inventory" id="inventory" class="form-control">
+                                        <label for="inventory">Inventory:</label>
+                                        <span class="view_span">{{ $user->inventory }}</span>
+                                        <select name="inventory" id="inventory" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="User">User</option>
+                                            <option value="Administrator" {{ $user->inventory == "Administrator" ? "selected" : "" }}>Administrator</option>
+                                            <option value="User" {{ $user->inventory == "Administrator" ? "selected" : "" }}>User</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="purchase">Purchase</label>
-                                        <select name="purchase" id="purchase" class="form-control">
+                                        <label for="purchase">Purchase:</label>
+                                        <span class="view_span">{{ $user->purchase }}</span>
+                                        <select name="purchase" id="purchase" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="User">User</option>
+                                            <option value="Administrator" {{ $user->purchase == "Administrator" ? "selected" : "" }}>Administrator</option>
+                                            <option value="User" {{ $user->purchase == "User" ? "selected" : "" }}>User</option>
                                         </select>
                                     </div>
                                 </div>
@@ -229,11 +236,12 @@
                                 <h5>Human Resource</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="employees">Employees</label>
-                                        <select name="employees" id="employees" class="form-control">
+                                        <label for="employees">Employees:</label>
+                                        <span class="view_span">{{ $user->employees }}</span>
+                                        <select name="employees" id="employees" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Administrator">Administrator</option>
-                                            <option value="Officer">Officer</option>
+                                            <option value="Administrator" {{ $user->employees == "Administrator" ? "selected" : "" }}>Administrator</option>
+                                            <option value="Officer" {{ $user->employees == "Officer" ? "selected" : "" }}>Officer</option>
                                         </select>
                                     </div>
                                 </div>
@@ -245,11 +253,12 @@
                                 <h5>Administration</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="administration">Administration</label>
-                                        <select name="administration" id="administration" class="form-control">
+                                        <label for="administration">Administration:</label>
+                                        <span class="view_span">{{ $user->administration }}</span>
+                                        <select name="administration" id="administration" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="Access Rights">Access Rights</option>
-                                            <option value="Settings">Settings</option>
+                                            <option value="Access Rights" {{ $user->administration == "Access Rights" ? "selected" : "" }}>Access Rights</option>
+                                            <option value="Settings" {{ $user->administration == "Settings" ? "selected" : "" }}>Settings</option>
                                         </select>
                                     </div>
                                 </div>
@@ -261,10 +270,11 @@
                                 <h5>Website</h5>
                                 <div class="row mt-1">
                                     <div class="col-md-12">
-                                        <label for="website">Website</label>
-                                        <select name="website" id="website" class="form-control">
+                                        <label for="website">Website:</label>
+                                        <span class="view_span">{{ $user->website }}</span>
+                                        <select name="website" id="website" class="form-control edit_input">
                                             <option>--Select--</option>
-                                            <option value="All">All</option>
+                                            <option value="All" {{ $user->website == "All" ? "selected" : "" }}>All</option>
                                         </select>
                                     </div>
                                 </div>
@@ -282,7 +292,15 @@
     $(document).ready(function (){
         $('#save').hide();
         $('#discard').hide();
-        $('.customer').hide();
+        if ($('#user_type_span').text().trim() !== 'customer')
+        {
+            $('.customer').hide();
+        }
+        else
+        {
+            $('.employee').hide();
+        }
+
         $('.edit_input').hide();
     });
 
