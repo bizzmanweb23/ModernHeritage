@@ -214,7 +214,7 @@ class DashboardController extends Controller
         return view('frontend.admin.customer.allCustomer',['allCustomer' => $customer]);  
     }
 
-    public function addcustomer(Request $request)
+    public function addCustomer(Request $request)
     {
         $countryCodes = CountryCode::get();
         $gst = GST::get();
@@ -232,7 +232,7 @@ class DashboardController extends Controller
     }
 
 
-    public function savecustomer(Request $request)
+    public function saveCustomer(Request $request)
     {       
         $data = $request->validate([
             'customer_type' => 'required',
@@ -352,7 +352,7 @@ class DashboardController extends Controller
                                                         ]);
     }
 
-    public function editcustomer(Request $request, $id)
+    public function editCustomer(Request $request, $id)
     {
         $data = $request->validate([
             'customer_name' => 'required',
@@ -368,7 +368,6 @@ class DashboardController extends Controller
                 'gst_treatment' => 'required'
             ]);
         }
-
         $customer = Customer::findOrFail($id);
         if($request->file('customer_image')){
             $file_type = $request->file('customer_image')->extension();
