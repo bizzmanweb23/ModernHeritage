@@ -24,25 +24,26 @@
 <div class="container-fluid d-flex flex-row flex-wrap">
     @foreach($allUser as $u )
         <div class="card m-2" style="width: 23rem">
-            <div class="card-body p-2">
-                <div class="row">
-                    {{-- <div class="col-sm-4">
-                        @if(isset($c->customer_image))
-                            <img src="{{ asset($c->customer_image) }}" alt="Product"
-                                style="height: 7rem; width:7rem">
-                        @else
-                            <img src="{{ asset('images/products/default.jpg') }}"
-                                alt="Product" style="height: 7rem; width:7rem">
-                        @endif
-                    </div> --}}
-                    <div class="col-sm-8">
-                        <p class="mb-0">{{ $u->user_name }}</p>
-                        <p class="mb-0">{{ $u->email }}</p>
-                        {{-- <p class="mb-0">{{ $u->language }}</p>
-                        <p class="mb-0">{{ $u->website }}</p> --}}
+            <a href="{{ url('/') }}/admin/userdetails/{{ $u->id }}">
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            @if(isset($u->customer_image))
+                                <img src="{{ asset($u->customer_image) }}" alt="Product"
+                                    style="height: 7rem; width:7rem">
+                            @else
+                                <img src="{{ asset('images/products/default.jpg') }}"
+                                    alt="Product" style="height: 7rem; width: 7rem">
+                            @endif
+                        </div>
+                        <div class="col-sm-8">
+                            <p class="mb-0">{{ $u->user_name }}</p>
+                            <p class="mb-0">{{ $u->email }}</p>
+                            <p class="mb-0">{{ $u->mobile }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     @endforeach
 </div>

@@ -31,7 +31,14 @@ class DashboardController extends Controller
 
     public function allUser()
     {
-        $allUser = User::where('role_id', '!=', 1)->get();
+        $customers = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
+                        ->where('users.user_type', 'customer')
+                        ->select('users.*','customers.customer_image', 'customers.mobile')
+                        ->get();
+        $allUser = [];
+        foreach ($customers as $c) {
+            array_push($allUser, $c);
+        }
         return view('frontend.admin.user.index', [
             'allUser' => $allUser,
         ]);
@@ -120,7 +127,6 @@ class DashboardController extends Controller
         $user->email = $data['email'];
         $user->password = Hash::make($data['password']);
         $user->user_type = $data['user_type'];
-        $user->phone = $request->country_code_m . $data['mobile'];
         if ($request->user_type == 'customer')
         {
             $user->user_id = $customer->unique_id;
@@ -145,76 +151,20 @@ class DashboardController extends Controller
         return redirect(route('index'));
     }
 
-
-    // public function userDetails(Request $request)
-    // {
-    //     if ($request->unique_id) {
-    //         $col_name = 'unique_id';
-    //         $col_value = $request->unique_id;
-    //     } elseif ($request->user_name) {
-    //         $col_name = 'user_name';
-    //         $col_value = $request->user_name;
-    //     }
-    //     else{
-    //         return redirect()->back();
-    //     }
-    //     $user = User::where($col_name, 'LIKE', '%'.$col_value.'%')->get();
-
-    //     return view('frontend.admin.dashboard.alluser', ['allUser' => $user]);
-    // }
-
-    // public function memberData(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-    //     $route = explode('/', $request->path())[0];
-
-    //     return view('frontend.admin.dashboard.memberData', [
-    //         'user' => $user,
-    //         'route' => $route,
-    //     ]);
-    // }
-
-    // public function editUser(Request $request, $id)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     $data = $request->validate([
-    //         'user_name' => 'required',
-    //         'lastname' => 'required',
-    //         'email' => 'required|email:rfc,dns',
-    //         'phone' => 'required',
-    //         'address' => 'required',
-    //         'state' => 'required',
-    //         'zipcode' => 'required',
-    //         'country' => 'required',
-    //     ]);
-
-    //     $user->user_name = $request->user_name;
-    //     $user->lastname = $request->lastname;
-    //     $user->email = $request->email;
-    //     $user->phone = $request->phone;
-    //     $user->address = $request->address;
-    //     $user->state = $request->state;
-    //     $user->zipcode = $request->zipcode;
-    //     $user->country = $request->country;
-    //     $user->device_id = $request->device_id;
-    //     $user->device_name = $request->device_name;
-
-    //     $user->save();
-
-    //     return redirect(route('users'));
-    // }
-
-    // public function userStatus($id, $status)
-    // {
-    //     $user = User::findOrFail($id);
-
-    //     $user->status = $status;
-
-    //     $user->save();
-
-    //     return redirect(route('users'));
-    // }
+    public function userData($id)
+    {
+        $u = User::findOrFail($id);
+        $countryCodes = CountryCode::get();
+        if($u->user_type == 'customer')
+        {
+            $user = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
+                        ->where('users.user_type', 'customer')
+                        ->where('users.id', $id)
+                        ->select('users.*','customers.customer_image', 'customers.mobile')
+                        ->first();
+        }
+        return view('frontend.admin.user.userData',['user' => $user, 'countryCodes' => $countryCodes]);
+    }
 
     // public function createRole()
     // {

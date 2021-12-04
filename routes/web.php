@@ -60,6 +60,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/index', [DashboardController::class,'allUser'])->name('index');
     Route::get('/addUser', [DashboardController::class,'addUser'])->name('addUser');
     Route::post('/saveUser', [DashboardController::class,'saveUser'])->name('saveUser');
+    Route::get('/userdetails/{id}', [DashboardController::class,'userData']);
 
     //admin--role
     Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
