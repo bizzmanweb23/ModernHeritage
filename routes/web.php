@@ -47,6 +47,13 @@ Route::group(['prefix' => 'admin'], function () {
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
+    //admin--userManagement
+    Route::get('/index', [DashboardController::class,'allUser'])->name('index');
+    Route::get('/addUser', [DashboardController::class,'addUser'])->name('addUser');
+    Route::post('/saveUser', [DashboardController::class,'saveUser'])->name('saveUser');
+    Route::get('/userdetails/{id}', [DashboardController::class,'userData']);
+    Route::post('/useredit/{id}', [DashboardController::class,'editUser']);
+
     //admin--customerManagement
     Route::get('/allcustomers', [DashboardController::class,'allCustomerDetails'])->name('allcustomer');
     Route::get('/customer', [DashboardController::class,'customerDetails'])->name('customer');
@@ -56,12 +63,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/customeredit/{id}', [DashboardController::class,'editCustomer']);
     Route::get('/customerstatus/{id}/{status}', [DashboardController::class,'customerStatus']);
 
-    //admin--userManagement
-    Route::get('/index', [DashboardController::class,'allUser'])->name('index');
-    Route::get('/addUser', [DashboardController::class,'addUser'])->name('addUser');
-    Route::post('/saveUser', [DashboardController::class,'saveUser'])->name('saveUser');
-    Route::get('/userdetails/{id}', [DashboardController::class,'userData']);
-    Route::post('/useredit/{id}', [DashboardController::class,'editUser']);
+    //admin--employeeManagement
+    Route::get('/allEmployee', [DashboardController::class,'allEmployee'])->name('allEmployee');
+    Route::get('/addEmployee', [DashboardController::class,'addEmployee'])->name('addEmployee');
+
 
     //admin--role
     Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');

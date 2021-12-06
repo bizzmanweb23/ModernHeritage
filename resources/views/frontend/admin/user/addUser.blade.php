@@ -21,7 +21,7 @@
     }
 
 </style>
-<form action="{{ route('saveUser') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('saveUser') }}" method="POST" enctype="multipart/form-data" id="addUser">
     @csrf
     <div class="container">
         <div class="card">
@@ -30,9 +30,18 @@
                     <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
                             aria-hidden="true"></i>Save</button>
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ route('index') }}"><i
-                            class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
+                        href="{{ route('index') }}"><i class="fas fa-arrow-left text-dark me-2"
+                            aria-hidden="true"></i>Back</a>
                 </div>
+                @if($errors->any())
+                    <div class="alert alert-warning">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="row mt-1">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -68,15 +77,17 @@
                             <label for="mobile">Mobile</label>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <select name="country_code_m" class="form-control"  id="country_code_m">
+                                    <select name="country_code_m" class="form-control" id="country_code_m">
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
-                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})</option>
+                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
+                                    <input type="text" class="form-control" id="mobile" name="mobile"
+                                        placeholder="Mobile" required>
                                 </div>
                             </div>
                         </div>
@@ -86,15 +97,15 @@
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-                                required>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required>
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="form-group">
                             <label for="confirm_password">Confirm Password:</label>
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                placeholder="Confirm Password" required>
+                                placeholder="Confirm Password" required data-rule-equalTo="#password">
                         </div>
                     </div>
                 </div>
@@ -155,7 +166,8 @@
                                 <div class="row mt-1">
                                     <div class="col-md-12">
                                         <label for="bom_purchase_request">BOM Purchase Request</label>
-                                        <select name="bom_purchase_request" id="bom_purchase_request" class="form-control">
+                                        <select name="bom_purchase_request" id="bom_purchase_request"
+                                            class="form-control">
                                             <option>--Select--</option>
                                             <option value="BOM Request User">BOM Request User</option>
                                             <option value="BOM Request Manager">BOM Request Manager</option>
@@ -273,23 +285,32 @@
 </form>
 
 <script>
-    $(document).ready(function (){
+    $(document).ready(function () {
         $('.customer').hide();
     });
 
-    $('#customer').click(function (){
+    $('#customer').click(function () {
         $('.employee').hide();
         $('.customer').show();
     });
 
-    $('#employee').click(function (){
+    $('#employee').click(function () {
         $('.customer').hide();
         $('.employee').show();
     });
-    $('#others').click(function (){
+    $('#others').click(function () {
         $('.customer').hide();
         $('.employee').show();
     });
+
+    // $('#confirm_password').on('input', function (){
+    //     console.log($('#confirm_password').val());
+    //     var password = $('#password').val();
+    //     var confirm_password = $('#confirm_password').val();
+    //     if (password !== confirm_password) {
+    //         $('#confirm_password').focus();
+    //     }
+    // });
 
 </script>
 @endsection

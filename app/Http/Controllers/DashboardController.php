@@ -57,9 +57,11 @@ class DashboardController extends Controller
             'email' => 'required|email:rfc,dns',
             'country_code_m' => 'required',
             'mobile' => 'required',
-            'password' => 'required',
+            'password' => 'required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'required',
             'user_type' => 'required',            
         ]);
+        //dd('mou');
 
         if ($request->user_type == 'customer')
         {
@@ -207,7 +209,6 @@ class DashboardController extends Controller
             'email' => 'required|email:rfc,dns',
             'country_code_m' => 'required',
             'mobile' => 'required',
-            'password' => 'required',
             'user_type' => 'required',            
         ]);
 
@@ -268,22 +269,16 @@ class DashboardController extends Controller
         $user->user_name = $data['user_name'];
         $user->email = $data['email'];
         $user->user_type = $data['user_type'];
-        if ($request->user_type == 'employee')
-        {
-            $user->sales = $request->sales;
-            $user->project = $request->project;
-            $user->inventory = $request->inventory;
-            $user->purchase = $request->purchase;
-            $user->employees = $request->employees;
-            $user->bom_purchase_request = $request->bom_purchase_request;
-            $user->invoicing = $request->invoicing;
-            $user->administration = $request->administration;
-        }
-        elseif ($request->user_type == 'customer')
-        {
-            $user->website = $request->website;
-        }
-        
+        $user->sales = $request->sales;
+        $user->project = $request->project;
+        $user->inventory = $request->inventory;
+        $user->purchase = $request->purchase;
+        $user->employees = $request->employees;
+        $user->bom_purchase_request = $request->bom_purchase_request;
+        $user->invoicing = $request->invoicing;
+        $user->administration = $request->administration;
+        $user->website = $request->website;
+    
         $user->save();
 
         return redirect(route('index'));
@@ -364,6 +359,7 @@ class DashboardController extends Controller
             'country_code_m' => 'required',
             'mobile' => 'required',
             'email' => 'required|email:rfc,dns|unique:customers,email',
+            'password' => 'required',
         ]);
         if ($request->customer_type=='company') 
         {
@@ -385,6 +381,33 @@ class DashboardController extends Controller
         } else {
             $number = "MHC" . sprintf("%05d", $number + 1);
         }
+
+        //user table unique_id
+        $unique_id_user = User::orderBy('id', 'desc')->first();
+        if($unique_id_user)
+        {
+            $number_user = str_replace('MHU', '', $unique_id_user->unique_id);
+        }
+        else
+        {
+            $number_user = 0;
+        }
+        if ($number_user == 0) {
+            $number_user = 'MHU00001';
+        } else {
+            $number_user = "MHU" . sprintf("%05d", $number_user + 1);
+        }
+
+        $user = new User;
+        $user->unique_id = $number_user;
+        $user->user_name = $data['customer_name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->user_id = $number;
+        $user->status = 1;
+        $user->user_type = "customer";
+        $user->role_id = 2;
+        $user->save();
 
         if($request->file('customer_image')){
             $file_type = $request->file('customer_image')->extension();
@@ -557,6 +580,18 @@ class DashboardController extends Controller
 
         return redirect(route('allcustomer'));
     }
+
+    //employeeManagement
+    public function allEmployee()
+    {
+        return view('frontend.admin.employee.index');
+    }
+
+    public function addEmployee()
+    {
+        return view('frontend.admin.employee.addEmployee');
+    }
+    
 
 
 }

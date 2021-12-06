@@ -21,7 +21,7 @@
         </div>
     </div>
 </form>
-<div class="container-fluid d-flex flex-row flex-wrap">
+<div class= "d-flex flex-row flex-wrap">
     @foreach($allUser as $u )
         <div class="card m-2" style="width: 23rem">
             <a href="{{ url('/') }}/admin/userdetails/{{ $u->id }}">

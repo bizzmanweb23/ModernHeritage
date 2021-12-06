@@ -3,22 +3,23 @@
 @section('content')
 <style>
     .upload {
-  height: 100px;
-  width: 100px; 
-  position: relative;
-}
+        height: 100px;
+        width: 100px;
+        position: relative;
+    }
 
-.upload:hover > .edit {
-  display: block;
-}
+    .upload:hover>.edit {
+        display: block;
+    }
 
-.edit {
-  display: none;
-  position: absolute;
-  top: 1px;
-  right: 1px;
-  cursor: pointer;
-}
+    .edit {
+        display: none;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        cursor: pointer;
+    }
+
 </style>
 <form action="{{ route('savecustomer') }}" method="POST" enctype="multipart/form-data">
     @csrf
@@ -29,13 +30,23 @@
                     <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
                             aria-hidden="true"></i>Save</button>
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ route('allcustomer') }}"><i
-                            class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
+                        href="{{ route('allcustomer') }}"><i class="fas fa-arrow-left text-dark me-2"
+                            aria-hidden="true"></i>Back</a>
                 </div>
+                @if($errors->any())
+                    <div class="alert alert-warning">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="customer_type" id="customertype1" value="individual" checked>
+                            <input class="form-check-input" type="radio" name="customer_type" id="customertype1"
+                                value="individual" checked>
                             <label class="form-check-label" for="customer_type">
                                 Individual
                             </label>
@@ -43,7 +54,8 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="customer_type" id="customertype2" value="company">
+                            <input class="form-check-input" type="radio" name="customer_type" id="customertype2"
+                                value="company">
                             <label class="form-check-label" for="customer_type">
                                 Company
                             </label>
@@ -53,20 +65,22 @@
                     </div>
                     <div class="col-md-2">
                         <div class="upload">
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 100px; width:100px">
+                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                                style="height: 100px; width:100px">
                             <label for="customer_image" class="edit">
-                                <i class="fas fa-pencil-alt"></i>                    
+                                <i class="fas fa-pencil-alt"></i>
                                 <input id="customer_image" type="file" style="display: none" name="customer_image">
-                            </label> 
+                            </label>
                         </div>
-                    </div> 
+                    </div>
                 </div>
-                
+
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="customer_name">Name</label>
-                            <input type="text" class="form-control" id="customer_name" name="customer_name" placeholder="Name" required>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name"
+                                placeholder="Name" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -74,37 +88,40 @@
                             <label for="mobile">Mobile</label>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <select name="country_code_m" class="form-control"  id="country_code_m">
+                                    <select name="country_code_m" class="form-control" id="country_code_m">
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
-                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})</option>
+                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
+                                    <input type="text" class="form-control" id="mobile" name="mobile"
+                                        placeholder="Mobile" required>
                                 </div>
                             </div>
                         </div>
-                    </div>       
+                    </div>
                 </div>
-            
+
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="address">Address</label>
                             <input type="text" class="form-control" id="address" name="address"
                                 placeholder="Street Name, House No, Door No, City" required>
-                        </div>         
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                required>
                         </div>
                     </div>
                 </div>
-            
+
                 <div class="row mt-1">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -126,25 +143,42 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required>
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group company" id="gst">
                             <label for="gst">GST Treatment</label>
                             <select name="gst_treatment" id="gst_treatment" class="form-control">
                                 <option value=""> --Select-- </option>
-                                        @foreach($gst as $g)
-                                            <option value="{{ $g->gst_treatment }}">{{ $g->gst_treatment }}</option>
-                                        @endforeach
+                                @foreach($gst as $g)
+                                    <option value="{{ $g->gst_treatment }}">{{ $g->gst_treatment }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">            
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="form-group company">
+                            <label for="gst_no">GST No.</label>
+                            <input type="text" class="form-control" id="gst_no" name="gst_no"
+                                placeholder="Enter GST No.">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="website">Tags</label>
                             <select multiple="multiple" name="tag[]" id="tag" class="form-control">
@@ -155,15 +189,6 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="row mt-1">
-                    <div class="col-md-6">
-                        <div class="form-group company">
-                            <label for="gst_no">GST No.</label>
-                            <input type="text" class="form-control" id="gst_no" name="gst_no" placeholder="Enter GST No.">
-                        </div> 
                     </div>
                 </div>
 
@@ -185,37 +210,42 @@
                     <div id="contact_address" class="container tab-pane active"><br>
                         <div style="display: flex; flex-wrap: no-wrap;">
                             <div class="form-check mr-2">
-                                <input class="form-check-input contact_radio" type="radio" name="contact_type" id="contact" value="contact" checked>
+                                <input class="form-check-input contact_radio" type="radio" name="contact_type"
+                                    id="contact" value="contact" checked>
                                 <label class="form-check-label" for="contact_type">
                                     Contact
                                 </label>
                             </div>
                             <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type" id="invoice" value="invoice">
+                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
+                                    id="invoice" value="invoice">
                                 <label class="form-check-label" for="contact_type">
                                     Invoice Address
                                 </label>
                             </div>
                             <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type" id="delivery" value="delivery">
+                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
+                                    id="delivery" value="delivery">
                                 <label class="form-check-label" for="contact_type">
                                     Delivery Address
                                 </label>
                             </div>
                             <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type" id="other" value="other">
+                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
+                                    id="other" value="other">
                                 <label class="form-check-label" for="contact_type">
                                     Other Address
                                 </label>
                             </div>
                             <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type" id="private" value="private">
+                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
+                                    id="private" value="private">
                                 <label class="form-check-label" for="contact_type">
                                     Private Address
                                 </label>
                             </div>
-                        </div>                        
-                        
+                        </div>
+
                         <div class="row">
                             <div class="col-md-10">
                                 <div class="row mt-2">
@@ -225,7 +255,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="contact_email">Email</label>
-                                        <input type="email" class="form-control" name="contact_email" id="contact_email">
+                                        <input type="email" class="form-control" name="contact_email"
+                                            id="contact_email">
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -242,7 +273,8 @@
                                         </div>
                                         <div class="notcontact">
                                             <label for="contact_address">Address</label>
-                                            <input type="text" class="form-control" name="contact_address" id="contact_address">
+                                            <input type="text" class="form-control" name="contact_address"
+                                                id="contact_address">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -252,8 +284,9 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-md-6 contact">
-                                            <label for="contact_job_position">Job Position</label>
-                                            <input type="text" class="form-control" name="contact_job_position" id="contact_job_position">
+                                        <label for="contact_job_position">Job Position</label>
+                                        <input type="text" class="form-control" name="contact_job_position"
+                                            id="contact_job_position">
                                     </div>
                                     <div class="col-md-2 notcontact">
                                         <label for="contact_state">State</label>
@@ -261,15 +294,18 @@
                                     </div>
                                     <div class="col-md-2 notcontact">
                                         <label for="contact_zipcode">Zipcode</label>
-                                        <input type="text" class="form-control" name="contact_zipcode" id="contact_zipcode">
+                                        <input type="text" class="form-control" name="contact_zipcode"
+                                            id="contact_zipcode">
                                     </div>
                                     <div class="col-md-2 notcontact">
                                         <label for="contact_country">Country</label>
-                                        <input type="text" class="form-control" name="contact_country" id="contact_country">
+                                        <input type="text" class="form-control" name="contact_country"
+                                            id="contact_country">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="contact_mobile">Mobile</label>
-                                        <input type="text" class="form-control" name="contact_mobile" id="contact_mobile">
+                                        <input type="text" class="form-control" name="contact_mobile"
+                                            id="contact_mobile">
                                     </div>
                                 </div>
                                 <div class="row mt-2">
@@ -283,17 +319,19 @@
                                 <div class="row mt-2">
                                     <div class="col-md-2">
                                         <div class="upload">
-                                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 100px; width:100px">
+                                            <img src="{{ asset('images/products/default.jpg') }}"
+                                                alt="Product" style="height: 100px; width:100px">
                                             <label for="contact_image" class="edit">
-                                                <i class="fas fa-pencil-alt"></i>                    
-                                                <input id="contact_image" type="file" style="display: none" name="contact_image">
-                                            </label> 
+                                                <i class="fas fa-pencil-alt"></i>
+                                                <input id="contact_image" type="file" style="display: none"
+                                                    name="contact_image">
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
 
                     {{-- sales --}}
@@ -324,12 +362,13 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="paymentTerms">Payment Terms:</label>
-                                    <select name="paymentTerms" id="paymentTerms" class="form-control">
-                                        <option value=""> --Select-- </option>
-                                        @foreach($paymentTerms as $pt)
-                                            <option value="{{ $pt->terms_of_payment }}">{{ $pt->terms_of_payment }}</option>
-                                        @endforeach
-                                    </select>
+                                <select name="paymentTerms" id="paymentTerms" class="form-control">
+                                    <option value=""> --Select-- </option>
+                                    @foreach($paymentTerms as $pt)
+                                        <option value="{{ $pt->terms_of_payment }}">{{ $pt->terms_of_payment }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -366,7 +405,6 @@
         placeholder: "Select a Tag",
         allowClear: true
     });
-
 
 </script>
 @endsection
