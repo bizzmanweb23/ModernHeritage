@@ -283,36 +283,36 @@
                             <div class="mt-2 mb-2">
                                 <div style="display: flex; flex-wrap: no-wrap;">
                                     <div class="form-check mr-2">
-                                        <input class="form-check-input contact_radio" type="radio" name="contact_type${window.count}"
-                                            id="contact${window.count}" value="contact" checked>
+                                        <input class="form-check-input contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="contact${window.count}" value="contact" onclick="contact_radio_click(${window.count})" checked>
                                         <label class="form-check-label" for="contact_type">
                                             Contact
                                         </label>
                                     </div>
                                     <div class="form-check mr-2">
-                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
-                                            id="invoice${window.count}" value="invoice">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="invoice${window.count}" value="invoice" onclick="not_contact_radio_click(${window.count})">
                                         <label class="form-check-label" for="contact_type">
                                             Invoice Address
                                         </label>
                                     </div>
                                     <div class="form-check mr-2">
-                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
-                                            id="delivery${window.count}" value="delivery">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="delivery${window.count}" value="delivery" onclick="not_contact_radio_click(${window.count})">
                                         <label class="form-check-label" for="contact_type">
                                             Delivery Address
                                         </label>
                                     </div>
                                     <div class="form-check mr-2">
-                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
-                                            id="other${window.count}" value="other">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="other${window.count}" value="other" onclick="not_contact_radio_click(${window.count})">
                                         <label class="form-check-label" for="contact_type">
                                             Other Address
                                         </label>
                                     </div>
                                     <div class="form-check mr-2">
-                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
-                                            id="private${window.count}" value="private">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="private${window.count}" value="private" onclick="not_contact_radio_click(${window.count})">
                                         <label class="form-check-label" for="contact_type">
                                             Private Address
                                         </label>
@@ -339,7 +339,7 @@
                                         </div>
                                         <div class="row mt-2">
                                             <div class="col-md-6">
-                                                <div class="contact">
+                                                <div class="contact${window.count}">
                                                     <label for="contact_title">Title</label>
                                                     <select name="contact_title${window.count}" id="contact_title${window.count}" class="form-control">
                                                         <option value="Mr.">Mister</option>
@@ -349,7 +349,7 @@
                                                         <option value="Prof.">Professor</option>
                                                     </select>
                                                 </div>
-                                                <div class="notcontact">
+                                                <div class="notcontact${window.count}">
                                                     <label for="contact_address">Address</label>
                                                     <input type="text" class="form-control" name="contact_address${window.count}"
                                                         id="contact_address${window.count}">
@@ -361,21 +361,21 @@
                                             </div>
                                         </div>
                                         <div class="row mt-2">
-                                            <div class="col-md-6 contact">
+                                            <div class="col-md-6 contact${window.count}">
                                                 <label for="contact_job_position">Job Position</label>
                                                 <input type="text" class="form-control" name="contact_job_position${window.count}"
                                                     id="contact_job_position${window.count}">
                                             </div>
-                                            <div class="col-md-2 notcontact">
+                                            <div class="col-md-2 notcontact${window.count}">
                                                 <label for="contact_state">State</label>
                                                 <input type="text" class="form-control" name="contact_state${window.count}" id="contact_state${window.count}">
                                             </div>
-                                            <div class="col-md-2 notcontact">
+                                            <div class="col-md-2 notcontact${window.count}">
                                                 <label for="contact_zipcode">Zipcode</label>
                                                 <input type="text" class="form-control" name="contact_zipcode${window.count}"
                                                     id="contact_zipcode${window.count}">
                                             </div>
-                                            <div class="col-md-2 notcontact">
+                                            <div class="col-md-2 notcontact${window.count}">
                                                 <label for="contact_country">Country</label>
                                                 <input type="text" class="form-control" name="contact_country${window.count}"
                                                     id="contact_country${window.count}">
@@ -413,20 +413,29 @@
                             <hr>
                         `);
                     
-        $('.notcontact').hide();
+        $(`.notcontact${window.count}`).hide();
 
-        $('.contact_radio').click(function () {
-            $('.contact').show();
-            $('.notcontact').hide();
-        });
-
-        $('.not_contact_radio').click(function () {
-            $('.contact').hide();
-            $('.notcontact').show();
-        });
+        
     });
 
+    function contact_radio_click(count) {
+        $(`.contact`+count).show();
+        $(`.notcontact`+count).hide();
+    };
+    function not_contact_radio_click(count) {
+        $(`.contact`+count).hide();
+        $(`.notcontact`+count).show();
+    };
 
+    // $(`.contact_radio${window.count}`).click(function () {
+    //     $(`.contact${window.count}`).show();
+    //     $(`.notcontact${window.count}`).hide();
+    // });
+
+    // $(`.not_contact_radio${window.count}`).click(function () {
+    //     $(`.contact${window.count}`).hide();
+    //     $(`.notcontact${window.count}`).show();
+    // });
     $('#tag').select2({
         width: '100%',
         placeholder: "Select a Tag",
