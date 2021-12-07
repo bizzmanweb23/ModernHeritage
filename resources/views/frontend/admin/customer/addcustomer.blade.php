@@ -208,129 +208,14 @@
 
                     {{-- contact_address --}}
                     <div id="contact_address" class="container tab-pane active"><br>
-                        <div style="display: flex; flex-wrap: no-wrap;">
-                            <div class="form-check mr-2">
-                                <input class="form-check-input contact_radio" type="radio" name="contact_type"
-                                    id="contact" value="contact" checked>
-                                <label class="form-check-label" for="contact_type">
-                                    Contact
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                    id="invoice" value="invoice">
-                                <label class="form-check-label" for="contact_type">
-                                    Invoice Address
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                    id="delivery" value="delivery">
-                                <label class="form-check-label" for="contact_type">
-                                    Delivery Address
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                    id="other" value="other">
-                                <label class="form-check-label" for="contact_type">
-                                    Other Address
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                    id="private" value="private">
-                                <label class="form-check-label" for="contact_type">
-                                    Private Address
-                                </label>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label for="contact_name">Contact Name</label>
-                                        <input type="text" class="form-control" name="contact_name" id="contact_name">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="contact_email">Email</label>
-                                        <input type="email" class="form-control" name="contact_email"
-                                            id="contact_email">
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <div class="contact">
-                                            <label for="contact_title">Title</label>
-                                            <select name="contact_title" id="contact_title" class="form-control">
-                                                <option value="Mr.">Mister</option>
-                                                <option value="Ms.">Miss</option>
-                                                <option value="Mrs.">Madam</option>
-                                                <option value="Dr.">Doctor</option>
-                                                <option value="Prof.">Professor</option>
-                                            </select>
-                                        </div>
-                                        <div class="notcontact">
-                                            <label for="contact_address">Address</label>
-                                            <input type="text" class="form-control" name="contact_address"
-                                                id="contact_address">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="contact_phone">Phone</label>
-                                        <input type="text" class="form-control" name="contact_phone" id="contact_phone">
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-6 contact">
-                                        <label for="contact_job_position">Job Position</label>
-                                        <input type="text" class="form-control" name="contact_job_position"
-                                            id="contact_job_position">
-                                    </div>
-                                    <div class="col-md-2 notcontact">
-                                        <label for="contact_state">State</label>
-                                        <input type="text" class="form-control" name="contact_state" id="contact_state">
-                                    </div>
-                                    <div class="col-md-2 notcontact">
-                                        <label for="contact_zipcode">Zipcode</label>
-                                        <input type="text" class="form-control" name="contact_zipcode"
-                                            id="contact_zipcode">
-                                    </div>
-                                    <div class="col-md-2 notcontact">
-                                        <label for="contact_country">Country</label>
-                                        <input type="text" class="form-control" name="contact_country"
-                                            id="contact_country">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="contact_mobile">Mobile</label>
-                                        <input type="text" class="form-control" name="contact_mobile"
-                                            id="contact_mobile">
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label for="contact_notes">Notes</label>
-                                        <input type="text" class="form-control" name="contact_notes" id="contact_notes">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="row mt-2">
-                                    <div class="col-md-2">
-                                        <div class="upload">
-                                            <img src="{{ asset('images/products/default.jpg') }}"
-                                                alt="Product" style="height: 100px; width:100px">
-                                            <label for="contact_image" class="edit">
-                                                <i class="fas fa-pencil-alt"></i>
-                                                <input id="contact_image" type="file" style="display: none"
-                                                    name="contact_image">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <input type="hidden" name="address_row_count" id="address_row_count" value=0>
+                        <div id="more_address"></div>
+                        
+                        <a class="btn btn-link text-dark px-3 mb-0" id="add_more" href="#">
+                            <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
+                            Add Address
+                        </a>
 
                     </div>
 
@@ -380,7 +265,6 @@
 <script>
     $(document).ready(function () {
         $('.company').hide();
-        $('.notcontact').hide();
         $('#customertype1').click(function () {
             $('.company').hide();
         });
@@ -388,6 +272,148 @@
         $('#customertype2').click(function () {
             $('.company').show();
         });
+    });
+
+    window.count = 0;
+    $('#add_more').click(function () {
+        window.count++;
+        console.log(window.count);
+        $('#address_row_count').val(window.count);
+        $('#more_address').append(`
+                            <div class="mt-2 mb-2">
+                                <div style="display: flex; flex-wrap: no-wrap;">
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input contact_radio" type="radio" name="contact_type${window.count}"
+                                            id="contact${window.count}" value="contact" checked>
+                                        <label class="form-check-label" for="contact_type">
+                                            Contact
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
+                                            id="invoice${window.count}" value="invoice">
+                                        <label class="form-check-label" for="contact_type">
+                                            Invoice Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
+                                            id="delivery${window.count}" value="delivery">
+                                        <label class="form-check-label" for="contact_type">
+                                            Delivery Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
+                                            id="other${window.count}" value="other">
+                                        <label class="form-check-label" for="contact_type">
+                                            Other Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio" type="radio" name="contact_type${window.count}"
+                                            id="private${window.count}" value="private">
+                                        <label class="form-check-label" for="contact_type">
+                                            Private Address
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-6">
+                                        <label for="contact_description">Contact Description</label>
+                                        <input type="text" class="form-control" name="contact_description${window.count}" id="contact_description${window.count}" placeholder="e.g. Invoice Address 1 or Delivery Address 1">
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-10">
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <label for="contact_name">Contact Name</label>
+                                                <input type="text" class="form-control" name="contact_name${window.count}" id="contact_name${window.count}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_email">Email</label>
+                                                <input type="email" class="form-control" name="contact_email${window.count}"
+                                                    id="contact_email${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <div class="contact">
+                                                    <label for="contact_title">Title</label>
+                                                    <select name="contact_title${window.count}" id="contact_title${window.count}" class="form-control">
+                                                        <option value="Mr.">Mister</option>
+                                                        <option value="Ms.">Miss</option>
+                                                        <option value="Mrs.">Madam</option>
+                                                        <option value="Dr.">Doctor</option>
+                                                        <option value="Prof.">Professor</option>
+                                                    </select>
+                                                </div>
+                                                <div class="notcontact">
+                                                    <label for="contact_address">Address</label>
+                                                    <input type="text" class="form-control" name="contact_address${window.count}"
+                                                        id="contact_address${window.count}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_phone">Phone</label>
+                                                <input type="text" class="form-control" name="contact_phone${window.count}" id="contact_phone${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6 contact">
+                                                <label for="contact_job_position">Job Position</label>
+                                                <input type="text" class="form-control" name="contact_job_position${window.count}"
+                                                    id="contact_job_position${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact">
+                                                <label for="contact_state">State</label>
+                                                <input type="text" class="form-control" name="contact_state${window.count}" id="contact_state${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact">
+                                                <label for="contact_zipcode">Zipcode</label>
+                                                <input type="text" class="form-control" name="contact_zipcode${window.count}"
+                                                    id="contact_zipcode${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact">
+                                                <label for="contact_country">Country</label>
+                                                <input type="text" class="form-control" name="contact_country${window.count}"
+                                                    id="contact_country${window.count}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_mobile">Mobile</label>
+                                                <input type="text" class="form-control" name="contact_mobile${window.count}"
+                                                    id="contact_mobile${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <label for="contact_notes">Notes</label>
+                                                <input type="text" class="form-control" name="contact_notes${window.count}" id="contact_notes${window.count}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="row mt-2">
+                                            <div class="col-md-2">
+                                                <div class="upload">
+                                                    <img src="{{ asset('images/products/default.jpg') }}"
+                                                        alt="Product" style="height: 100px; width:100px">
+                                                    <label for="contact_image${window.count}" class="edit">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                        <input id="contact_image${window.count}" type="file" style="display: none"
+                                                            name="contact_image${window.count}">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        `);
+                    
+        $('.notcontact').hide();
 
         $('.contact_radio').click(function () {
             $('.contact').show();
@@ -399,6 +425,7 @@
             $('.notcontact').show();
         });
     });
+
 
     $('#tag').select2({
         width: '100%',

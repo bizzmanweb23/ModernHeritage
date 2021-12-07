@@ -9,6 +9,7 @@ use App\Models\Role;
 use App\Models\GST;
 use App\Models\Tag;
 use App\Models\Customer;
+use App\Models\CustomerContact;
 use App\Models\PaymentTerms;
 use App\Models\SalesPerson;
 use App\Models\DeliveryMethod;
@@ -61,7 +62,6 @@ class DashboardController extends Controller
             'confirm_password' => 'required',
             'user_type' => 'required',            
         ]);
-        //dd('mou');
 
         if ($request->user_type == 'customer')
         {
@@ -419,16 +419,6 @@ class DashboardController extends Controller
             $file_path = null;
         }
 
-        if($request->file('contact_image')){
-            $file_type_contact = $request->file('contact_image')->extension();
-            $file_path_contact = $request->file('contact_image')->storeAs('images/contact',$number.'.'.$file_type_contact,'public');
-            $request->file('contact_image')->move(public_path('images/contact'),$number.'.'.$file_type_contact);
-        }
-        else
-        {
-            $file_path_contact = null;
-        }
-
         $customer = new Customer;
         $customer->customer_type = $data['customer_type'];
         $customer->unique_id = $number;
@@ -443,25 +433,42 @@ class DashboardController extends Controller
         $customer->email = $data['email'];
         $customer->website = $request->website;
         $customer->customer_image = $file_path;
-        $customer->contact_image = $file_path_contact;
         $customer->status = 1;
         $customer->tags = json_encode($request->tag);  
         $customer->salesperson = $request->salesperson;  
         $customer->deliveryMethod = $request->deliveryMethod; 
         $customer->payment_terms = $request->paymentTerms; 
-        $customer->contact_type = $request->contact_type;  
-        $customer->contact_name = $request->contact_name;  
-        $customer->contact_email = $request->contact_email;  
-        $customer->contact_title = $request->contact_title;  
-        $customer->contact_address = $request->contact_address;  
-        $customer->contact_phone = $request->contact_phone;  
-        $customer->contact_job_position = $request->contact_job_position;  
-        $customer->contact_state = $request->contact_state;  
-        $customer->contact_zipcode = $request->contact_zipcode;  
-        $customer->contact_country = $request->contact_country;  
-        $customer->contact_mobile = $request->contact_mobile;  
-        $customer->contact_notes = $request->contact_notes;  
         $customer->save();
+
+        for ($i=1; $i <= $request->address_row_count; $i++) {
+            $str_time = time();
+            if($request->file('contact_image'.$i)){
+                $file_type_contact = $request->file('contact_image'.$i)->extension();
+                $file_path_contact = $request->file('contact_image'.$i)->storeAs('images/contacts',$number.$str_time.'.'.$file_type_contact,'public');
+                $request->file('contact_image'.$i)->move(public_path('images/contacts'),$number.$str_time.'.'.$file_type_contact);
+            }
+            else
+            {
+                $file_path_contact = null;
+            }
+            $customer_contact = new CustomerContact;
+            $customer_contact->customer_id = $customer->id;
+            $customer_contact->contact_description = $request->input('contact_description'.$i);
+            $customer_contact->contact_type = $request->input('contact_type'.$i);  
+            $customer_contact->contact_name = $request->input('contact_name'.$i);  
+            $customer_contact->contact_email = $request->input('contact_email'.$i);  
+            $customer_contact->contact_title = $request->input('contact_title'.$i);  
+            $customer_contact->contact_address = $request->input('contact_address'.$i);  
+            $customer_contact->contact_phone = $request->input('contact_phone'.$i);  
+            $customer_contact->contact_job_position = $request->input('contact_job_position'.$i);  
+            $customer_contact->contact_state = $request->input('contact_state'.$i);  
+            $customer_contact->contact_zipcode = $request->input('contact_zipcode'.$i);  
+            $customer_contact->contact_country = $request->input('contact_country'.$i);  
+            $customer_contact->contact_mobile = $request->input('contact_mobile'.$i);  
+            $customer_contact->contact_notes = $request->input('contact_notes'.$i);  
+            $customer->contact_image = $file_path_contact;
+            $customer_contact->save();
+        }
 
         return redirect(route('allcustomer'));
     }
