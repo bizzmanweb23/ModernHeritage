@@ -22,14 +22,14 @@
     </div>
 </form>
 <div class= "d-flex flex-row flex-wrap">
-    {{-- @foreach($allUser as $u )
+    @foreach($employees as $e )
         <div class="card m-2" style="width: 23rem">
-            <a href="{{ url('/') }}/admin/userdetails/{{ $u->id }}">
+            <a href="#">
                 <div class="card-body p-2">
                     <div class="row">
                         <div class="col-sm-4">
-                            @if(isset($u->customer_image))
-                                <img src="{{ asset($u->customer_image) }}" alt="Product"
+                            @if(isset($e->emp_image))
+                                <img src="{{ asset($e->emp_image) }}" alt="Product"
                                     style="height: 7rem; width:7rem">
                             @else
                                 <img src="{{ asset('images/products/default.jpg') }}"
@@ -37,14 +37,14 @@
                             @endif
                         </div>
                         <div class="col-sm-8">
-                            <p class="mb-0">{{ $u->user_name }}</p>
-                            <p class="mb-0">{{ $u->email }}</p>
-                            <p class="mb-0">{{ $u->mobile }}</p>
+                            <p class="mb-0">{{ $e->emp_name }}</p>
+                            <p class="mb-0">{{ $e->work_email }}</p>
+                            <p class="mb-0">{{ $e->work_mobile }}</p>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
-    @endforeach --}}
+    @endforeach
 </div>
 @endsection

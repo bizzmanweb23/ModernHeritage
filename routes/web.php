@@ -65,8 +65,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/customerstatus/{id}/{status}', [DashboardController::class,'customerStatus']);
 
     //admin--employeeManagement
-    Route::get('/allEmployee', [DashboardController::class,'allEmployee'])->name('allEmployee');
-    Route::get('/addEmployee', [DashboardController::class,'addEmployee'])->name('addEmployee');
+    Route::get('/allemployee', [DashboardController::class,'allEmployee'])->name('allEmployee');
+    Route::get('/addemployee', [DashboardController::class,'addEmployee'])->name('addEmployee');
+    Route::post('/addemployee', [DashboardController::class,'saveEmployee'])->name('saveEmployee');
 
 
     //admin--role
