@@ -475,7 +475,13 @@ class DashboardController extends Controller
 
     public function customerData(Request $request,$id)
     {
-        $customer = customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
+        $customer_contacts = CustomerContact::where('customer_id', $id)->get();
+        foreach($customer_contacts as $contacts){
+            $i = 1;
+            $contacts->index = $i;
+            $i++;
+        }
         $route = explode("/",$request->path())[0];
         $countryCodes = CountryCode::get();
         $gst = GST::get();
@@ -493,6 +499,7 @@ class DashboardController extends Controller
             }
         }
         return view('frontend.admin.customer.customerData', ['customer' => $customer, 
+                                                            'customer_contacts' => $customer_contacts,
                                                             'route' => $route,
                                                             'countryCodes' => $countryCodes,
                                                             'gst' => $gst,
@@ -504,6 +511,14 @@ class DashboardController extends Controller
                                                             'paymentTerms' => $paymentTerms
                                                         ]);
     }
+
+    // public function getCustomerContacts(Request $request)
+    // {
+    //     $customer_id = $request->customer_id;
+    //     $customer_contacts = CustomerContact::where('customer_id', $customer_id)->get();
+    //     info($customer_contacts);
+    //     echo json_encode($customer_contacts);
+    // }
 
     public function editCustomer(Request $request, $id)
     {
@@ -579,7 +594,7 @@ class DashboardController extends Controller
 
     public function customerStatus($id,$status)
     {
-        $customer = customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
 
         $customer->status = $status;
 
