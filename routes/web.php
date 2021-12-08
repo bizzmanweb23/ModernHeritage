@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
@@ -48,26 +50,26 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
     //admin--userManagement
-    Route::get('/index', [DashboardController::class,'allUser'])->name('index');
-    Route::get('/addUser', [DashboardController::class,'addUser'])->name('addUser');
-    Route::post('/saveUser', [DashboardController::class,'saveUser'])->name('saveUser');
-    Route::get('/userdetails/{id}', [DashboardController::class,'userData']);
-    Route::post('/useredit/{id}', [DashboardController::class,'editUser']);
+    Route::get('/index', [UserController::class,'allUser'])->name('index');
+    Route::get('/addUser', [UserController::class,'addUser'])->name('addUser');
+    Route::post('/saveUser', [UserController::class,'saveUser'])->name('saveUser');
+    Route::get('/userdetails/{id}', [UserController::class,'userData']);
+    Route::post('/useredit/{id}', [UserController::class,'editUser']);
 
     //admin--customerManagement
-    Route::get('/allcustomers', [DashboardController::class,'allCustomerDetails'])->name('allcustomer');
-    Route::get('/customer', [DashboardController::class,'customerDetails'])->name('customer');
-    Route::get('/customers', [DashboardController::class,'addCustomer'])->name('addcustomer');
-    Route::post('/customers', [DashboardController::class,'saveCustomer'])->name('savecustomer');
-    Route::get('/customerdetails/{id}', [DashboardController::class,'customerData']);
-    Route::get('/customer-contacts', [DashboardController::class,'getCustomerContacts'])->name('getCustomerContacts');
-    Route::post('/customeredit/{id}', [DashboardController::class,'editCustomer']);
-    Route::get('/customerstatus/{id}/{status}', [DashboardController::class,'customerStatus']);
+    Route::get('/allcustomers', [CustomerController::class,'allCustomerDetails'])->name('allcustomer');
+    Route::get('/customer', [CustomerController::class,'customerDetails'])->name('customer');
+    Route::get('/customers', [CustomerController::class,'addCustomer'])->name('addcustomer');
+    Route::post('/customers', [CustomerController::class,'saveCustomer'])->name('savecustomer');
+    Route::get('/customerdetails/{id}', [CustomerController::class,'customerData']);
+    Route::get('/customer-contacts', [CustomerController::class,'getCustomerContacts'])->name('getCustomerContacts');
+    Route::post('/customeredit/{id}', [CustomerController::class,'editCustomer']);
+    Route::get('/customerstatus/{id}/{status}', [CustomerController::class,'customerStatus']);
 
     //admin--employeeManagement
-    Route::get('/allemployee', [DashboardController::class,'allEmployee'])->name('allEmployee');
-    Route::get('/addemployee', [DashboardController::class,'addEmployee'])->name('addEmployee');
-    Route::post('/addemployee', [DashboardController::class,'saveEmployee'])->name('saveEmployee');
+    Route::get('/allemployee', [EmployeeController::class,'allEmployee'])->name('allEmployee');
+    Route::get('/addemployee', [EmployeeController::class,'addEmployee'])->name('addEmployee');
+    Route::post('/addemployee', [EmployeeController::class,'saveEmployee'])->name('saveEmployee');
 
 
     //admin--role
