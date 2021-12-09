@@ -20,7 +20,7 @@ class EmployeeController extends Controller
     public function allEmployee()
     {
         $employees = Employee::get();
-        return view('frontend.admin.employee.index',['employees' => $employees]);
+        return view('frontend.admin.employee.allEmployee',['employees' => $employees]);
     }
 
     public function addEmployee()

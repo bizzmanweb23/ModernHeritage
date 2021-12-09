@@ -19,7 +19,6 @@ class InventoryController extends Controller
     }
     public function getInventory()
     {
-
         return view('frontend.admin.inventory.overview');
     }
     public function allproducts()

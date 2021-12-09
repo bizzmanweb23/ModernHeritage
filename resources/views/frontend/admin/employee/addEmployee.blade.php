@@ -1,6 +1,6 @@
-@extends('frontend.admin.layouts.master')
+@extends('frontend.admin.employee.index')
 
-@section('content')
+@section('employee_content')
 <style>
     .upload {
         height: 100px;
@@ -23,7 +23,6 @@
 </style>
 <form action="{{ route('saveEmployee') }}" method="post" enctype="multipart/form-data">
 @csrf
-    <div class="container">
         <div class="card">
             <div class="card-body">
                 @if($errors->any())
@@ -406,7 +405,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </form>
 
 <script>
