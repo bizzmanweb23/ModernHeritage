@@ -1,7 +1,7 @@
 @extends('frontend.admin.employee.index')
 
 @section('employee_content')
-<form action="{{ route('saveDepartment') }}" method="post">
+<form action="{{ route('saveJobPosition') }}" method="post">
     @csrf
         <div class="card">
             <div class="card-body">
@@ -18,16 +18,23 @@
                     <button class="btn btn-primary px-3 mb-0" id="save"><i class="fas fa-save me-2"
                             aria-hidden="true"></i>Save</button>
                     <a class="btn btn-secondary px-3 mb-0" id="back"
-                        href="{{ route('departments') }}"><i class="fas fa-arrow-left text-dark me-2"
+                        href="{{ route('allJobPosition') }}"><i class="fas fa-arrow-left text-dark me-2"
                             aria-hidden="true"></i>Back</a>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="department_name">Department Name:</label>
-                            <input type="text" class="form-control" id="department_name" name="department_name"
-                                placeholder="Enter Department Name" required>
+                            <label for="position_name">Job Position:</label>
+                            <input type="text" class="form-control" id="position_name" name="position_name"
+                                placeholder="Enter job position" required>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="position_description">Job Position:</label>
+                            <input type="text" class="form-control" id="position_description" name="position_description"
+                                placeholder="Enter job position description">
                     </div>
                     <div class="col-md-6">
                         <div class="form-group company" id="employee">

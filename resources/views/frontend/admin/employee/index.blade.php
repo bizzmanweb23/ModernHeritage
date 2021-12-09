@@ -17,8 +17,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="comfigureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Configuration</a>
           <ul class="dropdown-menu" aria-labelledby="comfigureDropdown">
-            <a class="dropdown-item" href="#">Job Position</a>
-            <a class="dropdown-item" href="#">Department</a>
+            <a class="dropdown-item" href="{{ route('allJobPosition') }}">Job Position</a>
+            <a class="dropdown-item" href="{{ route('departments') }}">Department</a>
             <a class="dropdown-item" href="#">Settings</a>
           </ul>
         </li>

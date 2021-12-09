@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Customer;
 use App\Models\Department;
+use App\Models\JobPosition;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 
@@ -168,4 +169,29 @@ class EmployeeController extends Controller
         return redirect(route('departments'));
     }
 
+    public function allJobPosition()
+    {
+        $jobPositions = JobPosition::get();
+        return view('frontend.admin.employee.job_position.index',['jobPositions' => $jobPositions]);
+    }
+
+    public function addJobPosition()
+    {
+        $employee = Employee::get();
+        return view('frontend.admin.employee.job_position.addJobPosition',['employee' => $employee]);
+    }
+    
+    public function saveJobPosition(Request $request)
+    {
+        $data = $request->validate(['position_name' => 'required']);
+        
+        $jobPosition = new JobPosition;
+        $jobPosition->position_name = $request->position_name;
+        $jobPosition->position_description = $request->position_description;
+        $jobPosition->manager = $request->manager;
+        $jobPosition->save();
+        
+        return redirect(route('allJobPosition'));
+    }
+    
 }
