@@ -427,15 +427,6 @@
         $(`.notcontact`+count).show();
     };
 
-    // $(`.contact_radio${window.count}`).click(function () {
-    //     $(`.contact${window.count}`).show();
-    //     $(`.notcontact${window.count}`).hide();
-    // });
-
-    // $(`.not_contact_radio${window.count}`).click(function () {
-    //     $(`.contact${window.count}`).hide();
-    //     $(`.notcontact${window.count}`).show();
-    // });
     $('#tag').select2({
         width: '100%',
         placeholder: "Select a Tag",

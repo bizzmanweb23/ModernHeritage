@@ -42,7 +42,6 @@ Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
 
 Route::group(['prefix' => 'admin'], function () {
 
-
     Route::get("/login", [AuthController::class, "login"])->name("adminlogin");
     Route::post("/login", [AuthController::class, "userlogin"])->name("adminlogin");
 

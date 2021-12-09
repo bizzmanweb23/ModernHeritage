@@ -258,11 +258,12 @@
                     {{-- contact_address --}}
                     <div id="contact_address" class="container tab-pane active"><br>
                         <div class="d-flex flex-row flex-wrap" id="more_address">
+                            <input type="hidden" name="address_row_count" id="address_row_count" value={{ count($customer_contacts) }}>
                             @foreach ($customer_contacts as $contact)
                             
                                 {{-- In view state --}}
                                 <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
-                                    <a href="#" >
+                                    <a href="#" onclick="viewContactDetails({{ $contact }})">
                                         <div class="card-body p-2">
                                             <div class="row">
                                                 <div class="col-sm-3">
@@ -282,45 +283,47 @@
                                 </div>
 
                                 {{-- In edit state --}}
+                                <input type="hidden" name="existing_contact_id{{ $contact->index }}" value="{{ $contact->id }}">
                                 <div class="mt-2 mb-2 edit_input">
                                     <div style="display: flex; flex-wrap: no-wrap;">
+                                        <span style="display: none;" id="contact_type{{ $contact->index }}">{{ $contact->contact_type }}</span>
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input contact_radio" type="radio" name="contact_type"
-                                                id="contact" value="contact"
+                                            <input class="form-check-input contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
+                                                id="contact{{ $contact->index }}" value="contact" onclick="contact_radio_click({{ $contact->index }})"
                                                 {{ $contact->contact_type == "contact" ? "checked" : "" }}>
-                                            <label class="form-check-label" for="contact_type">
+                                            <label class="form-check-label" for="contact_type{{ $contact->index }}">
                                                 Contact
                                             </label>
                                         </div>
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                                id="invoice" value="invoice"
+                                            <input class="form-check-input not_contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
+                                                id="invoice{{ $contact->index }}" value="invoice" onclick="not_contact_radio_click({{ $contact->index }})"
                                                 {{ $contact->contact_type == "invoice" ? "checked" : "" }}>
-                                            <label class="form-check-label" for="contact_type">
+                                            <label class="form-check-label" for="contact_type{{ $contact->index }}">
                                                 Invoice Address
                                             </label>
                                         </div>
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                                id="delivery" value="delivery"
+                                            <input class="form-check-input not_contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
+                                                id="delivery{{ $contact->index }}" value="delivery" onclick="not_contact_radio_click({{ $contact->index }})"
                                                 {{ $contact->contact_type == "delivery" ? "checked" : "" }}>
-                                            <label class="form-check-label" for="contact_type">
+                                            <label class="form-check-label" for="contact_type{{ $contact->index }}">
                                                 Delivery Address
                                             </label>
                                         </div>
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                                id="other" value="other"
+                                            <input class="form-check-input not_contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
+                                                id="other{{ $contact->index }}" value="other" onclick="not_contact_radio_click({{ $contact->index }})"
                                                 {{ $contact->contact_type == "other" ? "checked" : "" }}>
-                                            <label class="form-check-label" for="contact_type">
+                                            <label class="form-check-label" for="contact_type{{ $contact->index }}">
                                                 Other Address
                                             </label>
                                         </div>
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input not_contact_radio" type="radio" name="contact_type"
-                                                id="private" value="private"
+                                            <input class="form-check-input not_contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
+                                                id="private{{ $contact->index }}" value="private" onclick="not_contact_radio_click({{ $contact->index }})"
                                                 {{ $contact->contact_type == "private" ? "checked" : "" }}>
-                                            <label class="form-check-label" for="contact_type">
+                                            <label class="form-check-label" for="contact_type{{ $contact->index }}">
                                                 Private Address
                                             </label>
                                         </div>
@@ -329,23 +332,31 @@
                                         <div class="col-md-10">
                                             <div class="row mt-2">
                                                 <div class="col-md-6">
-                                                    <span class="mb-2">Contact Name:
-                                                        <input type="text" class="form-control edit_input" name="contact_name"
-                                                            id="contact_name" value="{{ $contact->contact_name }}">
-                                                    </span>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <span class="mb-2">Email:
-                                                        <input type="email" class="form-control edit_input" name="contact_email"
-                                                            id="contact_email" value="{{ $contact->contact_email }}">
+                                                    <span class="mb-2">Contact Description:
+                                                        <input type="text" class="form-control edit_input" name="contact_description{{ $contact->index }}"
+                                                            id="contact_description{{ $contact->index }}" value="{{ $contact->contact_description }}">
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-md-6">
-                                                    <div class="contact">
+                                                    <span class="mb-2">Contact Name:
+                                                        <input type="text" class="form-control edit_input" name="contact_name{{ $contact->index }}"
+                                                            id="contact_name{{ $contact->index }}" value="{{ $contact->contact_name }}">
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <span class="mb-2">Email:
+                                                        <input type="email" class="form-control edit_input" name="contact_email{{ $contact->index }}"
+                                                            id="contact_email{{ $contact->index }}" value="{{ $contact->contact_email }}">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <div class="contact{{ $contact->index }}">
                                                         <span class="mb-2">Title:
-                                                            <select name="contact_title" id="contact_title"
+                                                            <select name="contact_title{{ $contact->index }}" id="contact_title{{ $contact->index }}"
                                                                 class="form-control edit_input">
                                                                 <option value="Mr."
                                                                     {{ 'Mr.' == $contact->contact_title ? 'selected' : '' }}>
@@ -365,59 +376,59 @@
                                                             </select>
                                                         </span>
                                                     </div>
-                                                    <div class="notcontact">
+                                                    <div class="notcontact{{ $contact->index }}">
                                                         <span class="mb-2">Address:
                                                             <input type="text" class="form-control edit_input"
-                                                                name="contact_address" id="contact_address"
+                                                                name="contact_address{{ $contact->index }}" id="contact_address{{ $contact->index }}"
                                                                 value="{{ $contact->contact_address }}">
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <span class="mb-2">Phone:
-                                                        <input type="text" class="form-control edit_input" name="contact_phone"
-                                                            id="contact_phone" value="{{ $contact->contact_phone }}">
+                                                        <input type="text" class="form-control edit_input" name="contact_phone{{ $contact->index }}"
+                                                            id="contact_phone{{ $contact->index }}" value="{{ $contact->contact_phone }}">
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
-                                                <div class="col-md-6 contact">
+                                                <div class="col-md-6 contact{{ $contact->index }}">
                                                     <span class="mb-2">Job Position:
                                                         <input type="text" class="form-control edit_input"
-                                                            name="contact_job_position" id="contact_job_position"
+                                                            name="contact_job_position{{ $contact->index }}" id="contact_job_position{{ $contact->index }}"
                                                             value="{{ $contact->contact_job_position }}">
                                                     </span>
                                                 </div>
-                                                <div class="col-md-2 notcontact">
+                                                <div class="col-md-2 notcontact{{ $contact->index }}">
                                                     <span class="mb-2">State:
-                                                        <input type="text" class="form-control edit_input" name="contact_state"
-                                                            id="contact_state" value="{{ $contact->contact_state }}">
+                                                        <input type="text" class="form-control edit_input" name="contact_state{{ $contact->index }}"
+                                                            id="contact_state{{ $contact->index }}" value="{{ $contact->contact_state }}">
                                                     </span>
                                                 </div>
-                                                <div class="col-md-2 notcontact">
+                                                <div class="col-md-2 notcontact{{ $contact->index }}">
                                                     <span class="mb-2">Zipcode:
-                                                        <input type="text" class="form-control edit_input" name="contact_zipcode"
+                                                        <input type="text" class="form-control edit_input" name="contact_zipcode{{ $contact->index }}"
                                                             id="contact_zipcode" value="{{ $contact->contact_zipcode }}">
                                                     </span>
                                                 </div>
-                                                <div class="col-md-2 notcontact">
+                                                <div class="col-md-2 notcontact{{ $contact->index }}">
                                                     <span class="mb-2">Country:
-                                                        <input type="text" class="form-control edit_input" name="contact_country"
-                                                            id="contact_country" value="{{ $contact->contact_country }}">
+                                                        <input type="text" class="form-control edit_input" name="contact_country{{ $contact->index }}"
+                                                            id="contact_country{{ $contact->index }}" value="{{ $contact->contact_country }}">
                                                     </span>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <span class="mb-2">Mobile:
-                                                        <input type="text" class="form-control edit_input" name="contact_mobile"
-                                                            id="contact_mobile" value="{{ $contact->contact_mobile }}">
+                                                        <input type="text" class="form-control edit_input" name="contact_mobile{{ $contact->index }}"
+                                                            id="contact_mobile{{ $contact->index }}" value="{{ $contact->contact_mobile }}">
                                                     </span>
                                                 </div>
                                             </div>
                                             <div class="row mt-2">
                                                 <div class="col-md-6">
                                                     <span class="mb-2">Notes:
-                                                        <input type="text" class="form-control edit_input" name="contact_notes"
-                                                            id="contact_notes" value="{{ $contact->contact_notes }}">
+                                                        <input type="text" class="form-control edit_input" name="contact_notes{{ $contact->index }}"
+                                                            id="contact_notes{{ $contact->index }}" value="{{ $contact->contact_notes }}">
                                                     </span>
                                                 </div>
                                             </div>
@@ -431,10 +442,10 @@
                                                     <img src="{{ asset('images/products/default.jpg') }}"
                                                         alt="Product" style="height: 100px; width:100px">
                                                 @endif
-                                                <label for="contact_image" class="edit">
+                                                <label for="contact_image{{ $contact->index }}" class="edit">
                                                     <i class="fas fa-pencil-alt"></i>
-                                                    <input id="contact_image" type="file" style="display: none"
-                                                        name="contact_image">
+                                                    <input id="contact_image{{ $contact->index }}" type="file" style="display: none"
+                                                        name="contact_image{{ $contact->index }}">
                                                 </label>
                                             </div>
                                         </div>
@@ -444,6 +455,10 @@
                                 
                             @endforeach
                         </div>
+                        <a class="btn btn-link text-dark px-3 mb-0 edit_input" id="add_more" href="#">
+                            <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
+                            Add Address
+                        </a>
                     </div>
 
                     {{-- sales --}}
@@ -512,14 +527,10 @@
         if ($('#customer_type_span').text().trim() !== 'company') {
             $('.company').hide();
         }
-
-        if ($('#contact_type').text().trim() === 'contact') {
-            $('.notcontact').hide();
-        } else {
-            $('.contact').hide();
-        }
     });
 
+    window.count = {{ count($customer_contacts) }};
+    console.log('count: ',window.count);
     $('#edit').click(function () {
         $('#save').show();
         $('#discard').show();
@@ -532,6 +543,14 @@
             placeholder: "Select a tag",
             allowClear: true
         });
+        for (let index = 1; index <= window.count; index++) {
+            if ($(`#contact_type${index}`).text().trim() === 'contact') {
+                contact_radio_click(index);
+            } else {
+                not_contact_radio_click(index);
+            }
+            
+        }
     });
 
     $('#customertype1').click(function () {
@@ -546,15 +565,166 @@
     });
 
 
-    $('.contact_radio').click(function () {
-        $('.contact').show();
-        $('.notcontact').hide();
+    function contact_radio_click(count) {
+        $(`.contact`+count).show();
+        $(`.notcontact`+count).hide();
+    };
+    function not_contact_radio_click(count) {
+        $(`.contact`+count).hide();
+        $(`.notcontact`+count).show();
+    };
+
+    // for adding more contacts
+    $('#add_more').click(function () {
+        window.count++;
+        console.log(window.count);
+        $('#address_row_count').val(window.count);
+        $('#more_address').append(`
+                            <div class="mt-2 mb-2">
+                                <div style="display: flex; flex-wrap: no-wrap;">
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="contact${window.count}" value="contact" onclick="contact_radio_click(${window.count})" checked>
+                                        <label class="form-check-label" for="contact_type">
+                                            Contact
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="invoice${window.count}" value="invoice" onclick="not_contact_radio_click(${window.count})">
+                                        <label class="form-check-label" for="contact_type">
+                                            Invoice Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="delivery${window.count}" value="delivery" onclick="not_contact_radio_click(${window.count})">
+                                        <label class="form-check-label" for="contact_type">
+                                            Delivery Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="other${window.count}" value="other" onclick="not_contact_radio_click(${window.count})">
+                                        <label class="form-check-label" for="contact_type">
+                                            Other Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check mr-2">
+                                        <input class="form-check-input not_contact_radio${window.count}" type="radio" name="contact_type${window.count}"
+                                            id="private${window.count}" value="private" onclick="not_contact_radio_click(${window.count})">
+                                        <label class="form-check-label" for="contact_type">
+                                            Private Address
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-6">
+                                        <label for="contact_description">Contact Description</label>
+                                        <input type="text" class="form-control" name="contact_description${window.count}" id="contact_description${window.count}" placeholder="e.g. Invoice Address 1 or Delivery Address 1">
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <div class="col-md-10">
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <label for="contact_name">Contact Name</label>
+                                                <input type="text" class="form-control" name="contact_name${window.count}" id="contact_name${window.count}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_email">Email</label>
+                                                <input type="email" class="form-control" name="contact_email${window.count}"
+                                                    id="contact_email${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <div class="contact${window.count}">
+                                                    <label for="contact_title">Title</label>
+                                                    <select name="contact_title${window.count}" id="contact_title${window.count}" class="form-control">
+                                                        <option value="Mr.">Mister</option>
+                                                        <option value="Ms.">Miss</option>
+                                                        <option value="Mrs.">Madam</option>
+                                                        <option value="Dr.">Doctor</option>
+                                                        <option value="Prof.">Professor</option>
+                                                    </select>
+                                                </div>
+                                                <div class="notcontact${window.count}">
+                                                    <label for="contact_address">Address</label>
+                                                    <input type="text" class="form-control" name="contact_address${window.count}"
+                                                        id="contact_address${window.count}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_phone">Phone</label>
+                                                <input type="text" class="form-control" name="contact_phone${window.count}" id="contact_phone${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6 contact${window.count}">
+                                                <label for="contact_job_position">Job Position</label>
+                                                <input type="text" class="form-control" name="contact_job_position${window.count}"
+                                                    id="contact_job_position${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact${window.count}">
+                                                <label for="contact_state">State</label>
+                                                <input type="text" class="form-control" name="contact_state${window.count}" id="contact_state${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact${window.count}">
+                                                <label for="contact_zipcode">Zipcode</label>
+                                                <input type="text" class="form-control" name="contact_zipcode${window.count}"
+                                                    id="contact_zipcode${window.count}">
+                                            </div>
+                                            <div class="col-md-2 notcontact${window.count}">
+                                                <label for="contact_country">Country</label>
+                                                <input type="text" class="form-control" name="contact_country${window.count}"
+                                                    id="contact_country${window.count}">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="contact_mobile">Mobile</label>
+                                                <input type="text" class="form-control" name="contact_mobile${window.count}"
+                                                    id="contact_mobile${window.count}">
+                                            </div>
+                                        </div>
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <label for="contact_notes">Notes</label>
+                                                <input type="text" class="form-control" name="contact_notes${window.count}" id="contact_notes${window.count}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="row mt-2">
+                                            <div class="col-md-2">
+                                                <div class="upload">
+                                                    <img src="{{ asset('images/products/default.jpg') }}"
+                                                        alt="Product" style="height: 100px; width:100px">
+                                                    <label for="contact_image${window.count}" class="edit">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                        <input id="contact_image${window.count}" type="file" style="display: none"
+                                                            name="contact_image${window.count}">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                        `);
+                    
+        $(`.notcontact${window.count}`).hide();
+
+        
     });
 
-    $('.not_contact_radio').click(function () {
-        $('.contact').hide();
-        $('.notcontact').show();
-    });
+    // view contact details on view mode
+    function viewContactDetails(contact)
+    {
+        console.log(contact);
+    }
+
+
 
     // function to get customer_contacts
     // function get_customer_contacts(){
