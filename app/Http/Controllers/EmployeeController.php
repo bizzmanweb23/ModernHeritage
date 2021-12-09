@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Customer;
+use App\Models\Department;
+use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
@@ -27,8 +29,10 @@ class EmployeeController extends Controller
     {
         $countryCodes = CountryCode::get();
         $customer = Customer::get();
+        $employee = Employee::get();
         return view('frontend.admin.employee.addEmployee',['customer' => $customer,
-                                                            'countryCodes' => $countryCodes
+                                                            'countryCodes' => $countryCodes,
+                                                            'employee' => $employee
                                                         ]);
     }
     
@@ -138,6 +142,30 @@ class EmployeeController extends Controller
         $employee->save();
 
         return redirect(route('allEmployee'));
+    }
+
+    public function allDepartment()
+    {
+        $departments = Department::get();
+        return view('frontend.admin.employee.department.departments',['departments' => $departments]);
+    }
+
+    public function addDepartment()
+    {
+        $employee = Employee::get();
+        return view('frontend.admin.employee.department.addDepartment',['employee' => $employee]);
+    }
+
+    public function saveDepartment(Request $request)
+    {
+        $data = $request->validate(['department_name' => 'required']);
+
+        $department = new Department;
+        $department->department_name = $request->department_name;
+        $department->manager = $request->manager;
+        $department->save();
+
+        return redirect(route('departments'));
     }
 
 }

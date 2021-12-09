@@ -12,12 +12,12 @@
           <a class="nav-link" href="{{ route('allEmployee') }}">Employees</a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link" href="#" id="productDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Department</a>
+          <a class="nav-link" href="{{ route('departments') }}" id="departments" role="button" aria-expanded="false">Department</a>
         </li>       
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="comfigureDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Configuration</a>
           <ul class="dropdown-menu" aria-labelledby="comfigureDropdown">
-            <a class="dropdown-item" href="#}">Job Position</a>
+            <a class="dropdown-item" href="#">Job Position</a>
             <a class="dropdown-item" href="#">Department</a>
             <a class="dropdown-item" href="#">Settings</a>
           </ul>

@@ -69,8 +69,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/allemployee', [EmployeeController::class,'allEmployee'])->name('allEmployee');
     Route::get('/addemployee', [EmployeeController::class,'addEmployee'])->name('addEmployee');
     Route::post('/addemployee', [EmployeeController::class,'saveEmployee'])->name('saveEmployee');
+    Route::get('/departments', [EmployeeController::class,'allDepartment'])->name('departments');
+    Route::get('/createdepartment', [EmployeeController::class,'addDepartment'])->name('addDepartment');
+    Route::post('/saveDepartment', [EmployeeController::class,'saveDepartment'])->name('saveDepartment');
 
-
+    
     //admin--role
     Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
     Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole');
