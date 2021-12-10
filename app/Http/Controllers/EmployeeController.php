@@ -147,6 +147,42 @@ class EmployeeController extends Controller
         return redirect(route('allEmployee'));
     }
 
+    public function employeeData($id)
+    {
+        $employee = Employee::leftjoin('departments', 'employees.department', '=', 'departments.id')
+                            ->leftjoin('employees as manager', 'employees.manager', '=', 'manager.id')
+                            ->where('employees.id', $id)
+                            ->select(
+                                'employees.*',
+                                'departments.department_name',
+                                'manager.emp_name as manager_name'
+                            )
+                            ->first();
+
+        $customer = Customer::get();
+        $selected_customers = json_decode($employee->default_customer);
+        $selected_customers_name = [];
+        if(isset($selected_customers)){
+            foreach($customer as $c){
+                if(in_array($c->id,$selected_customers)){
+                    array_push($selected_customers_name, $c->customer_name);
+                }
+            }
+        }
+        $countryCodes = CountryCode::get();
+        $employees = Employee::where('id','!=',$id)->get();
+        $department = Department::get();
+        return view('frontend.admin.employee.employeeData',['customer' => $customer,
+                                                            'countryCodes' => $countryCodes,
+                                                            'employees' => $employees,
+                                                            'employee' => $employee,
+                                                            'department' => $department,
+                                                            'selected_customers' => $selected_customers,
+                                                            'selected_customers_name' => $selected_customers_name,
+                                                        ]);
+
+    }
+
     public function allDepartment()
     {
         $departments = Department::get();

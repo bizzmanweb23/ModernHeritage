@@ -228,14 +228,6 @@ class CustomerController extends Controller
                                                         ]);
     }
 
-    // public function getCustomerContacts(Request $request)
-    // {
-    //     $customer_id = $request->customer_id;
-    //     $customer_contacts = CustomerContact::where('customer_id', $customer_id)->get();
-    //     info($customer_contacts);
-    //     echo json_encode($customer_contacts);
-    // }
-
     public function editCustomer(Request $request, $id)
     {
         $data = $request->validate([

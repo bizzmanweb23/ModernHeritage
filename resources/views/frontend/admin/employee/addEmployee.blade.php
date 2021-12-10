@@ -127,7 +127,7 @@
                         <select name="manager" id="manager" class="form-control">
                             <option value=""> --Select-- </option>
                             @foreach($employee as $e)
-                                <option value="{{ $e->manager }}">{{ $e->emp_name }}</option>
+                                <option value="{{ $e->id }}">{{ $e->emp_name }}</option>
                             @endforeach
                         </select>
                     </div>

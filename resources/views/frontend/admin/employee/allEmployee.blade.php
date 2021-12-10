@@ -24,7 +24,7 @@
 <div class= "d-flex flex-row flex-wrap">
     @foreach($employees as $e )
         <div class="card m-2" style="width: 23rem">
-            <a href="#">
+            <a href="{{ url('/') }}/admin/employeedetails/{{ $e->id }}">
                 <div class="card-body p-2">
                     <div class="row">
                         <div class="col-sm-4">
