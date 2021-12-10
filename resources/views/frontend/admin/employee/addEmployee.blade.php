@@ -93,9 +93,9 @@
                         <label for="department">Department</label>
                         <select name="department" id="department" class="form-control">
                             <option value=""> --Select-- </option>
-                            {{-- @foreach($gst as $g)
-                                <option value="{{ $g->department }}">{{ $g->department }}</option>
-                            @endforeach --}}
+                            @foreach($department as $d)
+                                <option value="{{$d->id }}">{{$d->department_name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

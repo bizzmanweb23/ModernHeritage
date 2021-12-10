@@ -31,9 +31,11 @@ class EmployeeController extends Controller
         $countryCodes = CountryCode::get();
         $customer = Customer::get();
         $employee = Employee::get();
+        $department = Department::get();
         return view('frontend.admin.employee.addEmployee',['customer' => $customer,
                                                             'countryCodes' => $countryCodes,
-                                                            'employee' => $employee
+                                                            'employee' => $employee,
+                                                            'department' => $department,
                                                         ]);
     }
     

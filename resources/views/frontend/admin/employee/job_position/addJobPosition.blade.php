@@ -32,7 +32,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="position_description">Job Position:</label>
+                        <label for="position_description">Job Position Description:</label>
                             <input type="text" class="form-control" id="position_description" name="position_description"
                                 placeholder="Enter job position description">
                     </div>
