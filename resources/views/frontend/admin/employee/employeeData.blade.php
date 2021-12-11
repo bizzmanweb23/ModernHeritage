@@ -57,9 +57,13 @@
                         </div>
                         <div class="form-group">
                             <label for="job_position">Job Position:</label>
-                            <span class="view_span">{{ $employee->job_position }}</span>
-                            <input type="text" class="form-control edit_input" id="job_position" name="job_position" value="{{ $employee->job_position }}"
-                                placeholder="Job Position" required>
+                            <span class="view_span">{{ $employee->position_name }}</span>
+                            <select name="job_position" class="form-control edit_input" id="job_position" required>
+                                <option value="">--Select--</option>
+                                @foreach($jobPosition as $jp)
+                                    <option value="{{ $jp->id }}" {{ $employee->job_position == $jp->id ? 'selected' : ''}}>{{ $jp->position_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-2">

@@ -32,10 +32,12 @@ class EmployeeController extends Controller
         $customer = Customer::get();
         $employee = Employee::get();
         $department = Department::get();
+        $jobPosition = JobPosition::get();
         return view('frontend.admin.employee.addEmployee',['customer' => $customer,
                                                             'countryCodes' => $countryCodes,
                                                             'employee' => $employee,
                                                             'department' => $department,
+                                                            'jobPosition' => $jobPosition,
                                                         ]);
     }
     
@@ -150,12 +152,14 @@ class EmployeeController extends Controller
     public function employeeData($id)
     {
         $employee = Employee::leftjoin('departments', 'employees.department', '=', 'departments.id')
+                            ->leftjoin('job_positions','employees.job_position','=','job_positions.id')
                             ->leftjoin('employees as manager', 'employees.manager', '=', 'manager.id')
                             ->where('employees.id', $id)
                             ->select(
                                 'employees.*',
                                 'departments.department_name',
-                                'manager.emp_name as manager_name'
+                                'manager.emp_name as manager_name',
+                                'job_positions.position_name'
                             )
                             ->first();
 
@@ -172,11 +176,13 @@ class EmployeeController extends Controller
         $countryCodes = CountryCode::get();
         $employees = Employee::where('id','!=',$id)->get();
         $department = Department::get();
+        $jobPosition = JobPosition::get();
         return view('frontend.admin.employee.employeeData',['customer' => $customer,
                                                             'countryCodes' => $countryCodes,
                                                             'employees' => $employees,
                                                             'employee' => $employee,
                                                             'department' => $department,
+                                                            'jobPosition' => $jobPosition,
                                                             'selected_customers' => $selected_customers,
                                                             'selected_customers_name' => $selected_customers_name,
                                                         ]);

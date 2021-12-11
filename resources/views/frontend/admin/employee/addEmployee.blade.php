@@ -49,9 +49,13 @@
                             placeholder="Employee's Name" required>
                     </div>
                     <div class="form-group">
-                        <label for="customer_name">Job Position:</label>
-                        <input type="text" class="form-control" id="job_position" name="job_position"
-                            placeholder="Job Position" required>
+                        <label for="job_position">Job Position:</label>
+                        <select name="job_position" class="form-control" id="job_position" required>
+                            <option value="">--Select--</option>
+                            @foreach($jobPosition as $jp)
+                                <option value="{{ $jp->id }}">{{ $jp->position_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-2">
