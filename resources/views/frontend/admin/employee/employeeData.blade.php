@@ -21,7 +21,7 @@
     }
 
 </style>
-<form action="#" method="POST"
+<form action="{{ url('/') }}/admin/employeeedit/{{ $employee->id }}" method="POST"
     enctype="multipart/form-data">
     @csrf
         <div class="card">
@@ -32,7 +32,7 @@
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
                         href="{{ route('allEmployee') }}"><i class="fas fa-arrow-left text-dark me-2"
                             aria-hidden="true"></i>Back</a>
-                    <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
+                    <button class="btn btn-link text-dark px-3 mb-0" id="save" type="submit"><i class="fas fa-save text-dark me-2"
                             aria-hidden="true"></i>Save</button>
                     <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="javascript:;"><i
                             class="far fa-trash-alt me-2"></i>Discard</a>
@@ -82,9 +82,9 @@
                                 <img src="{{ asset('images/products/default.jpg') }}"
                                     alt="Product" style="height: 100px; width:100px">
                             @endif
-                            <label for="user_image" class="edit">
+                            <label for="emp_image" class="edit">
                                 <i class="fas fa-pencil-alt"></i>
-                                <input id="user_image" type="file" style="display: none" name="user_image"
+                                <input id="emp_image" type="file" style="display: none" name="emp_image"
                                     value="{{ $employee->emp_image }}">
                             </label>
                         </div>
