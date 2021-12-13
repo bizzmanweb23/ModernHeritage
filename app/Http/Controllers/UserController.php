@@ -6,6 +6,7 @@ use App\Models\CountryCode;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customer;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -22,11 +23,20 @@ class UserController extends Controller
     {
         $customers = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
                         ->where('users.user_type', 'customer')
-                        ->select('users.*','customers.customer_image', 'customers.mobile')
+                        ->select('users.*','customers.customer_image as user_image', 'customers.mobile as user_mobile')
                         ->get();
         $allUser = [];
         foreach ($customers as $c) {
             array_push($allUser, $c);
+        }
+
+        $employees = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
+                            ->where('users.user_type', 'employee')
+                            ->select('users.*','employees.emp_image as user_image', 'employees.work_mobile as user_mobile')
+                            ->get();
+        
+        foreach ($employees as $e) {
+            array_push($allUser, $e);
         }
         return view('frontend.admin.user.index', [
             'allUser' => $allUser,
@@ -184,7 +194,14 @@ class UserController extends Controller
             $user = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
                         ->where('users.user_type', 'customer')
                         ->where('users.id', $id)
-                        ->select('users.*','customers.customer_image', 'customers.mobile')
+                        ->select('users.*','customers.customer_image as user_image', 'customers.mobile as user_mobile')
+                        ->first();
+        }
+        elseif ($u->user_type == 'employee') {
+            $user = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
+                        ->where('users.user_type', 'employee')
+                        ->where('users.id', $id)
+                        ->select('users.*','employees.emp_image as user_image', 'employees.work_mobile as user_mobile')
                         ->first();
         }
         return view('frontend.admin.user.userData',['user' => $user, 'countryCodes' => $countryCodes]);
@@ -210,7 +227,6 @@ class UserController extends Controller
                         ->where('users.id', $id)
                         ->select('users.*','customers.customer_image', 'customers.mobile')
                         ->first();
-            
             if($request->file('user_image')){
                 $file_type = $request->file('user_image')->extension();
                 $file_path = $request->file('user_image')->storeAs('images/customers',$user->user_id.'.'.$file_type,'public');
@@ -231,27 +247,27 @@ class UserController extends Controller
         }
         elseif ($request->user_type == 'employee')
         {
-            // $user = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
-            //             ->where('users.id', $id)
-            //             ->select('users.*','employees.employee_image', 'employees.mobile')
-            //             ->first();
+            $user = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
+                        ->where('users.id', $id)
+                        ->select('users.*','employees.emp_image', 'employees.work_mobile')
+                        ->first();
             
-            // if($request->file('user_image')){
-            //     $file_type = $request->file('user_image')->extension();
-            //     $file_path = $request->file('user_image')->storeAs('images/employees',$user->user_id.'.'.$file_type,'public');
-            //     $request->file('user_image')->move(public_path('images/employees'),$user->user_id.'.'.$file_type);
-            // }
-            // else
-            // {
-            //     $file_path = null;
-            // }
-            
-            // $employee = Employee::where('unique_id', $user->user_id)->first();
-            // $employee->employee_name = $data['user_name'];
-            // $employee->email = $data['email'];
-            // $employee->mobile = $request->country_code_m . $data['mobile'];
-            // $employee->employee_image = $file_path;
-            // $employee->save();
+            if($request->file('user_image')){
+                $file_type = $request->file('user_image')->extension();
+                $file_path = $request->file('user_image')->storeAs('images/employees',$user->user_id.'.'.$file_type,'public');
+                $request->file('user_image')->move(public_path('images/employees'),$user->user_id.'.'.$file_type);
+            }
+            else
+            {
+                $file_path = $user->emp_image;
+            }
+
+            $employee = Employee::where('unique_id', $user->user_id)->first();
+            $employee->emp_name = $data['user_name'];
+            $employee->work_email = $data['email'];
+            $employee->work_mobile = $request->country_code_m . $data['mobile'];
+            $employee->emp_image = $file_path;
+            $employee->save();
         }
 
         $user->user_name = $data['user_name'];

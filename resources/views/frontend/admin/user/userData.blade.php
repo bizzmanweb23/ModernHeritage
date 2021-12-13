@@ -59,8 +59,8 @@
                     <div class="col-md-2"></div>
                     <div class="col-md-2">
                         <div class="upload view_span">
-                            @if(isset($user->customer_image))
-                                <img src="{{ asset($user->customer_image) }}" alt="Product"
+                            @if(isset($user->user_image))
+                                <img src="{{ asset($user->user_image) }}" alt="Product"
                                     style="height: 100px; width:100px">
                             @else
                                 <img src="{{ asset('images/products/default.jpg') }}"
@@ -68,8 +68,8 @@
                             @endif
                         </div>
                         <div class="upload edit_input">
-                            @if(isset($user->customer_image))
-                                <img src="{{ asset($user->customer_image) }}" alt="Product"
+                            @if(isset($user->user_image))
+                                <img src="{{ asset($user->user_image) }}" alt="Product"
                                     style="height: 100px; width:100px">
                             @else
                                 <img src="{{ asset('images/products/default.jpg') }}"
@@ -78,7 +78,7 @@
                             <label for="user_image" class="edit">
                                 <i class="fas fa-pencil-alt"></i>
                                 <input id="user_image" type="file" style="display: none" name="user_image"
-                                    value="{{ $user->customer_image }}">
+                                    value="{{ $user->user_image }}">
                             </label>
                         </div>
                     </div>
@@ -97,21 +97,21 @@
                     <div class="col-md-10">
                         <div class="form-group">
                             <label for="mobile">Mobile:</label>
-                            <span class="view_span">{{ $user->mobile }}</span>
+                            <span class="view_span">{{ $user->user_mobile }}</span>
                             <div class="row edit_input">
                                 <div class="col-md-3">
                                     <select name="country_code_m" class="form-control" id="country_code_m">
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
                                             <option value="+{{ $c->code }}"
-                                                {{ substr($user->mobile, 0, 3) == $c->code ? 'selected' : '' }}>
+                                                {{ substr($user->user_mobile, 0, 3) == $c->code ? 'selected' : '' }}>
                                                 +{{ $c->code }}({{ $c->name }})</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" name="mobile" id="mobile"
-                                        value="{{ substr($user->mobile, 3) }}" placeholder="user Mobile"
+                                        value="{{ substr($user->user_mobile, 3) }}" placeholder="user Mobile"
                                         class="form-control" required />
                                 </div>
                             </div>
