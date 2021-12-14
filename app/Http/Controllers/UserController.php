@@ -104,39 +104,39 @@ class UserController extends Controller
         }
         elseif ($request->user_type == 'employee')
         {
-            // $unique_id = Employee::orderBy('id', 'desc')->first();
-            // if($unique_id)
-            // {
-            //     $number = str_replace('MHC', '', $unique_id->unique_id);
-            // }
-            // else
-            // {
-            //     $number = 0;
-            // }
-            // if ($number == 0) {
-            //     $number = 'MHC00001';
-            // } else {
-            //     $number = "MHC" . sprintf("%05d", $number + 1);
-            // }
+            $unique_id = Employee::orderBy('id', 'desc')->first();
+            if($unique_id)
+            {
+                $number = str_replace('MHE', '', $unique_id->unique_id);
+            }
+            else
+            {
+                $number = 0;
+            }
+            if ($number == 0) {
+                $number = 'MHE00001';
+            } else {
+                $number = "MHE" . sprintf("%05d", $number + 1);
+            }
             
-            // if($request->file('user_image')){
-            //     $file_type = $request->file('user_image')->extension();
-            //     $file_path = $request->file('user_image')->storeAs('images/employees',$number.'.'.$file_type,'public');
-            //     $request->file('user_image')->move(public_path('images/employees'),$number.'.'.$file_type);
-            // }
-            // else
-            // {
-            //     $file_path = null;
-            // }
+            if($request->file('user_image')){
+                $file_type = $request->file('user_image')->extension();
+                $file_path = $request->file('user_image')->storeAs('images/employees',$number.'.'.$file_type,'public');
+                $request->file('user_image')->move(public_path('images/employees'),$number.'.'.$file_type);
+            }
+            else
+            {
+                $file_path = null;
+            }
             
-            // $employee = new employee;
-            // $employee->unique_id = $number;
-            // $employee->employee_name = $data['user_name'];
-            // $employee->email = $data['email'];
-            // $employee->mobile = $request->country_code_m . $data['mobile'];
-            // $employee->employee_image = $file_path;
-            // $employee->status = 1;
-            // $employee->save();
+            $employee = new employee;
+            $employee->unique_id = $number;
+            $employee->emp_name = $data['user_name'];
+            $employee->work_email = $data['email'];
+            $employee->work_mobile = $request->country_code_m . $data['mobile'];
+            $employee->emp_image = $file_path;
+            $employee->status = 1;
+            $employee->save();
         }
 
         $unique_id = User::orderBy('id', 'desc')->first();
@@ -162,8 +162,7 @@ class UserController extends Controller
         $user->user_type = $data['user_type'];
         if ($request->user_type == 'employee')
         {
-            // TODO: employee unique id needs to be stored 
-            // $user->user_id = $employee->unique_id;
+            $user->user_id = $employee->unique_id;
             $user->sales = $request->sales;
             $user->project = $request->project;
             $user->inventory = $request->inventory;
@@ -172,6 +171,7 @@ class UserController extends Controller
             $user->bom_purchase_request = $request->bom_purchase_request;
             $user->invoicing = $request->invoicing;
             $user->administration = $request->administration;
+            $user->role_id = 3;
         }
         elseif ($request->user_type == 'customer')
         {

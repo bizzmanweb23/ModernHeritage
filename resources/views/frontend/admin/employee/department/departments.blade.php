@@ -26,7 +26,7 @@
             <a href="#">
                 <div class="card-body p-2">
                     <h5 class="mb-3">{{ $d->department_name }}</h5>
-                    <a href="#" class="btn btn-dark">Employee</a>
+                    <a href="{{ route('department.employees',['dept_id' => $d->id]) }}" class="btn btn-dark">Employee</a>
                 </div>
             </a>
         </div>

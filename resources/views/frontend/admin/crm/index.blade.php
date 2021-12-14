@@ -28,7 +28,7 @@
         <form action="{{ route('saverequest')}}" method="POST">
             @csrf
 
-            <input type="hidden" name="client_id" id="client_id">
+            <input type="hidden" name="customer_id" id="customer_id">
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Add leads</h4>
@@ -37,9 +37,9 @@
                 <!-- Modal body -->
                 <div class="modal-body">
                     <div class="row mb-2">
-                        <div class="col-md-4"><label for="client_name">Client Name</label></div>
+                        <div class="col-md-4"><label for="lead_customer_name">Client Name</label></div>
                         <div class="col-md-7">
-                            <input type="text" class="form-control typeahead" id="client_name" name="client_name" placeholder="Name" required>
+                            <input type="text" class="form-control typeahead" id="lead_customer_name" name="lead_customer_name" placeholder="Name" required>
                         </div>
                         <div class="col-md-1">
                             <a href="#" class="btn btn-link px-2 mb-0" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#addClientModal">
@@ -48,20 +48,20 @@
                         </div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-4"><label for="opportunity">Opportunity</label></div>
-                            <div class="col-md-8"><input type="text" class="form-control" id="opportunity" name="opportunity" placeholder="opportunity" required></div>
+                        <div class="col-md-4"><label for="lead_opportunity">Opportunity</label></div>
+                            <div class="col-md-8"><input type="text" class="form-control" id="lead_opportunity" name="lead_opportunity" placeholder="opportunity" required></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-4"> <label for="email">Email</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="Email"></div>
+                        <div class="col-md-4"> <label for="lead_email">Email</label></div>
+                        <div class="col-md-8"><input type="email" class="form-control" id="lead_email" name="lead_email" placeholder="Email"></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-4"><label for="mobile_no">Mobile No</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile No"></div>
+                        <div class="col-md-4"><label for="lead_mobile">Mobile No</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="lead_mobile" name="lead_mobile" placeholder="Mobile No"></div>
                     </div>
                     <div class="row mb-2">
-                        <div class="col-md-4"> <label for="expected_price">Expected Price</label></div>
-                        <div class="col-md-8"><input type="text" class="form-control" id="expected_price" name="expected_price" placeholder="₹ "></div>
+                        <div class="col-md-4"> <label for="lead_expected_price">Expected Price</label></div>
+                        <div class="col-md-8"><input type="text" class="form-control" id="lead_expected_price" name="lead_expected_price" placeholder="₹ "></div>
                     </div>
                     </div>
     
@@ -108,14 +108,14 @@
 </div>
 
 <script type="text/javascript">
-    $('#client_name').autocomplete({
+    $('#lead_customer_name').autocomplete({
              source: function(request, response) {
                  $.ajax({
                      type: 'get',
                      url: "{{ route('searchrequest') }}",
                      dataType: "json",
                      data: {
-                         term: $('#client_name').val()
+                         term: $('#lead_customer_name').val()
                      },
                      success: function(data) {
                          response(data);
@@ -125,10 +125,10 @@
              },
              select: function(event, ui) {
                  if (ui.item.id != 0) {
-                     $('#client_id').val(ui.item.id)
-                     $('#email').val(ui.item.email)
-                     $('#mobile_no').val(ui.item.phone);
-                     $('#opportunity').val(ui.item.opportunity);
+                     $('#customer_id').val(ui.item.id);
+                     $('#lead_email').val(ui.item.email);
+                     $('#lead_mobile').val(ui.item.phone);
+                     $('#lead_opportunity').val(ui.item.opportunity);
                  }
              },
              minLength: 1,

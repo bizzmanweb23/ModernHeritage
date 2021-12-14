@@ -8,6 +8,7 @@ use App\Models\Stage;
 use App\Models\Tag;
 use App\Models\User;
 use App\Models\CountryCode;
+use App\Models\Customer;
 use App\Models\Quotation;
 
 
@@ -35,17 +36,17 @@ class CrmController extends Controller
     public function searchRequest(Request $request)
     {
        
-        $client = User::where('role_id', '=',2)
-                        ->where('user_name', 'LIKE', '%'.$request->term.'%')
-                        ->get();
-        if ($client->count() > 0) {
-            foreach ($client as $item) {
+        $customers = Customer::where('customer_name', 'LIKE', '%'.$request->term.'%')
+                            ->get();
+        if ($customers->count() > 0) {
+            foreach ($customers as $item) {
+            info($item);
                 $data[] = [
-                    'label' => $item->user_name.' '.$item->lastname,
+                    'label' => $item->customer_name,
                     'id' => $item->id,
                     'email' => $item->email,
-                    'phone' => $item->phone,
-                    'opportunity' => $item->user_name.'\'s opportunity'
+                    'phone' => $item->mobile,
+                    'opportunity' => $item->customer_name.'\'s opportunity'
                 ];
             }
         } else {
@@ -57,10 +58,10 @@ class CrmController extends Controller
     public function saveRequest(Request $request)
     {       
         $data = $request->validate([
-            'client_name' => 'required',
-            'email' => 'email:rfc,dns',
-            'mobile_no' => 'numeric',
-            'expected_price' => 'numeric',
+            'lead_customer_name' => 'required',
+            'lead_email' => 'email:rfc,dns',
+            'lead_mobile' => 'numeric',
+            'lead_expected_price' => 'numeric',
         ]);
         // $unique_id = CRM::orderBy('id', 'desc')->first();
         // if($unique_id)
@@ -78,12 +79,12 @@ class CrmController extends Controller
         // }
 
         $lead = new Lead;
-        $lead->client_name = $data['client_name'];
-        $lead->client_id = $request->client_id;
-        $lead->opportunity = $request->opportunity;
-        $lead->email = $request->email;
-        $lead->mobile_no = $request->mobile_no;
-        $lead->expected_price = $request->expected_price;   
+        $lead->client_name = $data['lead_customer_name'];
+        $lead->client_id = $request->customer_id;
+        $lead->opportunity = $request->lead_opportunity;
+        $lead->email = $request->lead_email;
+        $lead->mobile_no = $request->lead_mobile;
+        $lead->expected_price = $request->lead_expected_price;   
         $lead->stage_id = 1;   
         $lead->save();
 

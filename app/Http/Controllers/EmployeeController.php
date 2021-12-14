@@ -282,6 +282,13 @@ class EmployeeController extends Controller
         return redirect(route('departments'));
     }
 
+    public function departmentEmployee($dept_id)
+    {
+        $employees = Employee::where('employees.department', '=', $dept_id)->get();
+
+        return view('frontend.admin.employee.allEmployee',['employees' => $employees]);
+    }
+
     public function allJobPosition()
     {
         $jobPositions = JobPosition::get();

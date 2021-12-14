@@ -131,34 +131,10 @@
 
                     {{-- Access rights --}}
                     <div id="access_rights" class="container tab-pane active"><br>
-                        <div class="view_span">
+                        <div>
                             <label for="user_type">User Type:</label>
                             <span class="text-uppercase" id="user_type_span">{{ $user->user_type }}</span>
-                        </div>
-                        <div style="display: flex; flex-wrap: no-wrap;" class="edit_input">
-                            <div class="form-check mr-2">
-                                <input class="form-check-input" type="radio" name="user_type" id="employee"
-                                    value="employee"
-                                    {{ $user->user_type == "employee" ? "checked" : "" }}>
-                                <label class="form-check-label" for="user_type">
-                                    Employee
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input" type="radio" name="user_type" id="customer"
-                                    value="customer"
-                                    {{ $user->user_type == "customer" ? "checked" : "" }}>
-                                <label class="form-check-label" for="user_type">
-                                    Customer
-                                </label>
-                            </div>
-                            <div class="form-check mr-2">
-                                <input class="form-check-input" type="radio" name="user_type" id="others" value="others"
-                                    {{ $user->user_type == "others" ? "checked" : "" }}>
-                                <label class="form-check-label" for="user_type">
-                                    Others
-                                </label>
-                            </div>
+                            <input type="hidden" name="user_type" id="user_type" value="{{ $user->user_type }}">
                         </div>
 
                         <div class="row mt-2 employee">
@@ -169,7 +145,7 @@
                                         <label for="sales">Sales:</label>
                                         <span class="view_span">{{ $user->sales }}</span>
                                         <select name="sales" id="sales" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator"
                                                 {{ $user->sales == "Administrator" ? "selected" : "" }}>
                                                 Administrator</option>
@@ -191,7 +167,7 @@
                                         <span class="view_span">{{ $user->bom_purchase_request }}</span>
                                         <select name="bom_purchase_request" id="bom_purchase_request"
                                             class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="BOM Request User"
                                                 {{ $user->bom_purchase_request == "BOM Request User" ? "selected" : "" }}>
                                                 BOM Request User</option>
@@ -212,7 +188,7 @@
                                         <label for="project">Project:</label>
                                         <span class="view_span">{{ $user->project }}</span>
                                         <select name="project" id="project" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator"
                                                 {{ $user->project == "Administrator" ? "selected" : "" }}>
                                                 Administrator</option>
@@ -230,7 +206,7 @@
                                         <label for="invoicing">Invoicing:</label>
                                         <span class="view_span">{{ $user->invoicing }}</span>
                                         <select name="invoicing" id="invoicing" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Billing"
                                                 {{ $user->invoicing == "Billing" ? "selected" : "" }}>
                                                 Billing</option>
@@ -254,7 +230,7 @@
                                         <label for="inventory">Inventory:</label>
                                         <span class="view_span">{{ $user->inventory }}</span>
                                         <select name="inventory" id="inventory" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator"
                                                 {{ $user->inventory == "Administrator" ? "selected" : "" }}>
                                                 Administrator</option>
@@ -269,7 +245,7 @@
                                         <label for="purchase">Purchase:</label>
                                         <span class="view_span">{{ $user->purchase }}</span>
                                         <select name="purchase" id="purchase" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator"
                                                 {{ $user->purchase == "Administrator" ? "selected" : "" }}>
                                                 Administrator</option>
@@ -287,7 +263,7 @@
                                         <label for="employees">Employees:</label>
                                         <span class="view_span">{{ $user->employees }}</span>
                                         <select name="employees" id="employees" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator"
                                                 {{ $user->employees == "Administrator" ? "selected" : "" }}>
                                                 Administrator</option>
@@ -309,7 +285,7 @@
                                         <span class="view_span">{{ $user->administration }}</span>
                                         <select name="administration" id="administration"
                                             class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Access Rights"
                                                 {{ $user->administration == "Access Rights" ? "selected" : "" }}>
                                                 Access Rights</option>
@@ -330,7 +306,7 @@
                                         <label for="website">Website:</label>
                                         <span class="view_span">{{ $user->website }}</span>
                                         <select name="website" id="website" class="form-control edit_input">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="All"
                                                 {{ $user->website == "All" ? "selected" : "" }}>
                                                 All</option>

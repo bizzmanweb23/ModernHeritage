@@ -153,7 +153,7 @@
                                     <div class="col-md-12">
                                         <label for="sales">Sales</label>
                                         <select name="sales" id="sales" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="User: Own Documents only">User: Own Documents only</option>
                                             <option value="User: All Documents">User: All Documents</option>
@@ -168,7 +168,7 @@
                                         <label for="bom_purchase_request">BOM Purchase Request</label>
                                         <select name="bom_purchase_request" id="bom_purchase_request"
                                             class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="BOM Request User">BOM Request User</option>
                                             <option value="BOM Request Manager">BOM Request Manager</option>
                                         </select>
@@ -184,7 +184,7 @@
                                     <div class="col-md-12">
                                         <label for="project">Project</label>
                                         <select name="project" id="project" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="User">User</option>
                                         </select>
@@ -197,7 +197,7 @@
                                     <div class="col-md-12">
                                         <label for="invoicing">Invoicing</label>
                                         <select name="invoicing" id="invoicing" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Billing">Billing</option>
                                             <option value="Accountant">Accountant</option>
                                             <option value="Billing Administrator">Billing Administrator</option>
@@ -214,7 +214,7 @@
                                     <div class="col-md-12">
                                         <label for="inventory">Inventory</label>
                                         <select name="inventory" id="inventory" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="User">User</option>
                                         </select>
@@ -224,7 +224,7 @@
                                     <div class="col-md-12">
                                         <label for="purchase">Purchase</label>
                                         <select name="purchase" id="purchase" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="User">User</option>
                                         </select>
@@ -237,7 +237,7 @@
                                     <div class="col-md-12">
                                         <label for="employees">Employees</label>
                                         <select name="employees" id="employees" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Administrator">Administrator</option>
                                             <option value="Officer">Officer</option>
                                         </select>
@@ -253,7 +253,7 @@
                                     <div class="col-md-12">
                                         <label for="administration">Administration</label>
                                         <select name="administration" id="administration" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="Access Rights">Access Rights</option>
                                             <option value="Settings">Settings</option>
                                         </select>
@@ -269,7 +269,7 @@
                                     <div class="col-md-12">
                                         <label for="website">Website</label>
                                         <select name="website" id="website" class="form-control">
-                                            <option>--Select--</option>
+                                            <option value="">--Select--</option>
                                             <option value="All">All</option>
                                         </select>
                                     </div>

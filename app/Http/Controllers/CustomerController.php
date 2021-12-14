@@ -71,7 +71,6 @@ class CustomerController extends Controller
         $data = $request->validate([
             'customer_type' => 'required',
             'customer_name' => 'required',
-            'address' => 'required',
             'country_code_m' => 'required',
             'mobile' => 'required',
             'email' => 'required|email:rfc,dns|unique:customers,email',
@@ -122,7 +121,14 @@ class CustomerController extends Controller
         $user->user_id = $number;
         $user->status = 1;
         $user->user_type = "customer";
-        $user->role_id = 2;
+        if($request->customer_type == 'company')
+        {
+            $user->role_id = 2;
+        }
+        else
+        {
+            $user->role_id = 4;
+        }
         $user->save();
 
         if($request->file('customer_image')){
@@ -139,7 +145,7 @@ class CustomerController extends Controller
         $customer->customer_type = $data['customer_type'];
         $customer->unique_id = $number;
         $customer->customer_name = $data['customer_name'];
-        $customer->address = $data['address'];
+        $customer->address = $request->address;
         $customer->state = $request->state;
         $customer->zipcode = $request->zipcode;
         $customer->country = $request->country;

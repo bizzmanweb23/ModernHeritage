@@ -1,16 +1,31 @@
-<form method="POST" action="{{ url('/') }}/register/client">
+<form method="POST" action="{{ route('savecustomer') }}">
     @csrf
     <!-- Modal body -->
     <div class="modal-body">
-        <label>First Name</label>
-        <div class="mb-3">
-            <input type="text" class="form-control" name="firstname" id="firstname" required
-                placeholder="First Name" aria-label="First Name" aria-describedby="first-name-addon">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="customer_type" id="customertype1"
+                        value="individual" checked>
+                    <label class="form-check-label" for="customer_type">
+                        Individual
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="customer_type" id="customertype2"
+                        value="company">
+                    <label class="form-check-label" for="customer_type">
+                        Company
+                    </label>
+                </div>
+            </div>
         </div>
-        <label>Last Name</label>
+        <label>Client Name</label>
         <div class="mb-3">
-            <input type="text" class="form-control" name="lastname" id="lastname" required
-                placeholder="Last Name" aria-label="Last Name" aria-describedby="last-name-addon">
+            <input type="text" class="form-control" name="customer_name" id="customer_name" required
+                placeholder="Enter Client Name" aria-label="Client Name" aria-describedby="client-name-addon">
         </div>
         <label>Email</label>
         <div class="mb-3">
@@ -22,18 +37,18 @@
             <input type="password" class="form-control" name="password" id="password" required
                 placeholder="Password" aria-label="Password" aria-describedby="password-addon">
         </div>
-        <label>Phone No</label>
+        <label>Mobile No</label>
         <div class="mb-3 d-flex">
-            <select name="country_code" class="form-control" style="width: 30em" id="country_code">
+            <select name="country_code_m" class="form-control" style="width: 30em" id="country_code_m" required>
                 <option value="">{{ __('select') }}</option>
                 @foreach($countryCodes as $c)
                     <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})</option>
                 @endforeach
             </select>
-            <input type="text" class="form-control" style="width: 70em" name="phone" id="phone" required
-                placeholder="Phone No" aria-label="Phone No" aria-describedby="phone-no-addon">
+            <input type="text" class="form-control" style="width: 70em" name="mobile" id="mobile" required
+                placeholder="Mobile No" aria-label="Mobile No" aria-describedby="client-mobile-no-addon">
         </div>
-        @if(Auth::check() && $path=='any')
+        {{-- @if(Auth::check() && $path=='any')
             <label for="role">Role</label>
             <div class="mb-3">
                 <select name="role" class="form-control" id="role">
@@ -47,7 +62,7 @@
                 <span style="color: red">{{ $message }}</span>
                 <br>
             @enderror
-        @endif
+        @endif --}}
     </div>
     <!-- Modal footer -->
     <div class="modal-footer">
