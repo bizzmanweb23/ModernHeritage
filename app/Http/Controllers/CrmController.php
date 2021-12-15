@@ -94,9 +94,9 @@ class CrmController extends Controller
     public function viewRequest($lead_id)
     { 
         // $lead = Lead::findOrFail($lead_id);
-        $lead = Lead::leftjoin('users', 'leads.client_id', '=', 'users.id')
+        $lead = Lead::leftjoin('customers', 'leads.client_id', '=', 'customers.id')
                     ->where('leads.id', $lead_id)
-                    ->select('leads.*', 'users.address', 'users.state', 'users.zipcode', 'users.country')
+                    ->select('leads.*', 'customers.address', 'customers.state', 'customers.zipcode', 'customers.country')
                     ->first();
         $tag = Tag::get();
         $stage = Stage::get();
@@ -147,12 +147,12 @@ class CrmController extends Controller
         $lead->tag = json_encode($request->tag);  
         $lead->save();
 
-        $user = User::findOrFail($lead->client_id);
-        $user->address = $request->address;
-        $user->state = $request->state;
-        $user->zipcode = $request->zipcode;
-        $user->country = $request->country;
-        $user->save();
+        $customer = Customer::findOrFail($lead->client_id);
+        $customer->address = $request->address;
+        $customer->state = $request->state;
+        $customer->zipcode = $request->zipcode;
+        $customer->country = $request->country;
+        $customer->save();
 
         return redirect()->back();
     }

@@ -107,7 +107,7 @@
 
                         <div class="ms-auto text-end row">
                             <label for="total">Total :</label>
-                            <span class="text-dark font-weight-bold ms-sm-2" id="total">{{ $qp->total }}</span>
+                            {{-- <span class="text-dark font-weight-bold ms-sm-2" id="total">{{ $qp->total }}</span> --}}
                         </div>
                         
                     </div>                   
