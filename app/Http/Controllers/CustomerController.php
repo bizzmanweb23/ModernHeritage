@@ -27,7 +27,7 @@ class CustomerController extends Controller
     {
         $allCustomer = Customer::get(); 
                                                               
-        return view('frontend.admin.Customer.allCustomer',['allCustomer' => $allCustomer]); 
+        return view('frontend.admin.customer.allcustomer',['allCustomer' => $allCustomer]); 
     }
 
     public function customerDetails(Request $request)
@@ -45,7 +45,7 @@ class CustomerController extends Controller
         $customer =  Customer::where($col_name,$col_value)
                            ->get();
         
-        return view('frontend.admin.customer.allCustomer',['allCustomer' => $customer]);  
+        return view('frontend.admin.customer.allcustomer',['allCustomer' => $customer]);  
     }
 
     public function addCustomer(Request $request)
@@ -56,7 +56,7 @@ class CustomerController extends Controller
         $paymentTerms = PaymentTerms::get();
         $salesPerson = SalesPerson::get();
         $deliveryMethod = DeliveryMethod::get();
-        return view('frontend.admin.customer.addCustomer',['countryCodes' => $countryCodes,
+        return view('frontend.admin.customer.addcustomer',['countryCodes' => $countryCodes,
                                                             'gst' => $gst, 
                                                             'tag' => $tag, 
                                                             'paymentTerms' => $paymentTerms, 
