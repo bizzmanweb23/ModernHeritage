@@ -564,15 +564,15 @@
                     <div id="sales" class="container tab-pane fade"><br>
                         <div class="row">
                             <div class="col-md-4">
-                                <span class="mb-2 company">Salesperson:
+                                <span class="mb-2">Salesperson:
                                     <span class="text-dark font-weight-bold ms-sm-2 view_span"
                                         id="salesperson">{{ $customer->salesperson }}</span>
                                     <select name="salesperson" id="salesperson" class="form-control edit_input">
                                         <option value=""> --Select-- </option>
                                         @foreach($salesperson as $sp)
-                                            <option value="{{ $sp->person_name }}"
-                                                {{ $sp->person_name == $customer->salesperson ? 'selected' : '' }}>
-                                                {{ $sp->person_name }}</option>
+                                            <option value="{{ $sp->emp_name }}"
+                                                {{ $sp->emp_name == $customer->salesperson ? 'selected' : '' }}>
+                                                {{ $sp->emp_name }}</option>
                                         @endforeach
                                     </select>
                                 </span>
@@ -580,7 +580,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <span class="mb-2 company">Delivery Method:
+                                <span class="mb-2">Delivery Method:
                                     <span class="text-dark font-weight-bold ms-sm-2 view_span"
                                         id="deliveryMethod">{{ $customer->deliveryMethod }}</span>
                                     <select name="deliveryMethod" id="deliveryMethod" class="form-control edit_input">
@@ -597,7 +597,7 @@
 
                         <div class="row">
                             <div class="col-md-4">
-                                <span class="mb-2 company">Payment Terms:
+                                <span class="mb-2">Payment Terms:
                                     <span class="text-dark font-weight-bold ms-sm-2 view_span"
                                         id="paymentTerms">{{ $customer->payment_terms }}</span>
                                     <select name="paymentTerms" id="paymentTerms" class="form-control edit_input">

@@ -33,7 +33,6 @@
                     <th class="text-uppercase text-primary font-weight-bolder" scope="col">Email</th>
                     <th class="text-uppercase text-primary font-weight-bolder" scope="col">Phone No</th>
                     <th class="text-uppercase text-primary font-weight-bolder" scope="col">Operate</th>
-
                 </tr>
             </thead>
             <tbody>

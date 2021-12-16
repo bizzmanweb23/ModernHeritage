@@ -12,6 +12,7 @@ use App\Models\CustomerContact;
 use App\Models\PaymentTerms;
 use App\Models\SalesPerson;
 use App\Models\DeliveryMethod;
+use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
@@ -54,7 +55,7 @@ class CustomerController extends Controller
         $gst = GST::get();
         $tag = Tag::get();
         $paymentTerms = PaymentTerms::get();
-        $salesPerson = SalesPerson::get();
+        $salesPerson = Employee::where('job_position', 8)->get();
         $deliveryMethod = DeliveryMethod::get();
         return view('frontend.admin.customer.addcustomer',['countryCodes' => $countryCodes,
                                                             'gst' => $gst, 
@@ -208,7 +209,7 @@ class CustomerController extends Controller
         $countryCodes = CountryCode::get();
         $gst = GST::get();
         $tag = Tag::get();
-        $salesperson = SalesPerson::get();
+        $salesperson = Employee::where('job_position', 8)->get();
         $deliveryMethod = DeliveryMethod::get();
         $paymentTerms = PaymentTerms::get();
         $selected_tags = json_decode($customer->tags);

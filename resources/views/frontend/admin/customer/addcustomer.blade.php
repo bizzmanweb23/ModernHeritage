@@ -227,7 +227,7 @@
                                 <select name="salesperson" id="salesperson" class="form-control">
                                     <option value=""> --Select-- </option>
                                     @foreach($salesPerson as $sp)
-                                        <option value="{{ $sp->id }}">{{ $sp->person_name }}</option>
+                                        <option value="{{ $sp->id }}">{{ $sp->emp_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
