@@ -63,11 +63,14 @@ class QuotationController extends Controller
             $tax = $request->$req_tax;
             $tax_arr = [];
 
-            foreach ($tax as $t) 
-            {
-                $val = json_decode($t)->id;
-                array_push($tax_arr, $val);
+            if (isset($tax)) {
+                foreach ($tax as $t) 
+                {
+                    $val = json_decode($t)->id;
+                    array_push($tax_arr, $val);
+                }
             }
+            
             $quotation_product = new Quotation_product;
             $quotation_product->quotation_id = $quotation->id;
             $quotation_product->product_id = $request->$req_product_id;

@@ -16,7 +16,7 @@
                     @else
                     <button type="submit" class="btn btn-link text-dark px-3 mb-0" id="confirm"><i
                             class="fas fa-save text-dark me-2" aria-hidden="true"></i>Confirm</button>
-                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="javascript:;"><i
+                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="{{ url('/') }}/admin/viewrequest/{{ $quotation->leads_id }}"><i
                             class="far fa-trash-alt me-2"></i>Discard</a>
                     @endif
                 </div>  
