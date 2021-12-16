@@ -455,6 +455,105 @@
                                 
                             @endforeach
                         </div>
+
+                        <div class="card m-2 p-3 view_span"  style="background-color:bisque;" id="view_contact_details">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Type:
+                                                <span class="text-dark text-uppercase font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_type"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Description:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_description"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Name:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_name"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Email:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_email"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Title:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_title"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Address:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_address"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Phone:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_phone"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Job Position:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_job_position"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact State:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_state"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Zipcode:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_zip_code"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Country:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_country"></span>
+                                            </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Mobile:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_mobile"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <span class="mb-2">Contact Notes:
+                                                <span class="text-dark font-weight-bold ms-sm-2 view_span"
+                                                    id="view_contact_notes"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 mt-4">
+                                    <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                                        style="height: 100px; width:100px" id="view_contact_image">
+                                </div>
+                            </div>
+                        </div>
                         <a class="btn btn-link text-dark px-3 mb-0 edit_input" id="add_more" href="#">
                             <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
                             Add Address
@@ -527,6 +626,7 @@
         if ($('#customer_type_span').text().trim() !== 'company') {
             $('.company').hide();
         }
+        $('#view_contact_details').hide();
     });
 
     window.count = {{ count($customer_contacts) }};
@@ -718,10 +818,44 @@
         
     });
 
+    window.viewContactId = 0;
     // view contact details on view mode
     function viewContactDetails(contact)
     {
-        console.log(contact);
+        console.log('viewContactDetails : ',contact);
+        if (contact.id == window.viewContactId)
+        {
+            // hide details
+            window.viewContactId = 0;
+            $('#view_contact_details').hide();
+        }
+        else
+        {
+            // show details
+            window.viewContactId = contact.id;
+            $('#view_contact_details').show();
+            $('#view_contact_type').text(contact.contact_type);
+            $('#view_contact_description').text(contact.contact_description);
+            $('#view_contact_name').text(contact.contact_name);
+            $('#view_contact_email').text(contact.contact_email);
+            $('#view_contact_title').text(contact.contact_title);
+            $('#view_contact_address').text(contact.contact_address);
+            $('#view_contact_phone').text(contact.contact_phone);
+            $('#view_contact_job_position').text(contact.contact_job_position);
+            $('#view_contact_state').text(contact.contact_state);
+            $('#view_contact_zip_code').text(contact.contact_zip_code);
+            $('#view_contact_country').text(contact.contact_country);
+            $('#view_contact_mobile').text(contact.contact_mobile);
+            $('#view_contact_notes').text(contact.contact_notes);
+            if(contact.contact_image !== null)
+            {
+                $('#view_contact_image').attr('src',`{{ asset('/') }}${contact.contact_image}`);
+            }
+            else
+            {
+                $('#view_contact_image').attr('src',`{{ asset('/') }}images/products/default.jpg`);
+            }
+        }
     }
 
 
