@@ -112,7 +112,7 @@
              source: function(request, response) {
                  $.ajax({
                      type: 'get',
-                     url: "{{ route('searchrequest') }}",
+                     url: "{{ route('searchcustomer') }}",
                      dataType: "json",
                      data: {
                          term: $('#lead_customer_name').val()

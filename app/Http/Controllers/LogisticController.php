@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\GST;
 use App\Models\Tax;
 use App\Models\CountryCode;
+use App\Models\CustomerContact;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
 use App\Models\LogisticLeadsProduct;
@@ -17,81 +18,6 @@ use Illuminate\Support\Facades\Hash;
 
 class LogisticController extends Controller
 {
-    public function allClients()
-    {
-        $allClients = Client::get();
-        return view('frontend.admin.logisticManagement.clients.allClients', ['allClients' => $allClients]);
-    }
-    
-    public function addClient()
-    {
-        $countryCodes = CountryCode::get();
-        return view('frontend.admin.logisticManagement.clients.addClient', ['countryCodes' => $countryCodes]);
-    }
-    
-    public function saveClient(Request $request)
-    {
-        $data = $request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' => 'required|email:rfc,dns',
-            'phone' => 'required',
-            'password' => 'required',
-            'address' => 'required',
-            'address2' => 'required',
-            'state' => 'required',
-            'zipcode' => 'required',
-            'country' => 'required',
-        ]);
-
-        $unique_id = Client::orderBy('id', 'desc')->first();
-        if($unique_id)
-        {
-            $number = str_replace('MHC', '', $unique_id->unique_id);
-        }
-        else
-        {
-            $number = 0;
-        } 
-        if ($number == 0) {
-            $number = 'MHC000001';
-        } else {
-            $number = "MHC" . sprintf("%06d", $number + 1);
-        }
-
-        if($request->file('client_image')){
-            $file_type = $request->file('client_image')->extension();
-            $file_path = $request->file('client_image')->storeAs('images/clients',$number.'.'.$file_type,'public');
-            $request->file('client_image')->move(public_path('images/clients'),$number.'.'.$file_type);
-        }
-        else
-        {
-            $file_path = null;
-        }
-
-        $client = new Client;
-
-        $client->client_type = $request->client_type;
-        $client->unique_id = $number;
-        $client->firstname = $request->firstname;
-        $client->lastname = $request->lastname;
-        $client->email = $request->email;
-        $client->phone = $request->country_code . $request->phone;
-        $client->address = $request->address;
-        $client->address2 = $request->address2;
-        $client->state = $request->state;
-        $client->zipcode = $request->zipcode;
-        $client->country = $request->country;
-        $client->gst = $request->gst;
-        $client->password = Hash::make($request->password);
-        $client->client_image = $file_path;
-        $client->status = 1;
-
-        $client->save();
-
-        return redirect(route('allclients'));
-    }
-
     public function getRequest()
     {
         $logistic_stage = LogisticStage::get();
@@ -101,18 +27,23 @@ class LogisticController extends Controller
         return view('frontend.admin.logisticManagement.logistic_crm.index',['logistic_stage' => $logistic_stage,'logistic_lead' => $logistic_lead]);
     }
 
-    public function searchClientRequest(Request $request)
+    public function addRequest()
     {
-       
-        $client = Client::where('firstname', 'LIKE', '%'.$request->term.'%')
-                        ->get();
-        if ($client->count() > 0) {
-            foreach ($client as $item) {
+        return view('frontend.admin.logisticManagement.logistic_crm.addLead');
+    }
+
+    public function searchContact(Request $request)
+    {  
+        $contacts = CustomerContact::where('customer_id', '=', $request->client_id)
+                                    ->get();
+        if ($contacts->count() > 0) {
+            foreach ($contacts as $item) {
+            info($item);
                 $data[] = [
-                    'label' => $item->firstname.' '.$item->lastname,
+                    'label' => $item->contact_name,
                     'id' => $item->id,
-                    'email' => $item->email,
-                    'phone' => $item->phone,
+                    'email' => $item->contact_email,
+                    'mobile' => $item->contact_mobile,
                 ];
             }
         } else {
@@ -121,20 +52,16 @@ class LogisticController extends Controller
         echo json_encode($data);
     }
 
-    public function addRequest()
-    {
-        return view('frontend.admin.logisticManagement.logistic_crm.addLead');
-    }
-
     public function saveRequest(Request $request)
     {
         $data = $request->validate([
             'client_id' => 'required',
             'client_name' => 'required',
-            'pickup_from' => 'required',
+            // 'pickup_from' => 'required',
+            'pickup_client' => 'required',
             'pickup_add_1' => 'required',
-            'pickup_add_2' => 'required',
-            'pickup_add_3' => 'required',
+            'pickup_add_2' => '',
+            'pickup_add_3' => '', 
             'pickup_pin' => 'required',
             'pickup_state' => 'required',
             'pickup_country' => 'required',
@@ -143,10 +70,11 @@ class LogisticController extends Controller
             'pickup_phone' => 'required',
             'contact_name' => 'required',
             'contact_phone' => 'required',
-            'delivered_to' => 'required',
+            'delivery_client' => 'required',
+            // 'delivered_to' => 'required',
             'delivery_add_1' => 'required',
-            'delivery_add_2' => 'required',
-            'delivery_add_3' => 'required',
+            'delivery_add_2' => '',
+            'delivery_add_3' => '',
             'delivery_pin' => 'required',
             'delivery_state' => 'required',
             'delivery_country' => 'required',
@@ -176,7 +104,8 @@ class LogisticController extends Controller
         $logistic_lead->unique_id = $number;
         $logistic_lead->client_id = $data['client_id'];
         $logistic_lead->client_name = $data['client_name'];
-        $logistic_lead->pickup_from = $data['pickup_from'];
+        // $logistic_lead->pickup_from = $data['pickup_from'];
+        $logistic_lead->pickup_client = $data['pickup_client'];
         $logistic_lead->pickup_add_1 = $data['pickup_add_1'];
         $logistic_lead->pickup_add_2 = $data['pickup_add_2'];
         $logistic_lead->pickup_add_3 = $data['pickup_add_3'];
@@ -188,7 +117,8 @@ class LogisticController extends Controller
         $logistic_lead->pickup_phone = $data['pickup_phone'];
         $logistic_lead->contact_name = $data['contact_name'];
         $logistic_lead->contact_phone = $data['contact_phone'];
-        $logistic_lead->delivered_to = $data['delivered_to'];
+        $logistic_lead->delivery_client = $data['delivery_client'];
+        // $logistic_lead->delivered_to = $data['delivered_to'];
         $logistic_lead->delivery_add_1 = $data['delivery_add_1'];
         $logistic_lead->delivery_add_2 = $data['delivery_add_2'];
         $logistic_lead->delivery_add_3 = $data['delivery_add_3'];

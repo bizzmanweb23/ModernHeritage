@@ -86,7 +86,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //admin--CRM
     Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
-    Route::get('/searchrequest', [CrmController::class,'searchRequest'])->name('searchrequest');
+    Route::get('/searchrequest', [CrmController::class,'searchCustomer'])->name('searchcustomer');
     // Route::get('/request', [CrmController::class,'addRequest'])->name('addrequest');
     Route::post('/request', [CrmController::class,'saveRequest'])->name('saverequest');
     Route::get('/viewrequest/{lead_id}', [CrmController::class,'viewRequest']);
@@ -130,7 +130,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/crm', [LogisticController::class,'getRequest'])->name('logistic_crm');
         Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
         Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
-        Route::get('/searchclientrequest', [LogisticController::class,'searchClientRequest'])->name('searchclientrequest');
+        Route::get('/searchcontact', [LogisticController::class,'searchContact'])->name('searchcontact');
         Route::get('/viewrequest/{lead_id}', [LogisticController::class,'viewRequest']);
         Route::post('/updaterequest/{lead_id}', [LogisticController::class,'updateRequest']);
         Route::get('/update-stage/{lead_id}/{stage_id}', [LogisticController::class,'updateLogisticStage']);

@@ -33,11 +33,9 @@ class CrmController extends Controller
         return view('frontend.admin.crm.addrequest');   
     }
 
-    public function searchRequest(Request $request)
-    {
-       
-        $customers = Customer::where('customer_name', 'LIKE', '%'.$request->term.'%')
-                            ->get();
+    public function searchCustomer(Request $request)
+    { 
+        $customers = Customer::get();
         if ($customers->count() > 0) {
             foreach ($customers as $item) {
             info($item);
@@ -46,7 +44,11 @@ class CrmController extends Controller
                     'id' => $item->id,
                     'email' => $item->email,
                     'phone' => $item->mobile,
-                    'opportunity' => $item->customer_name.'\'s opportunity'
+                    'opportunity' => $item->customer_name.'\'s opportunity',
+                    'address' => $item->address,
+                    'state' => $item->state,
+                    'country' => $item->country,
+                    'zipcode' => $item->zipcode,
                 ];
             }
         } else {

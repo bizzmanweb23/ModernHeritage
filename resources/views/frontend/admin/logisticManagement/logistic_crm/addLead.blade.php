@@ -10,15 +10,15 @@
 
     <input type="hidden" name="client_id" id="client_id">
     <div class="container mb-4">
-        <div class="card p-1"  style="background-color:khaki;">
+        <div class="card p-1">
             <h4 class="pl-4 mb-0 pt-3">Bill To</h4>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-md-4">
                         <span>
-                            <label for="client_name">Client Name</label>
+                            <label for="client_name">Customer Name</label>
                             <input type="text" class="form-control typeahead" id="client_name" name="client_name"
-                                placeholder="Client Name" required>
+                                placeholder="Customer Name" required>
                         </span>
                     </div>
                     <div class="col-md-4">
@@ -51,18 +51,18 @@
             <div class="row mb-2">
                 <div class="col-md-6">
                     <span>
-                        <label for="pickup_client">Pickup Client</label>
+                        <label for="pickup_client">Pickup Customer</label>
                         <input type="text" class="form-control" id="pickup_client" name="pickup_client" required>
                     </span>
                 </div>
                 <div class="col-md-6">
                     <span>
-                        <label for="delivery_client">Delivery Client</label>
+                        <label for="delivery_client">Delivery Customer</label>
                         <input type="text" class="form-control" id="delivery_client" name="delivery_client" required>
                     </span>
                 </div>
             </div>
-            <div class="row mb-2">
+            {{-- <div class="row mb-2">
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_from">Pickup From</label>
@@ -75,7 +75,7 @@
                         <input type="text" class="form-control" id="delivered_to" name="delivered_to" required>
                     </span>
                 </div>
-            </div>
+            </div> --}}
             <div class="row mb-2">
                 <div class="col-md-6">
                     <span>
@@ -94,13 +94,13 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_add_2">Address 2</label>
-                        <input type="text" class="form-control" id="pickup_add_2" name="pickup_add_2" required>
+                        <input type="text" class="form-control" id="pickup_add_2" name="pickup_add_2">
                     </span>
                 </div>
                 <div class="col-md-6">
                     <span>
                         <label for="delivery_add_2">Address 2</label>
-                        <input type="text" class="form-control" id="delivery_add_2" name="delivery_add_2" required>
+                        <input type="text" class="form-control" id="delivery_add_2" name="delivery_add_2">
                     </span>
                 </div>
             </div>
@@ -108,20 +108,20 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_add_3">Address 3</label>
-                        <input type="text" class="form-control" id="pickup_add_3" name="pickup_add_3" required>
+                        <input type="text" class="form-control" id="pickup_add_3" name="pickup_add_3">
                     </span>
                 </div>
                 <div class="col-md-6">
                     <span>
                         <label for="delivery_add_3">Address 3</label>
-                        <input type="text" class="form-control" id="delivery_add_3" name="delivery_add_3" required>
+                        <input type="text" class="form-control" id="delivery_add_3" name="delivery_add_3">
                     </span>
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col-md-3">
                     <span>
-                        <label for="pickup_pin">PIN</label>
+                        <label for="pickup_pin">ZipCode</label>
                         <input type="text" class="form-control" id="pickup_pin" name="pickup_pin" required>
                     </span>
                 </div>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="col-md-3">
                     <span>
-                        <label for="delivery_pin">PIN</label>
+                        <label for="delivery_pin">ZipCode</label>
                         <input type="text" class="form-control" id="delivery_pin" name="delivery_pin" required>
                     </span>
                 </div>
@@ -237,7 +237,7 @@
 
     <div class="mb-2">
         <button type="submit" class="btn btn-primary">Save</button>
-        <a href="{{ url()->previous() }}" class="btn btn-danger">Back</a>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
     </div>
 </form>
 
@@ -246,7 +246,7 @@
         source: function (request, response) {
             $.ajax({
                 type: 'get',
-                url: "{{ route('searchrequest') }}",
+                url: "{{ route('searchcustomer') }}",
                 dataType: "json",
                 data: {
                     term: $('#client_name').val()
@@ -266,11 +266,35 @@
         },
         minLength: 1,
     });
+    $('#contact_name').autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: 'get',
+                url: "{{ route('searchcontact') }}",
+                dataType: "json",
+                data: {
+                    // term: $('#contact_name').val(),
+                    client_id: $('#client_id').val() 
+                },
+                success: function (data) {
+                    response(data);
+                    console.log(data)
+                },
+            });
+        },
+        select: function (event, ui) {
+            if (ui.item.id != 0) {  
+                // $('#pickup_email').val(ui.item.email);
+                $('#contact_phone').val(ui.item.mobile);
+            }
+        },
+        minLength: 1,
+    });
     $('#pickup_client').autocomplete({
         source: function (request, response) {
             $.ajax({
                 type: 'get',
-                url: "{{ route('searchrequest') }}",
+                url: "{{ route('searchcustomer') }}",
                 dataType: "json",
                 data: {
                     term: $('#pickup_client').val()
@@ -283,7 +307,10 @@
         },
         select: function (event, ui) {
             if (ui.item.id != 0) {
-                // $('#client_id').val(ui.item.id);
+                $('#pickup_add_1').val(ui.item.address);
+                $('#pickup_pin').val(ui.item.zipcode);
+                $('#pickup_state').val(ui.item.state);
+                $('#pickup_country').val(ui.item.country);
                 $('#pickup_email').val(ui.item.email);
                 $('#pickup_phone').val(ui.item.phone);
             }
@@ -294,7 +321,7 @@
         source: function (request, response) {
             $.ajax({
                 type: 'get',
-                url: "{{ route('searchrequest') }}",
+                url: "{{ route('searchcustomer') }}",
                 dataType: "json",
                 data: {
                     term: $('#delivery_client').val()
@@ -307,7 +334,10 @@
         },
         select: function (event, ui) {
             if (ui.item.id != 0) {
-                // $('#client_id').val(ui.item.id);
+                $('#delivery_add_1').val(ui.item.address);
+                $('#delivery_pin').val(ui.item.zipcode);
+                $('#delivery_state').val(ui.item.state);
+                $('#delivery_country').val(ui.item.country);
                 $('#delivery_email').val(ui.item.email);
                 $('#delivery_phone').val(ui.item.phone);
             }

@@ -12,7 +12,7 @@
             Logistic</a>
     @else
         <a class="btn btn-primary"
-            href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quatation</a>
+            href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
     @endif
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success"
