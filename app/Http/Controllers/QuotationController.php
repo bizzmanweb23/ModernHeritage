@@ -33,7 +33,6 @@ class QuotationController extends Controller
         ]);
 
         $quotation_unique_id = Quotation::orderBy('id', 'desc')->first();
-        //dd($quotation_unique_id);
         if ($quotation_unique_id) {
             $number = str_replace('MHQ', '', $quotation_unique_id->quotation_unique_id);
         } else {
@@ -53,12 +52,14 @@ class QuotationController extends Controller
         $quotation->gst_treatment = $request->gst_treatment;
         $quotation->expiration = $request->expiration;
         $quotation->quotation_unique_id = $number;
+        $quotation->total_price = $request->total;
         $quotation->save();
 
         for ($i=1; $i <= $product_row_count ; $i++) { 
             $req_tax = 'tax'.strval($i);
             $req_product_id = 'product_id'.strval($i);
             $req_quantity = 'quantity'.strval($i);
+            $req_subtotal = 'subtotal'.strval($i);
 
             $tax = $request->$req_tax;
             $tax_arr = [];
@@ -75,7 +76,7 @@ class QuotationController extends Controller
             $quotation_product->quotation_id = $quotation->id;
             $quotation_product->product_id = $request->$req_product_id;
             $quotation_product->quantity = $request->$req_quantity;
-            $quotation_product->total = $request->total;
+            $quotation_product->total = $request->req_subtotal;
             $quotation_product->tax = json_encode($tax_arr);
             $quotation_product->save();
 

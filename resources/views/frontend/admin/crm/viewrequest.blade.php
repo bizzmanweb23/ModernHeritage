@@ -6,7 +6,7 @@
 
 @section('content')
 <a class="btn btn-primary" href="{{ url('/') }}/admin/newquotation/{{ $lead->id }}">New
-    Quatation</a>
+    Quotation</a>
 <a class="btn btn-primary" href="{{ url('/') }}/admin/updatestage/{{ $lead->id }}/4">Mark Won</a>
 <a class="btn btn-primary" href="{{ url('/') }}/admin/updatestage/{{ $lead->id }}/0">Mark Lost</a>
 <div class="ms-auto text-end">
