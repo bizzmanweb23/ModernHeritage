@@ -47,11 +47,11 @@
                         <h5>Bill To</h5>
                         <div class="row mb-2">
                             <div class="col-md-4">
-                                <label class="mb-2 ">Client Name:</label>
+                                <label class="mb-2 ">Customer Name:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="client_name_span">{{ $lead->client_name }}</span>
                                 <input type="text" name="client_name" id="client_name"
-                                    value="{{ $lead->client_name }}" placeholder="Client Name" readonly
+                                    value="{{ $lead->client_name }}" placeholder="Customer Name" readonly
                                     class="form-control" required />
                             </div>
                             <div class="col-md-4">
@@ -82,7 +82,7 @@
 
                         <div class="row mb-2">
                             <div class="col-md-5">
-                                <label class="mb-2 ">Client Name:</label>
+                                <label class="mb-2 ">Customer Name:</label>
                                     <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="pickup_client_span">{{ $lead->pickup_client }}</span>
                                     <input type="text" name="pickup_client" id="pickup_client"
@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-5">
-                                <label class="mb-2 ">Client Name:</label>
+                                <label class="mb-2 ">Customer Name:</label>
                                     <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="delivery_client_span">{{ $lead->delivery_client }}</span>
                                     <input type="text" name="delivery_client" id="delivery_client"
@@ -151,7 +151,7 @@
                             
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Email:
+                                    <span class="mb-2">Email:
                                         <input type="text" name="pickup_email" id="pickup_email"
                                             value="{{ $lead->pickup_email }}" placeholder="Pickup Email"
                                             class="form-control" />
@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Email:
+                                    <span class="mb-2">Email:
                                         <input type="text" name="delivery_email" id="delivery_email"
                                             value="{{ $lead->delivery_email }}" placeholder="Delivery Email"
                                             class="form-control" />
@@ -171,7 +171,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Address 2:
+                                    <span class="mb-2">Address 2:
                                         <input type="text" name="pickup_add_2" id="pickup_add_2"
                                             value="{{ $lead->pickup_add_2 }}" placeholder="Pickup Address 2"
                                             class="form-control" />
@@ -179,7 +179,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Address 2:
+                                    <span class="mb-2">Address 2:
                                         <input type="text" name="delivery_add_2" id="delivery_add_2"
                                             value="{{ $lead->delivery_add_2 }}" placeholder="Delivery Address 2"
                                             class="form-control" />
@@ -189,7 +189,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Address 3:
+                                    <span class="mb-2">Address 3:
                                         <input type="text" name="pickup_add_3" id="pickup_add_3"
                                             value="{{ $lead->pickup_add_3 }}" placeholder="Pickup Address 3"
                                             class="form-control" />
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Address 3:
+                                    <span class="mb-2">Address 3:
                                         <input type="text" name="delivery_add_3" id="delivery_add_3"
                                             value="{{ $lead->delivery_add_3 }}" placeholder="Delivery Address 3"
                                             class="form-control" />
@@ -207,7 +207,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Location :
+                                    <span class="mb-2">Location :
                                         <input type="text" name="pickup_location" id="pickup_location"
                                             value="{{ $lead->pickup_location }}" placeholder="Pickup Location"
                                             class="form-control" />
@@ -215,7 +215,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Location :
+                                    <span class="mb-2">Location :
                                         <input type="text" name="delivery_location" id="delivery_location"
                                             value="{{ $lead->delivery_location }}" placeholder="Delivery Location"
                                             class="form-control" />
@@ -225,7 +225,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Pin:
+                                    <span class="mb-2">Pin:
                                         <input type="text" name="pickup_pin" id="pickup_pin"
                                             value="{{ $lead->pickup_pin }}" placeholder="Pickup Pin"
                                             class="form-control" />
@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Pin:
+                                    <span class="mb-2">Pin:
                                         <input type="text" name="delivery_pin" id="delivery_pin"
                                             value="{{ $lead->delivery_pin }}" placeholder="Delivery Pin"
                                             class="form-control" />
@@ -243,7 +243,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup State:
+                                    <span class="mb-2">State:
                                         <input type="text" name="pickup_state" id="pickup_state"
                                             value="{{ $lead->pickup_state }}" placeholder="Pickup State"
                                             class="form-control" />
@@ -251,7 +251,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery State:
+                                    <span class="mb-2">State:
                                         <input type="text" name="delivery_state" id="delivery_state"
                                             value="{{ $lead->delivery_state }}" placeholder="Delivery State"
                                             class="form-control" />
@@ -261,7 +261,7 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pickup Country:
+                                    <span class="mb-2">Country:
                                         <input type="text" name="pickup_country" id="pickup_country"
                                             value="{{ $lead->pickup_country }}" placeholder="Pickup Country"
                                             class="form-control" />
@@ -269,7 +269,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Delivery Country:
+                                    <span class="mb-2">Country:
                                         <input type="text" name="delivery_country" id="delivery_country"
                                             value="{{ $lead->delivery_country }}" placeholder="Delivery Country"
                                             class="form-control" />
