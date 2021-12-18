@@ -173,7 +173,12 @@ class LogisticController extends Controller
                                 ->first();
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
                                             ->get();
-        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',['lead' => $lead, 'lead_products' => $lead_products]);
+        $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
+        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',[
+                                                    'lead' => $lead,
+                                                    'lead_products' => $lead_products,
+                                                    'quotation_count' => $quotation_count,
+                                                ]);
     }
 
     public function updateRequest(Request $request, $lead_id)
@@ -235,6 +240,30 @@ class LogisticController extends Controller
         $logistic_lead->delivery_email = $data['delivery_email'];
         $logistic_lead->save();
 
+        LogisticLeadsProduct::where('lead_id', '=', $lead_id)->delete();
+        
+        for ($i=1; $i <= $request->product_row_count; $i++) { 
+            $req_product_name = 'product_name'.strval($i);
+            $req_dimension = 'dimension'.strval($i);
+            $req_quantity = 'quantity'.strval($i);
+            $req_uom = 'uom'.strval($i);
+            $req_area = 'area'.strval($i);
+            $req_weight = 'weight'.strval($i);
+
+
+            $logistic_leads_product = new LogisticLeadsProduct;
+
+            $logistic_leads_product->lead_id = $logistic_lead->unique_id;         //same unique_id of logistic_leads table
+            $logistic_leads_product->product_name = $request->$req_product_name;
+            $logistic_leads_product->dimension = $request->$req_dimension;
+            $logistic_leads_product->quantity = $request->$req_quantity;
+            $logistic_leads_product->uom = $request->$req_uom;
+            $logistic_leads_product->area = $request->$req_area;
+            $logistic_leads_product->weight = $request->$req_weight;
+
+            $logistic_leads_product->save();
+        }
+
         return redirect()->back();
     }
 
@@ -264,10 +293,15 @@ class LogisticController extends Controller
         $tax = $request->tax;
         $tax_arr = [];
 
-        foreach ($tax as $t) 
+        if(isset($tax))
         {
-            $val = json_decode($t)->id;
-            array_push($tax_arr, $val);
+            foreach ($tax as $t) 
+        foreach ($tax as $t) 
+            foreach ($tax as $t) 
+            {
+                $val = json_decode($t)->id;
+                array_push($tax_arr, $val);
+            }
         }
         
         $quotation = new LogisticLeadsQuotation;
@@ -285,6 +319,17 @@ class LogisticController extends Controller
         $quotation->quotation_id = $number;
         $quotation->save();
 
-        return redirect('admin/logistic/viewrequest/'.$lead_id);
+        return redirect('logistic/viewrequest/'.$lead_id);
+    }
+
+    public function viewQuotation($lead_id)
+    {
+        $quotation = LogisticLeadsQuotation::leftjoin('logistic_leads','logistic_leads_quotations.lead_id', '=' , 'logistic_leads.id')
+                                    ->where('logistic_leads_quotations.lead_id',$lead_id)
+                                    ->select('logistic_leads_quotations.*',              
+                                            'logistic_leads.stage_id',
+                                            'logistic_leads.client_name',
+                                        )->get();
+        return view('frontend.admin.logisticManagement.logistic_crm.viewquotation',['quotation' => $quotation]);
     }
 }

@@ -30,7 +30,7 @@
                     <div class="d-flex flex-column">
                         <div class="row mt-2">
                             <div class="col-md-5">
-                                <span class="mb-2">Client Name:
+                                <span class="mb-2">Customer Name:
                                     {{-- <span class="text-dark font-weight-bold ms-sm-2" id="client_name_span">{{ $lead->client_name }}</span>
                                 --}}
                                 <input type="text" name="client_name" id="client_name" value="{{ $lead->client_name }}"

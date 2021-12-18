@@ -18,6 +18,10 @@
     <a class="btn btn-success"
         href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Add Assignee</a>
 @endif
+<div class="ms-auto text-end">
+    <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
+        class="btn btn-link text-dark px-3 mb-0">Quotation : {{ $quotation_count }}</a>
+</div>
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card container-fluid">
@@ -140,7 +144,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hide_div mt-4">
+                    <div class="mt-4">
                         <h5 class="mb-2">Extra Informations: </h5>
                         <div class="row mb-2 mt-2">
                             <div class="col-md-5"><h5>Pickup Details</h5></div>
@@ -151,19 +155,21 @@
                             
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Email:
+                                    <label class="mb-2">Email: </label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_email_span">{{ $lead->pickup_email }}</span>
                                         <input type="text" name="pickup_email" id="pickup_email"
                                             value="{{ $lead->pickup_email }}" placeholder="Pickup Email"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Email:
+                                    <label class="mb-2">Email: </label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_email_span">{{ $lead->delivery_email }}</span>
                                         <input type="text" name="delivery_email" id="delivery_email"
                                             value="{{ $lead->delivery_email }}" placeholder="Delivery Email"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
 
@@ -171,152 +177,191 @@
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Address 2:
+                                    <label class="mb-2">Address 2: </label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_add_2_span">{{ $lead->pickup_add_2 }}</span>
                                         <input type="text" name="pickup_add_2" id="pickup_add_2"
                                             value="{{ $lead->pickup_add_2 }}" placeholder="Pickup Address 2"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Address 2:
+                                    <label class="mb-2">Address 2:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_add_2_span">{{ $lead->delivery_add_2 }}</span>
                                         <input type="text" name="delivery_add_2" id="delivery_add_2"
                                             value="{{ $lead->delivery_add_2 }}" placeholder="Delivery Address 2"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Address 3:
+                                    <label class="mb-2">Address 3:  </label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_add_3_span">{{ $lead->pickup_add_3 }}</span>
                                         <input type="text" name="pickup_add_3" id="pickup_add_3"
                                             value="{{ $lead->pickup_add_3 }}" placeholder="Pickup Address 3"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Address 3:
+                                    <label class="mb-2">Address 3:</span>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_add_3_span">{{ $lead->delivery_add_3 }}</span>
                                         <input type="text" name="delivery_add_3" id="delivery_add_3"
                                             value="{{ $lead->delivery_add_3 }}" placeholder="Delivery Address 3"
-                                            class="form-control" />
-                                    </span>
+                                            class="form-control" />   
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Location :
+                                    <label class="mb-2">Location :</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_location_span">{{ $lead->pickup_location }}</span>
                                         <input type="text" name="pickup_location" id="pickup_location"
                                             value="{{ $lead->pickup_location }}" placeholder="Pickup Location"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Location :
+                                    <label class="mb-2">Location :</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_location_span">{{ $lead->delivery_location }}</span>
                                         <input type="text" name="delivery_location" id="delivery_location"
                                             value="{{ $lead->delivery_location }}" placeholder="Delivery Location"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pin:
+                                    <label class="mb-2">Pin:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_pin_span">{{ $lead->pickup_pin }}</span>
                                         <input type="text" name="pickup_pin" id="pickup_pin"
                                             value="{{ $lead->pickup_pin }}" placeholder="Pickup Pin"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Pin:
+                                    <label class="mb-2">Pin:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_pin_span">{{ $lead->delivery_pin }}</span>
                                         <input type="text" name="delivery_pin" id="delivery_pin"
                                             value="{{ $lead->delivery_pin }}" placeholder="Delivery Pin"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">State:
+                                    <label class="mb-2">State:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_state_span">{{ $lead->pickup_state }}</span>
                                         <input type="text" name="pickup_state" id="pickup_state"
                                             value="{{ $lead->pickup_state }}" placeholder="Pickup State"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">State:
+                                    
+                                    <label class="mb-2">State:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_state_span">{{ $lead->delivery_state }}</span>
                                         <input type="text" name="delivery_state" id="delivery_state"
                                             value="{{ $lead->delivery_state }}" placeholder="Delivery State"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
-                                    <span class="mb-2">Country:
+                                    <label class="mb-2">Country:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="pickup_country_span">{{ $lead->pickup_country }}</span>
                                         <input type="text" name="pickup_country" id="pickup_country"
                                             value="{{ $lead->pickup_country }}" placeholder="Pickup Country"
                                             class="form-control" />
-                                    </span>
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <span class="mb-2">Country:
+                                    <label class="mb-2">Country:</label>
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="delivery_country_span">{{ $lead->delivery_country }}</span>
                                         <input type="text" name="delivery_country" id="delivery_country"
                                             value="{{ $lead->delivery_country }}" placeholder="Delivery Country"
                                             class="form-control" />
-                                    </span>
                                 </div>
                             </div>
-                            <input type="hidden" name="product_row_count" id="product_row_count" value="{{ count($lead_products) }}">
-                            <div>
-                                <a class="btn btn-link text-dark px-3 mb-0" id="add_product" href="#"><i
-                                        class="fas fa-plus text-dark me-2" aria-hidden="true"></i>Add Product</a>
+                            <div style="border: steelblue; border-radius: 20px; border-style: groove; padding: 10px 5px 5px 20px;">
+                                <input type="hidden" name="product_row_count" id="product_row_count" value="{{ count($lead_products) }}">
+                                <div class="hide_div">
+                                    <a class="btn btn-link text-dark px-3 mb-0" id="add_product" href="#"><i
+                                            class="fas fa-plus text-dark me-2" aria-hidden="true"></i>Add Product</a>
+                                </div>
+                                <table class="table mb-0 table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">Product Name</p>
+                                            </th>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">Dimension</p>
+                                            </th>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">Quantity</p>
+                                            </th>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">UOM</p>
+                                            </th>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">Area</p>
+                                            </th>
+                                            <th class="text-uppercase" scope="col">
+                                                <p class="mb-0 mt-0 text-xs font-weight-bolder">Weight</p>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for ($i = 0; $i < count($lead_products); $i++)
+                                        <tr>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{$lead_products[$i]->product_name}}</span>
+                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->product_name }}" name="product_name{{ $i }}" id="product_name{{ $i }}" required>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{$lead_products[$i]->dimension }}</span>
+                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->dimension }}" name="dimension{{ $i }}" id="dimension{{ $i }}">
+                                            </td>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{  $lead_products[$i]->quantity  }}</span>
+                                                <input type="number" class="form-control" value="{{ $lead_products[$i]->quantity }}" name="quantity{{ $i }}" id="quantity{{ $i }}" min="1" required>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{ $lead_products[$i]->uom}}</span>
+                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->uom }}" name="uom{{ $i }}" id="uom{{ $i }}" required>
+                                            </td>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{ $lead_products[$i]->area }}</span>
+                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->area }}" name="area{{ $i }}" id="area{{ $i }}">
+                                            </td>
+                                            <td>
+                                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                                id="delivery_country_span">{{ $lead_products[$i]->weight }}</span>
+                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->weight }}" name="weight{{ $i }}" id="weight{{ $i }}">
+                                            </td>
+                                        </tr>
+                                        @endfor
+                                    </tbody>
+                                </table>
                             </div>
-                            <table class="table mb-0 table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Product Name</p>
-                                        </th>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Dimension</p>
-                                        </th>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Quantity</p>
-                                        </th>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">UOM</p>
-                                        </th>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Area</p>
-                                        </th>
-                                        <th class="text-uppercase" scope="col">
-                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Weight</p>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @for ($i = 0; $i < count($lead_products); $i++)
-                                    <tr>
-                                        <td><input type="text" class="form-control" value="{{ $lead_products[$i]->product_name }}" name="product_name{{ $i }}" id="product_name{{ $i }}" required></td>
-                                        <td><input type="text" class="form-control" value="{{ $lead_products[$i]->dimension }}" name="dimension{{ $i }}" id="dimension{{ $i }}"></td>
-                                        <td><input type="number" class="form-control" value="{{ $lead_products[$i]->quantity }}" name="quantity{{ $i }}" id="quantity{{ $i }}" min="1" required></td>
-                                        <td><input type="text" class="form-control" value="{{ $lead_products[$i]->uom }}" name="uom{{ $i }}" id="uom{{ $i }}" required></td>
-                                        <td><input type="text" class="form-control" value="{{ $lead_products[$i]->area }}" name="area{{ $i }}" id="area{{ $i }}"></td>
-                                        <td><input type="text" class="form-control" value="{{ $lead_products[$i]->weight }}" name="weight{{ $i }}" id="weight{{ $i }}"></td>
-                                    </tr>
-                                    @endfor
-                                </tbody>
-                            </table>
                         @endif
                     </div>
                 </div>
