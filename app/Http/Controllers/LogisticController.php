@@ -11,6 +11,7 @@ use App\Models\CountryCode;
 use App\Models\CustomerContact;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
+use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsProduct;
 use App\Models\LogisticLeadsQuotation;
 use Illuminate\Support\Facades\DB;
@@ -157,22 +158,39 @@ class LogisticController extends Controller
         return redirect(route('logistic_crm'));
     }
 
-    public function updateLogisticStage($lead_id, $stage_id)
+    public function updateLogisticStage(Request $request, $lead_id, $stage_id)
     {
         $lead = LogisticLead::findOrFail($lead_id);
         $lead->stage_id = $stage_id;
         $lead->save();
+
+        if ($stage_id=='2') {
+            $salesPerson = new LogisticLeadSalesPerson;
+            $salesPerson->sale_person_name = $request->salesPerson_name;
+            $salesPerson->sale_person_id = $request->salesPerson_id;
+            $salesPerson->logistic_lead_id = $lead_id;
+            $salesPerson->save();
+        }
+       
 
         return redirect()->back();
     }
 
     public function viewRequest($lead_id)
     {
+
         $lead = LogisticLead::leftjoin('logistic_leads_quotations','logistic_leads.id','=','logistic_leads_quotations.lead_id')
                                 ->where('logistic_leads.id',$lead_id)
                                 ->select('logistic_leads.*',
                                         'logistic_leads_quotations.quotation_id')
                                 ->first();
+
+        $salesPerson = LogisticLead::leftjoin('customers','logistic_leads.client_id','=','customers.id')
+                                    ->leftjoin('employees','employees.unique_id','=','customers.salesperson')
+                                    ->where('logistic_leads.client_id',$lead->client_id)
+                                    ->select('employees.unique_id as salesperson_id','employees.emp_name as salesperson_name')
+                                    ->first();
+
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
                                             ->get();
         $index = 1;
@@ -185,6 +203,7 @@ class LogisticController extends Controller
                                                     'lead' => $lead,
                                                     'lead_products' => $lead_products,
                                                     'quotation_count' => $quotation_count,
+                                                    'salesPerson' => $salesPerson,
                                                 ]);
     }
 

@@ -5,19 +5,49 @@
 @endsection
 
 @section('content')
-@if($lead->stage_id == 1)
-    @if(isset($lead->quotation_id))
-        <a class="btn btn-success"
-            href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/2">Qualified for
-            Logistic</a>
-    @else
-        <a class="btn btn-primary"
-            href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
-    @endif
+<a class="btn btn-primary"
+href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
+@if($lead->stage_id == 1)  
+    <a class="btn btn-success"
+        href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Add to Salesperson</a>
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success"
         href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Add Assignee</a>
 @endif
+
+<!-- The Modal -->
+<div class="modal" id="addSalesPersonModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/2" method="get">
+                @csrf
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Sales Person</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="salesPerson_name">SalesPerson Name</label></div>
+                        <div class="col-md-7">
+                            <input type="hidden" class="form-control modal_input" id="salesPerson_id" name="salesPerson_id"
+                                value="{{ $salesPerson->salesperson_id }}" required>
+                            <input type="text" class="form-control modal_input" id="salesPerson_name" name="salesPerson_name"
+                                value="{{ $salesPerson->salesperson_name }}" required>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <div class="ms-auto text-end">
     <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
         class="btn btn-link text-dark px-3 mb-0">Quotation : {{ $quotation_count }}</a>
@@ -386,6 +416,7 @@
         $('#discard').hide();
         $('input').hide();
         $('.hide_div').hide();
+        $('.modal_input').show();
     });
 
     $('#edit').click(function () {

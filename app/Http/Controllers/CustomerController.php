@@ -198,7 +198,10 @@ class CustomerController extends Controller
 
     public function customerData(Request $request,$id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = Customer::leftjoin('employees', 'employees.unique_id', '=', 'customers.salesperson')
+                            ->where('customers.id',$id)
+                            ->select('customers.*', 'employees.emp_name as salesperson_name')
+                            ->first();
         $customer_contacts = CustomerContact::where('customer_id', $id)->get();
         $i = 1;
         foreach($customer_contacts as $contact){

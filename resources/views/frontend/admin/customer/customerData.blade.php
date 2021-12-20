@@ -566,12 +566,12 @@
                             <div class="col-md-4">
                                 <span class="mb-2">Salesperson:
                                     <span class="text-dark font-weight-bold ms-sm-2 view_span"
-                                        id="salesperson">{{ $customer->salesperson }}</span>
+                                        id="salesperson">{{ $customer->salesperson_name }}</span>
                                     <select name="salesperson" id="salesperson" class="form-control edit_input">
                                         <option value=""> --Select-- </option>
                                         @foreach($salesperson as $sp)
-                                            <option value="{{ $sp->emp_name }}"
-                                                {{ $sp->emp_name == $customer->salesperson ? 'selected' : '' }}>
+                                            <option value="{{ $sp->unique_id }}"
+                                                {{ $sp->unique_id == $customer->salesperson ? 'selected' : '' }}>
                                                 {{ $sp->emp_name }}</option>
                                         @endforeach
                                     </select>
