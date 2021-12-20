@@ -173,6 +173,11 @@ class LogisticController extends Controller
                                 ->first();
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
                                             ->get();
+        $index = 1;
+        foreach ($lead_products as $product) {
+            $product->index = $index;
+            $index++;
+        }
         $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
         return view('frontend.admin.logisticManagement.logistic_crm.viewLead',[
                                                     'lead' => $lead,
@@ -183,7 +188,6 @@ class LogisticController extends Controller
 
     public function updateRequest(Request $request, $lead_id)
     {
-        
         $data = $request->validate([
             'client_name' => 'required',
             'contact_name' => 'required',
@@ -240,8 +244,8 @@ class LogisticController extends Controller
         $logistic_lead->delivery_email = $data['delivery_email'];
         $logistic_lead->save();
 
-        LogisticLeadsProduct::where('lead_id', '=', $lead_id)->delete();
-        
+        LogisticLeadsProduct::where('lead_id', '=', $logistic_lead->unique_id)->delete();
+
         for ($i=1; $i <= $request->product_row_count; $i++) { 
             $req_product_name = 'product_name'.strval($i);
             $req_dimension = 'dimension'.strval($i);
@@ -278,7 +282,8 @@ class LogisticController extends Controller
     public function saveQuotation(Request $request,$lead_id)
     {
 
-        $quotation_unique_id = LogisticLeadsQuotation::orderBy('id', 'desc')->first();       
+        $quotation_unique_id = LogisticLeadsQuotation::orderBy('id', 'desc')->first();    
+
         if ($quotation_unique_id) {
             $number = str_replace('MHLQ', '', $quotation_unique_id->quotation_id);
         } else {
@@ -295,8 +300,6 @@ class LogisticController extends Controller
 
         if(isset($tax))
         {
-            foreach ($tax as $t) 
-        foreach ($tax as $t) 
             foreach ($tax as $t) 
             {
                 $val = json_decode($t)->id;
@@ -319,7 +322,7 @@ class LogisticController extends Controller
         $quotation->quotation_id = $number;
         $quotation->save();
 
-        return redirect('logistic/viewrequest/'.$lead_id);
+        return redirect('admin/logistic/viewrequest/'.$lead_id);
     }
 
     public function viewQuotation($lead_id)

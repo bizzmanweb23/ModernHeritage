@@ -154,7 +154,7 @@
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_location">Location</label>
-                        <input type="text" class="form-control" id="pickup_location" name="pickup_location" required>
+                        <input type="text" class="form-control" id="pickup_location" name="pickup_location">
                     </span>
                 </div>
                 <div class="col-md-3">
@@ -166,7 +166,7 @@
                 <div class="col-md-3">
                     <span>
                         <label for="delivery_location">Location</label>
-                        <input type="text" class="form-control" id="delivery_location" name="delivery_location" required>
+                        <input type="text" class="form-control" id="delivery_location" name="delivery_location">
                     </span>
                 </div>
             </div>

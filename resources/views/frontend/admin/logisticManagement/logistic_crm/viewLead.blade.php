@@ -206,7 +206,7 @@
                                 </div>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-5">
-                                    <label class="mb-2">Address 3:</span>
+                                    <label class="mb-2">Address 3:</label>
                                         <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="delivery_add_3_span">{{ $lead->delivery_add_3 }}</span>
                                         <input type="text" name="delivery_add_3" id="delivery_add_3"
@@ -325,40 +325,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i < count($lead_products); $i++)
+                                        @foreach($lead_products as $product)
                                         <tr>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{$lead_products[$i]->product_name}}</span>
-                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->product_name }}" name="product_name{{ $i }}" id="product_name{{ $i }}" required>
+                                                id="delivery_country_span">{{$product->product_name}}</span>
+                                                <input type="text" class="form-control" value="{{ $product->product_name }}" name="product_name{{ $product->index }}" id="product_name{{ $product->index }}" required>
                                             </td>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{$lead_products[$i]->dimension }}</span>
-                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->dimension }}" name="dimension{{ $i }}" id="dimension{{ $i }}">
+                                                id="delivery_country_span">{{$product->dimension }}</span>
+                                                <input type="text" class="form-control" value="{{ $product->dimension }}" name="dimension{{ $product->index }}" id="dimension{{ $product->index }}">
                                             </td>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{  $lead_products[$i]->quantity  }}</span>
-                                                <input type="number" class="form-control" value="{{ $lead_products[$i]->quantity }}" name="quantity{{ $i }}" id="quantity{{ $i }}" min="1" required>
+                                                id="delivery_country_span">{{  $product->quantity  }}</span>
+                                                <input type="number" class="form-control" value="{{ $product->quantity }}" name="quantity{{ $product->index }}" id="quantity{{ $product->index }}" min="1" required>
                                             </td>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{ $lead_products[$i]->uom}}</span>
-                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->uom }}" name="uom{{ $i }}" id="uom{{ $i }}" required>
+                                                id="delivery_country_span">{{ $product->uom}}</span>
+                                                <input type="text" class="form-control" value="{{ $product->uom }}" name="uom{{ $product->index }}" id="uom{{ $product->index }}" required>
                                             </td>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{ $lead_products[$i]->area }}</span>
-                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->area }}" name="area{{ $i }}" id="area{{ $i }}">
+                                                id="delivery_country_span">{{ $product->area }}</span>
+                                                <input type="text" class="form-control" value="{{ $product->area }}" name="area{{ $product->index }}" id="area{{ $product->index }}">
                                             </td>
                                             <td>
                                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
-                                                id="delivery_country_span">{{ $lead_products[$i]->weight }}</span>
-                                                <input type="text" class="form-control" value="{{ $lead_products[$i]->weight }}" name="weight{{ $i }}" id="weight{{ $i }}">
+                                                id="delivery_country_span">{{ $product->weight }}</span>
+                                                <input type="text" class="form-control" value="{{ $product->weight }}" name="weight{{ $product->index }}" id="weight{{ $product->index }}">
                                             </td>
                                         </tr>
-                                        @endfor
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -394,6 +394,7 @@
 
     window.count = $('#product_row_count').val();
     $('#add_product').click(function () {
+        window.count++;
         console.log('add product')
         console.log(window.count);
         $('#product_row_count').val(window.count);
@@ -407,7 +408,6 @@
                                 <td><input type="text" class="form-control" name="weight${window.count}" id="weight${window.count}"></td>
                             </tr>
                         `);
-            window.count++;
     });
 
 </script>
