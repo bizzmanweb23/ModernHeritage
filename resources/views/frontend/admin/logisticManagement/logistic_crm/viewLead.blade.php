@@ -50,7 +50,7 @@
                     <div style="border: steelblue; border-radius: 20px; border-style: groove; padding: 10px 5px 5px 20px;">
                         <h5>Bill To</h5>
                         <div class="row mb-2">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="mb-2 ">Customer Name:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="client_name_span">{{ $lead->client_name }}</span>
@@ -58,20 +58,30 @@
                                     value="{{ $lead->client_name }}" placeholder="Customer Name" readonly
                                     class="form-control" required />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="mb-2">Contact Person:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="contact_name_span">{{ $lead->contact_name }}</span>
                                 <input type="text" name="contact_name" id="contact_name"
                                         value="{{ $lead->contact_name }}" placeholder="Contact Person Name"
+                                        class="form-control" required />
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <label class="mb-2">Expected Date:</label>
+                                <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        id="expected_date_span">{{ $lead->expected_date }}</span>
+                                    <input type="date" name="expected_date" id="expected_date"
+                                        value="{{ $lead->expected_date }}" required
                                         class="form-control" />
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <label class="mb-2">Contact Phone No:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="contact_phone_span">{{ $lead->contact_phone }}</span>
                                     <input type="text" name="contact_phone" id="contact_phone"
-                                        value="{{ $lead->contact_phone }}" placeholder="Contact phone"
+                                        value="{{ $lead->contact_phone }}" placeholder="Contact phone" required
                                         class="form-control" />
                             </div>
                         </div>

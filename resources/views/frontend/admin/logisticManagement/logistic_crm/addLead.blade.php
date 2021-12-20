@@ -14,21 +14,30 @@
             <h4 class="pl-4 mb-0 pt-3">Bill To</h4>
             <div class="card-body">
                 <div class="row mb-2">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <span>
                             <label for="client_name">Customer Name</label>
                             <input type="text" class="form-control typeahead" id="client_name" name="client_name"
                                 placeholder="Customer Name" required>
                         </span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <span>
                             <label for="contact_name">Contact Person</label>
                             <input type="text" class="form-control" id="contact_name" name="contact_name"
                                 placeholder="Contact Person" required>
                         </span>
                     </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="row mb-2">
+                    <div class="col-md-6">
+                        <span>
+                            <label for="expected_date">Expected Date</label>
+                            <input type="date" class="form-control" id="expected_date" name="expected_date"
+                                placeholder="" required>
+                        </span>
+                    </div>
+                    <div class="col-md-6">
                         <span>
                             <label for="contact_phone">Phone No</label>
                             <input type="text" class="form-control" id="contact_phone" name="contact_phone"

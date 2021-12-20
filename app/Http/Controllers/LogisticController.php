@@ -57,6 +57,7 @@ class LogisticController extends Controller
         $data = $request->validate([
             'client_id' => 'required',
             'client_name' => 'required',
+            'expected_date' => 'required',
             // 'pickup_from' => 'required',
             'pickup_client' => 'required',
             'pickup_add_1' => 'required',
@@ -104,6 +105,7 @@ class LogisticController extends Controller
         $logistic_lead->unique_id = $number;
         $logistic_lead->client_id = $data['client_id'];
         $logistic_lead->client_name = $data['client_name'];
+        $logistic_lead->expected_date = $data['expected_date'];
         // $logistic_lead->pickup_from = $data['pickup_from'];
         $logistic_lead->pickup_client = $data['pickup_client'];
         $logistic_lead->pickup_add_1 = $data['pickup_add_1'];
@@ -191,6 +193,7 @@ class LogisticController extends Controller
         $data = $request->validate([
             'client_name' => 'required',
             'contact_name' => 'required',
+            'expected_date' => 'required',
             'contact_phone' => 'required|numeric',
             'pickup_client' => 'required',
             'pickup_email' => 'required|email:rfc,dns',
@@ -217,6 +220,7 @@ class LogisticController extends Controller
         ]);
         $logistic_lead = LogisticLead::findOrFail($lead_id);
         $logistic_lead->client_name = $data['client_name'];
+        $logistic_lead->expected_date = $data['expected_date'];
         $logistic_lead->contact_name = $data['contact_name'];
         $logistic_lead->contact_phone = $data['contact_phone'];
         // $logistic_lead->pickup_from = $data['pickup_from'];
