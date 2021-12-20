@@ -32,7 +32,7 @@
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <span>
-                            <label for="expected_date">Expected Date</label>
+                            <label for="expected_date">Expected Delivery Date</label>
                             <input type="date" class="form-control" id="expected_date" name="expected_date"
                                 placeholder="" required>
                         </span>

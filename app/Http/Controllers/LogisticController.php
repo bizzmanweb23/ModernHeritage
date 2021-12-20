@@ -297,9 +297,12 @@ class LogisticController extends Controller
     public function addQuotation($lead_id)
     {
         $lead = LogisticLead::findOrFail($lead_id);
+
+        $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
+                                            ->get();
         $gst = GST::get();
         $tax = Tax::get();
-        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax]);
+        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'lead_products' => $lead_products]);
     }
 
     public function saveQuotation(Request $request,$lead_id)

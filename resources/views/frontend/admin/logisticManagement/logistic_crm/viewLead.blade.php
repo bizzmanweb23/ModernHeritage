@@ -9,10 +9,10 @@
 href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
 @if($lead->stage_id == 1)  
     <a class="btn btn-success"
-        href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Add to Salesperson</a>
+        href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Assign Salesperson</a>
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success"
-        href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Add Assignee</a>
+        href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Assign Driver</a>
 @endif
 
 <!-- The Modal -->
@@ -99,7 +99,7 @@ href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation<
                         </div>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="mb-2">Expected Date:</label>
+                                <label class="mb-2">Expected Delivery Date:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="expected_date_span">{{ $lead->expected_date }}</span>
                                     <input type="date" name="expected_date" id="expected_date"
@@ -191,7 +191,6 @@ href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation<
                             <div class="col-md-1"></div>
                             <div class="col-md-5"><h5>Delivery Details</h5></div>
                         </div>
-                        @if($lead->stage_id == 1)
                             
                             <div class="row mb-2">
                                 <div class="col-md-5">
@@ -212,8 +211,6 @@ href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation<
                                             class="form-control" />
                                 </div>
                             </div>
-
-                            
 
                             <div class="row mb-2">
                                 <div class="col-md-5">
@@ -402,7 +399,7 @@ href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation<
                                     </tbody>
                                 </table>
                             </div>
-                        @endif
+                        
                     </div>
                 </div>
             </form>

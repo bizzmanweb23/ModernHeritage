@@ -104,11 +104,73 @@
                         </div>
                         <br>
                         <br>
-                        <table class="table mb-0 table-responsive">
+                        
+                        <div style="border: steelblue; border-radius: 20px; border-style: groove; padding: 10px 5px 5px 20px;" class="mb-3">
+                            <input type="hidden" name="product_row_count" id="product_row_count" value="{{ count($lead_products) }}">
+                            <h4 class="mb-0">
+                                Logistic Product Details
+                            </h4>
+                            <table class="table mb-0 mt-2">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Product Name</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Dimension</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Quantity</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">UOM</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Area</p>
+                                        </th>
+                                        <th class="text-uppercase" scope="col">
+                                            <p class="mb-0 mt-0 text-xs font-weight-bolder">Weight</p>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($lead_products as $product)
+                                    <tr>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{$product->product_name}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{$product->dimension }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{  $product->quantity  }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{ $product->uom}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{ $product->area }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                            id="delivery_country_span">{{ $product->weight }}</span>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <table class="table mb-0 mt-3 table-responsive">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase" scope="col">
-                                        <p class="mb-0 mt-0 text-xs font-weight-bolder">Product</p>
+                                        <p class="mb-0 mt-0 text-xs font-weight-bolder">Service</p>
                                     </th>
                                     <th class="text-uppercase" scope="col">
                                         <p class="mb-0 mt-0 text-xs font-weight-bolder">Description</p>
