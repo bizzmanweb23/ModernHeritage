@@ -12,6 +12,7 @@ use App\Http\Controllers\CrmController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\SalesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,7 +132,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
         Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
         Route::get('/searchcontact', [LogisticController::class,'searchContact'])->name('searchcontact');
-        Route::get('/viewrequest/{lead_id}', [LogisticController::class,'viewRequest']);
+        Route::get('/viewrequest/{lead_id}/{prev_route?}', [LogisticController::class,'viewRequest']);
         Route::post('/updaterequest/{lead_id}', [LogisticController::class,'updateRequest']);
         Route::get('/update-stage/{lead_id}/{stage_id}', [LogisticController::class,'updateLogisticStage']);
         
@@ -139,6 +140,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/newquotation/{lead_id}', [LogisticController::class,'addQuotation']);
         Route::post('/newquotation/{lead_id}', [LogisticController::class,'saveQuotation']);
         Route::get('/viewquotation/{lead_id}', [LogisticController::class,'viewQuotation']);
+
+        //admin--logistic--sales--person Activity
+        Route::get('/allSalesperson', [SalesController::class,'allSalesperson'])->name('salespersons');
+        Route::get('/assignedleads/{salesperson_id}', [SalesController::class,'assignedLeads'])->name('assignedleads');
+
 });
     
 });

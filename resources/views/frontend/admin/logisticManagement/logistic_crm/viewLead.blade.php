@@ -61,10 +61,12 @@ href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation<
                 <input type="hidden" name="lead_id" id="lead_id" value={{ $lead->id }}>
                 <input type="hidden" name="client_id" id="client_id" value={{ $lead->client_id }}>
                 <div class="ms-auto text-end">
+                    @if ($prev_route == 'logistic_crm')
                     <a class="btn btn-link text-dark px-3 mb-0" id="edit" href="javascript:;"><i
-                            class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                        class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                    @endif
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ route('logistic_crm') }}"><i
+                        href="{{ $prev_route == 'logistic_crm' ? route('logistic_crm') : url()->previous() }}"><i
                             class="fas fa-arrow-left text-dark me-2" aria-hidden="true"></i>Back</a>
                     <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
                             aria-hidden="true"></i>Save</button>

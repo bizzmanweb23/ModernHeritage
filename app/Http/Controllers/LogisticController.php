@@ -176,7 +176,7 @@ class LogisticController extends Controller
         return redirect()->back();
     }
 
-    public function viewRequest($lead_id)
+    public function viewRequest($lead_id,$prev_route = 'logistic_crm')
     {
 
         $lead = LogisticLead::leftjoin('logistic_leads_quotations','logistic_leads.id','=','logistic_leads_quotations.lead_id')
@@ -204,6 +204,7 @@ class LogisticController extends Controller
                                                     'lead_products' => $lead_products,
                                                     'quotation_count' => $quotation_count,
                                                     'salesPerson' => $salesPerson,
+                                                    'prev_route' => $prev_route,
                                                 ]);
     }
 

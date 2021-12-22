@@ -1,13 +1,14 @@
 @extends('frontend.admin.layouts.master')
 
+@section('page')
+  <h6 class="font-weight-bolder mb-0">Sales Person Activity</h6>
+@endsection
+
 @section('content')
-<form action="{{ route('customer') }}" method="GET">
+<form action="#" method="GET">
     @csrf
     <div class="row">
-        <div class="col-md-4">
-            <a href="{{ route('addcustomer') }}" class="btn btn-primary">Add customer</a>
-        </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-7"></div>
         <div class="col-md-5">
             <div style="display: flex; flex-wrap: no-wrap">
                 <input type="text" class="form-control mr-1" id="customer_name" placeholder="Search..."
@@ -22,14 +23,14 @@
     </div>
 </form>
 <div class="d-flex flex-row flex-wrap">
-    @foreach($allCustomer as $c )
+    @foreach($salesPersons as $sp )
         <div class="card m-2" style="width: 23rem">
-            <a href="{{ url('/') }}/admin/customerdetails/{{ $c->id }}">
+            
                 <div class="card-body p-2">
                     <div class="row">
                         <div class="col-sm-4">
-                            @if(isset($c->customer_image))
-                                <img src="{{ asset($c->customer_image) }}" alt="Product"
+                            @if(isset($sp->emp_image))
+                                <img src="{{ asset($sp->emp_image) }}" alt="Product"
                                     style="height: 7rem; width:7rem">
                             @else
                                 <img src="{{ asset('images/products/default.jpg') }}"
@@ -37,14 +38,14 @@
                             @endif
                         </div>
                         <div class="col-sm-8">
-                            <p class="mb-0">{{ $c->customer_name }}</p>
-                            <p class="mb-0">{{ $c->address }}</p>
-                            <p class="mb-0">{{ $c->email }}</p>
-                            <p class="mb-0">{{ $c->mobile }}</p>
+                            <p class="mb-0">{{ $sp->emp_name }}</p>
+                            <p class="mb-0">{{ $sp->work_email }}</p>
+                            <p class="mb-0">{{ $sp->work_mobile }}</p>
+                            <a href="{{ route('assignedleads',['salesperson_id' => $sp->unique_id]) }}" class=" btn btn-sm btn-dark">Assigned Leads
+                            </a>
                         </div>
                     </div>
                 </div>
-            </a>
         </div>
     @endforeach
 </div>
