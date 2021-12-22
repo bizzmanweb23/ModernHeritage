@@ -45,6 +45,11 @@
                             <p class="mb-0">{{ $v->model_name }}</p>
                             <p class="mb-0">{{ $v->license_plate_no }}</p>
                             <p class="mb-0">{{ $v->emp_name }}</p>
+                            @if ($v->status == 1)
+                                <span class="badge badge-sm bg-gradient-success">Active</span>
+                            @else                               
+                                <span class="badge badge-sm bg-gradient-secondary">Inactive</span>
+                            @endif
                         </div>
                     </div>
                 </div>

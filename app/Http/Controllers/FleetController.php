@@ -53,6 +53,7 @@ class FleetController extends Controller
         $vehicle->vehicle_image = $file_path;
         $vehicle->model_colour = $request->model_colour;
         $vehicle->model_year = $request->model_year;
+        $vehicle->status = '1';
         $vehicle->save();
 
         return redirect(route('allVehicles'));

@@ -14,10 +14,10 @@
         href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Assign Salesperson</a>
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success"
-        href="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3">Assign Driver</a>
+        href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>
 @endif
 
-<!-- The Modal -->
+<!-- The SalesPerson Modal -->
 <div class="modal" id="addSalesPersonModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -36,6 +36,40 @@
                                 value="{{ $salesPerson->salesperson_id }}" required>
                             <input type="text" class="form-control modal_input" id="salesPerson_name" name="salesPerson_name"
                                 value="{{ $salesPerson->salesperson_name }}" required>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Driver Modal -->
+<div class="modal" id="assignDriverModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ url('/') }}/admin/logistic/update-stage/{{ $lead->id }}/3" method="get">
+                @csrf
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Driver</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="driver_id">Driver Name:</label></div>
+                        <div class="col-md-7">
+                            <select name="driver_id" id="driver_id" class="form-control" required>
+                                <option value="">Select Driver</option>
+                                @foreach ($drivers as $d)
+                                   <option value="{{ $d->unique_id }}">{{ $d->emp_name }}</option> 
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <!-- Modal footer -->

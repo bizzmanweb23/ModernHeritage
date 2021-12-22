@@ -9,11 +9,14 @@ use App\Models\GST;
 use App\Models\Tax;
 use App\Models\CountryCode;
 use App\Models\CustomerContact;
+use App\Models\Employee;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
+use App\Models\LogisticLeadDriver;
 use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsProduct;
 use App\Models\LogisticLeadsQuotation;
+use App\Models\Vehicle;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -171,6 +174,14 @@ class LogisticController extends Controller
             $salesPerson->logistic_lead_id = $lead_id;
             $salesPerson->save();
         }
+
+        if ($stage_id=='3') {
+            $driver = new LogisticLeadDriver();
+            $driver->driver_id = $request->driver_id;
+            $driver->logistic_lead_id = $lead_id;
+            $driver->save();
+
+        }
        
 
         return redirect()->back();
@@ -190,6 +201,10 @@ class LogisticController extends Controller
                                     ->where('logistic_leads.client_id',$lead->client_id)
                                     ->select('employees.unique_id as salesperson_id','employees.emp_name as salesperson_name')
                                     ->first();
+        $drivers = Vehicle::leftjoin('employees','employees.unique_id','=','vehicles.driver_id')
+                            ->where('employees.job_position','=','9')
+                            ->select('vehicles.*','employees.emp_name','employees.unique_id')
+                            ->get();
 
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
                                             ->get();
@@ -205,6 +220,7 @@ class LogisticController extends Controller
                                                     'quotation_count' => $quotation_count,
                                                     'salesPerson' => $salesPerson,
                                                     'prev_route' => $prev_route,
+                                                    'drivers' => $drivers,
                                                 ]);
     }
 
