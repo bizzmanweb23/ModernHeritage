@@ -13,6 +13,7 @@ use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\FleetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -144,6 +145,11 @@ Route::group(['prefix' => 'admin'], function () {
         //admin--logistic--sales--person Activity
         Route::get('/allSalesperson', [SalesController::class,'allSalesperson'])->name('salespersons');
         Route::get('/assignedleads/{salesperson_id}', [SalesController::class,'assignedLeads'])->name('assignedleads');
+
+        //fleet-management
+        Route::get('/allvehicles', [FleetController::class,'allVehicles'])->name('allVehicles');
+        Route::get('/addvehicles', [FleetController::class,'addVehicles'])->name('addVehicles');
+        Route::post('/savevehicle', [FleetController::class,'saveVehicle'])->name('saveVehicle');
 
 });
     

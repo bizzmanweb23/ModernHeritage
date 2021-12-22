@@ -6,7 +6,9 @@
 
 @section('content')
 <a class="btn btn-primary"
-href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
+@if ($prev_route == 'logistic_crm')
+    href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
+@endif
 @if($lead->stage_id == 1)  
     <a class="btn btn-success"
         href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Assign Salesperson</a>
