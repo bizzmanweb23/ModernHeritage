@@ -214,6 +214,10 @@ class LogisticController extends Controller
             $index++;
         }
         $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
+        $assigned_driver = LogisticLeadDriver::leftjoin('employees','employees.unique_id','=','logistic_leads_drivers.driver_id')
+                                                ->where('logistic_lead_id', '=' , $lead_id)
+                                                ->select('employees.emp_name', 'logistic_leads_drivers.driver_id')
+                                                ->first();
         return view('frontend.admin.logisticManagement.logistic_crm.viewLead',[
                                                     'lead' => $lead,
                                                     'lead_products' => $lead_products,
@@ -221,6 +225,7 @@ class LogisticController extends Controller
                                                     'salesPerson' => $salesPerson,
                                                     'prev_route' => $prev_route,
                                                     'drivers' => $drivers,
+                                                    'assigned_driver' => $assigned_driver,
                                                 ]);
     }
 

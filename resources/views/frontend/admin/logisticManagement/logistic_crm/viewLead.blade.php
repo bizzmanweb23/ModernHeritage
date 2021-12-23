@@ -85,12 +85,8 @@
 </div>
 
 
-<div class="ms-auto text-end">
-    <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
-        class="btn btn-link text-dark px-3 mb-0">Quotation : {{ $quotation_count }}</a>
-</div>
 <div class="row">
-    <div class="col-md-12 mt-3">
+    <div class="col-md-10">
         <div class="card container-fluid">
             <form action="{{ url('/') }}/admin/logistic/updaterequest/{{ $lead->id }}"
                 method="post">
@@ -442,6 +438,66 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card">
+            <div class="card-body px-2 py-2">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingOne" style="background-color: bisque">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <strong>Quotation ({{ $quotation_count }})</strong>
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if ($quotation_count > 0)
+                                <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View Quotations</a>
+                            @else
+                                <a href=""
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> No Quotation</a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingTwo" style="background-color: bisque">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <strong>Sales Person</strong>
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($salesPerson))
+                                <a href="{{ route('assignedleads',['salesperson_id' => $salesPerson->salesperson_id]) }}"
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $salesPerson->salesperson_name }}</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingThree" style="background-color: bisque">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <strong>Driver</strong>
+                        </button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($assigned_driver))
+                                <a href=""
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $assigned_driver->emp_name }}</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
