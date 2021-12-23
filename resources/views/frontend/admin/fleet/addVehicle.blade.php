@@ -45,8 +45,12 @@
                 <div class="col-md-8">
                     <div class="form-group">
                         <label for="model_name">Model:</label>
-                        <input type="text" class="form-control" id="model_name" name="model_name"
-                            placeholder="Model Name" required>
+                        <select class="form-control" id="model_name" name="model_name" onchange="onModelSelect({{ $models }})" required>
+                            <option value="">Select Model</option>
+                            @foreach ($models as $m)
+                                <option value="{{ $m->id }}">{{ $m->model_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="license_plate_no">License Plate No:</label>
@@ -57,13 +61,9 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-2">
-                    <div class="upload">
-                        <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                    <div class="">
+                        <img name="vehicle_image" id="vehicle_image" src="{{ asset('images/products/default.jpg') }}" alt="Product"
                             style="height: 100px; width:100px">
-                        <label for="vehicle_image" class="edit">
-                            <i class="fas fa-pencil-alt"></i>
-                            <input id="vehicle_image" type="file" style="display: none" name="vehicle_image">
-                        </label>
                     </div>
                 </div>
             </div>
@@ -106,3 +106,22 @@
     </div>
 </form>
 @endsection
+
+<script>
+    function onModelSelect(models){
+        var selected_model = $('#model_name').val();
+        var image = "";
+        if (selected_model === null || selected_model === undefined || selected_model === ""){
+            $("#vehicle_image").attr("src","{{ asset('/') }}images/products/default.jpg");
+        } else {
+            // console.log('model',models[selected_model-1]);
+            models.forEach(model => {
+                if(model.id == selected_model) {
+                    console.log('model', model);
+                    image = model.brand_image;
+                }
+            });
+            $("#vehicle_image").attr("src",`{{ asset('/') }}${image}`);
+        }
+    }
+</script>

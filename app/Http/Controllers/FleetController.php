@@ -13,7 +13,9 @@ class FleetController extends Controller
     public function allVehicles()
     {
         $vehicle = Vehicle::leftjoin('employees','vehicles.driver_id','=','employees.unique_id')
-                            ->select('employees.emp_name','vehicles.*')
+                            ->leftjoin('vehicle_models','vehicles.model_name','=','vehicle_models.id')
+                            ->leftjoin('vehicle_brands','vehicle_models.brand_id','=','vehicle_brands.id')
+                            ->select('employees.emp_name','vehicles.*', 'vehicle_models.model_name', 'vehicle_brands.brand_image as vehicle_image')
                             ->get();
         return view('frontend.admin.fleet.allVehicles',['vehicle' => $vehicle]);
     }
@@ -21,9 +23,13 @@ class FleetController extends Controller
     public function addVehicles()
     {
         $drivers = Employee::where('job_position', '9')->get();
+        $models = VehicleModel::leftjoin('vehicle_brands', 'vehicle_brands.id', '=', 'vehicle_models.brand_id')
+                                ->select('vehicle_brands.brand_image', 'vehicle_models.*')
+                                ->get();
         return view('frontend.admin.fleet.addVehicle',
                             [
                                 'drivers' => $drivers,
+                                'models' => $models,
                             ]);
     }
 

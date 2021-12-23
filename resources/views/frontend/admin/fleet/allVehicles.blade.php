@@ -9,7 +9,7 @@
     @csrf
     <div class="row">
         <div class="col-md-4">
-            <a href="{{ route('addVehicles') }}" class="btn btn-primary">Add Vehicles</a>
+            <a href="{{ route('addVehicles') }}" class="btn btn-dark">Add Vehicles</a>
         </div>
         <div class="col-md-3"></div>
         <div class="col-md-5">

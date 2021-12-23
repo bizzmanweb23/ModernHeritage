@@ -6,7 +6,7 @@
 
 @section('content')
 @if ($prev_route == 'logistic_crm')
-    href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
+    <a class="btn btn-primary" href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
 @endif
 @if($lead->stage_id == 1)  
     <a class="btn btn-success"
@@ -14,6 +14,8 @@
 @elseif($lead->stage_id == 2)
     <a class="btn btn-success"
         href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>
+@elseif($lead->stage_id == 3)
+    <a class="btn btn-dark" href="#">Invoice</a>       
 @endif
 
 <!-- The SalesPerson Modal -->
