@@ -150,7 +150,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/allvehicles', [FleetController::class,'allVehicles'])->name('allVehicles');
         Route::get('/addvehicles', [FleetController::class,'addVehicles'])->name('addVehicles');
         Route::post('/savevehicle', [FleetController::class,'saveVehicle'])->name('saveVehicle');
+        Route::get('/allbrands', [FleetController::class,'allBrands'])->name('allBrands');
+        Route::post('/savebrands', [FleetController::class,'saveBrands'])->name('saveBrands');
+        Route::get('/allmodels', [FleetController::class,'allModels'])->name('allModels');
+        Route::post('/savemodels', [FleetController::class,'saveModels'])->name('saveModels');
 
-});
+    });
     
 });

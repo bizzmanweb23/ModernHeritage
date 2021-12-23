@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-<a class="btn btn-primary"
 @if ($prev_route == 'logistic_crm')
     href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
 @endif

@@ -10,6 +10,13 @@
         <li class="nav-item dropdown">
           <a class="nav-link" href="#" id="maintenance" role="button" aria-expanded="false">Maintenance</a>
         </li>       
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" id="configuration" role="button" data-bs-toggle="dropdown" aria-expanded="false">Configuration</a>
+          <ul class="dropdown-menu" aria-labelledby="configuration">
+            <a class="dropdown-item" href="{{ route('allBrands') }}">Brands</a>
+            <a class="dropdown-item" href="{{ route('allModels') }}">Vehicle Models</a>
+          </ul>
+        </li>       
       </ul>
     </div>
 </nav> 

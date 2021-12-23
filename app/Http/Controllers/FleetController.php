@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\Vehicle;
+use App\Models\VehicleBrand;
+use App\Models\VehicleModel;
 use Illuminate\Http\Request;
 
 
@@ -57,5 +59,66 @@ class FleetController extends Controller
         $vehicle->save();
 
         return redirect(route('allVehicles'));
+    }
+
+    public function allBrands()
+    {
+        $brands = VehicleBrand::get();
+        foreach ($brands as $b) {
+            $count = VehicleModel::where('brand_id', $b->id)->get()->count();
+            $b->count = $count;
+        }
+        return view('frontend.admin.fleet.brands.allBrands', ['brands' => $brands]);
+    }
+
+    public function saveBrands(Request $request)
+    {
+        $data = $request->validate([
+            'brand_name' => 'required',
+            'brand_image' => 'required',
+        ]);
+        $str_time = time();
+        if($request->file('brand_image')){
+            $file_type = $request->file('brand_image')->extension();
+            $file_path = $request->file('brand_image')->storeAs('images/vehicle_brands','Brand_'.$str_time.'.'.$file_type,'public');
+            $request->file('brand_image')->move(public_path('images/vehicle_brands'),'Brand_'.$str_time.'.'.$file_type);
+        }
+        else
+        {
+            $file_path = null;
+        }
+
+        $brand = new VehicleBrand;
+        $brand->brand_name = $request->brand_name;
+        $brand->brand_image = $file_path;
+        $brand->save();
+
+        return redirect(route('allBrands'));
+    }
+    
+    public function allModels()
+    {
+        $brands = VehicleBrand::get();
+        foreach ($brands as $b) {
+            $models = VehicleModel::where('brand_id', $b->id)->get();
+            $b->models = $models;
+        }
+        return view('frontend.admin.fleet.models.allModels', ['brands' => $brands]);
+    }
+
+    public function saveModels(Request $request)
+    {
+        $data = $request->validate([
+            'model_name' => 'required',
+            'brand_id' => 'required',
+            'vehicle_type' => 'required',
+        ]);
+        $model = new VehicleModel;
+        $model->model_name = $request->model_name;
+        $model->brand_id = $request->brand_id;
+        $model->vehicle_type = $request->vehicle_type;
+        $model->save();
+
+        return redirect(route('allModels'));
     }
 }
