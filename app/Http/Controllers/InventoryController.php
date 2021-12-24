@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Attributes;
+use App\Models\Service;
 use App\Models\UomCategory;
 use App\Models\UOM;
 use App\Models\Tax;
@@ -143,5 +144,25 @@ class InventoryController extends Controller
 
         return redirect(route('allUOM'));
 
+    }
+
+    public function allServices()
+    {
+        $services = Service::get();
+        return view('frontend.admin.inventory.configuration.allServices',['services' => $services]);
+    }
+
+    public function saveServices(Request $request)
+    {
+        $data = $request->validate([
+            'service_name' => 'required',
+        ]);
+
+        $service = new Service;
+        $service->service_name = $request->service_name;
+        $service->service_desc = $request->service_desc;
+        $service->save();
+
+        return redirect(route('allServices'));
     }
 }

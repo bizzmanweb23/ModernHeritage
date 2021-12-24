@@ -64,7 +64,6 @@
                                         @endforeach
                                     </select>
                                 </span>
-        
                             </div>
                         </div>
                         <div class="row mt-2">
@@ -213,7 +212,6 @@
                             <span id="total_span" class="font-weight-bolder"></span>
                             <input hidden type="text" name="total" id="total" readonly>
                         </div>
-                        
                     </div>                   
                 </div>
             </form>

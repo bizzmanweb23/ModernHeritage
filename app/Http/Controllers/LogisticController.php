@@ -17,6 +17,7 @@ use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsProduct;
 use App\Models\LogisticLeadsQuotation;
 use App\Models\Vehicle;
+use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
@@ -180,16 +181,12 @@ class LogisticController extends Controller
             $driver->driver_id = $request->driver_id;
             $driver->logistic_lead_id = $lead_id;
             $driver->save();
-
         }
-       
-
         return redirect()->back();
     }
 
     public function viewRequest($lead_id,$prev_route = 'logistic_crm')
     {
-
         $lead = LogisticLead::leftjoin('logistic_leads_quotations','logistic_leads.id','=','logistic_leads_quotations.lead_id')
                                 ->where('logistic_leads.id',$lead_id)
                                 ->select('logistic_leads.*',
@@ -299,7 +296,6 @@ class LogisticController extends Controller
             $req_area = 'area'.strval($i);
             $req_weight = 'weight'.strval($i);
 
-
             $logistic_leads_product = new LogisticLeadsProduct;
 
             $logistic_leads_product->lead_id = $logistic_lead->unique_id;         //same unique_id of logistic_leads table
@@ -319,12 +315,12 @@ class LogisticController extends Controller
     public function addQuotation($lead_id)
     {
         $lead = LogisticLead::findOrFail($lead_id);
-
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
                                             ->get();
         $gst = GST::get();
         $tax = Tax::get();
-        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'lead_products' => $lead_products]);
+        $service = Service::get();
+        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'lead_products' => $lead_products,'service' => $service]);
     }
 
     public function saveQuotation(Request $request,$lead_id)

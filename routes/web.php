@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\CrmController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
@@ -119,6 +120,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/saveUOMcategory', [InventoryController::class,'saveUOMcategory'])->name('UOMcategory');
     Route::get('/allUOM', [InventoryController::class,'allUOM'])->name('allUOM');
     Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
+    Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
+    Route::get('/allservices', [InventoryController::class,'allServices'])->name('allServices');
+    Route::post('/saveservices', [InventoryController::class,'saveServices'])->name('saveServices');
     
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
@@ -155,6 +159,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/allmodels', [FleetController::class,'allModels'])->name('allModels');
         Route::post('/savemodels', [FleetController::class,'saveModels'])->name('saveModels');
 
+        //driver-management
+        Route::get('/driver-overview', [DriverController::class,'driverOverview'])->name('driverOverview');
+        Route::get('/presentdelivery', [DriverController::class,'presentDelivery'])->name('presentDelivery');
     });
     
 });
