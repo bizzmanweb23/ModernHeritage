@@ -470,9 +470,9 @@
                       </h2>
                       <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            @if (isset($salesPerson))
-                                <a href="{{ route('assignedleads',['salesperson_id' => $salesPerson->salesperson_id]) }}"
-                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $salesPerson->salesperson_name }}</a>
+                            @if (isset($assignedSalesperson))
+                                <a href="{{ route('assignedleads',['salesperson_id' => $assignedSalesperson->sale_person_id]) }}"
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $assignedSalesperson->sale_person_name }}</a>
                             @else
                                 <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
                             @endif

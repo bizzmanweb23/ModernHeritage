@@ -161,7 +161,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //driver-management
         Route::get('/driver-overview', [DriverController::class,'driverOverview'])->name('driverOverview');
-        Route::get('/presentdelivery', [DriverController::class,'presentDelivery'])->name('presentDelivery');
+        Route::get('/deliveries/{delivery_time}', [DriverController::class,'allDeliveries'])->name('allDeliveries');
     });
     
 });

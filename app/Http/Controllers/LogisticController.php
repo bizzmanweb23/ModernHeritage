@@ -211,6 +211,7 @@ class LogisticController extends Controller
             $index++;
         }
         $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
+        $assignedSalesperson = LogisticLeadSalesPerson::where('logistic_lead_id', $lead_id)->first();
         $assigned_driver = LogisticLeadDriver::leftjoin('employees','employees.unique_id','=','logistic_leads_drivers.driver_id')
                                                 ->where('logistic_lead_id', '=' , $lead_id)
                                                 ->select('employees.emp_name', 'logistic_leads_drivers.driver_id')
@@ -222,6 +223,7 @@ class LogisticController extends Controller
                                                     'salesPerson' => $salesPerson,
                                                     'prev_route' => $prev_route,
                                                     'drivers' => $drivers,
+                                                    'assignedSalesperson' => $assignedSalesperson,
                                                     'assigned_driver' => $assigned_driver,
                                                 ]);
     }
@@ -319,8 +321,13 @@ class LogisticController extends Controller
                                             ->get();
         $gst = GST::get();
         $tax = Tax::get();
-        $service = Service::get();
-        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'lead_products' => $lead_products,'service' => $service]);
+        $services = Service::get();
+        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 
+                                                                                    'gst' => $gst,
+                                                                                    'tax' => $tax,
+                                                                                    'lead_products' => $lead_products,
+                                                                                    'services' => $services
+                                                                                ]);
     }
 
     public function saveQuotation(Request $request,$lead_id)

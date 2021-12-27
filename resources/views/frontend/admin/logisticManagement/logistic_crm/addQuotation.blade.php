@@ -106,9 +106,9 @@
                         
                         <div style="border: steelblue; border-radius: 20px; border-style: groove; padding: 10px 5px 5px 20px;" class="mb-3">
                             <input type="hidden" name="product_row_count" id="product_row_count" value="{{ count($lead_products) }}">
-                            <h4 class="mb-0">
+                            <h5 class="mb-0">
                                 Logistic Product Details
-                            </h4>
+                            </h5>
                             <table class="table mb-0 mt-2">
                                 <thead>
                                     <tr>
@@ -169,7 +169,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-uppercase" scope="col">
-                                        <p class="mb-0 mt-0 text-xs font-weight-bolder">Service</p>
+                                        <p class="mb-0 mt-0 text-xs font-weight-bolder">Service Name</p>
                                     </th>
                                     <th class="text-uppercase" scope="col">
                                         <p class="mb-0 mt-0 text-xs font-weight-bolder">Description</p>
@@ -190,7 +190,14 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text" class="form-control" name="product_name" id="product_name"></td>
+                                    <td>
+                                        <select class="form-control" name="product_name" id="product_name" onchange="onServiceChange({{ $services }})" required>
+                                            <option value="">select service</option>
+                                            @foreach ($services as $s)
+                                                <option value="{{ $s->service_name }}">{{ $s->service_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
                                     <td><input type="text" class="form-control" name="description" id="description"></td>
                                     <td><input type="number" class="form-control" name="quantity" id="quantity" onchange="onqtychange()" min="1"></td>
                                     <td><input type="text" class="form-control" name="unitPrice" id="unitPrice" onchange="onqtychange()"></td>
@@ -257,7 +264,7 @@
         var taxValues = Object.values(tax);
         for(var j=0; j<taxLength; j++){
             var tax_value = parseFloat(JSON.parse(taxValues[j]).tax_value);
-            sub_tax = sub_tax + ((sub*tax_value) / 10000)
+            sub_tax = sub_tax + ((sub*tax_value) / 100)
             console.log('subtax - '+sub_tax);
         }
         sub_total = sub + sub_tax;
@@ -274,6 +281,22 @@
         console.log('tax_amt - '+tax_amt);
         $('#tax_total_span').text('Tax :   ₹ ' + tax_amt.toFixed(2));
         $('#total_span').text('Total :   ₹ ' + total.toFixed(2));
+    }
+
+    function onServiceChange(services)
+    {
+        var selected_service = $('#product_name').val();
+        var desc = "";
+        if (selected_service === null || selected_service === undefined || selected_service === ""){
+            $("#description").val("");
+        } else {
+            services.forEach(service => {
+                if(service.service_name == selected_service) {
+                    desc = service.service_desc;
+                }
+            });
+            $("#description").val(desc);
+        }
     }
 </script>
 @endsection
