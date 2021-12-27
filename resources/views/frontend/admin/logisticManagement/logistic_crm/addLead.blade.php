@@ -8,7 +8,6 @@
 <form action="{{ route('addLogisticLead') }}" method="POST">
     @csrf
 
-    <input type="hidden" name="client_id" id="client_id">
     <div class="container mb-4">
         <div class="card p-1">
             <h4 class="pl-4 mb-0 pt-3">Bill To</h4>
@@ -16,9 +15,15 @@
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <span>
-                            <label for="client_name">Customer Name</label>
-                            <input type="text" class="form-control typeahead" id="client_name" name="client_name"
-                                placeholder="Customer Name" required>
+                            <input type="hidden" name="client_name" id="client_name">
+                            <input type="hidden" name="client_id" id="client_id">
+                            <label for="client_id">Customer/Company Name</label>
+                            <select class="form-control" id="bill_to_customer" name="bill_to_customer" onchange="onBillToCustomerChange()" required>
+                                <option value="">select customer/company</option>
+                                @foreach ($customers as $c)
+                                    <option value="{{ $c }}">{{ $c->customer_name }}</option>
+                                @endforeach
+                            </select>
                         </span>
                     </div>
                     <div class="col-md-6">
@@ -60,13 +65,13 @@
             <div class="row mb-2">
                 <div class="col-md-6">
                     <span>
-                        <label for="pickup_client">Pickup Customer</label>
+                        <label for="pickup_client">Pickup Customer/Company</label>
                         <input type="text" class="form-control" id="pickup_client" name="pickup_client" required>
                     </span>
                 </div>
                 <div class="col-md-6">
                     <span>
-                        <label for="delivery_client">Delivery Customer</label>
+                        <label for="delivery_client">Delivery Customer/Company</label>
                         <input type="text" class="form-control" id="delivery_client" name="delivery_client" required>
                     </span>
                 </div>
@@ -251,30 +256,14 @@
 </form>
 
 <script>
-    $('#client_name').autocomplete({
-        source: function (request, response) {
-            $.ajax({
-                type: 'get',
-                url: "{{ route('searchcustomer') }}",
-                dataType: "json",
-                data: {
-                    term: $('#client_name').val()
-                },
-                success: function (data) {
-                    response(data);
-                    console.log(data)
-                },
-            });
-        },
-        select: function (event, ui) {
-            if (ui.item.id != 0) {
-                $('#client_id').val(ui.item.id);
-                // $('#pickup_email').val(ui.item.email);
-                // $('#pickup_phone').val(ui.item.phone);
-            }
-        },
-        minLength: 1,
-    });
+
+    function onBillToCustomerChange()
+    {
+        var selectedCustomer = JSON.parse($('#bill_to_customer').val());
+        $('#client_id').val(selectedCustomer.id);
+        $('#client_name').val(selectedCustomer.customer_name);
+    }
+
     $('#contact_name').autocomplete({
         source: function (request, response) {
             $.ajax({

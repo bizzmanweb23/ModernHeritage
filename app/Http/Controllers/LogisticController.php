@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\GST;
 use App\Models\Tax;
 use App\Models\CountryCode;
+use App\Models\Customer;
 use App\Models\CustomerContact;
 use App\Models\Employee;
 use App\Models\LogisticStage;
@@ -34,7 +35,8 @@ class LogisticController extends Controller
 
     public function addRequest()
     {
-        return view('frontend.admin.logisticManagement.logistic_crm.addLead');
+        $customers = Customer::get();
+        return view('frontend.admin.logisticManagement.logistic_crm.addLead', ['customers' => $customers]);
     }
 
     public function searchContact(Request $request)
@@ -71,7 +73,7 @@ class LogisticController extends Controller
             'pickup_pin' => 'required',
             'pickup_state' => 'required',
             'pickup_country' => 'required',
-            'pickup_location' => 'required',
+            'pickup_location' => '',
             'pickup_email' => 'required|email:rfc,dns',
             'pickup_phone' => 'required',
             'contact_name' => 'required',
@@ -84,7 +86,7 @@ class LogisticController extends Controller
             'delivery_pin' => 'required',
             'delivery_state' => 'required',
             'delivery_country' => 'required',
-            'delivery_location' => 'required',
+            'delivery_location' => '',
             'delivery_email' => 'required|email:rfc,dns',
             'delivery_phone' => 'required',
         ]);
