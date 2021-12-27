@@ -15,6 +15,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FleetController;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -162,6 +163,10 @@ Route::group(['prefix' => 'admin'], function () {
         //driver-management
         Route::get('/driver-overview', [DriverController::class,'driverOverview'])->name('driverOverview');
         Route::get('/deliveries/{delivery_time}', [DriverController::class,'allDeliveries'])->name('allDeliveries');
+        
+        //logistic-crm -- invoices
+        Route::post('/create-invoice/{lead_id}', [InvoiceController::class,'createInvoice'])->name('createInvoice');
+        Route::get('/show-invoice/{lead_id}', [InvoiceController::class,'showInvoice'])->name('showInvoice');
     });
     
 });
