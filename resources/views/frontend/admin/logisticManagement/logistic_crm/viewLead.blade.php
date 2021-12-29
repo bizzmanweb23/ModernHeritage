@@ -494,7 +494,7 @@
             </form>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="card">
             <div class="card-body px-2 py-2">
                 <div class="accordion" id="accordionExample">
@@ -551,7 +551,7 @@
                       </div>
                     </div>
                     <div class="accordion-item mb-2">
-                      <h2 class="accordion-header" id="headingFour" style="background-color: bisque" title="Driver">
+                      <h2 class="accordion-header" id="headingFour" style="background-color: bisque" title="Invoice">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                             <strong><i class="fas fa-file-invoice"></i></strong>
                         </button>
@@ -559,7 +559,7 @@
                       <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             @if (isset($invoice))
-                                <a href=""
+                                <a href="{{ route('showInvoice', ['lead_id' => $lead->id]) }}"
                                     class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $invoice->unique_id }}</a>
                             @else
                                 <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> No Invoice</a>

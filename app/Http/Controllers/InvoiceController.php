@@ -39,13 +39,11 @@ class InvoiceController extends Controller
         }
 
         $today = date('Y-m-d');
-        $quotation = LogisticLeadsQuotation::where('lead_id', $lead_id)->first();
         $invoice = new LogisticLeadInvoice;
         $invoice->logistic_lead_id = $lead_id;
         $invoice->unique_id = $number;
         $invoice->invoice_type = $request->invoice_type;
         $invoice->down_payment = $request->down_payment;
-        $invoice->quotation_reference = $quotation->quotation_id;
         $invoice->invoice_date = $today;
         $invoice->due_date = $today;
         $invoice->save();
@@ -54,25 +52,69 @@ class InvoiceController extends Controller
 
     public function showInvoice($lead_id)
     {
-        $invoice = LogisticLeadInvoice::leftjoin('logistic_leads_quotations', 'logistic_leads_quotations.quotation_id', '=', 'logistic_leads_invoices.quotation_reference')
-                                        ->leftjoin('gst', 'gst.id', '=', 'logistic_leads_quotations.gst_treatment')
-                                        ->where('logistic_leads_invoices.logistic_lead_id', $lead_id)
-                                        ->select('logistic_leads_invoices.unique_id as invoice_id',
-                                                'logistic_leads_invoices.invoice_type',
-                                                'logistic_leads_invoices.invoice_date',
-                                                'logistic_leads_invoices.due_date',
-                                                'logistic_leads_quotations.*',
-                                                'gst.gst_treatment as gst_treatment')
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', $lead_id)
                                         ->first();
+        $quotations = LogisticLeadsQuotation::leftjoin('gst', 'gst.id', '=', 'logistic_leads_quotations.gst_treatment')
+                                            ->where('lead_id', $lead_id)
+                                            ->select('logistic_leads_quotations.*',
+                                                    'gst.gst_treatment')
+                                            ->get();
+        $tax = Tax::get();
+        foreach ($quotations as $q) {
+            $selected_taxs = json_decode($q->tax);
+            $selected_taxs_name = [];
+            if(isset($selected_taxs)){
+                foreach($tax as $t){
+                    if(in_array($t->id,$selected_taxs)){
+                        array_push($selected_taxs_name, $t->tax_name);
+                    }
+                }
+                // selected_taxs_name not present in table, added selected_taxs_name only to show in view.
+                $q->selected_taxs_name = $selected_taxs_name;
+            }
+        }
+
+        if(isset($invoice->quotation_reference))
+        {
+            $quotation_details =  LogisticLeadsQuotation::leftjoin('gst', 'gst.id', '=', 'logistic_leads_quotations.gst_treatment')
+                                                        ->where('quotation_id', $invoice->quotation_reference)
+                                                        ->select('logistic_leads_quotations.*',
+                                                                'gst.gst_treatment')
+                                                        ->first();
+            if(isset($quotation_details))
+            {
+                $selected_taxs = json_decode($quotation_details->tax);
+                $selected_taxs_name = [];
+                if(isset($selected_taxs)){
+                    foreach($tax as $t){
+                        if(in_array($t->id,$selected_taxs)){
+                            array_push($selected_taxs_name, $t->tax_name);
+                        }
+                    }
+                    // selected_taxs_name not present in table, added selected_taxs_name only to show in view.
+                    $q->selected_taxs_name = $selected_taxs_name;
+                }
+            }
+        }
+        else {
+            $quotation_details = null;
+        }
         $lead = LogisticLead::where('logistic_leads.id', $lead_id)
                             ->first();
-        // $gst = GST::get();
-        $tax = Tax::get();
-        $services = Service::get();
         return view('frontend.admin.logisticManagement.invoice.index',['invoice' => $invoice,
                                                                         'lead' => $lead,
-                                                                        'tax' => $tax,
-                                                                        'services' => $services,
+                                                                        'quotation_details' => $quotation_details,
+                                                                        'quotations' => $quotations,
                                                                     ]);
+    }
+
+    public function confirmInvoice(Request $request, $lead_id)
+    {
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', $lead_id)
+                                        ->first();
+        $invoice->quotation_reference = $request->quotation_reference;
+        $invoice->save();
+
+        return redirect(route('showInvoice', ['lead_id' => $lead_id]));
     }
 }
