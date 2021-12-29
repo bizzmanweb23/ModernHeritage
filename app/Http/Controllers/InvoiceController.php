@@ -40,7 +40,6 @@ class InvoiceController extends Controller
 
         $today = date('Y-m-d');
         $quotation = LogisticLeadsQuotation::where('lead_id', $lead_id)->first();
-
         $invoice = new LogisticLeadInvoice;
         $invoice->logistic_lead_id = $lead_id;
         $invoice->unique_id = $number;

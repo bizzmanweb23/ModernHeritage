@@ -16,7 +16,7 @@
         href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>      
 @endif
 
-@if ($quotation_count > 0)
+@if ($quotation_count > 0 && !isset($invoice))
     <a class="btn btn-dark" href="#" data-bs-toggle="modal" data-bs-target="#invoiceModal">Invoice</a>  
 @endif
 
@@ -170,7 +170,7 @@
                         <h5>Bill To</h5>
                         <div class="row mb-2">
                             <div class="col-md-6">
-                                <label class="mb-2 ">Customer Name:</label>
+                                <label class="mb-2 ">Customer/Company Name:</label>
                                 <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="client_name_span">{{ $lead->client_name }}</span>
                                 <input type="text" name="client_name" id="client_name"
@@ -215,7 +215,7 @@
 
                         <div class="row mb-2">
                             <div class="col-md-5">
-                                <label class="mb-2 ">Customer Name:</label>
+                                <label class="mb-2 ">Customer/Company Name:</label>
                                     <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="pickup_client_span">{{ $lead->pickup_client }}</span>
                                     <input type="text" name="pickup_client" id="pickup_client"
@@ -224,7 +224,7 @@
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-5">
-                                <label class="mb-2 ">Customer Name:</label>
+                                <label class="mb-2 ">Customer/Company Name:</label>
                                     <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="delivery_client_span">{{ $lead->delivery_client }}</span>
                                     <input type="text" name="delivery_client" id="delivery_client"
@@ -546,6 +546,23 @@
                                     class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $assigned_driver->emp_name }}</a>
                             @else
                                 <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingFour" style="background-color: bisque" title="Driver">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <strong><i class="fas fa-file-invoice"></i></strong>
+                        </button>
+                      </h2>
+                      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($invoice))
+                                <a href=""
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $invoice->unique_id }}</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> No Invoice</a>
                             @endif
                         </div>
                       </div>

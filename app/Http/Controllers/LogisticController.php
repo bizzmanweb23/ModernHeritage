@@ -14,6 +14,7 @@ use App\Models\Employee;
 use App\Models\LogisticStage;
 use App\Models\LogisticLead;
 use App\Models\LogisticLeadDriver;
+use App\Models\LogisticLeadInvoice;
 use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsProduct;
 use App\Models\LogisticLeadsQuotation;
@@ -218,6 +219,7 @@ class LogisticController extends Controller
                                                 ->where('logistic_lead_id', '=' , $lead_id)
                                                 ->select('employees.emp_name', 'logistic_leads_drivers.driver_id')
                                                 ->first();
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', '=' , $lead_id)->first();
         return view('frontend.admin.logisticManagement.logistic_crm.viewLead',[
                                                     'lead' => $lead,
                                                     'lead_products' => $lead_products,
@@ -227,6 +229,7 @@ class LogisticController extends Controller
                                                     'drivers' => $drivers,
                                                     'assignedSalesperson' => $assignedSalesperson,
                                                     'assigned_driver' => $assigned_driver,
+                                                    'invoice' => $invoice,
                                                 ]);
     }
 
