@@ -38,7 +38,7 @@
                 <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
                         aria-hidden="true"></i>Save</button>
                 <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                    href="#"><i class="fas fa-arrow-left text-dark me-2"
+                    href="{{ route('allVehicles') }}"><i class="fas fa-arrow-left text-dark me-2"
                         aria-hidden="true"></i>Back</a>
             </div>
             <div class="row">

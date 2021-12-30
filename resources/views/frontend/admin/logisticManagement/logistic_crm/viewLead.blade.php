@@ -140,7 +140,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-11">
         <div class="card container-fluid">
             <form action="{{ url('/') }}/admin/logistic/updaterequest/{{ $lead->id }}"
                 method="post">
@@ -494,24 +494,24 @@
             </form>
         </div>
     </div>
-    <div class="col-md-2">
+    <div class="col-md-1">
         <div class="card">
             <div class="card-body px-2 py-2">
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item mb-2">
                       <h2 class="accordion-header" id="headingOne" style="background-color: bisque" title="Quotation">
                         <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          <strong><i class="fas fa-receipt"></i>({{ $quotation_count }})</strong>
+                          <strong><i class="fas fa-receipt"></i></strong>
                         </button>
                       </h2>
                       <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 @if ($quotation_count > 0)
                                     <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
-                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View Quotations</a>
+                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
                                 @else
                                     <a href=""
-                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> No Quotation</a>
+                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
                                 @endif
                             </div>
                       </div>
@@ -526,9 +526,9 @@
                         <div class="accordion-body">
                             @if (isset($assignedSalesperson))
                                 <a href="{{ route('assignedleads',['salesperson_id' => $assignedSalesperson->sale_person_id]) }}"
-                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $assignedSalesperson->sale_person_name }}</a>
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
                             @else
-                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
                             @endif
                         </div>
                       </div>
@@ -543,9 +543,9 @@
                         <div class="accordion-body">
                             @if (isset($assigned_driver))
                                 <a href=""
-                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $assigned_driver->emp_name }}</a>
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
                             @else
-                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> Not Assigned</a>
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
                             @endif
                         </div>
                       </div>
@@ -560,9 +560,9 @@
                         <div class="accordion-body">
                             @if (isset($invoice))
                                 <a href="{{ route('showInvoice', ['lead_id' => $lead->id]) }}"
-                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> {{ $invoice->unique_id }}</a>
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
                             @else
-                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i> No Invoice</a>
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
                             @endif
                         </div>
                       </div>
