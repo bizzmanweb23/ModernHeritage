@@ -40,7 +40,7 @@
                             <div class="col-md-2"></div>
                             <div class="col-md-5">
                                 <span class="mb-2">Invoice Type:
-                                    <span class="text-dark font-weight-bold ms-sm-2" id="invoice_type_span">{{ $invoice->invoice_type }}</span>
+                                    <span class="text-dark font-weight-bold ms-sm-2" id="invoice_type_span">{{ str_replace('_', ' ', $invoice->invoice_type) }}</span>
                                 </span>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <span class="mb-2">Quotation Reference:
                                     {{-- <span class="text-dark font-weight-bold ms-sm-2" id="quotation_reference_span">{{ $invoice->quotation_id }}</span> --}}
                                     <select name="quotation_reference" id="quotation_reference" class="form-control"
-                                            onchange="onQuoteChange({{ $quotations }})" required {{ isset($invoice->quotation_reference) ? 'disabled' : '' }}>
+                                            onchange="onQuoteChange({{ $quotations }},{{ $invoice->price_breakup_loops }}, '{{  $invoice->invoice_type }}', '{{ $invoice->down_payment }}')" required {{ isset($invoice->quotation_reference) ? 'disabled' : '' }}>
                                         <option value="">select quotation</option>
                                         @foreach ($quotations as $q)
                                             <option value="{{ $q->quotation_id }}" {{ $q->quotation_id == $invoice->quotation_reference ? 'selected' : '' }}>{{ $q->quotation_id }}</option>
@@ -92,10 +92,32 @@
                                 </span>
                             </div>
                         </div>
+                        @if ($invoice->invoice_type != 'regular')
+                            <div class="mt-4">
+                                <h5 class="mb-3">Price Breakup</h5>
+                                <div class="d-flex" id="price_breakup_div">
+                                    @if ($invoice->invoice_type == 'down_payment_percentage')
+                                        @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
+                                            <span class="badge badge-sm bg-gradient-secondary mx-2 price_breakup_percentage_span">
+                                                {{ isset($quotation_details) ? 'Price - ₹ '.$quotation_details->breakup_price : 'Price - ₹ 0' }}
+                                            </span>
+                                        @endfor
+                                    @endif
+                                    @if ($invoice->invoice_type == 'down_payment_amount')
+                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
+                                            {{ isset($quotation_details) ? 'Downpayment - ₹ '.$invoice->down_payment : 'Downpayment - ₹ 0' }}
+                                        </span>
+                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
+                                            {{ isset($quotation_details) ? 'Remaining - ₹ '.$quotation_details->breakup_price : 'Remaining - ₹ 0' }}
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
                         <br>
                         <br>
                         
-                        <div id="table_div">
+                        <div>
                             <table class="table mb-0 mt-3 table-responsive">
                                 <thead>
                                     <tr>
@@ -131,13 +153,13 @@
                                             <span class="text-dark font-weight-bold ms-sm-2" id="quantity">{{ $quotation_details ? $quotation_details->quantity : '' }}</span>
                                         </td>
                                         <td>
-                                            <span class="text-dark font-weight-bold ms-sm-2" id="unit_price">{{ $quotation_details ? $quotation_details->unit_price : '' }}</span>
+                                            <span class="text-dark font-weight-bold ms-sm-2" id="unit_price">{{ $quotation_details ? '₹ '.$quotation_details->unit_price : '' }}</span>
                                         </td>
                                         <td>
                                             <span class="text-dark font-weight-bold ms-sm-2" id="tax">{{ $quotation_details ? $quotation_details->selected_taxs_name : '' }}</span>
                                         </td>
                                         <td>
-                                            <span class="text-dark font-weight-bold ms-sm-2" id="subtotal">{{ $quotation_details ? floatval($quotation_details->unit_price) * intval($quotation_details->quantity) : '' }}</span>
+                                            <span class="text-dark font-weight-bold ms-sm-2" id="subtotal">{{ $quotation_details ? '₹ '.floatval($quotation_details->unit_price) * intval($quotation_details->quantity) : '' }}</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -147,7 +169,7 @@
                                 <span id="untaxed_total_span" class="font-weight-bolder"></span>
                                 <span id="tax_total_span" class="font-weight-bolder"></span>
                                 <span id="total_span" class="font-weight-bolder"></span>
-                                <span class="text-dark font-weight-bold ms-sm-2"id="total_price">{{ $quotation_details ? 'Total Price : ' . $quotation_details->total_price : '' }}</span>
+                                <span class="text-dark font-weight-bold ms-sm-2"id="total_price">{{ $quotation_details ? 'Total Price : ₹ ' . $quotation_details->total_price : '' }}</span>
                             </div>
                         </div>
                         
@@ -160,10 +182,11 @@
 
 <script>
 
-    function onQuoteChange(quotations)
+    function onQuoteChange(quotations, price_breakup_loops, invoice_type, down_payment)
     {
         var selected_quotation = $('#quotation_reference').val();
-        console.log('here : ',selected_quotation);
+        console.log('price_breakup_loops : ',price_breakup_loops);
+        console.log('invoice_type : ',invoice_type);
         if (selected_quotation == ""){
             $('#gst_treatment_span').text("");
             $('#service_name').text('');
@@ -173,6 +196,15 @@
             $('#tax').text('');
             $('#subtotal').text('');
             $('#total_price').text('');
+            if(invoice_type === 'down_payment_percentage'){
+                $('.price_breakup_percentage_span').text('Price - ₹ 0');
+            }
+            
+            if(invoice_type === 'down_payment_amount'){
+                $('#price_breakup_amount_span').text('Downpayment - ₹ 0');
+                $('#remaining_price_span').text('Remaining - ₹ 0');
+            }
+            $('#price_breakup_div').hide();
         } else {
             quotations.forEach(q => {
                 if(q.quotation_id == selected_quotation){
@@ -180,12 +212,23 @@
                     $('#service_name').text(q.product);
                     $('#description').text(q.description);
                     $('#quantity').text(q.quantity);
-                    $('#unit_price').text(q.unit_price);
+                    $('#unit_price').text('₹ '+q.unit_price);
                     $('#tax').text(q.selected_taxs_name);
-                    $('#subtotal').text(parseInt(q.quantity) * parseFloat(q.unit_price));
-                    $('#total_price').text('Total Price : '+q.total_price);
+                    $('#subtotal').text('₹ '+ parseInt(q.quantity) * parseFloat(q.unit_price));
+                    $('#total_price').text('Total Price : ₹ '+q.total_price);
+
+                    if(invoice_type === 'down_payment_percentage'){
+                        var breakup_price = parseFloat(q.total_price / price_breakup_loops);
+                        $('.price_breakup_percentage_span').text('Price - ₹ '+breakup_price.toFixed(2));
+                    }
+                    
+                    if(invoice_type === 'down_payment_amount'){
+                        $('#price_breakup_amount_span').text('Downpayment - ₹ '+parseFloat(down_payment));
+                        $('#remaining_price_span').text('Remaining - ₹ '+ parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
+                    }
                 }
             });
+            $('#price_breakup_div').show();
         }
     }
 </script>

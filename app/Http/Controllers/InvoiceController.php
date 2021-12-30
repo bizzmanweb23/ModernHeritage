@@ -95,10 +95,32 @@ class InvoiceController extends Controller
                     $q->selected_taxs_name = $selected_taxs_name;
                 }
             }
+            if($invoice->invoice_type == 'down_payment_percentage')
+            {
+                $price_breakup_loops = 100 / intval($invoice->down_payment);
+                $invoice->price_breakup_loops = intval($price_breakup_loops);
+                $quotation_details->breakup_price = round(floatval($quotation_details->total_price / intval($price_breakup_loops)),2);
+            }
+            else
+            {
+                $invoice->price_breakup_loops = 0;
+                $quotation_details->breakup_price = floatval($quotation_details->total_price - $invoice->down_payment);
+            }
         }
         else {
             $quotation_details = null;
         }
+
+        if($invoice->invoice_type == 'down_payment_percentage')
+        {
+            $price_breakup_loops = 100 / intval($invoice->down_payment);
+            $invoice->price_breakup_loops = intval($price_breakup_loops);
+        }
+        else
+        {
+            $invoice->price_breakup_loops = 0;
+        }
+
         $lead = LogisticLead::where('logistic_leads.id', $lead_id)
                             ->first();
         return view('frontend.admin.logisticManagement.invoice.index',['invoice' => $invoice,
