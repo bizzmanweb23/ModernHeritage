@@ -199,8 +199,8 @@
                                         </select>
                                     </td>
                                     <td><input type="text" class="form-control" name="description" id="description"></td>
-                                    <td><input type="number" class="form-control" name="quantity" id="quantity" onchange="onqtychange()" min="1"></td>
-                                    <td><input type="text" class="form-control" name="unitPrice" id="unitPrice" onchange="onqtychange()"></td>
+                                    <td><input type="number" class="form-control" name="quantity" id="quantity" onchange="onqtychange()" min="1" required></td>
+                                    <td><input type="text" class="form-control" name="unitPrice" id="unitPrice" onchange="onqtychange()" required></td>
                                     <td>
                                         <select multiple="multiple" name="tax[]" id="tax" class="form-control" onchange="ontaxchange()">
                                             @foreach($tax as $t)

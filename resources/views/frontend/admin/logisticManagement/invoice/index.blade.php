@@ -92,32 +92,8 @@
                                 </span>
                             </div>
                         </div>
-                        @if ($invoice->invoice_type != 'regular')
-                            <div class="mt-4">
-                                <h5 class="mb-3">Price Breakup</h5>
-                                <div class="d-flex" id="price_breakup_div">
-                                    @if ($invoice->invoice_type == 'down_payment_percentage')
-                                        @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
-                                            <span class="badge badge-sm bg-gradient-secondary mx-2 price_breakup_percentage_span">
-                                                {{ isset($quotation_details) ? 'Price - ₹ '.$quotation_details->breakup_price : 'Price - ₹ 0' }}
-                                            </span>
-                                        @endfor
-                                    @endif
-                                    @if ($invoice->invoice_type == 'down_payment_amount')
-                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
-                                            {{ isset($quotation_details) ? 'Downpayment - ₹ '.$invoice->down_payment : 'Downpayment - ₹ 0' }}
-                                        </span>
-                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
-                                            {{ isset($quotation_details) ? 'Remaining - ₹ '.$quotation_details->breakup_price : 'Remaining - ₹ 0' }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                        <br>
-                        <br>
                         
-                        <div>
+                        <div class="mb-3 mt-3">
                             <table class="table mb-0 mt-3 table-responsive">
                                 <thead>
                                     <tr>
@@ -173,6 +149,90 @@
                             </div>
                         </div>
                         
+                        @if ($invoice->invoice_type != 'regular')
+                            <div class="mt-2">
+                                <h5 class="mb-3">Price Breakup</h5>
+                                <div class="d-flex" id="price_breakup_div">
+                                    @if ($invoice->invoice_type == 'down_payment_percentage')
+                                        @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
+                                            <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
+                                                <a href="#">
+                                                    <div class="card-body p-2">
+                                                        <div class="row">
+                                                            <div class="col-md-10">
+                                                                <label for="">Installment {{ $i }}</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <span class="badge badge-sm bg-gradient-secondary mx-2 price_breakup_percentage_span">
+                                                                    {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
+                                                                </span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <span class="badge badge-sm bg-gradient-warning">
+                                                                    UNPAID
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endfor
+                                    @endif
+                                    @if ($invoice->invoice_type == 'down_payment_amount')
+                                        <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
+                                            <a href="#">
+                                                <div class="card-body p-2">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <label for="">Downpayment</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
+                                                                {{ isset($quotation_details) ? '₹ '.$invoice->down_payment : '₹ 0' }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-sm bg-gradient-warning">
+                                                                UNPAID
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
+                                            <a href="#">
+                                                <div class="card-body p-2">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <label for="">Remaining</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-8">
+                                                            <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
+                                                                {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
+                                                            </span>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-sm bg-gradient-warning">
+                                                                UNPAID
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                        
+                                    @endif
+                                </div>
+                            </div>
+                        @endif
                     </div>                   
                 </div>
             </form>
@@ -197,12 +257,12 @@
             $('#subtotal').text('');
             $('#total_price').text('');
             if(invoice_type === 'down_payment_percentage'){
-                $('.price_breakup_percentage_span').text('Price - ₹ 0');
+                $('.price_breakup_percentage_span').text('₹ 0');
             }
             
             if(invoice_type === 'down_payment_amount'){
-                $('#price_breakup_amount_span').text('Downpayment - ₹ 0');
-                $('#remaining_price_span').text('Remaining - ₹ 0');
+                $('#price_breakup_amount_span').text('₹ 0');
+                $('#remaining_price_span').text('₹ 0');
             }
             $('#price_breakup_div').hide();
         } else {
@@ -219,12 +279,12 @@
 
                     if(invoice_type === 'down_payment_percentage'){
                         var breakup_price = parseFloat(q.total_price / price_breakup_loops);
-                        $('.price_breakup_percentage_span').text('Price - ₹ '+breakup_price.toFixed(2));
+                        $('.price_breakup_percentage_span').text('₹ '+breakup_price.toFixed(2));
                     }
                     
                     if(invoice_type === 'down_payment_amount'){
-                        $('#price_breakup_amount_span').text('Downpayment - ₹ '+parseFloat(down_payment));
-                        $('#remaining_price_span').text('Remaining - ₹ '+ parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
+                        $('#price_breakup_amount_span').text('₹ '+parseFloat(down_payment));
+                        $('#remaining_price_span').text('₹ '+ parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
                     }
                 }
             });
