@@ -232,6 +232,35 @@
                                     @endif
                                 </div>
                             </div>
+                        @else
+                            <div class="mt-2">
+                                <h5 class="mb-3">Price</h5>
+                                <div class="d-flex" id="">
+                                    <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
+                                        <a href="#">
+                                            <div class="card-body p-2">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label for="">Amount</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="regular_amount_span">
+                                                            {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <span class="badge badge-sm bg-gradient-warning">
+                                                            UNPAID
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     </div>                   
                 </div>
@@ -264,6 +293,9 @@
                 $('#price_breakup_amount_span').text('₹ 0');
                 $('#remaining_price_span').text('₹ 0');
             }
+            if (invoice_type === 'regular') {
+                $('#regular_amount_span').text('₹ 0');
+            }
             $('#price_breakup_div').hide();
         } else {
             quotations.forEach(q => {
@@ -285,6 +317,10 @@
                     if(invoice_type === 'down_payment_amount'){
                         $('#price_breakup_amount_span').text('₹ '+parseFloat(down_payment));
                         $('#remaining_price_span').text('₹ '+ parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
+                    }
+
+                    if (invoice_type === 'regular') {
+                        $('#regular_amount_span').text('₹ '+ parseFloat(q.total_price));
                     }
                 }
             });
