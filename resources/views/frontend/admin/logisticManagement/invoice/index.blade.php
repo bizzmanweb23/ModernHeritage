@@ -154,6 +154,8 @@
                                 <h5 class="mb-3">Price Breakup</h5>
                                 <div class="d-flex" id="price_breakup_div">
                                     @if ($invoice->invoice_type == 'down_payment_percentage')
+                                        <input type="hidden" name="price_breakup_percentage_input" id="price_breakup_percentage_input">
+                                        <input type="hidden" name="price_breakup_loop" id="price_breakup_loop">
                                         @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
                                             <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
                                                 <a href="#">
@@ -194,6 +196,7 @@
                                                             <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
                                                                 {{ isset($quotation_details) ? '₹ '.$invoice->down_payment : '₹ 0' }}
                                                             </span>
+                                                            <input type="hidden" name="price_breakup_amount_input" id="price_breakup_amount_input">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <span class="badge badge-sm bg-gradient-warning">
@@ -217,6 +220,7 @@
                                                             <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
                                                                 {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
                                                             </span>
+                                                            <input type="hidden" name="remaining_price_input" id="remaining_price_input">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <span class="badge badge-sm bg-gradient-warning">
@@ -249,6 +253,7 @@
                                                         <span class="badge badge-sm bg-gradient-secondary mx-2" id="regular_amount_span">
                                                             {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
                                                         </span>
+                                                        <input type="hidden" name="regular_amount_input" id="regular_amount_input">
                                                     </div>
                                                     <div class="col-md-4">
                                                         <span class="badge badge-sm bg-gradient-warning">
@@ -274,6 +279,7 @@
     function onQuoteChange(quotations, price_breakup_loops, invoice_type, down_payment)
     {
         var selected_quotation = $('#quotation_reference').val();
+        $('#price_breakup_loop').val(price_breakup_loops);
         console.log('price_breakup_loops : ',price_breakup_loops);
         console.log('invoice_type : ',invoice_type);
         if (selected_quotation == ""){
@@ -312,15 +318,20 @@
                     if(invoice_type === 'down_payment_percentage'){
                         var breakup_price = parseFloat(q.total_price / price_breakup_loops);
                         $('.price_breakup_percentage_span').text('₹ '+breakup_price.toFixed(2));
+                        $('#price_breakup_percentage_input').val(breakup_price.toFixed(2));
                     }
                     
                     if(invoice_type === 'down_payment_amount'){
                         $('#price_breakup_amount_span').text('₹ '+parseFloat(down_payment));
+                        $('#price_breakup_amount_input').val(parseFloat(down_payment));
                         $('#remaining_price_span').text('₹ '+ parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
+                        $('#remaining_price_input').val(parseFloat(parseFloat(q.total_price) - parseFloat(down_payment)));
+
                     }
 
                     if (invoice_type === 'regular') {
                         $('#regular_amount_span').text('₹ '+ parseFloat(q.total_price));
+                        $('#regular_amount_input').val(parseFloat(q.total_price));
                     }
                 }
             });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\GST;
+use App\Models\InvoicePriceBreakups;
 use App\Models\LogisticLead;
 use App\Models\LogisticLeadInvoice;
 use App\Models\LogisticLeadSalesPerson;
@@ -137,6 +138,44 @@ class InvoiceController extends Controller
         $invoice->quotation_reference = $request->quotation_reference;
         $invoice->save();
 
+        if($invoice->invoice_type == 'down_payment_percentage')
+        {
+            for ($i=1; $i <= intval($request->price_breakup_loop); $i++) { 
+                $breakups = new InvoicePriceBreakups;
+                $breakups->invoice_id = $invoice->unique_id;
+                $breakups->breakup_type = 'Installment '.$i;
+                $breakups->breakup_amount = $request->price_breakup_percentage_input;
+                $breakups->is_paid = 0;
+                $breakups->save();
+            }
+        }
+        elseif($invoice->invoice_type == 'down_payment_amount')
+        {
+            $breakups = new InvoicePriceBreakups;
+            $breakups->invoice_id = $invoice->unique_id;
+            $breakups->breakup_type = 'Downpayment';
+            $breakups->breakup_amount = $request->price_breakup_amount_input;
+            $breakups->is_paid = 0;
+            $breakups->save();
+
+            $breakups = new InvoicePriceBreakups;
+            $breakups->invoice_id = $invoice->unique_id;
+            $breakups->breakup_type = 'Remaining';
+            $breakups->breakup_amount = $request->remaining_price_input;
+            $breakups->is_paid = 0;
+            $breakups->save();
+        }
+        else
+        {
+            $breakups = new InvoicePriceBreakups;
+            $breakups->invoice_id = $invoice->unique_id;
+            $breakups->breakup_type = 'Amount';
+            $breakups->breakup_amount = $request->regular_amount_input;
+            $breakups->is_paid = 0;
+            $breakups->save();
+        }
+        
+      
         return redirect(route('showInvoice', ['lead_id' => $lead_id]));
     }
 }
