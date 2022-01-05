@@ -171,4 +171,13 @@ class InvoiceController extends Controller
       
         return redirect(route('showInvoice', ['lead_id' => $lead_id]));
     }
+
+    public function paymentRecived($lead_id)
+    {
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', $lead_id)
+                                        ->first();
+        $breakups_price = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
+                                                ->get();
+        return view('frontend.admin.logisticManagement.invoice.paymentReceived', ['breakups_price' => $breakups_price]);
+    }
 }

@@ -16,7 +16,7 @@
                             class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a> --}}
                     @if (!isset($invoice->quotation_reference))
                         <button type="submit" class="btn btn-link text-dark px-3 mb-0" id="save"><i
-                            class="fas fa-save text-dark me-2" aria-hidden="true"></i>Confirm</button>
+                            class="fas fa-save text-dark me-2" aria-hidden="true"></i>Confirm</button>   
                     @endif
                     <a class="btn btn-link text-dark px-3 mb-0" id="back"
                         href="{{ url('/') }}/admin/logistic/viewrequest/{{ $lead->id }}"><i
@@ -25,6 +25,9 @@
                     {{-- <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="{{ url()->previous() }}"><i
                             class="far fa-trash-alt me-2"></i>Discard</a> --}}
                 </div>
+                @if (isset($invoice->quotation_reference))
+                    <a class="btn btn-dark" href="{{ route('paymentRecived',['lead_id' => $lead->id]) }}">Payment Received</a>  
+                @endif
 
                 <input type="hidden" name="client_id" value="{{ $lead->client_id }}" id="client_id">
                 <input type="hidden" name="leads_id" value="{{ $lead->id }}" id="leads_id">
