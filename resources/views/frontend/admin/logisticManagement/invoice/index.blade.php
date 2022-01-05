@@ -149,27 +149,95 @@
                             </div>
                         </div>
                         
-                        @if ($invoice->invoice_type != 'regular')
+                        @if (isset($invoice->quotation_reference))
+                            {{-- invoice already confirmed --}}
                             <div class="mt-2">
-                                <h5 class="mb-3">Price Breakup</h5>
-                                <div class="d-flex" id="price_breakup_div">
-                                    @if ($invoice->invoice_type == 'down_payment_percentage')
-                                        <input type="hidden" name="price_breakup_percentage_input" id="price_breakup_percentage_input">
-                                        <input type="hidden" name="price_breakup_loop" id="price_breakup_loop">
-                                        @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
+                                <h5 class="mb-3">Price</h5>
+                                @foreach ($invoice_price_breakups as $pb)
+                                <div class="d-flex" id="">
+                                    <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 15rem">
+                                        <a href="#">
+                                            <div class="card-body p-2">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                        <label for="">{{ $pb->breakup_type }}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-7">
+                                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="regular_amount_span">
+                                                            ₹ {{ $pb->breakup_amount }}
+                                                        </span>
+                                                        <input type="hidden" name="regular_amount_input" id="regular_amount_input">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @if ($pb->is_paid == 0)
+                                                            <span class="badge badge-sm bg-gradient-warning">
+                                                                UNPAID
+                                                            </span>
+                                                        @else
+                                                            <span class="badge badge-sm bg-gradient-success">
+                                                                PAID
+                                                            </span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @else
+                            {{-- invoice not confirmed --}}
+                            @if ($invoice->invoice_type != 'regular')
+                                <div class="mt-2">
+                                    <h5 class="mb-3">Price Breakup</h5>
+                                    <div class="d-flex" id="price_breakup_div">
+                                        @if ($invoice->invoice_type == 'down_payment_percentage')
+                                            <input type="hidden" name="price_breakup_percentage_input" id="price_breakup_percentage_input">
+                                            <input type="hidden" name="price_breakup_loop" id="price_breakup_loop">
+                                            @for ($i = 1; $i <= $invoice->price_breakup_loops; $i++)
+                                                <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 15rem">
+                                                    <a href="#">
+                                                        <div class="card-body p-2">
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <label for="">Installment {{ $i }}</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-7">
+                                                                    <span class="badge badge-sm bg-gradient-secondary mx-2 price_breakup_percentage_span">
+                                                                        ₹ 0
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <span class="badge badge-sm bg-gradient-warning">
+                                                                        UNPAID
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endfor
+                                        @endif
+                                        @if ($invoice->invoice_type == 'down_payment_amount')
                                             <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
                                                 <a href="#">
                                                     <div class="card-body p-2">
                                                         <div class="row">
                                                             <div class="col-md-10">
-                                                                <label for="">Installment {{ $i }}</label>
+                                                                <label for="">Downpayment</label>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <span class="badge badge-sm bg-gradient-secondary mx-2 price_breakup_percentage_span">
-                                                                    {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
+                                                                <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
+                                                                    ₹ 0
                                                                 </span>
+                                                                <input type="hidden" name="price_breakup_amount_input" id="price_breakup_amount_input">
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <span class="badge badge-sm bg-gradient-warning">
@@ -180,92 +248,66 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                        @endfor
-                                    @endif
-                                    @if ($invoice->invoice_type == 'down_payment_amount')
-                                        <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
-                                            <a href="#">
-                                                <div class="card-body p-2">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <label for="">Downpayment</label>
+                                            <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
+                                                <a href="#">
+                                                    <div class="card-body p-2">
+                                                        <div class="row">
+                                                            <div class="col-md-10">
+                                                                <label for="">Remaining</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
+                                                                    ₹ 0
+                                                                </span>
+                                                                <input type="hidden" name="remaining_price_input" id="remaining_price_input">
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <span class="badge badge-sm bg-gradient-warning">
+                                                                    UNPAID
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <span class="badge badge-sm bg-gradient-secondary mx-2" id="price_breakup_amount_span">
-                                                                {{ isset($quotation_details) ? '₹ '.$invoice->down_payment : '₹ 0' }}
-                                                            </span>
-                                                            <input type="hidden" name="price_breakup_amount_input" id="price_breakup_amount_input">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <span class="badge badge-sm bg-gradient-warning">
-                                                                UNPAID
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
-                                            <a href="#">
-                                                <div class="card-body p-2">
-                                                    <div class="row">
-                                                        <div class="col-md-10">
-                                                            <label for="">Remaining</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-8">
-                                                            <span class="badge badge-sm bg-gradient-secondary mx-2" id="remaining_price_span">
-                                                                {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
-                                                            </span>
-                                                            <input type="hidden" name="remaining_price_input" id="remaining_price_input">
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <span class="badge badge-sm bg-gradient-warning">
-                                                                UNPAID
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        
-                                        
-                                    @endif
-                                </div>
-                            </div>
-                        @else
-                            <div class="mt-2">
-                                <h5 class="mb-3">Price</h5>
-                                <div class="d-flex" id="">
-                                    <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 18rem">
-                                        <a href="#">
-                                            <div class="card-body p-2">
-                                                <div class="row">
-                                                    <div class="col-md-10">
-                                                        <label for="">Amount</label>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-8">
-                                                        <span class="badge badge-sm bg-gradient-secondary mx-2" id="regular_amount_span">
-                                                            {{ isset($quotation_details) ? '₹ '.$quotation_details->breakup_price : '₹ 0' }}
-                                                        </span>
-                                                        <input type="hidden" name="regular_amount_input" id="regular_amount_input">
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <span class="badge badge-sm bg-gradient-warning">
-                                                            UNPAID
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                                </a>
                                             </div>
-                                        </a>
+                                            
+                                            
+                                        @endif
                                     </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="mt-2">
+                                    <h5 class="mb-3">Price</h5>
+                                    <div class="d-flex" id="">
+                                        <div class="card m-2 view_span" style="background-color: lightsteelblue; width: 15rem">
+                                            <a href="#">
+                                                <div class="card-body p-2">
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <label for="">Amount</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <span class="badge badge-sm bg-gradient-secondary mx-2" id="regular_amount_span">
+                                                                ₹ 0
+                                                            </span>
+                                                            <input type="hidden" name="regular_amount_input" id="regular_amount_input">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <span class="badge badge-sm bg-gradient-warning">
+                                                                UNPAID
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         @endif
                     </div>                   
                 </div>

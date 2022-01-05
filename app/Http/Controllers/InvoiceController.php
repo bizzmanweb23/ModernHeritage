@@ -93,20 +93,12 @@ class InvoiceController extends Controller
                         }
                     }
                     // selected_taxs_name not present in table, added selected_taxs_name only to show in view.
-                    $q->selected_taxs_name = $selected_taxs_name;
+                    $quotation_details->selected_taxs_name = implode(',', $selected_taxs_name);
                 }
             }
-            if($invoice->invoice_type == 'down_payment_percentage')
-            {
-                $price_breakup_loops = 100 / intval($invoice->down_payment);
-                $invoice->price_breakup_loops = intval($price_breakup_loops);
-                $quotation_details->breakup_price = round(floatval($quotation_details->total_price / intval($price_breakup_loops)),2);
-            }
-            else
-            {
-                $invoice->price_breakup_loops = 0;
-                $quotation_details->breakup_price = floatval($quotation_details->total_price - $invoice->down_payment);
-            }
+            
+            $invoice_price_breakups = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
+                                                            ->get();
         }
         else {
             $quotation_details = null;
@@ -127,6 +119,7 @@ class InvoiceController extends Controller
         return view('frontend.admin.logisticManagement.invoice.index',['invoice' => $invoice,
                                                                         'lead' => $lead,
                                                                         'quotation_details' => $quotation_details,
+                                                                        'invoice_price_breakups' => $invoice_price_breakups,
                                                                         'quotations' => $quotations,
                                                                     ]);
     }
