@@ -37,6 +37,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <!-- END: Multiselect JS-->
 
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
   <!-- BEGIN: kanban CSS-->
   <link rel="stylesheet" type="text/css" href="{{ url('/') }}/assets/css/kanban.css">
   <!-- END: kanban CSS--> 

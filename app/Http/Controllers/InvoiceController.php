@@ -9,6 +9,7 @@ use App\Models\LogisticLead;
 use App\Models\LogisticLeadInvoice;
 use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsQuotation;
+use App\Models\Payment;
 use App\Models\Service;
 use App\Models\Tax;
 use Illuminate\Http\Request;
@@ -48,7 +49,7 @@ class InvoiceController extends Controller
         $invoice->invoice_date = $today;
         $invoice->due_date = $today;
         $invoice->save();
-        return redirect(route('showInvoice', ['lead_id' => $lead_id]));
+        return redirect()->route('showInvoice', ['lead_id' => $lead_id])->with('success', 'Invoice has been created !');
     }
 
     public function showInvoice($lead_id)
@@ -169,15 +170,114 @@ class InvoiceController extends Controller
         }
         
       
-        return redirect(route('showInvoice', ['lead_id' => $lead_id]));
+        return redirect()->route('showInvoice', ['lead_id' => $lead_id])->with('success', 'Invoice has been confirmed !');
     }
 
-    public function paymentRecived($lead_id)
+    public function paymentReceived($lead_id)
+    {
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', $lead_id)
+                                        ->first();
+        $breakups_price = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
+                                                ->where('is_paid', 0)
+                                                ->get();
+        return view('frontend.admin.logisticManagement.invoice.paymentReceived', ['breakups_price' => $breakups_price, 'lead_id' => $lead_id]);
+    }
+
+    public function savePaymentReceived(Request $request, $lead_id)
     {
         $invoice = LogisticLeadInvoice::where('logistic_lead_id', $lead_id)
                                         ->first();
         $breakups_price = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
                                                 ->get();
-        return view('frontend.admin.logisticManagement.invoice.paymentReceived', ['breakups_price' => $breakups_price]);
+
+        $data = $request->validate([
+                'paymentAmount' => 'required',
+                'payment_type' => 'required'
+        ]);
+
+        if($request->payment_type == 'dd')
+        {
+            $request->validate([
+                'dd_no' => 'required',
+                'dd_date' => 'required',
+                'dd_amount' => 'required'
+            ]);
+
+            foreach ($request->paymentAmount as $breakup_id) {
+                $invoice_price_breakup = InvoicePriceBreakups::findOrFail($breakup_id);
+                $invoice_price_breakup->is_paid = 1;
+                $invoice_price_breakup->save();
+
+                $payment = new Payment;
+                $payment->breakup_price_id = $breakup_id;
+                $payment->payment_type = $request->payment_type;
+                $payment->amount = $invoice_price_breakup->breakup_amount;
+                $payment->dd_no = $request->dd_no;
+                $payment->dd_date = $request->dd_date;
+                $payment->save();
+            }
+        }
+        elseif($request->payment_type == 'checque')
+        {
+            $request->validate([
+                'checq_no' => 'required',
+                'checq_date' => 'required',
+                'bank_name' => 'required',
+                'checq_amount' => 'required'
+            ]);
+
+            foreach ($request->paymentAmount as $breakup_id) {
+                $invoice_price_breakup = InvoicePriceBreakups::findOrFail($breakup_id);
+                $invoice_price_breakup->is_paid = 1;
+                $invoice_price_breakup->save();
+
+                $payment = new Payment;
+                $payment->breakup_price_id = $breakup_id;
+                $payment->payment_type = $request->payment_type;
+                $payment->amount = $invoice_price_breakup->breakup_amount;
+                $payment->checq_no = $request->checq_no;
+                $payment->checq_date = $request->checq_date;
+                $payment->bank_name = $request->bank_name;
+                $payment->save();
+            }
+        }
+        elseif($request->payment_type == 'online')
+        {
+            $request->validate([
+                'online_date' => 'required',
+                'transaction_no' => 'required',
+                'online_amount' => 'required'
+            ]);
+
+            foreach ($request->paymentAmount as $breakup_id) {
+                $invoice_price_breakup = InvoicePriceBreakups::findOrFail($breakup_id);
+                $invoice_price_breakup->is_paid = 1;
+                $invoice_price_breakup->save();
+
+                $payment = new Payment;
+                $payment->breakup_price_id = $breakup_id;
+                $payment->payment_type = $request->payment_type;
+                $payment->amount = $invoice_price_breakup->breakup_amount;
+                $payment->online_date = $request->online_date;
+                $payment->transaction_no = $request->transaction_no;
+                $payment->save();
+            }
+        }
+        else
+        {
+            foreach ($request->paymentAmount as $breakup_id) {
+                $invoice_price_breakup = InvoicePriceBreakups::findOrFail($breakup_id);
+                $invoice_price_breakup->is_paid = 1;
+                $invoice_price_breakup->save();
+
+                $payment = new Payment;
+                $payment->breakup_price_id = $breakup_id;
+                $payment->payment_type = $request->payment_type;
+                $payment->amount = $invoice_price_breakup->breakup_amount;
+                $payment->save();
+            }
+        }
+        
+        return redirect()->route('showInvoice', ['lead_id' => $lead_id])->with('success','Payment has been received !');
     }
 }

@@ -168,7 +168,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/create-invoice/{lead_id}', [InvoiceController::class,'createInvoice'])->name('createInvoice');
         Route::get('/show-invoice/{lead_id}', [InvoiceController::class,'showInvoice'])->name('showInvoice');
         Route::post('/confirm-invoice/{lead_id}', [InvoiceController::class,'confirmInvoice'])->name('confirmInvoice');
-        Route::get('/payment-recived/{lead_id}', [InvoiceController::class,'paymentRecived'])->name('paymentRecived');
+        Route::get('/payment-received/{lead_id}', [InvoiceController::class,'paymentReceived'])->name('paymentReceived');
+        Route::post('/save-payment-received/{lead_id}', [InvoiceController::class,'savePaymentReceived'])->name('savePaymentReceived');
     });
     
 });

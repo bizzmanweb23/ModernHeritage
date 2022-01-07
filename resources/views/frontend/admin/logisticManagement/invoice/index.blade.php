@@ -5,6 +5,9 @@
 @endsection
 
 @section('content')
+@if(Session::has('success'))
+    <h4>Success</h4>
+@endif
 <div class="row">
     <div class="col-md-12 mt-3">
         <div class="card container container-fluid">
@@ -26,7 +29,8 @@
                             class="far fa-trash-alt me-2"></i>Discard</a> --}}
                 </div>
                 @if (isset($invoice->quotation_reference))
-                    <a class="btn btn-dark" href="{{ route('paymentRecived',['lead_id' => $lead->id]) }}">Payment Received</a>  
+                    <a class="btn btn-dark" href="{{ route('paymentReceived',['lead_id' => $lead->id]) }}">Payment Received</a> 
+                    <a class="btn btn-dark" href="#">Credit Note</a>
                 @endif
 
                 <input type="hidden" name="client_id" value="{{ $lead->client_id }}" id="client_id">
@@ -320,6 +324,15 @@
 </div>
 
 <script>
+
+    @if(Session::has('success'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+        toastr.success("{{ session('success') }}");
+    @endif
 
     function onQuoteChange(quotations, price_breakup_loops, invoice_type, down_payment)
     {
