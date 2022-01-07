@@ -102,6 +102,41 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="capacity">Vehicle Capacity:</label>
+                        <input type="text" class="form-control" id="capacity" name="capacity"
+                            placeholder="10 Ton Lorry Crane" required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="trip_hour">Trip Hours:</label>
+                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="2" max="4" required>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="trip_price">Per Trip Price (/Trip):</label>
+                        <input type="text" class="form-control" id="trip_price" name="trip_price" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="after_trip_price">OT After Trip Hour (/Hr):</label>
+                        <input type="text" class="form-control" id="after_trip_price" name="after_trip_price" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="additional_locn_price">Additional Location Price (/Locn):</label>
+                        <input type="text" class="form-control" id="additional_locn_price" name="additional_locn_price">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </form>

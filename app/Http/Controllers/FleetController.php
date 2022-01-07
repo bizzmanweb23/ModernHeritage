@@ -16,6 +16,7 @@ class FleetController extends Controller
                             ->leftjoin('vehicle_models','vehicles.model_name','=','vehicle_models.id')
                             ->leftjoin('vehicle_brands','vehicle_models.brand_id','=','vehicle_brands.id')
                             ->select('employees.emp_name','vehicles.*', 'vehicle_models.model_name', 'vehicle_brands.brand_image as vehicle_image')
+                            ->orderBy('vehicles.id')
                             ->get();
         return view('frontend.admin.fleet.allVehicles',['vehicle' => $vehicle]);
     }
@@ -62,9 +63,18 @@ class FleetController extends Controller
         $vehicle->model_colour = $request->model_colour;
         $vehicle->model_year = $request->model_year;
         $vehicle->status = '1';
+        $vehicle->capacity = $request->capacity;
+        $vehicle->trip_hour = $request->trip_hour;
+        $vehicle->trip_price = $request->trip_price;
+        $vehicle->after_trip_price = $request->after_trip_price;
+        $vehicle->additional_locn_price = $request->additional_locn_price;
+        $vehicle->after_6pm_price = floatval($request->after_trip_price)*1.5;
+        $vehicle->after_10pm_price = floatval($request->after_trip_price)*2;
+        $vehicle->full_day_price = floatval($request->after_trip_price)*8;
+        $vehicle->sunday_price = floatval($request->after_trip_price)*2;
         $vehicle->save();
 
-        return redirect(route('allVehicles'));
+        return redirect()->route('allVehicles')->with('success', 'Vehicle saved successfully !');
     }
 
     public function allBrands()

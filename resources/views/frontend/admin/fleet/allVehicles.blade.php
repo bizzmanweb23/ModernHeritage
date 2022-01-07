@@ -31,17 +31,17 @@
             <a href="#">
                 <div class="card-body p-2">
                     <div class="row">
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             @if(isset($v->vehicle_image))
                                 <img src="{{ asset($v->vehicle_image) }}" alt="Product"
-                                    style="height: 7rem; width:7rem">
+                                    style="height: 5rem; width:5rem">
                             @else
                                 <img src="{{ asset('images/products/default.jpg') }}"
-                                    alt="Product" style="height: 7rem; width: 7rem">
+                                    alt="Product" style="height: 5rem; width: 5rem">
                             @endif
                         </div>
                         <div class="col-sm-1"></div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                             <p class="mb-0">{{ $v->model_name }}</p>
                             <p class="mb-0">{{ $v->license_plate_no }}</p>
                             <p class="mb-0">{{ $v->emp_name }}</p>
@@ -57,4 +57,14 @@
         </div>
     @endforeach
 </div>
+<script>
+    @if(Session::has('success'))
+        toastr.options =
+        {
+            "closeButton" : true,
+            "progressBar" : true
+        }
+        toastr.success("{{ session('success') }}");
+    @endif
+</script>
 @endsection
