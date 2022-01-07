@@ -8,10 +8,11 @@
 @if ($prev_route == 'logistic_crm')
     <a class="btn btn-primary" href="{{ url('/') }}/admin/logistic/newquotation/{{ $lead->id }}">New Quotation</a>
 @endif
-@if($lead->stage_id == 1)  
+@if (!isset($assignedSalesperson))
     <a class="btn btn-success"
         href="#" data-bs-toggle="modal" data-bs-target="#addSalesPersonModal">Assign Salesperson</a>
-@elseif($lead->stage_id == 2)
+@endif
+@if (!isset($assigned_driver))
     <a class="btn btn-success"
         href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>      
 @endif

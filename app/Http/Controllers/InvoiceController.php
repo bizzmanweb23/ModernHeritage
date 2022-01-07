@@ -103,6 +103,7 @@ class InvoiceController extends Controller
         }
         else {
             $quotation_details = null;
+            $invoice_price_breakups = null;
         }
 
         if($invoice->invoice_type == 'down_payment_percentage')

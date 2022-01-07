@@ -166,8 +166,13 @@
                                         <a href="#">
                                             <div class="card-body p-2">
                                                 <div class="row">
-                                                    <div class="col-md-10">
+                                                    <div class="col-md-7">
                                                         <label for="">{{ $pb->breakup_type }}</label>
+                                                    </div>
+                                                    <div class="col-md-2 ml-3">
+                                                        <span class="badge badge-sm bg-gradient-secondary mx-2">
+                                                            {{ $invoice->down_payment }}%
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -183,7 +188,7 @@
                                                                 UNPAID
                                                             </span>
                                                         @else
-                                                            <span class="badge badge-sm bg-gradient-success">
+                                                            <span class="badge badge-sm bg-gradient-success ml-3">
                                                                 PAID
                                                             </span>
                                                         @endif
@@ -209,8 +214,13 @@
                                                     <a href="#">
                                                         <div class="card-body p-2">
                                                             <div class="row">
-                                                                <div class="col-md-10">
+                                                                <div class="col-md-7">
                                                                     <label for="">Installment {{ $i }}</label>
+                                                                </div>
+                                                                <div class="col-md-2 ml-3">
+                                                                    <span class="badge badge-sm bg-gradient-secondary mx-2">
+                                                                        {{ $invoice->down_payment }}%
+                                                                    </span>
                                                                 </div>
                                                             </div>
                                                             <div class="row">
