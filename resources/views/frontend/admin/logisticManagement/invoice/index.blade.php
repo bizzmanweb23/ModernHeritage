@@ -29,7 +29,9 @@
                             class="far fa-trash-alt me-2"></i>Discard</a> --}}
                 </div>
                 @if (isset($invoice->quotation_reference))
-                    <a class="btn btn-dark" href="{{ route('paymentReceived',['lead_id' => $lead->id]) }}">Payment Received</a> 
+                    @if ($unpaidCount > 0)
+                        <a class="btn btn-dark" href="{{ route('paymentReceived',['lead_id' => $lead->id]) }}">Payment Received</a> 
+                    @endif
                     <a class="btn btn-dark" href="#">Credit Note</a>
                 @endif
 

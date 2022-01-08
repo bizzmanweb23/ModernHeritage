@@ -100,10 +100,15 @@ class InvoiceController extends Controller
             
             $invoice_price_breakups = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
                                                             ->get();
+            $unpaidCount = InvoicePriceBreakups::where('invoice_id','=',$invoice->unique_id)
+                                                ->where('is_paid', 0)
+                                                ->get()
+                                                ->count();
         }
         else {
             $quotation_details = null;
             $invoice_price_breakups = null;
+            $unpaidCount = 0;
         }
 
         if($invoice->invoice_type == 'down_payment_percentage')
@@ -122,6 +127,7 @@ class InvoiceController extends Controller
                                                                         'lead' => $lead,
                                                                         'quotation_details' => $quotation_details,
                                                                         'invoice_price_breakups' => $invoice_price_breakups,
+                                                                        'unpaidCount' => $unpaidCount,
                                                                         'quotations' => $quotations,
                                                                     ]);
     }
