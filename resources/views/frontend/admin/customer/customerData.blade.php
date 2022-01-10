@@ -39,15 +39,6 @@
                         <a class="btn btn-link text-danger text-gradient px-3 mb-0" id="discard" href="javascript:;"><i
                                 class="far fa-trash-alt me-2"></i>Discard</a>
                     </div>
-                    @if($errors->any())
-                        <div class="alert alert-warning">
-                            <ul>
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
                     {{-- Customer type and image view mode --}}
                     <div class="row mb-2 view_span">
                         <div class="col-md-4">
@@ -619,6 +610,16 @@
     </div>
 </div>
 <script>
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
     $(document).ready(function () {
         $('#save').hide();
         $('#discard').hide();

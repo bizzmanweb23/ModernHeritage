@@ -27,7 +27,6 @@ class CustomerController extends Controller
     public function allCustomerDetails()
     {
         $allCustomer = Customer::get(); 
-                                                              
         return view('frontend.admin.customer.allcustomer',['allCustomer' => $allCustomer]); 
     }
 

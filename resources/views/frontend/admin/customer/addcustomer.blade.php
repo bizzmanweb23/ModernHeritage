@@ -33,15 +33,6 @@
                         href="{{ route('allcustomer') }}"><i class="fas fa-arrow-left text-dark me-2"
                             aria-hidden="true"></i>Back</a>
                 </div>
-                @if($errors->any())
-                    <div class="alert alert-warning">
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
@@ -263,6 +254,16 @@
     </div>
 </form>
 <script>
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
     $(document).ready(function () {
         $('.company').hide();
         $('#customertype1').click(function () {
