@@ -294,6 +294,7 @@
                                                 Invoice Address
                                             </label>
                                         </div>
+                                        
                                         <div class="form-check mr-2">
                                             <input class="form-check-input not_contact_radio{{ $contact->index }}" type="radio" name="contact_type{{ $contact->index }}"
                                                 id="delivery{{ $contact->index }}" value="delivery" onclick="not_contact_radio_click({{ $contact->index }})"
