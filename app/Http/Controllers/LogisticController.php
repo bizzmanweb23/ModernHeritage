@@ -436,7 +436,23 @@ class LogisticController extends Controller
     }
     public function viewDeliveryOrders()
     {
-        $DeliveryOrders = LogisticLead::all();
+        $DeliveryOrders = LogisticLeadDriver::leftjoin('logistic_leads','logistic_leads.id','=','logistic_leads_drivers.logistic_lead_id')
+                            ->select('logistic_leads.*','logistic_leads_drivers.logistic_lead_id')
+                            ->get();
         return view('frontend.admin.logisticManagement.deliveryOrders.index',compact('DeliveryOrders'));
+    }
+    public function viewDetailedOrders($lead_id)
+    {  
+        $lead = LogisticLead::leftjoin('logistic_leads_drivers','logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+                    ->where('logistic_leads.unique_id', $lead_id)
+                    ->select('logistic_leads.*')
+                    ->first();
+        $lead_products = LogisticLeadsProduct::where('lead_id', $lead_id)->get();
+        $index = 1;
+        foreach ($lead_products as $product) {
+            $product->index = $index;
+            $index++;
+        }
+        return view('frontend.admin.logisticManagement.deliveryOrders.detailedOrders',[ 'lead' => $lead,'lead_products' => $lead_products]);   
     }
 }

@@ -157,6 +157,7 @@ Route::group(['prefix' => 'admin'], function () {
 
         //admin--logistic--delivery_orders
         Route::get('/delivery-orders',[LogisticController::class,'viewDeliveryOrders'])->name('Delivery-Orders');
+        Route::get('/detailed-delivery-orders/{lead_id}',[LogisticController::class,'viewDetailedOrders'])->name('DetailedOrders');
 
 
         //fleet-management

@@ -66,7 +66,7 @@
                         </div>
                       </td>
                       <td class="align-middle">
-                        <a href="" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        <a href="{{route('DetailedOrders',$D->unique_id)}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                           View
                         </a>
                       </td>
