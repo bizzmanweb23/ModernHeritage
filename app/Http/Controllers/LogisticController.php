@@ -18,6 +18,8 @@ use App\Models\LogisticLeadInvoice;
 use App\Models\LogisticLeadSalesPerson;
 use App\Models\LogisticLeadsProduct;
 use App\Models\LogisticLeadsQuotation;
+use App\Models\LogisticDashboard;
+use Calendar;
 use App\Models\Vehicle;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +186,11 @@ class LogisticController extends Controller
             $driver->driver_id = $request->driver_id;
             $driver->logistic_lead_id = $lead_id;
             $driver->save();
+            $dashboard = new LogisticDashboard();
+            $dashboard->driver_id = $request->driver_id;
+            $dashboard->start_time = $request->start_time;
+            $dashboard->end_time = $request->end_time;
+            $dashboard->save();
         }
         return redirect()->back();
     }
@@ -390,5 +397,46 @@ class LogisticController extends Controller
                                             'logistic_leads.client_name',
                                         )->get();
         return view('frontend.admin.logisticManagement.logistic_crm.viewquotation',['quotation' => $quotation]);
+    }
+    public function viewcalander(Request $request)
+    {
+        $drivers = Vehicle::leftjoin('employees','employees.unique_id','=','vehicles.driver_id')
+                            ->where('employees.job_position','=','9')
+                            ->select('vehicles.*','employees.emp_name','employees.unique_id')
+                            ->get();
+        $events = [];
+        $data = LogisticDashboard::all();
+        if($data->count()) {
+            foreach ($data as $key => $value) {
+                $events[] = Calendar::event(
+                    $value->driver_id,
+                    false,
+                    new \DateTime($value->start_time),
+                    new \DateTime($value->end_time),
+                    null,
+                    // Add color and link on event
+	                [
+	                    'color' => '#f05050',
+	                    // 'url' => 'pass here url and any route',
+	                ]
+                );
+            }
+        }
+        $calendar = Calendar::addEvents($events);
+        return view('frontend.admin.logisticManagement.logistic_dashboard.index',compact('calendar','drivers'));
+    }
+    public function updateLogisticDashboard(Request $request)
+    {
+            $dashboard = new LogisticDashboard();
+            $dashboard->driver_id = $request->driver_id;
+            $dashboard->start_time = $request->start_time;
+            $dashboard->end_time = $request->end_time;
+            $dashboard->save();
+        return redirect()->route('ViewCalander');
+    }
+    public function viewDeliveryOrders()
+    {
+        $DeliveryOrders = LogisticLead::all();
+        return view('frontend.admin.logisticManagement.deliveryOrders.index',compact('DeliveryOrders'));
     }
 }

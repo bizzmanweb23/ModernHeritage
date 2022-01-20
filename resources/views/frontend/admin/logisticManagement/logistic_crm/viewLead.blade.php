@@ -76,6 +76,18 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="">Start Time:</label></div>
+                        <div class="col-md-7">
+                            <input type="datetime-local" class="form-control modal_input" id="" name="start_time" placeholder="" required="">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-4"><label for="">End Time:</label></div>
+                        <div class="col-md-7">
+                            <input type="datetime-local" class="form-control modal_input" id="" name="end_time" placeholder="" required="">
+                        </div>
+                    </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Save</button>

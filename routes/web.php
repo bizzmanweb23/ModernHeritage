@@ -141,6 +141,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/viewrequest/{lead_id}/{prev_route?}', [LogisticController::class,'viewRequest']);
         Route::post('/updaterequest/{lead_id}', [LogisticController::class,'updateRequest']);
         Route::get('/update-stage/{lead_id}/{stage_id}', [LogisticController::class,'updateLogisticStage']);
+        Route::post('/update-dashboard', [LogisticController::class,'updateLogisticDashboard'])->name('assign-driver');
         
         //admin--logistic-quotation
         Route::get('/newquotation/{lead_id}', [LogisticController::class,'addQuotation']);
@@ -150,6 +151,13 @@ Route::group(['prefix' => 'admin'], function () {
         //admin--logistic--sales--person Activity
         Route::get('/allSalesperson', [SalesController::class,'allSalesperson'])->name('salespersons');
         Route::get('/assignedleads/{salesperson_id}', [SalesController::class,'assignedLeads'])->name('assignedleads');
+
+        //admin--logistic--dashboard
+        Route::get('/viewCalander', [LogisticController::class,'viewcalander'])->name('ViewCalander');
+
+        //admin--logistic--delivery_orders
+        Route::get('/delivery-orders',[LogisticController::class,'viewDeliveryOrders'])->name('Delivery-Orders');
+
 
         //fleet-management
         Route::get('/allvehicles', [FleetController::class,'allVehicles'])->name('allVehicles');
