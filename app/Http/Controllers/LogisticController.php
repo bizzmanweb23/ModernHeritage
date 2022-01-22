@@ -30,7 +30,7 @@ class LogisticController extends Controller
     public function getRequest()
     {
         $logistic_stage = LogisticStage::get();
-        $logistic_lead = LogisticLead::get();
+        $logistic_lead = LogisticLead::where('expected_date', '!=','NULL')->get();
         //$countryCodes = CountryCode::get();
         //$path = 'client';
         return view('frontend.admin.logisticManagement.logistic_crm.index',['logistic_stage' => $logistic_stage,'logistic_lead' => $logistic_lead]);
@@ -427,11 +427,74 @@ class LogisticController extends Controller
     }
     public function updateLogisticDashboard(Request $request)
     {
+        $unique_id = LogisticLead::orderBy('id', 'desc')->first();
+        if($unique_id)
+        {
+            $number = str_replace('MHL', '', $unique_id->unique_id);
+        }
+        else
+        {
+            $number = 0;
+        } 
+        if ($number == 0) {
+            $number = 'MHL000001';
+        } else {
+            $number = "MHL" . sprintf("%06d", $number + 1);
+        }
+
+        $logistic_lead = new LogisticLead;
+
+        $logistic_lead->stage_id = 1;
+        $logistic_lead->unique_id = $number;
+        $logistic_lead->client_id = 'NULL';
+        $logistic_lead->client_name = $request->client_name;
+        $logistic_lead->pickup_from = $request->pickup_from;
+        $logistic_lead->pickup_add_1 = $request->pickup_add_1;
+        $logistic_lead->pickup_pin = $request->pickup_pin;
+        $logistic_lead->pickup_state = $request->pickup_state;
+        $logistic_lead->pickup_country = $request->pickup_country;
+        $logistic_lead->pickup_phone = $request->pickup_phone;
+        $logistic_lead->delivered_to = $request->delivered_to;
+        $logistic_lead->delivery_add_1 = $request->delivery_add_1;
+        $logistic_lead->delivery_pin = $request->delivery_pin;
+        $logistic_lead->delivery_state = $request->delivery_state;
+        $logistic_lead->delivery_country = $request->delivery_country;
+        $logistic_lead->delivery_phone = $request->delivery_phone;
+        $logistic_lead->expected_date = 'NULL';
+        $logistic_lead->pickup_email = 'NULL';
+        $logistic_lead->delivery_email = 'NULL';
+        $logistic_lead->contact_name = 'NULL';
+        $logistic_lead->contact_phone = 'NULL';
+        $logistic_lead->save();
+
+        for ($i=1; $i <= $request->product_row_count; $i++) { 
+            $req_product_name = 'product_name'.strval($i);
+            $req_dimension = 'dimension'.strval($i);
+            $req_quantity = 'quantity'.strval($i);
+            $req_uom = 'uom'.strval($i);
+            $req_area = 'area'.strval($i);
+            $req_weight = 'weight'.strval($i);
+            
+            $logistic_leads_product = new LogisticLeadsProduct;
+
+            $logistic_leads_product->lead_id = $number;         //same unique_id of logistic_leads table
+            $logistic_leads_product->product_name = $request->$req_product_name;
+            $logistic_leads_product->dimension = $request->$req_dimension;
+            $logistic_leads_product->quantity = $request->$req_quantity;
+            $logistic_leads_product->uom = $request->$req_uom;
+            $logistic_leads_product->area = $request->$req_area;
+            $logistic_leads_product->weight = $request->$req_weight;
+            $logistic_leads_product->save();
+        }
             $dashboard = new LogisticDashboard();
             $dashboard->driver_id = $request->driver_id;
             $dashboard->start_time = $request->start_time;
             $dashboard->end_time = $request->end_time;
             $dashboard->save();
+
+            // $driver = new LogisticLeadDriver();
+            //Update the LogisticLeadDriver not yet completed
+
         return redirect()->route('ViewCalander');
     }
     public function viewDeliveryOrders()
