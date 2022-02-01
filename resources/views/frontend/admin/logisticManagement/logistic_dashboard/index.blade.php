@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.css" />
@@ -12,6 +13,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<!-- Extra Modal -->
+<div class="modal" id="ExtraModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Assign Driver</h4>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <!-- <div class="row mb-2"><h5>Existing Order</h5> -->
+                            <div class="row">
+                                <div class="col-md-4"><span>Existing Order</span></div>
+                                <div class="col-md-8">
+                                    <div style="display: flex; flex-wrap: no-wrap">
+                                        <input type="text" class="form-control mr-1" id="order_no" placeholder="Enter Delivery Order No.">
+                                        <div>
+                                            <button type="button" id="searchbtn" style="border-radius: 10px">
+                                                <i class="fas fa-search fa-2x"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <a href="#"  id="new_order" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#assignDriverModal">New Order</a>
+                        <button type="submit" id="search" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Search</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
     <!-- The Driver Modal -->
 <div class="modal" id="assignDriverModal">
     <div class="modal-dialog modal-lg">
@@ -29,14 +66,9 @@
                             <div class="col-md-4">
                                 <input type="text" class="form-control" id="client_name" name="client_name" placeholder="" required>
                             </div>
-                            <div class="col-md-2"><label for="driver_id">Driver Name:</label></div>
+                            <div class="col-md-2"><label for="driver_id">Customer Phone No.</label></div>
                             <div class="col-md-4">
-                                <select name="driver_id" id="driver_id" class="form-control" required>
-                                    <option value="">Select Driver</option>
-                                    @foreach ($drivers as $d)
-                                    <option value="{{ $d->unique_id }}">{{ $d->emp_name }}</option> 
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" id="contact_phone" name="contact_phone" placeholder="" required>
                             </div>
                     </div>
                     <div class="row mb-2">
@@ -90,6 +122,16 @@
                             </div>
                     </div>
                     <div class="row mb-2">
+                        <div class="col-md-2"><label for="">Email</label></div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="pickup_email" name="pickup_email" required>
+                            </div>
+                        <div class="col-md-2"><label for="">Email</label></div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" id="delivery_email" name="delivery_email" required>
+                            </div>
+                    </div>
+                    <div class="row mb-2">
                         <div class="col-md-2"><label for="">Phone</label></div>
                             <div class="col-md-4">
                                 <input type="text" class="form-control" id="pickup_phone" name="pickup_phone" required>
@@ -135,6 +177,17 @@
         </div>
                     </div>
                     <div class="row mb-2">
+                        <div class="col-md-6"><label for="driver_id">Driver Name:</label></div>
+                            <div class="col-md-6">
+                                <select name="driver_id" id="driver_id" class="form-control" required>
+                                    <option value="">Select Driver</option>
+                                    @foreach ($drivers as $d)
+                                    <option value="{{ $d->unique_id }}">{{ $d->emp_name }}</option> 
+                                    @endforeach
+                                </select>
+                            </div>
+                    </div>
+                    <div class="row mb-2">
                         <div class="col-md-2"><label for="">Start Time:</label></div>
                         <div class="col-md-4">
                             <input type="datetime-local" class="form-control modal_input" id="start_time" name="start_time"  placeholder="" required>
@@ -154,17 +207,24 @@
         </div>
     </div>
 </div>
-    <div class="container">
-    <a class="btn btn-success"
-        href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>      
-      <h1></h1>
+<div class="container">
+    <!-- <a class="btn btn-success" 
+                href="#" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Assign Driver</a>       -->
+    <a class="btn btn-success" 
+                href="#" data-bs-toggle="modal" data-bs-target="#ExtraModal">Assign Driver</a>      
+    <a class="btn btn-success float-right"
+        href="{{route('ViewDriverCalander')}}">Check Driver availability</a>      
+   
       <div id='calendar_id'></div>
       {!! $calendar->calendar() !!}
-   </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js"></script>
 {!! $calendar->script() !!}
 <script>
+$(document).ready(function() {
+    $('#search').attr('disabled',true);
+    $('#searchbtn').attr('disabled',true);
     let current_date = new Date().toLocaleString("sv-SE", {
         year: "numeric",
         month: "2-digit",
@@ -191,20 +251,71 @@
             window.count++;
     });
     $('#start_time').on('change',function(){
-        var start_time = $('#start_time').val();
-        var end_time = $('#end_time').val(); 
+        var start_time = $('#start_time').val(); 
         if(start_time <= current_date){
             alert("Start Date can't be before or current date");   
             document.getElementById('start_time').value = "";
         }
     });
     $('#end_time').on('change',function(){
-        var start_time = $('#start_time').val();
-        var end_time = $('#end_time').val();
+         var end_time = $('#end_time').val();
          if (end_time <= current_date){
             alert("End Date can't be before or current date");
             document.getElementById('end_time').value = "";
-        }
+         }
     });
+    $('#order_no').on('change', function() {
+        var order_no = $('#order_no').val();
+        if(order_no == ''){
+            $('#search').attr('disabled', true);
+        }else{
+            $('#search').attr('disabled', false);
+        }
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: '/admin/logistic/search-order/' + order_no,
+            // data: "order_no=" + order_no,
+            dataType:"json",
+            success: function(data) {
+                if(data != ''){
+                     console.log(data);
+                     $.each(data, function(key, item) {
+                     $('#client_name').val(item.client_name);
+                     $('#contact_phone').val(item.contact_phone);
+                     $('#pickup_from').val(item.pickup_from);
+                     $('#delivered_to').val(item.delivered_to);
+                     $('#pickup_add_1').val(item.pickup_add_1);
+                     $('#delivery_add_1').val(item.delivery_add_1);
+                     $('#pickup_pin').val(item.pickup_pin);
+                     $('#delivery_pin').val(item.delivery_pin);
+                     $('#pickup_state').val(item.pickup_state);
+                     $('#delivery_state').val(item.delivery_state);
+                     $('#pickup_country').val(item.pickup_country);
+                     $('#delivery_country').val(item.delivery_country);
+                     $('#pickup_email').val(item.pickup_email);
+                     $('#delivery_email').val(item.delivery_email);
+                     $('#pickup_phone').val(item.pickup_phone);
+                     $('#delivery_phone').val(item.delivery_phone);
+                     });
+                }else{
+                    alert("Order Number doesn't exists");
+                    $('#order_no').val('');
+                    $('#search').attr('disabled',true);
+                } 
+            },
+        });
+    });
+    $('#new_order').on('click', function(){
+        $('#assignDriverModal').on('hidden.bs.modal', function () {
+            $(this).find('form').trigger('reset');
+            $('#order_no').val('');
+        });
+    });
+});
 </script>
 @endsection

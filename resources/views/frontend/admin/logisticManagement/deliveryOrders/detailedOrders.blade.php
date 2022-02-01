@@ -257,9 +257,85 @@
                                     </tbody>
                                 </table>
                             </div>
-                        
+                    </div>
+                </div>  
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="card">
+            <div class="card-body px-2 py-2">
+                <div class="accordion" id="accordionExample">
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingOne" style="background-color: bisque" title="Quotation">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          <strong><i class="fas fa-receipt"></i></strong>
+                        </button>
+                      </h2>
+                      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                @if ($quotation_count > 0)
+                                    <a href="{{ url('/') }}/admin/logistic/viewquotation/{{ $lead->id }}"
+                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
+                                @else
+                                    <a href=""
+                                        class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
+                                @endif
+                            </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingTwo" style="background-color: bisque" title="Sales Person">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <strong><i class="fas fa-user-tag"></i></strong>
+                        </button>
+                      </h2>
+                      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($assignedSalesperson))
+                                <a href="{{ route('assignedleads',['salesperson_id' => $assignedSalesperson->sale_person_id]) }}"
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingThree" style="background-color: bisque" title="Driver">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <strong><i class="fas fa-truck"></i></strong>
+                        </button>
+                      </h2>
+                      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($assigned_driver))
+                                <a href=""
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
+                            @endif
+                        </div>
+                      </div>
+                    </div>
+                    <div class="accordion-item mb-2">
+                      <h2 class="accordion-header" id="headingFour" style="background-color: bisque" title="Invoice">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <strong><i class="fas fa-file-invoice"></i></strong>
+                        </button>
+                      </h2>
+                      <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            @if (isset($invoice))
+                                <a href="{{ route('showInvoice', ['lead_id' => $lead->id]) }}"
+                                    class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-angle-right"></i> View</a>
+                            @else
+                                <a href=""class="btn btn-link text-dark px-0 py-0 mb-0"><i class="fas fa-exclamation-circle"></i></a>
+                            @endif
+                        </div>
+                      </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>

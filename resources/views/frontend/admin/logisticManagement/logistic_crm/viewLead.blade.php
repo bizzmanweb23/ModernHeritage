@@ -37,9 +37,9 @@
                         <div class="col-md-4"><label for="salesPerson_name">SalesPerson Name</label></div>
                         <div class="col-md-7">
                             <input type="hidden" class="form-control modal_input" id="salesPerson_id" name="salesPerson_id"
-                                value="{{ $salesPerson->salesperson_id }}" required>
+                                value="{{ $salesperson->salesperson_id }}" required>
                             <input type="text" class="form-control modal_input" id="salesPerson_name" name="salesPerson_name"
-                                value="{{ $salesPerson->salesperson_name }}" required>
+                                value="{{ $salesperson->salesperson_name }}" required>
                         </div>
                     </div>
                     <!-- Modal footer -->
@@ -90,7 +90,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit"id="btn_driver" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -642,8 +642,7 @@
                             </tr>
                         `);
     });
-$('#btn_driver').click(function(event){
-    var current_date = new Date().toLocaleString("sv-SE", {
+    let current_date = new Date().toLocaleString("sv-SE", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
@@ -651,14 +650,16 @@ $('#btn_driver').click(function(event){
     minute: "2-digit",
     second: "2-digit"
 }).replace(" ", "T");
+$('#start_time').on('change',function(event){
     var start_time = $('#start_time').val();
-    var end_time = $('#end_time').val();
-    if($('#start_time').val().length === 0 || $('#end_time').val().length === 0 ){
-        alert('Please fill the input fields');
-    }else if(start_time <= current_date){
+    if(start_time <= current_date){
         alert("Start Date can't be before or current date");   
         document.getElementById('start_time').value = "";
-    }else if (end_time <= current_date){
+    }
+});
+$('#end_time').on('change', function(event){
+    var end_time = $('#end_time').val();
+    if (end_time <= current_date){
         alert("End Date can't be before or current date");
         document.getElementById('end_time').value = "";
     }
