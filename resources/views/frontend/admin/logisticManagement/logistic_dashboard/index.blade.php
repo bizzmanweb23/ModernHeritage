@@ -64,6 +64,7 @@
                     <div class="row mb-2">
                             <div class="col-md-2"><label for="driver_id">Customer/Company Name</label></div>
                             <div class="col-md-4">
+                                <input type="hidden" id="lead_id" >
                                 <input type="text" class="form-control" id="client_name" name="client_name" placeholder="" required>
                             </div>
                             <div class="col-md-2"><label for="driver_id">Customer Phone No.</label></div>
@@ -172,6 +173,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                   
                 </tbody>
             </table>
         </div>
@@ -283,25 +285,42 @@ $(document).ready(function() {
             dataType:"json",
             success: function(data) {
                 if(data != ''){
-                     console.log(data);
+                    $('#add_product').hide();
+                    var trHTML = '';
                      $.each(data, function(key, item) {
-                     $('#client_name').val(item.client_name);
-                     $('#contact_phone').val(item.contact_phone);
-                     $('#pickup_from').val(item.pickup_from);
-                     $('#delivered_to').val(item.delivered_to);
-                     $('#pickup_add_1').val(item.pickup_add_1);
-                     $('#delivery_add_1').val(item.delivery_add_1);
-                     $('#pickup_pin').val(item.pickup_pin);
-                     $('#delivery_pin').val(item.delivery_pin);
-                     $('#pickup_state').val(item.pickup_state);
-                     $('#delivery_state').val(item.delivery_state);
-                     $('#pickup_country').val(item.pickup_country);
-                     $('#delivery_country').val(item.delivery_country);
-                     $('#pickup_email').val(item.pickup_email);
-                     $('#delivery_email').val(item.delivery_email);
-                     $('#pickup_phone').val(item.pickup_phone);
-                     $('#delivery_phone').val(item.delivery_phone);
-                     });
+                    $('#lead_id').val(item.lead_id);
+                    $('#client_name').val(item.client_name);
+                    $('#contact_phone').val(item.contact_phone);
+                    $('#pickup_from').val(item.pickup_from);
+                    $('#delivered_to').val(item.delivered_to);
+                    $('#pickup_add_1').val(item.pickup_add_1);
+                    $('#delivery_add_1').val(item.delivery_add_1);
+                    $('#pickup_pin').val(item.pickup_pin);
+                    $('#delivery_pin').val(item.delivery_pin);
+                    $('#pickup_state').val(item.pickup_state);
+                    $('#delivery_state').val(item.delivery_state);
+                    $('#pickup_country').val(item.pickup_country);
+                    $('#delivery_country').val(item.delivery_country);
+                    $('#pickup_email').val(item.pickup_email);
+                    $('#delivery_email').val(item.delivery_email);
+                    $('#pickup_phone').val(item.pickup_phone);
+                    $('#delivery_phone').val(item.delivery_phone);
+                    $('#product_name').val(item.product_name);
+                    $('#dimension').val(item.dimension);
+                    $('#quantity').val(item.quantity);
+                    $('#uom').val(item.uom);
+                    $('#area').val(item.area);
+                    $('#weight').val(item.weight);
+                        trHTML += 
+                                '<tr><td>' + item.product_name + 
+                                '</td><td>' + item.dimension + 
+                                '</td><td>' + item.quantity + 
+                                '</td><td>' + item.uom + 
+                                '</td><td>' + item.area + 
+                                '</td><td>' + item.weight + 
+                                '</td><td>'; 
+                    });
+                    $('tbody').append(trHTML);
                 }else{
                     alert("Order Number doesn't exists");
                     $('#order_no').val('');
@@ -315,6 +334,28 @@ $(document).ready(function() {
             $(this).find('form').trigger('reset');
             $('#order_no').val('');
         });
+    });
+    $('#btn_driver').on('click', function(){
+        var driver_id = $('#driver_id').val();
+        var logistic_leads_id = $('#lead_id').val();
+        var start_time = $('#start_time').val();
+        var end_time = $('#end_time').val();
+        $('#client_name').removeAttr('required');
+        $('#contact_phone').removeAttr('required');
+        $('#pickup_from').removeAttr('required');
+        $('#delivered_to').removeAttr('required');
+        $('#pickup_add_1').removeAttr('required');
+        $('#delivery_add_1').removeAttr('required');
+        $('#pickup_pin').removeAttr('required');
+        $('#delivery_pin').removeAttr('required');
+        $('#pickup_state').removeAttr('required');
+        $('#delivery_state').removeAttr('required');
+        $('#pickup_country').removeAttr('required');
+        $('#delivery_country').removeAttr('required');
+        $('#pickup_email').removeAttr('required');
+        $('#delivery_email').removeAttr('required');
+        $('#pickup_phone').removeAttr('required');
+        $('#delivery_phone').removeAttr('required');
     });
 });
 </script>

@@ -462,19 +462,28 @@ class LogisticController extends Controller
     }
     public function SearchOrder($order_no)
     {
-            // $data = LogisticLead::where('unique_id',$order_no)->get();
+            // $data1 = LogisticLead::where('unique_id',$order_no)->get();
             // $lead_products = LogisticLeadsProduct::where('lead_id', $order_no)->get();
             $data = LogisticLead::leftjoin('logistic_leads_products','logistic_leads.unique_id','=','logistic_leads_products.lead_id')
                                 ->where('logistic_leads.unique_id',$order_no)
-                                ->select('logistic_leads.*','logistic_leads_products.*')
+                                ->select('logistic_leads.*','logistic_leads_products.*','logistic_leads.id as lead_id')
                                 ->get();
-            $index = 1;
-            foreach ($data as $product) {
-                $product->index = $index;
-                $index++;
-            }
-            return response()->json($data);
+            return response()->json($data);   
     }
+    // TEsting for Ajax method
+    // public function AssignDriver(Request $request)
+    // {
+    //     $driver = new LogisticLeadDriver();
+    //             $driver->driver_id = $request->driver_id ?? null;
+    //             $driver->logistic_lead_id = $leads_id ?? null;
+    //             $driver->save();
+    //     $dashboard = new LogisticDashboard();
+    //             $dashboard->driver_id = $request->driver_id ?? null;
+    //             $dashboard->start_time = $request->start_time ?? null;
+    //             $dashboard->end_time = $request->end_time ?? null;
+    //             $dashboard->save();
+    //     return redirect()->route('ViewCalander')->with('success','Driver assigneed Sucessfully!');
+    // }
     public function updateLogisticDashboard(Request $request)
     {
 
@@ -564,11 +573,6 @@ class LogisticController extends Controller
                     ->select('logistic_leads.*')
                     ->first();
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead_id)->get();
-        $index = 1;
-        foreach ($lead_products as $product) {
-            $product->index = $index;
-            $index++;
-        }
         $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
         return view('frontend.admin.logisticManagement.deliveryOrders.detailedOrders',[ 
                                                     'lead' => $lead,
