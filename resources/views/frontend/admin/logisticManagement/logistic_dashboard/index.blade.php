@@ -335,6 +335,10 @@ $(document).ready(function() {
             $('#order_no').val('');
         });
     });
+});
+</script>
+<script>
+$(document).ready(function () {
     $('#btn_driver').on('click', function(){
         var driver_id = $('#driver_id').val();
         var logistic_leads_id = $('#lead_id').val();
@@ -356,7 +360,27 @@ $(document).ready(function() {
         $('#delivery_email').removeAttr('required');
         $('#pickup_phone').removeAttr('required');
         $('#delivery_phone').removeAttr('required');
-    });
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: "POST",
+            data: {
+                "driver_id": driver_id,
+                "logistic_leads_id": logistic_leads_id,
+                "start_time": start_time,
+                "end_time": end_time
+            },
+            url: '/admin/logistic/assign-driver/',
+            success: function(data) {
+                alert('success');
+            },
+            error: function() {
+                alert('error');
+            }
+        });
 });
 </script>
 @endsection

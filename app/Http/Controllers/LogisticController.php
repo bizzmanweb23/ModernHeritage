@@ -30,10 +30,10 @@ class LogisticController extends Controller
     public function getRequest()
     {
         $logistic_stage = LogisticStage::get();
-        $logistic_lead = LogisticLead::where('expected_date', '!=','NULL')->get();
+        $logistic_lead = LogisticLead::where('expected_date', '!=', 'NULL')->get();
         //$countryCodes = CountryCode::get();
         //$path = 'client';
-        return view('frontend.admin.logisticManagement.logistic_crm.index',['logistic_stage' => $logistic_stage,'logistic_lead' => $logistic_lead]);
+        return view('frontend.admin.logisticManagement.logistic_crm.index', ['logistic_stage' => $logistic_stage, 'logistic_lead' => $logistic_lead]);
     }
 
     public function addRequest()
@@ -43,12 +43,12 @@ class LogisticController extends Controller
     }
 
     public function searchContact(Request $request)
-    {  
+    {
         $contacts = CustomerContact::where('customer_id', '=', $request->client_id)
-                                    ->get();
+            ->get();
         if ($contacts->count() > 0) {
             foreach ($contacts as $item) {
-            info($item);
+                info($item);
                 $data[] = [
                     'label' => $item->contact_name,
                     'id' => $item->id,
@@ -72,7 +72,7 @@ class LogisticController extends Controller
             'pickup_client' => 'required',
             'pickup_add_1' => 'required',
             'pickup_add_2' => '',
-            'pickup_add_3' => '', 
+            'pickup_add_3' => '',
             'pickup_pin' => 'required',
             'pickup_state' => 'required',
             'pickup_country' => 'required',
@@ -95,14 +95,11 @@ class LogisticController extends Controller
         ]);
 
         $unique_id = LogisticLead::orderBy('id', 'desc')->first();
-        if($unique_id)
-        {
+        if ($unique_id) {
             $number = str_replace('MHL', '', $unique_id->unique_id);
-        }
-        else
-        {
+        } else {
             $number = 0;
-        } 
+        }
         if ($number == 0) {
             $number = 'MHL000001';
         } else {
@@ -143,14 +140,14 @@ class LogisticController extends Controller
 
         $logistic_lead->save();
 
-        for ($i=1; $i <= $request->product_row_count; $i++) { 
-            $req_product_name = 'product_name'.strval($i);
-            $req_dimension = 'dimension'.strval($i);
-            $req_quantity = 'quantity'.strval($i);
-            $req_uom = 'uom'.strval($i);
-            $req_area = 'area'.strval($i);
-            $req_weight = 'weight'.strval($i);
-            
+        for ($i = 1; $i <= $request->product_row_count; $i++) {
+            $req_product_name = 'product_name' . strval($i);
+            $req_dimension = 'dimension' . strval($i);
+            $req_quantity = 'quantity' . strval($i);
+            $req_uom = 'uom' . strval($i);
+            $req_area = 'area' . strval($i);
+            $req_weight = 'weight' . strval($i);
+
             $logistic_leads_product = new LogisticLeadsProduct;
 
             $logistic_leads_product->lead_id = $number;         //same unique_id of logistic_leads table
@@ -173,7 +170,7 @@ class LogisticController extends Controller
         $lead->stage_id = $stage_id;
         $lead->save();
 
-        if ($stage_id=='2') {
+        if ($stage_id == '2') {
             $salesPerson = new LogisticLeadSalesPerson;
             $salesPerson->sale_person_name = $request->salesPerson_name;
             $salesPerson->sale_person_id = $request->salesPerson_id;
@@ -181,7 +178,7 @@ class LogisticController extends Controller
             $salesPerson->save();
         }
 
-        if ($stage_id=='3') {
+        if ($stage_id == '3') {
             $driver = new LogisticLeadDriver();
             $driver->driver_id = $request->driver_id;
             $driver->logistic_lead_id = $lead_id;
@@ -195,13 +192,15 @@ class LogisticController extends Controller
         return redirect()->back();
     }
 
-    public function viewRequest($lead_id,$prev_route = 'logistic_crm')
+    public function viewRequest($lead_id, $prev_route = 'logistic_crm')
     {
-        $lead = LogisticLead::leftjoin('logistic_leads_quotations','logistic_leads.id','=','logistic_leads_quotations.lead_id')
-                                ->where('logistic_leads.id',$lead_id)
-                                ->select('logistic_leads.*',
-                                        'logistic_leads_quotations.quotation_id')
-                                ->first();
+        $lead = LogisticLead::leftjoin('logistic_leads_quotations', 'logistic_leads.id', '=', 'logistic_leads_quotations.lead_id')
+            ->where('logistic_leads.id', $lead_id)
+            ->select(
+                'logistic_leads.*',
+                'logistic_leads_quotations.quotation_id'
+            )
+            ->first();
 
         // $salesPerson = LogisticLead::leftjoin('customers','logistic_leads.client_id','=','customers.id')
         //                             ->leftjoin('employees','employees.unique_id','=','customers.salesperson')
@@ -209,42 +208,42 @@ class LogisticController extends Controller
         //                             ->select('employees.unique_id as salesperson_id','employees.emp_name as salesperson_name')
         //                             ->first();
 
-         $salesperson = Employee::leftjoin('job_positions','employees.job_position','=','job_positions.id')
-                                    ->where('job_positions.id','=',8)
-                                    ->select('employees.unique_id as salesperson_id','employees.emp_name as salesperson_name')
-                                    ->first();        
+        $salesperson = Employee::leftjoin('job_positions', 'employees.job_position', '=', 'job_positions.id')
+            ->where('job_positions.id', '=', 8)
+            ->select('employees.unique_id as salesperson_id', 'employees.emp_name as salesperson_name')
+            ->first();
 
-        $drivers = Vehicle::leftjoin('employees','employees.unique_id','=','vehicles.driver_id')
-                            ->where('employees.job_position','=','9')
-                            ->select('vehicles.*','employees.emp_name','employees.unique_id')
-                            ->get();
+        $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
+            ->where('employees.job_position', '=', '9')
+            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+            ->get();
 
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
-                                            ->get();
+            ->get();
         $index = 1;
         foreach ($lead_products as $product) {
             $product->index = $index;
             $index++;
         }
-        $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
+        $quotation_count = LogisticLeadsQuotation::where('lead_id', '=', $lead_id)->get()->count();
         $assignedSalesperson = LogisticLeadSalesPerson::where('logistic_lead_id', $lead_id)->first();
-        $assigned_driver = LogisticLeadDriver::leftjoin('employees','employees.unique_id','=','logistic_leads_drivers.driver_id')
-                                                ->where('logistic_lead_id', '=' , $lead_id)
-                                                ->select('employees.emp_name', 'logistic_leads_drivers.driver_id')
-                                                ->first();
-        $invoice = LogisticLeadInvoice::where('logistic_lead_id', '=' , $lead_id)->first();
-        return view('frontend.admin.logisticManagement.logistic_crm.viewLead',[
-                                                    'lead' => $lead,
-                                                    'lead_products' => $lead_products,
-                                                    'quotation_count' => $quotation_count,
-                                                    // 'salesPerson' => $salesPerson,
-                                                    'prev_route' => $prev_route,
-                                                    'drivers' => $drivers,
-                                                    'assignedSalesperson' => $assignedSalesperson,
-                                                    'assigned_driver' => $assigned_driver,
-                                                    'invoice' => $invoice,
-                                                    'salesperson' => $salesperson
-                                                ]);
+        $assigned_driver = LogisticLeadDriver::leftjoin('employees', 'employees.unique_id', '=', 'logistic_leads_drivers.driver_id')
+            ->where('logistic_lead_id', '=', $lead_id)
+            ->select('employees.emp_name', 'logistic_leads_drivers.driver_id')
+            ->first();
+        $invoice = LogisticLeadInvoice::where('logistic_lead_id', '=', $lead_id)->first();
+        return view('frontend.admin.logisticManagement.logistic_crm.viewLead', [
+            'lead' => $lead,
+            'lead_products' => $lead_products,
+            'quotation_count' => $quotation_count,
+            // 'salesPerson' => $salesPerson,
+            'prev_route' => $prev_route,
+            'drivers' => $drivers,
+            'assignedSalesperson' => $assignedSalesperson,
+            'assigned_driver' => $assigned_driver,
+            'invoice' => $invoice,
+            'salesperson' => $salesperson
+        ]);
     }
 
     public function updateRequest(Request $request, $lead_id)
@@ -263,7 +262,7 @@ class LogisticController extends Controller
             'pickup_add_3' => '',
             'pickup_pin' => 'required',
             'pickup_state' => 'required',
-            'pickup_country' => 'required',   
+            'pickup_country' => 'required',
             'pickup_location' => '',
             // 'delivered_to' => '',
             'delivery_client' => 'required',
@@ -275,7 +274,7 @@ class LogisticController extends Controller
             'delivery_pin' => 'required',
             'delivery_state' => 'required',
             'delivery_country' => 'required',
-            'delivery_email' => 'required|email:rfc,dns',       
+            'delivery_email' => 'required|email:rfc,dns',
         ]);
         $logistic_lead = LogisticLead::findOrFail($lead_id);
         $logistic_lead->client_name = $data['client_name'];
@@ -309,13 +308,13 @@ class LogisticController extends Controller
 
         LogisticLeadsProduct::where('lead_id', '=', $logistic_lead->unique_id)->delete();
 
-        for ($i=1; $i <= $request->product_row_count; $i++) { 
-            $req_product_name = 'product_name'.strval($i);
-            $req_dimension = 'dimension'.strval($i);
-            $req_quantity = 'quantity'.strval($i);
-            $req_uom = 'uom'.strval($i);
-            $req_area = 'area'.strval($i);
-            $req_weight = 'weight'.strval($i);
+        for ($i = 1; $i <= $request->product_row_count; $i++) {
+            $req_product_name = 'product_name' . strval($i);
+            $req_dimension = 'dimension' . strval($i);
+            $req_quantity = 'quantity' . strval($i);
+            $req_uom = 'uom' . strval($i);
+            $req_area = 'area' . strval($i);
+            $req_weight = 'weight' . strval($i);
 
             $logistic_leads_product = new LogisticLeadsProduct;
 
@@ -337,22 +336,23 @@ class LogisticController extends Controller
     {
         $lead = LogisticLead::findOrFail($lead_id);
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead->unique_id)
-                                            ->get();
+            ->get();
         $gst = GST::get();
         $tax = Tax::get();
         $services = Service::get();
-        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation',['lead' => $lead, 
-                                                                                    'gst' => $gst,
-                                                                                    'tax' => $tax,
-                                                                                    'lead_products' => $lead_products,
-                                                                                    'services' => $services
-                                                                                ]);
+        return view('frontend.admin.logisticManagement.logistic_crm.addQuotation', [
+            'lead' => $lead,
+            'gst' => $gst,
+            'tax' => $tax,
+            'lead_products' => $lead_products,
+            'services' => $services
+        ]);
     }
 
-    public function saveQuotation(Request $request,$lead_id)
+    public function saveQuotation(Request $request, $lead_id)
     {
 
-        $quotation_unique_id = LogisticLeadsQuotation::orderBy('id', 'desc')->first();    
+        $quotation_unique_id = LogisticLeadsQuotation::orderBy('id', 'desc')->first();
 
         if ($quotation_unique_id) {
             $number = str_replace('MHLQ', '', $quotation_unique_id->quotation_id);
@@ -368,15 +368,13 @@ class LogisticController extends Controller
         $tax = $request->tax;
         $tax_arr = [];
 
-        if(isset($tax))
-        {
-            foreach ($tax as $t) 
-            {
+        if (isset($tax)) {
+            foreach ($tax as $t) {
                 $val = json_decode($t)->id;
                 array_push($tax_arr, $val);
             }
         }
-        
+
         $quotation = new LogisticLeadsQuotation;
         $quotation->lead_id = $request->leads_id;
         $quotation->gst_treatment = $request->gst_treatment;
@@ -392,31 +390,31 @@ class LogisticController extends Controller
         $quotation->quotation_id = $number;
         $quotation->save();
 
-        return redirect('admin/logistic/viewrequest/'.$lead_id);
+        return redirect('admin/logistic/viewrequest/' . $lead_id);
     }
 
     public function viewQuotation($lead_id)
     {
-        $quotation = LogisticLeadsQuotation::leftjoin('logistic_leads','logistic_leads_quotations.lead_id', '=' , 'logistic_leads.id')
-                                    ->where('logistic_leads_quotations.lead_id',$lead_id)
-                                    ->select('logistic_leads_quotations.*',              
-                                            'logistic_leads.stage_id',
-                                            'logistic_leads.client_name',
-                                        )->get();
-        return view('frontend.admin.logisticManagement.logistic_crm.viewquotation',['quotation' => $quotation]);
+        $quotation = LogisticLeadsQuotation::leftjoin('logistic_leads', 'logistic_leads_quotations.lead_id', '=', 'logistic_leads.id')
+            ->where('logistic_leads_quotations.lead_id', $lead_id)
+            ->select(
+                'logistic_leads_quotations.*',
+                'logistic_leads.stage_id',
+                'logistic_leads.client_name',
+            )->get();
+        return view('frontend.admin.logisticManagement.logistic_crm.viewquotation', ['quotation' => $quotation]);
     }
     public function viewcalander(Request $request)
     {
-        $drivers = Vehicle::leftjoin('employees','employees.unique_id','=','vehicles.driver_id')
-                            ->where('employees.job_position','=','9')
-                            ->select('vehicles.*','employees.emp_name','employees.unique_id')
-                            ->get();
+        $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
+            ->where('employees.job_position', '=', '9')
+            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+            ->get();
         $events = [];
-        // $data = LogisticDashboard::all();
-        $data = LogisticDashboard::leftjoin('employees','employees.unique_id','=','logistic_dashboards.driver_id')
-                                ->select('employees.emp_name','logistic_dashboards.*')
-                                ->get();
-        if($data->count()) {
+        $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+            ->select('employees.emp_name', 'logistic_dashboards.*')
+            ->get();
+        if ($data->count()) {
             foreach ($data as $key => $value) {
                 $events[] = Calendar::event(
                     $value->emp_name,
@@ -425,77 +423,85 @@ class LogisticController extends Controller
                     new \DateTime($value->end_time),
                     null,
                     // Add color and link on event
-	                [
-	                    'color' => '#f05050',
-	                    // 'url' => 'pass here url and any route',
-	                ]
+                    [
+                        'color' => '#f05050',
+                        // 'url' => 'pass here url and any route',
+                    ]
                 );
             }
         }
         $calendar = Calendar::addEvents($events);
-        return view('frontend.admin.logisticManagement.logistic_dashboard.index',compact('calendar','drivers'));
+        return view('frontend.admin.logisticManagement.logistic_dashboard.index', compact('calendar', 'drivers'));
     }
     public function viewdrivercalander()
     {
-        $events = [];
-        $data = LogisticDashboard::leftjoin('employees','employees.unique_id','=','logistic_dashboards.driver_id')
-                                ->select('employees.emp_name','logistic_dashboards.*')
-                                ->get();
-        if($data->count()) {
-            foreach ($data as $key => $value) {
-                $events[] = Calendar::event(
-                    $value->emp_name,
-                    false,
-                    new \DateTime($value->start_time),
-                    new \DateTime($value->end_time),
-                    null, 
-                    // Add color and link on event
-	                [
-	                    'color' => '#f05050',
-	                    // 'url' => 'pass here url and any route',
-	                ]
-                );
-            }
+        $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
+        ->where('employees.job_position', '=', '9')
+        ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+        ->get();
+    $events = [];
+    $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+        ->select('employees.emp_name', 'logistic_dashboards.*')
+        ->get();
+    if ($data->count()) {
+        foreach ($data as $key => $value) {
+            $events[] = Calendar::event(
+                $value->emp_name,
+                false,
+                new \DateTime($value->start_time),
+                new \DateTime($value->end_time),
+                null,
+                // Add color and link on event
+                [
+                    'color' => '#f05050',
+                    // 'url' => 'pass here url and any route',
+                ]
+            );
         }
-        $calendar = Calendar::addEvents($events);
-        return view('frontend.admin.logisticManagement.logistic_dashboard.driverAvailable',compact('calendar'));
     }
+    $calendar = Calendar::addEvents($events);
+        return view('frontend.admin.logisticManagement.logistic_dashboard.driverAvailable', compact('calendar','drivers'));
+    }
+    // public function listing()
+    // {
+    //     $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+    //                              ->select('employees.emp_name', 'logistic_dashboards.*')
+    //                                 ->get();
+    //     return response()->json($data);
+    // }
     public function SearchOrder($order_no)
     {
-            // $data1 = LogisticLead::where('unique_id',$order_no)->get();
-            // $lead_products = LogisticLeadsProduct::where('lead_id', $order_no)->get();
-            $data = LogisticLead::leftjoin('logistic_leads_products','logistic_leads.unique_id','=','logistic_leads_products.lead_id')
-                                ->where('logistic_leads.unique_id',$order_no)
-                                ->select('logistic_leads.*','logistic_leads_products.*','logistic_leads.id as lead_id')
-                                ->get();
-            return response()->json($data);   
+        // $data1 = LogisticLead::where('unique_id',$order_no)->get();
+        // $lead_products = LogisticLeadsProduct::where('lead_id', $order_no)->get();
+        $data = LogisticLead::leftjoin('logistic_leads_products', 'logistic_leads.unique_id', '=', 'logistic_leads_products.lead_id')
+            ->where('logistic_leads.unique_id', $order_no)
+            ->select('logistic_leads.*', 'logistic_leads_products.*', 'logistic_leads.id as lead_id')
+            ->get();
+        return response()->json($data);
     }
     // TEsting for Ajax method
-    // public function AssignDriver(Request $request)
-    // {
-    //     $driver = new LogisticLeadDriver();
-    //             $driver->driver_id = $request->driver_id ?? null;
-    //             $driver->logistic_lead_id = $leads_id ?? null;
-    //             $driver->save();
-    //     $dashboard = new LogisticDashboard();
-    //             $dashboard->driver_id = $request->driver_id ?? null;
-    //             $dashboard->start_time = $request->start_time ?? null;
-    //             $dashboard->end_time = $request->end_time ?? null;
-    //             $dashboard->save();
-    //     return redirect()->route('ViewCalander')->with('success','Driver assigneed Sucessfully!');
-    // }
+    public function AssignDriverAjax(Request $request)
+    {
+        $driver = new LogisticLeadDriver();
+        $driver->driver_id = $request->driver_id ?? null;
+        $driver->logistic_lead_id = $leads_id ?? null;
+        $driver->save();
+        $dashboard = new LogisticDashboard();
+        $dashboard->driver_id = $request->driver_id ?? null;
+        $dashboard->start_time = $request->start_time ?? null;
+        $dashboard->end_time = $request->end_time ?? null;
+        $dashboard->save();
+        return redirect()->route('ViewCalander')->with('success', 'Driver assigneed Sucessfully!');
+    }
     public function updateLogisticDashboard(Request $request)
     {
 
         $unique_id = LogisticLead::orderBy('id', 'desc')->first();
-        if($unique_id)
-        {
+        if ($unique_id) {
             $number = str_replace('MHL', '', $unique_id->unique_id);
-        }
-        else
-        {
+        } else {
             $number = 0;
-        } 
+        }
         if ($number == 0) {
             $number = 'MHL000001';
         } else {
@@ -527,14 +533,14 @@ class LogisticController extends Controller
         $logistic_lead->contact_name = 'NULL';
         $logistic_lead->save();
 
-        for ($i=1; $i <= $request->product_row_count; $i++) { 
-            $req_product_name = 'product_name'.strval($i);
-            $req_dimension = 'dimension'.strval($i);
-            $req_quantity = 'quantity'.strval($i);
-            $req_uom = 'uom'.strval($i);
-            $req_area = 'area'.strval($i);
-            $req_weight = 'weight'.strval($i);
-            
+        for ($i = 1; $i <= $request->product_row_count; $i++) {
+            $req_product_name = 'product_name' . strval($i);
+            $req_dimension = 'dimension' . strval($i);
+            $req_quantity = 'quantity' . strval($i);
+            $req_uom = 'uom' . strval($i);
+            $req_area = 'area' . strval($i);
+            $req_weight = 'weight' . strval($i);
+
             $logistic_leads_product = new LogisticLeadsProduct;
 
             $logistic_leads_product->lead_id = $number;         //same unique_id of logistic_leads table
@@ -546,37 +552,38 @@ class LogisticController extends Controller
             $logistic_leads_product->weight = $request->$req_weight;
             $logistic_leads_product->save();
         }
-            $dashboard = new LogisticDashboard();
-            $dashboard->driver_id = $request->driver_id;
-            $dashboard->start_time = $request->start_time;
-            $dashboard->end_time = $request->end_time;
-            $dashboard->save();
+        $dashboard = new LogisticDashboard();
+        $dashboard->driver_id = $request->driver_id;
+        $dashboard->start_time = $request->start_time;
+        $dashboard->end_time = $request->end_time;
+        $dashboard->save();
 
-            $driver = new LogisticLeadDriver();
-            $driver->driver_id = $request->driver_id;
-            $driver->logistic_lead_id = $logistic_lead->id;
-            $driver->save();
+        $driver = new LogisticLeadDriver();
+        $driver->driver_id = $request->driver_id;
+        $driver->logistic_lead_id = $logistic_lead->id;
+        $driver->save();
 
         return redirect()->route('ViewCalander');
     }
     public function viewDeliveryOrders()
     {
-        $DeliveryOrders = LogisticLeadDriver::leftjoin('logistic_leads','logistic_leads.id','=','logistic_leads_drivers.logistic_lead_id')
-                            ->select('logistic_leads.*','logistic_leads_drivers.logistic_lead_id')
-                            ->get();
-        return view('frontend.admin.logisticManagement.deliveryOrders.index',compact('DeliveryOrders'));
+        $DeliveryOrders = LogisticLeadDriver::leftjoin('logistic_leads', 'logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+            ->select('logistic_leads.*', 'logistic_leads_drivers.logistic_lead_id')
+            ->get();
+        return view('frontend.admin.logisticManagement.deliveryOrders.index', compact('DeliveryOrders'));
     }
     public function viewDetailedOrders($lead_id)
-    {  
-        $lead = LogisticLead::leftjoin('logistic_leads_drivers','logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
-                    ->where('logistic_leads.unique_id', $lead_id)
-                    ->select('logistic_leads.*')
-                    ->first();
+    {
+        $lead = LogisticLead::leftjoin('logistic_leads_drivers', 'logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+            ->where('logistic_leads.unique_id', $lead_id)
+            ->select('logistic_leads.*')
+            ->first();
         $lead_products = LogisticLeadsProduct::where('lead_id', $lead_id)->get();
-        $quotation_count = LogisticLeadsQuotation::where('lead_id', '=' , $lead_id)->get()->count();
-        return view('frontend.admin.logisticManagement.deliveryOrders.detailedOrders',[ 
-                                                    'lead' => $lead,
-                                                    'lead_products' => $lead_products,
-                                                    'quotation_count' => $quotation_count]);   
+        $quotation_count = LogisticLeadsQuotation::where('lead_id', '=', $lead_id)->get()->count();
+        return view('frontend.admin.logisticManagement.deliveryOrders.detailedOrders', [
+            'lead' => $lead,
+            'lead_products' => $lead_products,
+            'quotation_count' => $quotation_count
+        ]);
     }
 }

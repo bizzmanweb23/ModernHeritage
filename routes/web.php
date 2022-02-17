@@ -157,7 +157,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/search-order/{order_no}',[LogisticController::class,'SearchOrder'])->name('Search');
         Route::get('/viewDriverCalander', [LogisticController::class,'viewdrivercalander'])->name('ViewDriverCalander');
         //Testing for Ajax
-        // Route::post('/assign-driver',[LogisticController::class,'AssignDriver']);
+        Route::post('/assign-driver',[LogisticController::class,'AssignDriverAjax']);
+        Route::get('/driver-listing',[LogisticController::class,'listing']);
 
         //admin--logistic--delivery_orders
         Route::get('/delivery-orders',[LogisticController::class,'viewDeliveryOrders'])->name('Delivery-Orders');
