@@ -6,7 +6,6 @@ use App\Models\Employee;
 use App\Models\LogisticLeadSalesPerson;
 use Illuminate\Http\Request;
 
-
 class SalesController extends Controller
 {
     public function allSalesperson()
