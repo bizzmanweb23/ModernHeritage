@@ -143,7 +143,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/update-stage/{lead_id}/{stage_id}', [LogisticController::class,'updateLogisticStage']);
         Route::post('/update-dashboard', [LogisticController::class,'updateLogisticDashboard'])->name('assign-driver');
         
-        //admin--logistic-quotation
+        ///admin--logistic-quotation
         Route::get('/newquotation/{lead_id}', [LogisticController::class,'addQuotation']);
         Route::post('/newquotation/{lead_id}', [LogisticController::class,'saveQuotation']);
         Route::get('/viewquotation/{lead_id}', [LogisticController::class,'viewQuotation']);
