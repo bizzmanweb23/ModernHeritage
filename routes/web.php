@@ -16,6 +16,7 @@ use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\OrdersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/customer-contacts', [CustomerController::class,'getCustomerContacts'])->name('getCustomerContacts');
     Route::post('/customeredit/{id}', [CustomerController::class,'editCustomer']);
     Route::get('/customerstatus/{id}/{status}', [CustomerController::class,'customerStatus']);
-
+    Route::get('/viewCustomer/{id}/', [CustomerController::class,'viewCustomer']);
+    Route::get('/deleteCustomer/', [CustomerController::class,'deleteCustomer'])->name('deleteCustomer');
+    Route::get('/editCustomer/{id}/', [CustomerController::class,'editCustomer']);
+    Route::post('/updateCustomer/', [CustomerController::class,'updateCustomer'])->name('updateCustomer');
+ 
+    
     //admin--employeeManagement
     Route::get('/allemployee', [EmployeeController::class,'allEmployee'])->name('allEmployee');
     Route::get('/addemployee', [EmployeeController::class,'addEmployee'])->name('addEmployee');
@@ -124,6 +130,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
     Route::get('/allservices', [InventoryController::class,'allServices'])->name('allServices');
     Route::post('/saveservices', [InventoryController::class,'saveServices'])->name('saveServices');
+
+
+     //order management
+     Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
     
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
@@ -153,12 +163,21 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/assignedleads/{salesperson_id}', [SalesController::class,'assignedLeads'])->name('assignedleads');
 
         //admin--logistic--dashboard
-        Route::get('/viewCalander', [LogisticController::class,'viewcalander'])->name('ViewCalander');
+        Route::get('/viewCalander1', [LogisticController::class,'viewcalander'])->name('ViewCalander1');
         Route::post('/search-order/{order_no}',[LogisticController::class,'SearchOrder'])->name('Search');
         Route::get('/viewDriverCalander', [LogisticController::class,'viewdrivercalander'])->name('ViewDriverCalander');
+        Route::get('/driver_status', [LogisticController::class,'driver_status'])->name('driver_status');
+        Route::post('/chekDriver', [LogisticController::class,'chekDriver'])->name('chekDriver');
+
+
+        
         //Testing for Ajax
         Route::post('/assign-driver',[LogisticController::class,'AssignDriverAjax']);
         Route::get('/driver-listing',[LogisticController::class,'listing']);
+
+
+        Route::get('/viewCalander', [LogisticController::class,'viewcalander1'])->name('ViewCalander');
+
 
         //admin--logistic--delivery_orders
         Route::get('/delivery-orders',[LogisticController::class,'viewDeliveryOrders'])->name('Delivery-Orders');
@@ -184,6 +203,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/confirm-invoice/{lead_id}', [InvoiceController::class,'confirmInvoice'])->name('confirmInvoice');
         Route::get('/payment-received/{lead_id}', [InvoiceController::class,'paymentReceived'])->name('paymentReceived');
         Route::post('/save-payment-received/{lead_id}', [InvoiceController::class,'savePaymentReceived'])->name('savePaymentReceived');
+
+       
     });
     
 });

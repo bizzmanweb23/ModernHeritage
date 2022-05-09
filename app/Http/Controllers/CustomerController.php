@@ -14,6 +14,7 @@ use App\Models\SalesPerson;
 use App\Models\DeliveryMethod;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class CustomerController extends Controller
 {
@@ -24,9 +25,17 @@ class CustomerController extends Controller
 
     //customer management
 
-    public function allCustomerDetails()
+    public function allCustomerDetails(Request $request)
     {
-        $allCustomer = Customer::get(); 
+       // $allCustomer = Customer::get();
+       $data = DB::table('customer_management');
+       if(isset($request->type) && $request->type=='individual' || $request->type=='company'){
+        $allCustomer = $data->where('customer_type',$request->type)->get();
+       }
+       else{
+        $allCustomer = $data->get();
+       }
+     
         return view('frontend.admin.customer.allcustomer',['allCustomer' => $allCustomer]); 
     }
 
@@ -64,9 +73,46 @@ class CustomerController extends Controller
                                                             'deliveryMethod' => $deliveryMethod
                                                         ]);   
     }
-
-
     public function saveCustomer(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:customer_management',
+        ]);
+        if($request->file('customer_image')){
+            $file_type = $request->file('customer_image')->extension();
+            $file_path = $request->file('customer_image')->storeAs('images/customers',time().'.'.$file_type,'public');
+            $request->file('customer_image')->move(public_path('images/customers'),time().'.'.$file_type);
+        }
+        else
+        {
+            $file_path = null;
+        }
+
+       DB::table('customer_management')->insert([
+           'name'=>$request->customer_name,
+           'email'=>$request->email,
+           'mobile'=>$request->country_code_m . $request->mobile,
+           'customer_type'=>$request->customer_type,
+           'image'=> $file_path,
+           'gst_treatment'=>$request->gst_treatment,
+           'password' =>Hash::make($request->password),
+           'gst_no'=>$request->gst_no,
+           'delivery_address'=>$request->delivery_address,
+           'delivery_state'=>$request->delivery_state,
+           'delivery_country'=>$request->delivery_country,
+           'delivery_zipcode'=>$request->delivery_zipcode,
+           'billing_address'=>$request->billing_address,
+           'billing_state'=>$request->billing_state,
+           'billing_country'=>$request->billing_country,
+           'billing_zipcode'=>$request->billing_zipcode,
+         
+
+       ]);
+       return redirect(route('allcustomer'));
+
+    }
+
+    public function saveCustomer1(Request $request)
     {       
         $data = $request->validate([
             'customer_type' => 'required',
@@ -237,7 +283,7 @@ class CustomerController extends Controller
                                                         ]);
     }
 
-    public function editCustomer(Request $request, $id)
+    public function editCustomer1(Request $request, $id)
     {
         $data = $request->validate([
             'customer_name' => 'required',
@@ -336,5 +382,63 @@ class CustomerController extends Controller
 
         return redirect(route('allcustomer'));
     }
+    public function viewCustomer($id)
+    {
+    
+        $data['data'] = DB::table('customer_management')->where('id',$id)->first();
+        return view('frontend.admin.customer.viewCustomer',$data);
+    }
+    public function deleteCustomer(Request $request)
+    {
+         $id = $request->id;
+        $data['data'] = DB::table('customer_management')->where('id',$id)->delete();
+        return back()->with('message','Customer deleted successfully');
+    }
+    public function editCustomer($id)
+    {
+        $data['countryCodes'] = CountryCode::get();
+        $data['gst'] = GST::get();
+        $data['data'] = DB::table('customer_management')->where('id',$id)->first();
+        return view('frontend.admin.customer.editCustomer',$data);
+    }
+    public function updateCustomer(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|unique:customer_management,email,'.$request->id,
+        ]);
 
+        if($request->hasFile('customer_image')){
+            $file_type = $request->file('customer_image')->extension();
+            $file_path = $request->file('customer_image')->storeAs('images/customers',time().'.'.$file_type,'public');
+            $request->file('customer_image')->move(public_path('images/customers'),time().'.'.$file_type);
+        }
+        else
+        {
+            $file_path = $request->customer_image_old;
+        }
+
+       DB::table('customer_management')->where('id',$request->id)->update([
+           'name'=>$request->customer_name,
+           'email'=>$request->email,
+           'mobile'=>$request->country_code_m . $request->mobile,
+           'customer_type'=>$request->customer_type,
+           'image'=> $file_path,
+           'gst_treatment'=>$request->gst_treatment,
+           'password' =>Hash::make($request->password),
+           'gst_no'=>$request->gst_no,
+           'delivery_address'=>$request->delivery_address,
+           'delivery_state'=>$request->delivery_state,
+           'delivery_country'=>$request->delivery_country,
+           'delivery_zipcode'=>$request->delivery_zipcode,
+           'billing_address'=>$request->billing_address,
+           'billing_state'=>$request->billing_state,
+           'billing_country'=>$request->billing_country,
+           'billing_zipcode'=>$request->billing_zipcode,
+         
+
+       ]);
+       return redirect(route('allcustomer'))->with('message','Customer updated successfully');
+    }
+ 
 }
+ 

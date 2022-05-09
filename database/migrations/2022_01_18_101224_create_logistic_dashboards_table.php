@@ -13,6 +13,7 @@ class CreateLogisticDashboardsTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('logistic_dashboards')) {
         Schema::create('logistic_dashboards', function (Blueprint $table) {
             $table->id();
             $table->string('driver_id')->required();           
@@ -20,6 +21,7 @@ class CreateLogisticDashboardsTable extends Migration
             $table->string('end_time')->required();            
             $table->timestamps();
         });
+    }
     }
 
     /**

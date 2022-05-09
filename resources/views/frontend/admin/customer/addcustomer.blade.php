@@ -43,10 +43,10 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="customer_type" id="customertype2"
-                                value="company">
+                                value="company" required>
                             <label class="form-check-label" for="customer_type">
                                 Company
                             </label>
@@ -79,7 +79,7 @@
                             <label for="mobile">Mobile</label>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <select name="country_code_m" class="form-control" id="country_code_m">
+                                    <select name="country_code_m" class="form-control" id="country_code_m" required>
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
                                             <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
@@ -89,7 +89,7 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="mobile" name="mobile"
-                                        placeholder="Mobile" required>
+                                        placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
                                 </div>
                             </div>
                         </div>
@@ -97,24 +97,31 @@
                 </div>
 
                 <div class="row mt-1">
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="address">Address</label>
                             <input type="text" class="form-control" id="address" name="address"
                                 placeholder="Street Name, House No, Door No, City" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                required>
+                             required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Password" required>
                         </div>
                     </div>
                 </div>
 
                 <div class="row mt-1">
-                    <div class="col-md-2">
+                    <!--div class="col-md-2">
                         <div class="form-group">
                             <label for="state">State</label>
                             <input type="text" class="form-control" id="state" name="state" placeholder="State">
@@ -131,14 +138,8 @@
                             <label for="country">Country</label>
                             <input type="text" class="form-control" id="country" name="country" placeholder="Country">
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password" required>
-                        </div>
-                    </div>
+                    </div-->
+                   
                 </div>
 
                 <div class="row mt-1">
@@ -154,22 +155,96 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row mt-1">
-                    <div class="col-md-6">
                         <div class="form-group company">
                             <label for="gst_no">GST No.</label>
                             <input type="text" class="form-control" id="gst_no" name="gst_no"
                                 placeholder="Enter GST No.">
                         </div>
                     </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row mt-1">
+                    <h5>Delivery Details</h5>
                     <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address</label>
+                            <input type="text" class="form-control" id="delivery_address" name="delivery_address"
+                                placeholder="Delivery address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">State</label>
+                            <input type="text" class="form-control" id="delivery_state" name="delivery_state"
+                                placeholder="Delivery state">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Country</label>
+                            <input type="text" class="form-control" id="delivery_country" name="delivery_country"
+                                placeholder="Delivery country">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Zipcode</label>
+                            <input type="text" class="form-control" id="delivery_zipcode" name="delivery_zipcode"
+                                placeholder="Delivery zipcode">
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row mt-1">
+                    <h5>Billing Details</h5>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address</label>
+                            <input type="text" class="form-control" id="billing_address" name="billing_address"
+                                placeholder="Billing address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">State</label>
+                            <input type="text" class="form-control" id="billing_state" name="billing_state"
+                                placeholder="Billing state">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Country</label>
+                            <input type="text" class="form-control" id="billing_country" name="billing_country"
+                                placeholder="Billing country">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Zipcode</label>
+                            <input type="text" class="form-control" id="billing_zipcode" name="billing_zipcode"
+                                placeholder="Billing zipcode">
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                        </div>
+                    </div> -->
+                </div>
+                <div class="row mt-1">
+                   
+                    <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label for="website">Tags</label>
                             <select multiple="multiple" name="tag[]" id="tag" class="form-control">
@@ -180,22 +255,22 @@
                                 @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 {{-- Tab lists --}}
-                <ul class="nav nav-tabs mt-4" role="tablist">
+                <!-- <ul class="nav nav-tabs mt-4" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-bs-toggle="tab" href="#contact_address">Contact & Address</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="tab" href="#sales">Sales</a>
                     </li>
-                </ul>
+                </ul> -->
 
 
                 {{-- Tab Panes --}}
-                <div class="tab-content mb-3">
+                <!--div class="tab-content mb-3">
 
                     {{-- contact_address --}}
                     <div id="contact_address" class="container tab-pane active"><br>
@@ -248,7 +323,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div-->
             </div>
         </div>
     </div>
