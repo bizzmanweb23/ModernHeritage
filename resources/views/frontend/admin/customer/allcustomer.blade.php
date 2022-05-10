@@ -21,7 +21,8 @@
 
 </div>
 @endif
-<div class="card" style="padding:15px;">
+<div class="container card" style="padding:15px;">
+
     <form>
         <div class="col-md-6">
             <div class="form-group">
@@ -39,7 +40,8 @@
             </div>
         </div>
     </form>
-    <table class="table-responsive table-hover" id="tableId">
+
+    <table class="table table-hover table-responsive" id="tableId" style="overflow: auto; width: 100%;  text-align: center;" >
         <thead>
             <tr>
                 <th>Sl#</th>
@@ -59,7 +61,7 @@
             <tr>
                 <td style="text-align:center">{{$key+1}}</td>
                 <td> @if(isset($c->image))
-                    <img src="{{ asset($c->image) }}" alt="Product" style="height: 5rem; width:5rem">
+                    <img src="{{ asset($c->image) }}" alt="Product" style="height: 6rem; width:6rem">
                     @else
                     <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
                     @endif
@@ -71,7 +73,7 @@
                 <td>
                     <a href="editCustomer/{{$c->id}}" class="btn btn-info btn-md" title="edit"><i class="fas fa-edit"></i></a>
                     <a href="viewCustomer/{{$c->id}}" class="btn btn-warning btn-md" title="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="#" onclick="return delete_user(this.id)" id="{{$c->id}}"class="btn btn-danger btn-md" title="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$c->id}}"class="btn btn-danger btn-md" title="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
                 </td>
 
 
@@ -81,6 +83,7 @@
 
         </tbody>
     </table>
+   
 </div>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script>
@@ -94,8 +97,10 @@
                 id: id
             },
             success: function(data) {
-               
-                location.reload();
+           if(data == 1){
+
+            location.reload();
+           }
 
             }
         });

@@ -130,11 +130,23 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/saveuom', [InventoryController::class,'saveUOM'])->name('saveuom');
     Route::get('/allservices', [InventoryController::class,'allServices'])->name('allServices');
     Route::post('/saveservices', [InventoryController::class,'saveServices'])->name('saveServices');
-
+    Route::post('/order_update', [OrdersController::class,'orderUpdate'])->name('order_update');
 
      //order management
      Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
+     Route::get('/order-details/{id}', [OrdersController::class,'orderDetails'])->name('orderDetails');
+ 
     
+
+     //order status
+     Route::get('/order-status', [OrdersController::class,'orderStatus'])->name('orderStatus');
+     Route::get('/addOrderStatus', [OrdersController::class,'addOrderStatus'])->name('addOrderStatus');
+     Route::post('/saveOrderStatus', [OrdersController::class,'saveOrderStatus'])->name('saveOrderStatus');
+     Route::get('/editStatus/{id}', [OrdersController::class,'editStatus'])->name('editStatus');
+     Route::post('/editOrderStatus', [OrdersController::class,'editOrderStatus'])->name('editOrderStatus');
+     Route::get('/deleteStatus/{id}', [OrdersController::class,'deleteStatus'])->name('deleteStatus');
+     Route::get('/orderStatusEdit/{id}', [OrdersController::class,'orderStatusEdit'])->name('orderStatusEdit');
+
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

@@ -392,7 +392,8 @@ class CustomerController extends Controller
     {
          $id = $request->id;
         $data['data'] = DB::table('customer_management')->where('id',$id)->delete();
-        return back()->with('message','Customer deleted successfully');
+        echo json_encode(1);
+       // return back()->with('message','Customer deleted successfully');
     }
     public function editCustomer($id)
     {
