@@ -21,7 +21,7 @@ class OrdersController extends Controller
     {
         $data['data'] = Order::select('orders.*','order_status.order_status')->where('orders.id',$id)->join('order_status','order_status.id','orders.order_status')->first();
         $data['order_products'] = OrderProducts::where('order_id',$id)->get();
-        $data['order_status']=DB::table('order_status')->get();
+        $data['order_status']=DB::table('order_status')->where('status',1)->get();
         return view('frontend.admin.orders.order_details',$data);
    
     }
