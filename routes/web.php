@@ -147,6 +147,13 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/deleteStatus/{id}', [OrdersController::class,'deleteStatus'])->name('deleteStatus');
      Route::get('/orderStatusEdit/{id}', [OrdersController::class,'orderStatusEdit'])->name('orderStatusEdit');
 
+
+     //driver management
+     Route::get('/drivers', [DriverController::class,'drivers'])->name('drivers');
+     Route::get('/addDriver', [DriverController::class,'addDriver'])->name('addDriver');
+     Route::get('/viewDriver/{id}', [DriverController::class,'viewDriver'])->name('viewDriver');
+     Route::get('/editDriver/{id}', [DriverController::class,'editDriver'])->name('editDriver');
+     
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

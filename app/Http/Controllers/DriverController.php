@@ -2,10 +2,16 @@
 namespace App\Http\Controllers;
 use App\Models\Employee;
 use App\Models\LogisticLeadDriver;
+use App\Models\User;
+use App\Models\CountryCode;
+use App\Models\Customer;
+use App\Models\Department;
+use App\Models\JobPosition;
 use App\Models\Vehicle;
 use App\Models\VehicleBrand;
 use App\Models\VehicleModel;
 use Illuminate\Http\Request;
+use DB;
 
 
 class DriverController extends Controller
@@ -32,4 +38,77 @@ class DriverController extends Controller
                                                 ->get();
         return view('frontend.admin.driver.deliveries',['deliveries' => $deliveries, 'delivery_time' => $delivery_time]);
     }
+    public function drivers()
+
+    {   
+     
+
+    
+        $drivers['drivers'] = DB::table('employees')
+                        ->where('employees.job_position', '=', '9')
+                        ->orderBy('employees.order_id','ASC')
+                        ->get();
+
+        if(isset($_GET['type']))
+        {
+            if($_GET['type']==1 || $_GET['type']==0)
+            {
+                $drivers['drivers'] = DB::table('employees')
+                ->where('employees.job_position', '=', '9')
+                ->where('employees.status', '=', $_GET['type'])
+                ->orderBy('employees.order_id','ASC')
+                ->get();
+            }
+            else{
+                $drivers['drivers'] = DB::table('employees')
+                ->where('employees.job_position', '=', '9')
+                ->orderBy('employees.order_id','ASC')
+                ->get();
+            }
+           
+        }
+
+       
+        return view('frontend.admin.driver.index1',$drivers);
+    }
+    public function addDriver ()
+    {
+          
+        $data['countryCodes'] = CountryCode::get();
+        $data['customer'] = Customer::get();
+        $data['employee'] = Employee::get();
+        $data['department'] = Department::get();
+        $data['jobPosition'] = JobPosition::get();
+        return view('frontend.admin.driver.add',$data);
+    }
+
+    public function viewDriver($id)
+    {
+        $driver['driver'] = DB::table('employees')
+                               
+                                ->where('id', '=', $id)
+                                ->first();
+        return view('frontend.admin.driver.view',$driver);
+    }
+    public function editDriver(Request $request,$id)
+    {
+        $driver['countryCodes'] = CountryCode::get();
+        $driver['department'] = Department::get();
+        $driver['employees'] = Employee::where('id','!=',$id)->get();
+        
+        $driver['employee'] = Employee::leftjoin('departments', 'employees.department', '=', 'departments.id')
+        ->leftjoin('job_positions','employees.job_position','=','job_positions.id')
+        ->leftjoin('employees as manager', 'employees.manager', '=', 'manager.id')
+        ->where('employees.id', $id)
+        ->select(
+            'employees.*',
+            'departments.department_name',
+            'manager.emp_name as manager_name',
+            'job_positions.position_name'
+        )
+        ->first();
+        
+       return view('frontend.admin.driver.edit',$driver);
+    }
+  
 }

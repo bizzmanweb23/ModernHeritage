@@ -11,6 +11,7 @@ use App\Models\Department;
 use App\Models\JobPosition;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -142,11 +143,27 @@ class EmployeeController extends Controller
         $employee->other_id_name = $request->other_id_name;
         $employee->other_id_no = $request->other_id_no;
         $employee->other_id_file = $other_id_file_path;
+        if($request->type =='D')
+        {
+            $max=DB::table('employees')->max('order_id');
+        
+            $employee->order_id = $max+1;
+        }
+        else{
+            $employee->order_id = '';
+        }
         $employee->	status = 1;
         
         $employee->save();
-
+        if($request->type =='D')
+        {
+            
+            return redirect(route('drivers'));
+        }
+      else{
         return redirect(route('allEmployee'));
+      }
+       
     }
 
     public function employeeData($id)
@@ -252,10 +269,19 @@ class EmployeeController extends Controller
         $employee->other_id_name = $request->other_id_name;
         $employee->other_id_no = $request->other_id_no;
         $employee->other_id_file = $other_id_file_path;
-        
+        $employee->status = $request->status;
         $employee->save();
 
+        if($request->type =='D')
+        {
+            
+            return redirect(route('drivers'));
+        }
+      else{
         return redirect('admin/employeedetails/'.$id);
+      }
+
+      //  return redirect('admin/employeedetails/'.$id);
     }
 
     public function allDepartment()
@@ -313,5 +339,5 @@ class EmployeeController extends Controller
         
         return redirect(route('allJobPosition'));
     }
-    
+  
 }

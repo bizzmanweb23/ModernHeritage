@@ -2,7 +2,11 @@
 
 @section('content')
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.2.9/css/dataTables.responsive.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
+
+
 
 <div class="card" style="padding:15px;">
     <h5>Order Management</h5>
@@ -10,7 +14,7 @@
 
 
 
-    <table class="table-responsive table-hover" id="tableId">
+    <table class="table-hover" id="tableId">
         <thead>
             <tr>
                 <th>Sl#</th>
