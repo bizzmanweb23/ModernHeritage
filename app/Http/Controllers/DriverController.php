@@ -117,5 +117,57 @@ class DriverController extends Controller
         
        return view('frontend.admin.driver.edit',$driver);
     }
+
+    public function deliveries(Request $request)
+    {
+      if(isset($request->type)) 
+       {
+        $today = date('Y-m-d');
+        if ($request->type == 'today') {
+            $condition = '>=';
+        } else {
+            $condition = '<';
+        }
+        if($request->type == 'today' || $request->type == 'past')
+        {
+            $deliveries['deliveries'] = LogisticLeadDriver::leftjoin('employees','employees.unique_id', '=', 'logistic_leads_drivers.driver_id')
+            ->leftjoin('logistic_leads', 'logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+            ->where('logistic_leads.expected_date', $condition, $today)
+            ->select('employees.emp_name', 'employees.work_mobile', 'employees.work_email', 'employees.emp_image','logistic_leads.*')
+            ->orderBy('logistic_leads.expected_date')
+            ->get();
+        }
+        else
+        {
+            $deliveries['deliveries'] = LogisticLeadDriver::leftjoin('employees','employees.unique_id', '=', 'logistic_leads_drivers.driver_id')
+            ->leftjoin('logistic_leads', 'logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+            ->select('employees.emp_name', 'employees.work_mobile', 'employees.work_email', 'employees.emp_image', 'logistic_leads.*')
+            ->orderBy('logistic_leads.expected_date')
+            ->get();
+        }
   
+       }
+     else
+       {
+        $deliveries['deliveries'] = LogisticLeadDriver::leftjoin('employees','employees.unique_id', '=', 'logistic_leads_drivers.driver_id')
+        ->leftjoin('logistic_leads', 'logistic_leads.id', '=', 'logistic_leads_drivers.logistic_lead_id')
+        ->select('employees.emp_name', 'employees.work_mobile', 'employees.work_email', 'employees.emp_image','logistic_leads.*')
+        ->orderBy('logistic_leads.expected_date')
+        ->get();
+       }
+       
+       $deliveries['status']=DB::table('order_status')->get();
+
+      
+        return view('frontend.admin.driver.deliveries1',$deliveries);
+    }
+    public function status_update(Request $request)
+    {
+          DB::table('logistic_leads')->where('id',$request->id)->update([
+              'status'=>$request->status
+          ]);
+       
+          echo json_encode(1);
+
+    }
 }

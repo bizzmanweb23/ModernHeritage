@@ -59,7 +59,7 @@
             <tr>
                 <td style="text-align:center">{{$key+1}}</td>
                 <td> @if(isset($c->emp_image))
-                    <img src="{{ asset($c->emp_image) }}" alt="Product" style="height: 6rem; width:6rem">
+                    <img src="{{ asset($c->emp_image) }}" alt="not found" style="height: 6rem; width:6rem">
                     @else
                     <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
                     @endif

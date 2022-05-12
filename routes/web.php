@@ -215,7 +215,8 @@ Route::group(['prefix' => 'admin'], function () {
         //driver-management
         Route::get('/driver-overview', [DriverController::class,'driverOverview'])->name('driverOverview');
         Route::get('/deliveries/{delivery_time}', [DriverController::class,'allDeliveries'])->name('allDeliveries');
-        
+        Route::get('/deliveries', [DriverController::class,'deliveries'])->name('deliveries');
+        Route::post('/status_update', [DriverController::class,'status_update'])->name('status_update');
         //logistic-crm -- invoices
         Route::post('/create-invoice/{lead_id}', [InvoiceController::class,'createInvoice'])->name('createInvoice');
         Route::get('/show-invoice/{lead_id}', [InvoiceController::class,'showInvoice'])->name('showInvoice');
