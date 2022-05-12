@@ -167,7 +167,7 @@ class DriverController extends Controller
               'status'=>$request->status
           ]);
        
-          echo json_encode(1);
-
+         // echo json_encode(1);
+         return back();
     }
 }

@@ -97,42 +97,47 @@
             </tr>
 
             <div class="modal" id="ExtraModal_{{$dv->id}}">
-             <form method="post">
-                 @csrf
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                <div class="modal-dialog">
+                    <form method="post" action="{{route('status_update')}}">
+                        @csrf
+                    <div class="modal-content">
+                        <!-- Modal header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">Status Update</h4>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                            <!-- <div class="row mb-2"><h5>Existing Order</h5> -->
+                            <div class="row">
+                                <div class="col-md-4" style="display:none"><span>Existing Order</span></div>
+                                <div class="col-md-8" style="display:none">
+                                    <div style="display: flex; flex-wrap: no-wrap">
+                                        <input type="text" value="{{$dv->id}}" class="form-control mr-1" id="id" name="id">
 
-                            <div class="modal-header">
-                                <h4 class="modal-title">Status Update</h4>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4"><span>Status</span></div>
+                                <div class="col-md-8">
+                                    <div style="display: flex; flex-wrap: no-wrap">
+                                        <select class="form-control mr-1" name="status" id="status">
+                                            @foreach($status as $st)
+                                            <option value="{{$st->id}}">{{$st->order_status}}</option>
+                                            @endforeach
+                                        </select>
 
-                            <div class="modal-body">
-
-                                <div class="row">
-
-                                    <div class="col-md-4"><span>Status</span></div>
-                                    <div class="col-md-8">
-                                        <div style="display: flex; flex-wrap: no-wrap">
-                                            <select class="form-control" name="status" id="status">
-
-                                                <option value="1">gbfbhfg1</option>
-                                                <option value="2">gbfbhfg2</option>
-                                            </select>
-
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Modal footer -->
-                            <div class="modal-footer">
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
 
-                                <button type="submit" id="{{$dv->id}}" class="btn btn-primary" onclick="update_status(this.id)">Save</button>
-                            </div>
+                            <button type="submit"  class="btn btn-primary" >Save</button>
                         </div>
                     </div>
 </form>
-             
+                </div>
             </div>
             @endforeach
 
@@ -154,22 +159,7 @@
     }
 
 
-    function update_status(id) {
-    
-
-        $.ajax({
-            url: "{{route('status_update')}}",
-            type: 'POST',
-           
-            success: function(data) {
-                alert(data);
-
-            }
-        });
-
-
-
-    }
+  
 
 
 
