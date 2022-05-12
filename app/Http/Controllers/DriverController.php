@@ -85,8 +85,15 @@ class DriverController extends Controller
     public function viewDriver($id)
     {
         $driver['driver'] = DB::table('employees')
-                               
-                                ->where('id', '=', $id)
+                                    ->select(
+                                        'employees.*',
+                                        'departments.department_name',
+                                        'manager.emp_name as manager_name'
+                                   
+                                    )
+                                ->where('employees.id', '=', $id)
+                                ->leftjoin('employees as manager', 'employees.manager', '=', 'manager.id')
+                                ->leftjoin('departments', 'employees.department', '=', 'departments.id')
                                 ->first();
         return view('frontend.admin.driver.view',$driver);
     }

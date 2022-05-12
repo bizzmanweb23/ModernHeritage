@@ -142,7 +142,7 @@
                             placeholder="Employee's Email" required>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label for="default_customer">Default Customer:</label>
                         <select multiple="multiple" name="default_customer[]" id="default_customer" class="form-control">
@@ -153,16 +153,16 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label for="password">Password:</label>
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="Password" required>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             {{-- Tab lists --}}

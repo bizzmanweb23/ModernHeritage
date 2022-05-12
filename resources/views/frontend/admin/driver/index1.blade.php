@@ -76,7 +76,7 @@
                 <td>
                     <a href="editDriver/{{$c->id}}" title="edit"><span class="badge badge-info"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
                     <a href="viewDriver/{{$c->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$c->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                   
                 </td>
 
 

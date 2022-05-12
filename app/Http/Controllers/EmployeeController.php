@@ -48,7 +48,7 @@ class EmployeeController extends Controller
             'emp_name' => 'required',
             'job_position' => 'required',
             'work_email' => 'required|email:rfc,dns|unique:employees',
-            'password' => 'required',
+         
         ]);
 
         $unique_id = Employee::orderBy('id', 'desc')->first();
@@ -102,16 +102,16 @@ class EmployeeController extends Controller
             $number_user = "MHU" . sprintf("%05d", $number_user + 1);
         }
 
-        $user = new User;
-        $user->unique_id = $number_user;
-        $user->user_name = $request->emp_name;
-        $user->email = $request->work_email;
-        $user->password = Hash::make($data['password']);
-        $user->user_id = $number;
-        $user->status = 1;
-        $user->user_type = "employee";
-        $user->role_id = 3;
-        $user->save();
+        // $user = new User;
+        // $user->unique_id = $number_user;
+        // $user->user_name = $request->emp_name;
+        // $user->email = $request->work_email;
+        // $user->password = Hash::make($data['password']);
+        // $user->user_id = $number;
+        // $user->status = 1;
+        // $user->user_type = "employee";
+        // $user->role_id = 3;
+        // $user->save();
 
         $employee = new Employee;
         $employee->unique_id = $number;
@@ -236,10 +236,10 @@ class EmployeeController extends Controller
         }
 
         //user table unique_id
-        $user = User::where('user_id','=',$employee->unique_id)->first();
-        $user->user_name = $request->emp_name;
-        $user->email = $request->work_email;
-        $user->save();
+        // $user = User::where('user_id','=',$employee->unique_id)->first();
+        // $user->user_name = $request->emp_name;
+        // $user->email = $request->work_email;
+        // $user->save();
 
         $employee->emp_name = $request->emp_name;
         $employee->job_position = $request->job_position;

@@ -297,12 +297,7 @@
                         <div class="row mb-2" style="display:none">
                             <div class="col-md-6"><label for="driver_id">Driver Name:</label></div>
                             <div class="col-md-6">
-                                <!-- <select name="driver_id" id="driver_id" class="form-control" required>
-                                    <option value="">Select Driver</option>
-                                    @foreach ($drivers as $d)
-                                    <option value="{{ $d->unique_id }}">{{ $d->emp_name }}</option> 
-                                    @endforeach
-                                </select> -->
+                          
                                 <input type="text" class="form-control modal_input" id="driver_id_t" name="driver_id_t" placeholder="" required>
                             </div>
                         </div>

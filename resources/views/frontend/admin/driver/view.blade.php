@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="form-group company" id="employee">
                         <label for="manager">Manager</label>
-
+                        {{ $driver->manager_name }}
                     </div>
                 </div>
             </div>
@@ -66,12 +66,7 @@
                         {{$driver->work_email}}
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="default_customer">Default Customer:</label>
-
-                    </div>
-                </div>
+             
             </div>
 
             <hr>
@@ -216,7 +211,8 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="other_id_file">ID File:</label>
-                            {{$driver->other_id_file}}
+                          
+                            <a href="{{asset($driver->other_id_file)}}" target="_blank" rel="noopener noreferrer">  <i class="fas fa-file" aria-hidden="true"></i> File</a>
                         </div>
                     </div>
                 </div>

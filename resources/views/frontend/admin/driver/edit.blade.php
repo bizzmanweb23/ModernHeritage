@@ -93,7 +93,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="work_mobile" name="work_mobile" value="{{substr($employee->work_mobile, 0) }}"
+                                    <input type="text" class="form-control" id="work_mobile" name="work_mobile" value="{{substr($employee->work_mobile, 3) }}"
                                         placeholder="Mobile">
                                         
                             <input type="hidden" class="form-control edit_input" id="job_position" name="job_position" value="{{ $employee->job_position }}"
@@ -144,7 +144,7 @@
                             <select name="manager" id="manager" class="form-control edit_input">
                                 <option value=""> --Select-- </option>
                                 @foreach($employees as $e)
-                                    <option value="{{ $e->id }}" {{ $employee->manager_name == $e->id ? 'selected' : '' }}>{{ $e->emp_name }}</option>
+                                    <option value="{{ $e->id }}" @if($e->id == $employee->manager) selected @endif>{{ $e->emp_name }}</option>
                                 @endforeach
                             </select>
                         </div>

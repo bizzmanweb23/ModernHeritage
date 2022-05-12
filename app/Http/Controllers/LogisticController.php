@@ -500,7 +500,7 @@ class LogisticController extends Controller
     public function updateLogisticDashboard(Request $request)
     {
 
-        if($request->driver_id == 0)
+        if($request->driver_id_t == 0)
         {
 
             
@@ -520,9 +520,8 @@ class LogisticController extends Controller
   
         }
         else{
-            $driver_id = $request->driver_id ;
+            $driver_id = $request->driver_id_t;
         }
-
 
 
 
