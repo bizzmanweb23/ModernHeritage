@@ -11,6 +11,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleBrand;
 use App\Models\VehicleModel;
 use Illuminate\Http\Request;
+use App\Models\LogisticLead;
 use DB;
 
 
@@ -162,12 +163,89 @@ class DriverController extends Controller
         return view('frontend.admin.driver.deliveries1',$deliveries);
     }
     public function status_update(Request $request)
+
     {
+     
           DB::table('logistic_leads')->where('id',$request->id)->update([
               'status'=>$request->status
           ]);
-       
+          DB::table('orders')->where('order_id',$request->order_id)->update([
+            'order_status'=>$request->status
+        ]);
          // echo json_encode(1);
          return back();
+    }
+    public function addToDelivery(Request $request)
+    {  
+
+      
+        
+        $unique_id = LogisticLead::orderBy('id', 'desc')->first();
+
+  
+        if ($unique_id) {
+            $number = str_replace('MHL', '', $unique_id->unique_id);
+        } else {
+            $number = 0;
+        }
+        if ($number == 0) {
+            $number = 'MHL000001';
+        } else {
+            $number = "MHL" . sprintf("%06d", $number + 1);
+        }
+
+        $logistic_lead = new LogisticLead;
+
+        $logistic_lead->stage_id = 1;
+        $logistic_lead->unique_id = $number;
+        $logistic_lead->client_id = 1;
+        $logistic_lead->client_name = $request->customer_name;
+        $logistic_lead->expected_date = $request->expected_date;
+        // $logistic_lead->pickup_from = $data['pickup_from'];
+        $logistic_lead->pickup_client = $request->pickup_client;
+        $logistic_lead->pickup_add_1 = $request->pickup_add_1;
+        $logistic_lead->pickup_add_2 = $request->pickup_add_2;
+        $logistic_lead->pickup_add_3 = $request->pickup_add_3;
+        $logistic_lead->pickup_pin = $request->pickup_pin;
+        $logistic_lead->pickup_state = $request->pickup_state;
+        $logistic_lead->pickup_country = $request->pickup_country;
+        $logistic_lead->pickup_location = $request->pickup_location;
+        $logistic_lead->pickup_email = $request->pickup_email;
+        $logistic_lead->pickup_phone = $request->pickup_phone;
+        $logistic_lead->contact_name = $request->contact_name;
+        $logistic_lead->contact_phone = $request->contact_phone;
+        $logistic_lead->delivery_client = $request->delivery_client;
+        // $logistic_lead->delivered_to = $data['delivered_to'];
+        $logistic_lead->delivery_add_1 = $request->delivery_add_1;
+        $logistic_lead->delivery_add_2 = $request->delivery_add_2;
+        $logistic_lead->delivery_add_3 = $request->delivery_add_3;
+        $logistic_lead->delivery_pin = $request->delivery_pin;
+        $logistic_lead->delivery_state = $request->delivery_state;
+        $logistic_lead->delivery_country = $request->delivery_country;
+        $logistic_lead->delivery_location = $request->delivery_location;
+        $logistic_lead->delivery_email = $request->delivery_email;
+        $logistic_lead->delivery_phone = $request->delivery_phone;
+        $logistic_lead->order_id = $request->order_id;
+        $logistic_lead->status = $request->status;
+        $logistic_lead->save();
+
+        $data= DB::table('order_products')->where('order_id',$request->order_id)->get();
+
+        foreach($data as $value)
+        {
+            DB::table('logistic_leads_products')->insert([
+                'lead_id' => $number,
+                'product_name' => $value->product_name,
+                'quantity' => $value->product_quantity,
+            ]);
+        }
+        DB::table('orders')->where('order_id',$request->order_id)->update([
+            'delivery_status' => 1,
+  
+        ]);
+  
+      
+        return Redirect()->route('orderList');
+
     }
 }

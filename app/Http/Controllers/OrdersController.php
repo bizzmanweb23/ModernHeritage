@@ -77,4 +77,9 @@ class OrdersController extends Controller
         ]);
         return redirect(route('orderList'))->with('message','Order Status updated successfully');
     }
+    public function assign_to_delivery($id)
+    {
+        $data['data'] = Order::select('orders.*')->where('orders.id',$id)->first();
+        return view('frontend.admin.orders.assign_to_delivery',$data);
+    }
 }

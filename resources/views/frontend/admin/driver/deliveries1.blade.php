@@ -53,8 +53,9 @@
             @foreach($deliveries as $key=>$dv )
             <tr>
                 <td>
-                    <button class="btn btn-primary btn-sm pull-right" id="{{$dv->id}}" onclick="show_modal(this.id)">Update Status</button>
+                    <button class="btn btn-warning btn-sm" id="{{$dv->id}}" onclick="show_modal(this.id)">Update</button>
                 </td>
+
                 <td>
                     <div class="d-flex px-2 py-1">
                         <div>
@@ -100,43 +101,43 @@
                 <div class="modal-dialog">
                     <form method="post" action="{{route('status_update')}}">
                         @csrf
-                    <div class="modal-content">
-                        <!-- Modal header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Status Update</h4>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            <!-- <div class="row mb-2"><h5>Existing Order</h5> -->
-                            <div class="row">
-                                <div class="col-md-4" style="display:none"><span>Existing Order</span></div>
-                                <div class="col-md-8" style="display:none">
-                                    <div style="display: flex; flex-wrap: no-wrap">
-                                        <input type="text" value="{{$dv->id}}" class="form-control mr-1" id="id" name="id">
-
+                        <div class="modal-content">
+                            <!-- Modal header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Status Update</h4>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <!-- <div class="row mb-2"><h5>Existing Order</h5> -->
+                                <div class="row">
+                                    <div class="col-md-4" style="display:none"><span>Existing Order</span></div>
+                                    <div class="col-md-8" style="display:none">
+                                        <div style="display: flex; flex-wrap: no-wrap">
+                                            <input type="text" value="{{$dv->id}}" class="form-control mr-1" id="id" name="id">
+                                            <input type="text" value="{{$dv->order_id}}" class="form-control mr-1" id="order_id" name="order_id">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4"><span>Status</span></div>
-                                <div class="col-md-8">
-                                    <div style="display: flex; flex-wrap: no-wrap">
-                                        <select class="form-control mr-1" name="status" id="status">
-                                            @foreach($status as $st)
-                                            <option value="{{$st->id}}">{{$st->order_status}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-md-4"><span>Status</span></div>
+                                    <div class="col-md-8">
+                                        <div style="display: flex; flex-wrap: no-wrap">
+                                            <select class="form-control mr-1" name="status" id="status">
+                                                @foreach($status as $st)
+                                                <option value="{{$st->id}}" @if($st->id == $dv->status) selected @endif>{{$st->order_status}}</option>
+                                                @endforeach
+                                            </select>
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
 
-                            <button type="submit"  class="btn btn-primary" >Save</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </div>
                         </div>
-                    </div>
-</form>
+                    </form>
                 </div>
             </div>
             @endforeach
@@ -157,11 +158,6 @@
     function show_modal(id) {
         $('#ExtraModal_' + id).modal('show');
     }
-
-
-  
-
-
 
     $(function() {
         $('#tableId').DataTable({

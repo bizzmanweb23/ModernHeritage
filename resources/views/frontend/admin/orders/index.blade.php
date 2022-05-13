@@ -2,10 +2,9 @@
 
 @section('content')
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/responsive/2.2.9/css/dataTables.responsive.css" rel="stylesheet" />
-<script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
+<link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" />
 
+<script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
 <div class="card" style="padding:15px;">
@@ -14,7 +13,7 @@
 
 
 
-    <table class="table-hover" id="tableId">
+    <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>
             <tr>
                 <th>Sl#</th>
@@ -50,7 +49,10 @@
                 <td>
                    
                     <a href="order-details/{{$c->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-
+                    @if($c->delivery_status == 1)
+                    @else
+                    <a href="assign_to_delivery/{{$c->id}}" title="assign to delivery"><span class="badge badge-primary"><i class="fa fa-truck"></i></span></a>
+                    @endif
                 </td>
 
 
@@ -66,9 +68,12 @@
 
 
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
     $(function() {
-        $('#tableId').DataTable();
+        $('#tableId').DataTable({
+            responsive: true
+        });
     });
   
 </script>

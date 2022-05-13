@@ -135,6 +135,7 @@ Route::group(['prefix' => 'admin'], function () {
      //order management
      Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
      Route::get('/order-details/{id}', [OrdersController::class,'orderDetails'])->name('orderDetails');
+     Route::get('/assign_to_delivery/{id}', [OrdersController::class,'assign_to_delivery'])->name('assign_to_delivery');
  
     
 
@@ -146,14 +147,15 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/editOrderStatus', [OrdersController::class,'editOrderStatus'])->name('editOrderStatus');
      Route::get('/deleteStatus/{id}', [OrdersController::class,'deleteStatus'])->name('deleteStatus');
      Route::get('/orderStatusEdit/{id}', [OrdersController::class,'orderStatusEdit'])->name('orderStatusEdit');
-
+     Route::post('/addToDelivery', [DriverController::class,'addToDelivery'])->name('addToDelivery');
+     
 
      //driver management
      Route::get('/drivers', [DriverController::class,'drivers'])->name('drivers');
      Route::get('/addDriver', [DriverController::class,'addDriver'])->name('addDriver');
      Route::get('/viewDriver/{id}', [DriverController::class,'viewDriver'])->name('viewDriver');
      Route::get('/editDriver/{id}', [DriverController::class,'editDriver'])->name('editDriver');
-     
+
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         
@@ -164,8 +166,8 @@ Route::group(['prefix' => 'admin'], function () {
         
         //admin--logistic--crm
         Route::get('/crm', [LogisticController::class,'getRequest'])->name('logistic_crm');
-        Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
-        Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
+       Route::get('/addrequest', [LogisticController::class,'addRequest'])->name('addLogisticLead');
+       Route::post('/addrequest', [LogisticController::class,'saveRequest'])->name('addLogisticLead');
         Route::get('/searchcontact', [LogisticController::class,'searchContact'])->name('searchcontact');
         Route::get('/viewrequest/{lead_id}/{prev_route?}', [LogisticController::class,'viewRequest']);
         Route::post('/updaterequest/{lead_id}', [LogisticController::class,'updateRequest']);
