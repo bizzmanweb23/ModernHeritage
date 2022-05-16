@@ -68,7 +68,6 @@
 
                         {{ $dv->emp_name }}<br>
                         {{ $dv->work_email }}
-                    </div>
 
                 </td>
 
@@ -90,6 +89,8 @@
                 <td><span class="badge badge-warning">Pending</span></td>
                 @elseif($dv->status == 2)
                 <td><span class="badge badge-success">Completed</span></td>
+                @elseif($dv->status == 5)
+                <td><span class="badge badge-info">Assign to Driver</span></td>
                 @else
                 <td><span class="badge badge-danger">Canceled</span></td>
                 @endif

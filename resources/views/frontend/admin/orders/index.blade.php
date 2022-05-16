@@ -38,21 +38,34 @@
                 </td>
                 <td>{{$c->customer_name}}</td>
                 <td>
-                   
-                        {{ $c->order_status }}
-                   
+                    @if($c->ordStatus == 'Completed')
+                    <span class="badge badge-success">Completed</span>
+                   @endif
+                   @if($c->ordStatus == 'Pending')
+                    <span class="badge badge-warning">Pending</span>
+                   @endif
+                   @if($c->ordStatus == 'Canceled')
+                    <span class="badge badge-danger">Canceled</span>
+                   @endif
+                   @if($c->ordStatus == 'Assign to Driver')
+                    <span class="badge badge-info">Assign to Driver</span>
+                   @endif
+                   @if($c->ordStatus == 'Assign to Delivery')
+                    <span class="badge badge-primary">Assign to Delivery</span>
+                   @endif
                 </td>
                 <td>{{ $c->order_amount }}</td>
                 <td>{{$c->order_mode}}</td>
                 <td>{{$c->created_at->format('d/m/Y')}}</td>
 
                 <td>
-                   
+
                     <a href="order-details/{{$c->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    @if($c->delivery_status == 1)
-                    <a href="assign_to_driver/{{$c->id}}" title="assign to driver"><span class="badge badge-info"><i class="fa fa-car"></i></span></a>
-                    @else
+                    @if($c->order_status == 1)
                     <a href="assign_to_delivery/{{$c->id}}" title="assign to delivery"><span class="badge badge-primary"><i class="fa fa-truck"></i></span></a>
+                    @endif
+                    @if($c->order_status == 4)
+                    <a href="assign_to_driver/{{$c->id}}" title="assign to driver"><span class="badge badge-info"><i class="fa fa-car"></i></span></a>
                     @endif
                 </td>
 
@@ -76,6 +89,5 @@
             responsive: true
         });
     });
-  
 </script>
 @endsection

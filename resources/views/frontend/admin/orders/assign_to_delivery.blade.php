@@ -58,7 +58,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_client">Pickup Customer/Company</label>
-                        <input type="text" class="form-control" id="pickup_client" name="pickup_client" required>
+                        <input type="text" class="form-control" id="pickup_client" name="pickup_client" value="{{$admin->user_name}}"required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -73,7 +73,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_add_1">Address 1</label>
-                        <input type="text" class="form-control" id="pickup_add_1" name="pickup_add_1" required>
+                        <input type="text" class="form-control" id="pickup_add_1" name="pickup_add_1" value="{{$admin->address_1}}" required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -115,13 +115,13 @@
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_pin">ZipCode</label>
-                        <input type="text" class="form-control" id="pickup_pin" name="pickup_pin" required>
+                        <input type="text" class="form-control" id="pickup_pin" name="pickup_pin" value="{{$admin->zipcode}}"required>
                     </span>
                 </div>
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_state">State</label>
-                        <input type="text" class="form-control" id="pickup_state" name="pickup_state" required>
+                        <input type="text" class="form-control" id="pickup_state" name="pickup_state"  value="{{$admin->state}}"required>
                     </span>
                 </div>
                 <div class="col-md-3">
@@ -141,7 +141,7 @@
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_country">Country</label>
-                        <input type="text" class="form-control" id="pickup_country" name="pickup_country" required>
+                        <input type="text" class="form-control" id="pickup_country" name="pickup_country" value="{{$admin->country}}"required>
                     </span>
                 </div>
                 <div class="col-md-3">
@@ -167,7 +167,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_email">Email</label>
-                        <input type="text" class="form-control" id="pickup_email" name="pickup_email" required>
+                        <input type="text" class="form-control" id="pickup_email" name="pickup_email" value="{{$admin->email}}"required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -181,7 +181,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_phone">Phone</label>
-                        <input type="text" class="form-control" id="pickup_phone" name="pickup_phone" required>
+                        <input type="text" class="form-control" id="pickup_phone" name="pickup_phone" value="{{$admin->mobile}}"required>
                     </span>
                 </div>
                 <div class="col-md-6">

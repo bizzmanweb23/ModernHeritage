@@ -156,7 +156,7 @@ class DriverController extends Controller
         ->orderBy('logistic_leads.expected_date')
         ->get();
        }
-       
+      
        $deliveries['status']=DB::table('order_status')->get();
 
       
@@ -178,7 +178,8 @@ class DriverController extends Controller
     public function addToDelivery(Request $request)
     {  
 
-      
+      //  echo $request->expected_date;
+       
         
         $unique_id = LogisticLead::orderBy('id', 'desc')->first();
 

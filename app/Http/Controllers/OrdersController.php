@@ -16,7 +16,7 @@ class OrdersController extends Controller
     //
     public function index()
     {
-        $orders['orders']=Order::select('orders.*','order_status.order_status')->join('order_status','order_status.id','orders.order_status')->get();
+        $orders['orders']=Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status')->get();
         return view('frontend.admin.orders.index',$orders);
     }
 
@@ -25,6 +25,7 @@ class OrdersController extends Controller
         $data['data'] = Order::select('orders.*','order_status.order_status')->where('orders.id',$id)->join('order_status','order_status.id','orders.order_status')->first();
         $data['order_products'] = OrderProducts::where('order_id',$id)->get();
         $data['order_status']=DB::table('order_status')->where('status',1)->get();
+    
         return view('frontend.admin.orders.order_details',$data);
    
     }
@@ -83,6 +84,7 @@ class OrdersController extends Controller
     public function assign_to_delivery($id)
     {
         $data['data'] = Order::select('orders.*')->where('orders.id',$id)->first();
+        $data['admin']=DB::table('users')->select('users.user_name','users.email','user_address.*')->where('user_name','Admin')->join('user_address','user_address.user_id','user_address.id')->first();
         return view('frontend.admin.orders.assign_to_delivery',$data);
     }
 

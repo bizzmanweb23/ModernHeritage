@@ -149,7 +149,7 @@
                         <div class="col-md-4"><span>Existing Order</span></div>
                         <div class="col-md-8">
                             <div style="display: flex; flex-wrap: no-wrap">
-                                <input type="text" class="form-control mr-1" id="order_no" value="<?php echo $lead->unique_id; ?>"placeholder="Enter Delivery Order No.">
+                                <input type="text" class="form-control mr-1" id="order_no" placeholder="Enter Delivery Order No.">
                                 <div>
                                     <button type="button" id="searchbtn" style="border-radius: 10px">
                                         <i class="fas fa-search fa-2x"></i>
@@ -338,7 +338,7 @@
         resources: <?php echo $cal; ?>,
         select: function(start, end, jsEvent, view, resource) {
        
-            $('#ExtraModal').modal('show');
+          //  $('#ExtraModal').modal('show');
          
             $('#driver_id_t').val(resource.id);
             var dt = new Date();
@@ -381,7 +381,7 @@
             $('#end-time').val(end.format('HH:mm'));
         },
         dayClick: function(date, jsEvent, view, resourceObj) {
-            $('#ExtraModal').modal('show');
+           // $('#ExtraModal').modal('show');
             $('#start-date').val(date)
             $('#driver_id_t').val(resourceObj.id);
             var dt = new Date();
@@ -486,9 +486,8 @@
                 // data: "order_no=" + order_no,
                 dataType: "json",
                 success: function(data) {
-                
-                    if (data != '') 
-                    {
+
+                    if (data != '') {
                         $('#add_product').hide();
                         var trHTML = '';
                         $.each(data, function(key, item) {
@@ -526,12 +525,10 @@
                                 '</td><td>';
                         });
                         $('tbody').append(trHTML);
-                    } 
-                    else 
-                    {
+                    } else {
                         alert("Order Number doesn't exists");
+                        $('#assignDriverModal').hide();
                         $('#order_no').val('');
-                     
                         $('#search').attr('disabled', true);
                     }
                 },

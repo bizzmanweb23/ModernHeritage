@@ -481,17 +481,16 @@ class LogisticController extends Controller
             ->where('logistic_leads.unique_id', $order_no)
             ->select('logistic_leads.*', 'logistic_leads_products.*', 'logistic_leads.id as lead_id')
             ->get();
-
+        
         return response()->json($data);
+       
+
+       
     }
     // TEsting for Ajax method
     public function AssignDriverAjax(Request $request)
     {
-        DB::table('orders')->where('order_id', $request->order_id)->update([
-            'order_status' => 5,
-            'driver_id' => $request->driver_id_t
-        ]);
-     
+      
 
         $driver = new LogisticLeadDriver();
         $driver->driver_id = $request->driver_id_t ?? null;
@@ -542,7 +541,7 @@ class LogisticController extends Controller
             $number = "MHL" . sprintf("%06d", $number + 1);
         }
 
-        $logistic_lead = new LogisticLead;
+        $logistic_lead =LogisticLead::find($request->lead_id);
 
         $logistic_lead->stage_id = 1;
         $logistic_lead->unique_id = $number;
@@ -565,27 +564,36 @@ class LogisticController extends Controller
         $logistic_lead->delivery_email = $request->delivery_email;
         $logistic_lead->expected_date = 'NULL';
         $logistic_lead->contact_name = 'NULL';
+        $logistic_lead->status = 5;
         $logistic_lead->save();
 
-        for ($i = 1; $i <= $request->product_row_count; $i++) {
-            $req_product_name = 'product_name' . strval($i);
-            $req_dimension = 'dimension' . strval($i);
-            $req_quantity = 'quantity' . strval($i);
-            $req_uom = 'uom' . strval($i);
-            $req_area = 'area' . strval($i);
-            $req_weight = 'weight' . strval($i);
 
-            $logistic_leads_product = new LogisticLeadsProduct;
+        DB::table('orders')->where('order_id', $request->order_id)->update([
+            'order_status' => 5,
+            'driver_id' => $request->driver_id_t
+        ]);
+     
 
-            $logistic_leads_product->lead_id = $number;         //same unique_id of logistic_leads table
-            $logistic_leads_product->product_name = $request->$req_product_name;
-            $logistic_leads_product->dimension = $request->$req_dimension;
-            $logistic_leads_product->quantity = $request->$req_quantity;
-            $logistic_leads_product->uom = $request->$req_uom;
-            $logistic_leads_product->area = $request->$req_area;
-            $logistic_leads_product->weight = $request->$req_weight;
-            $logistic_leads_product->save();
-        }
+
+        // for ($i = 1; $i <= $request->product_row_count; $i++) {
+        //     $req_product_name = 'product_name' . strval($i);
+        //     $req_dimension = 'dimension' . strval($i);
+        //     $req_quantity = 'quantity' . strval($i);
+        //     $req_uom = 'uom' . strval($i);
+        //     $req_area = 'area' . strval($i);
+        //     $req_weight = 'weight' . strval($i);
+
+        //     $logistic_leads_product = new LogisticLeadsProduct;
+
+        //     $logistic_leads_product->lead_id = $number;         //same unique_id of logistic_leads table
+        //     $logistic_leads_product->product_name = $request->$req_product_name;
+        //     $logistic_leads_product->dimension = $request->$req_dimension;
+        //     $logistic_leads_product->quantity = $request->$req_quantity;
+        //     $logistic_leads_product->uom = $request->$req_uom;
+        //     $logistic_leads_product->area = $request->$req_area;
+        //     $logistic_leads_product->weight = $request->$req_weight;
+        //     $logistic_leads_product->save();
+        // }
         $dashboard = new LogisticDashboard();
 
 
@@ -599,7 +607,7 @@ class LogisticController extends Controller
         $driver->logistic_lead_id = $logistic_lead->id;
         $driver->save();
 
-        return redirect()->route('ViewCalander');
+        return redirect()->route('orderList');
     }
     public function viewDeliveryOrders()
     {
@@ -683,7 +691,7 @@ class LogisticController extends Controller
 
 
 
-        return view('frontend.admin.logisticManagement.logistic_dashboard.index1', $data);
+        return view('frontend.admin.logisticManagement.logistic_dashboard.index2', $data);
     }
 
     public function driver_status(Request $request)
