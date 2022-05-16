@@ -15,7 +15,7 @@
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <span>
-                        <input type="text" class="form-control" id="order_id" name="order_id" value="{{$data->id}}" required>
+                        <input type="hidden" class="form-control" id="order_id" name="order_id" value="{{$data->id}}" required>
                         <input type="hidden" class="form-control" id="status" name="status" value="{{$data->order_status}}" required>
                             <label for="client_id">Customer/Company Name</label>
                             <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{$data->customer_name}}" placeholder="Contact Person" required>

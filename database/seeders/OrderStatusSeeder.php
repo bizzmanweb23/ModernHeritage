@@ -34,7 +34,18 @@ class OrderStatusSeeder extends Seeder
                 'order_status' => 'Canceled',
                 'status'=>1
             ),
-           
+            3 =>
+            array(
+                'id'=>4,
+                'order_status' => 'Assign to Delivery',
+                'status'=>1
+            ),
+            4 =>
+            array(
+                'id'=>5,
+                'order_status' => 'Assign to Driver',
+                'status'=>1
+            ),
            
         ));
     }

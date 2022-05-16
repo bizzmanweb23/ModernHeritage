@@ -241,6 +241,7 @@ class DriverController extends Controller
         }
         DB::table('orders')->where('order_id',$request->order_id)->update([
             'delivery_status' => 1,
+            'order_status' => 4,
   
         ]);
   

@@ -411,8 +411,8 @@ class LogisticController extends Controller
             ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
             ->get();
 
-           // print_r($drivers);
-           // die;
+        // print_r($drivers);
+        // die;
         $events = [];
         $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
             ->select('employees.emp_name', 'logistic_dashboards.*')
@@ -439,32 +439,32 @@ class LogisticController extends Controller
     public function viewdrivercalander()
     {
         $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
-        ->where('employees.job_position', '=', '9')
-        ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
-        ->get();
-   
-    $events = [];
-    $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
-        ->select('employees.emp_name', 'logistic_dashboards.*')
-        ->get();
-    if ($data->count()) {
-        foreach ($data as $key => $value) {
-            $events[] = Calendar::event(
-                $value->emp_name,
-                false,
-                new \DateTime($value->start_time),
-                new \DateTime($value->end_time),
-                null,
-                // Add color and link on event
-                [
-                    'color' => '#f05050',
-                    // 'url' => 'pass here url and any route',
-                ]
-            );
+            ->where('employees.job_position', '=', '9')
+            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+            ->get();
+
+        $events = [];
+        $data = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+            ->select('employees.emp_name', 'logistic_dashboards.*')
+            ->get();
+        if ($data->count()) {
+            foreach ($data as $key => $value) {
+                $events[] = Calendar::event(
+                    $value->emp_name,
+                    false,
+                    new \DateTime($value->start_time),
+                    new \DateTime($value->end_time),
+                    null,
+                    // Add color and link on event
+                    [
+                        'color' => '#f05050',
+                        // 'url' => 'pass here url and any route',
+                    ]
+                );
+            }
         }
-    }
-    $calendar = Calendar::addEvents($events);
-        return view('frontend.admin.logisticManagement.logistic_dashboard.driverAvailable', compact('calendar','drivers'));
+        $calendar = Calendar::addEvents($events);
+        return view('frontend.admin.logisticManagement.logistic_dashboard.driverAvailable', compact('calendar', 'drivers'));
     }
     // public function listing()
     // {
@@ -481,11 +481,18 @@ class LogisticController extends Controller
             ->where('logistic_leads.unique_id', $order_no)
             ->select('logistic_leads.*', 'logistic_leads_products.*', 'logistic_leads.id as lead_id')
             ->get();
+
         return response()->json($data);
     }
     // TEsting for Ajax method
     public function AssignDriverAjax(Request $request)
     {
+        DB::table('orders')->where('order_id', $request->order_id)->update([
+            'order_status' => 5,
+            'driver_id' => $request->driver_id_t
+        ]);
+     
+
         $driver = new LogisticLeadDriver();
         $driver->driver_id = $request->driver_id_t ?? null;
         $driver->logistic_lead_id = $leads_id ?? null;
@@ -495,31 +502,29 @@ class LogisticController extends Controller
         $dashboard->start_time = $request->start_time ?? null;
         $dashboard->end_time = $request->end_time ?? null;
         $dashboard->save();
-        return redirect()->route('ViewCalander')->with('success', 'Driver assigneed Sucessfully!');
+
+
+        return redirect()->route('ViewCalander');
     }
     public function updateLogisticDashboard(Request $request)
     {
 
-        if($request->driver_id_t == 0)
-        {
+        if ($request->driver_id_t == 0) {
 
-            
-            $no_p=LogisticDashboard::where('start_time','<=',$request->end_time)->where('end_time','>=',$request->start_time)->get()->toArray();
-           
-            $busy_drivers = array_column( $no_p, 'driver_id');
-          
+
+            $no_p = LogisticDashboard::where('start_time', '<=', $request->end_time)->where('end_time', '>=', $request->start_time)->get()->toArray();
+
+            $busy_drivers = array_column($no_p, 'driver_id');
+
 
             $driver = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
-            ->whereNotIn('vehicles.driver_id', $busy_drivers)
-            ->where('employees.job_position', '=', '9')
-            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
-            ->first();
+                ->whereNotIn('vehicles.driver_id', $busy_drivers)
+                ->where('employees.job_position', '=', '9')
+                ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+                ->first();
 
             $driver_id = $driver->driver_id;
-          
-  
-        }
-        else{
+        } else {
             $driver_id = $request->driver_id_t;
         }
 
@@ -582,7 +587,7 @@ class LogisticController extends Controller
             $logistic_leads_product->save();
         }
         $dashboard = new LogisticDashboard();
-      
+
 
         $dashboard->driver_id =  $driver_id;
         $dashboard->start_time = $request->start_time;
@@ -622,89 +627,97 @@ class LogisticController extends Controller
     {
 
         $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
-        ->where('employees.job_position', '=', '9')
-        ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
-        ->orderBy('employees.order_id','ASC')
-        ->get();
-        foreach($drivers as $a => $driver){  
-            $name =  $driver['emp_name']; 
+            ->where('employees.job_position', '=', '9')
+            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+            ->orderBy('employees.order_id', 'ASC')
+            ->get();
+        foreach ($drivers as $a => $driver) {
+            $name =  $driver['emp_name'];
             $id = $driver['unique_id'];
 
-            $data1[] = 
-			[
-				'id' =>$id,
-				'title'=> $name,
-			];    
-		}  
-		$data1[] = 
-			[
-				'id' =>0,
-				'title'=> 'No Preference',
-			];
-     
-            $event = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+            $data1[] =
+                [
+                    'id' => $id,
+                    'title' => $name,
+                ];
+        }
+        $data1[] =
+            [
+                'id' => 0,
+                'title' => 'No Preference',
+            ];
+
+        $event = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
             ->select('employees.emp_name', 'logistic_dashboards.*')
             ->get();
 
-           
-      
-            foreach($event as $events){
-                $resourceId = $events['driver_id'];  
-                $name = $events['emp_name'];
-              
-                $startTime = $events['start_time'];
-              
-                $endTime = $events['end_time'];
-                $data2[] = 
+        if (count($event) == 0) {
+            $data2[] =
                 [
-                    'resourceId' =>$resourceId,
-                    'title'=> $name,
-                    'start' =>$startTime,
-                    'end'=>$endTime,
-                ];    
-            }    //$data['therapy']= $therapy;
+                    'resourceId' => 1,
+                    'title' => '',
+                    'start' => '',
+                    'end' => '',
+                ];
+        }
+
+        foreach ($event as $events) {
+            $resourceId = $events['driver_id'];
+            $name = $events['emp_name'];
+
+            $startTime = $events['start_time'];
+
+            $endTime = $events['end_time'];
+            $data2[] =
+                [
+                    'resourceId' => $resourceId,
+                    'title' => $name,
+                    'start' => $startTime,
+                    'end' => $endTime,
+                ];
+        }
+        //$data['therapy']= $therapy;
         $data['cal'] = json_encode($data1);
         $data['event'] = json_encode($data2);
         $data['drivers'] = $drivers;
 
-    
 
-        return view('frontend.admin.logisticManagement.logistic_dashboard.index1',$data);
+
+        return view('frontend.admin.logisticManagement.logistic_dashboard.index1', $data);
     }
 
     public function driver_status(Request $request)
     {
-  
+
         $driver = DB::table('employees')
-        ->where('employees.unique_id', '=', $request->driver_id)
-        ->where('employees.job_position', '=', '9')
-        ->where('employees.status', '=', '1')
-        ->get();
+            ->where('employees.unique_id', '=', $request->driver_id)
+            ->where('employees.job_position', '=', '9')
+            ->where('employees.status', '=', '1')
+            ->get();
         echo count($driver);
     }
 
     public function chekDriver(Request $request)
     {
 
-       
+
         $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
-        ->where('employees.job_position', '=', '9')
-        ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
-        ->orderBy('employees.order_id','ASC');
+            ->where('employees.job_position', '=', '9')
+            ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+            ->orderBy('employees.order_id', 'ASC');
 
-        $max_order=$drivers->max('order_id');
-      
-       
-      
+        $max_order = $drivers->max('order_id');
 
-        DB::table('employees')->where('unique_id',$request->driver_id)->update([
-            'order_id'=> $max_order+1,
+
+
+
+        DB::table('employees')->where('unique_id', $request->driver_id)->update([
+            'order_id' => $max_order + 1,
         ]);
-     
-       
 
-      
-           return redirect()->route('ViewCalander');
-           
+
+
+
+        return redirect()->route('ViewCalander');
     }
 }

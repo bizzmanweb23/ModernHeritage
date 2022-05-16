@@ -26,6 +26,11 @@ class OrderSeeder extends Seeder
                 'order_status'=>1,
                 'order_mode'=>'COD',
                 'order_amount'=>550,
+                'delivery_address'=>'behala,kolkata',
+                'delivery_state'=>'west bengal',
+                'delivery_country'=>'india',
+                'delivery_zipcode'=>'745896',
+                'order_status'=>1,
                 'created_at'=>'2022-05-09 18:39:51'
             ),
 

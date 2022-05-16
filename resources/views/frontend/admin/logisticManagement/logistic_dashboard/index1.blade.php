@@ -149,7 +149,7 @@
                         <div class="col-md-4"><span>Existing Order</span></div>
                         <div class="col-md-8">
                             <div style="display: flex; flex-wrap: no-wrap">
-                                <input type="text" class="form-control mr-1" id="order_no" placeholder="Enter Delivery Order No.">
+                                <input type="text" class="form-control mr-1" id="order_no" value="<?php echo $lead->unique_id; ?>"placeholder="Enter Delivery Order No.">
                                 <div>
                                     <button type="button" id="searchbtn" style="border-radius: 10px">
                                         <i class="fas fa-search fa-2x"></i>
@@ -161,7 +161,7 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <a href="#" id="new_order" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#assignDriverModal">New Order</a>
+                    <!-- <a href="#" id="new_order" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#assignDriverModal">New Order</a> -->
                     <button type="submit" id="search" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#assignDriverModal">Search</button>
                 </div>
             </div>
@@ -182,6 +182,7 @@
                             <div class="col-md-2"><label for="driver_id">Customer/Company Name</label></div>
                             <div class="col-md-4">
                                 <input type="hidden" id="lead_id">
+                                <input type="text" class="form-control" id="order_id" name="order_id" placeholder="" required>
                                 <input type="text" class="form-control" id="client_name" name="client_name" placeholder="" required>
                             </div>
                             <div class="col-md-2"><label for="driver_id">Customer Phone No.</label></div>
@@ -430,8 +431,8 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#search').attr('disabled', true);
-        $('#searchbtn').attr('disabled', true);
+      //  $('#search').attr('disabled', true);
+       // $('#searchbtn').attr('disabled', true);
         let current_date = new Date().toLocaleString("sv-SE", {
             year: "numeric",
             month: "2-digit",
@@ -471,13 +472,9 @@
                 document.getElementById('end_time').value = "";
             }
         });
-        $('#order_no').on('change', function() {
+        $('#search').on('click', function() {
             var order_no = $('#order_no').val();
-            if (order_no == '') {
-                $('#search').attr('disabled', true);
-            } else {
-                $('#search').attr('disabled', false);
-            }
+           
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -496,8 +493,8 @@
                             $('#lead_id').val(item.lead_id);
                             $('#client_name').val(item.client_name);
                             $('#contact_phone').val(item.contact_phone);
-                            $('#pickup_from').val(item.pickup_from);
-                            $('#delivered_to').val(item.delivered_to);
+                            $('#pickup_from').val(item.pickup_client);
+                            $('#delivered_to').val(item.delivery_client);
                             $('#pickup_add_1').val(item.pickup_add_1);
                             $('#delivery_add_1').val(item.delivery_add_1);
                             $('#pickup_pin').val(item.pickup_pin);
@@ -516,6 +513,7 @@
                             $('#uom').val(item.uom);
                             $('#area').val(item.area);
                             $('#weight').val(item.weight);
+                            $('#order_id').val(item.order_id);
                             trHTML +=
                                 '<tr><td>' + item.product_name +
                                 '</td><td>' + item.dimension +

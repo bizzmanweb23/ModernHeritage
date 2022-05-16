@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProducts;
+use App\Models\Vehicle;
+use App\Models\LogisticDashboard;
+use Calendar;
 use DB;
 
 
@@ -81,5 +84,73 @@ class OrdersController extends Controller
     {
         $data['data'] = Order::select('orders.*')->where('orders.id',$id)->first();
         return view('frontend.admin.orders.assign_to_delivery',$data);
+    }
+
+    public function assign_to_driver($id)
+    {
+       
+   $data3= DB::table('logistic_leads')->where('order_id',$id)->first();
+
+        $drivers = Vehicle::leftjoin('employees', 'employees.unique_id', '=', 'vehicles.driver_id')
+        ->where('employees.job_position', '=', '9')
+        ->select('vehicles.*', 'employees.emp_name', 'employees.unique_id')
+        ->orderBy('employees.order_id', 'ASC')
+        ->get();
+    foreach ($drivers as $a => $driver) {
+        $name =  $driver['emp_name'];
+        $id = $driver['unique_id'];
+
+        $data1[] =
+            [
+                'id' => $id,
+                'title' => $name,
+            ];
+    }
+    $data1[] =
+        [
+            'id' => 0,
+            'title' => 'No Preference',
+        ];
+
+    $event = LogisticDashboard::leftjoin('employees', 'employees.unique_id', '=', 'logistic_dashboards.driver_id')
+        ->select('employees.emp_name', 'logistic_dashboards.*')
+        ->get();
+
+        if (count($event) == 0) {
+            $data2[] =
+                [
+                    'resourceId' => 1,
+                    'title' => '',
+                    'start' => '',
+                    'end' => '',
+                ];
+        }
+  
+    foreach ($event as $events) {
+        $resourceId = $events['driver_id'];
+        $name = $events['emp_name'];
+
+        $startTime = $events['start_time'];
+
+        $endTime = $events['end_time'];
+        $data2[] =
+            [
+                'resourceId' => $resourceId,
+                'title' => $name,
+                'start' => $startTime,
+                'end' => $endTime,
+            ];
+    }
+
+    //$data['therapy']= $therapy;
+
+    $data['cal'] = json_encode($data1);
+    $data['event'] = json_encode($data2);
+    $data['lead'] = $data3;
+    $data['drivers'] = $drivers;
+
+
+
+    return view('frontend.admin.logisticManagement.logistic_dashboard.index1', $data);
     }
 }
