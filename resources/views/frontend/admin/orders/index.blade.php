@@ -9,7 +9,24 @@
 
 <div class="card" style="padding:15px;">
     <h5>Order Management</h5>
+    <form>
+        <div class="col-md-6">
+            <div class="form-group">
 
+
+                <div class="col-md-5">
+                    <select name="order_status" class="form-control" id="order_status">
+                        <option value="all">All</option>
+                        @foreach($order_status as $key=>$st)
+                        <option value="{{$st->id}}" @if(isset($_GET['order_status']) && $_GET['order_status'] == $st->id )selected @endif>{{$st->order_status}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
 
 
 
@@ -88,6 +105,24 @@
         $('#tableId').DataTable({
             responsive: true
         });
+    });
+    $('#order_status').change(function(e) {
+        e.preventDefault();
+        var order_status = $('#order_status').val();
+
+        $.ajax({
+            url: "{{route('orderList')}}",
+            type: 'GET',
+            data: {
+                order_status: order_status
+            },
+            success: function(data) {
+                location.replace('?order_status=' + order_status);
+
+            }
+        });
+
+
     });
 </script>
 @endsection

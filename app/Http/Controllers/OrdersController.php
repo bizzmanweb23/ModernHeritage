@@ -14,9 +14,29 @@ use DB;
 class OrdersController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $orders['orders']=Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status')->get();
+        $data = Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status');
+
+        if(isset($request->order_status))
+        {
+            if($request->order_status!='all')
+            {
+                $orders['orders'] = $data->where('orders.order_status',$request->order_status)->get();
+            }
+            else
+            {
+                $orders['orders'] = $data->get();
+            }
+         
+        }
+        else
+        {
+            $orders['orders'] = $data->get();
+        }
+
+    
+        $orders['order_status']= DB::table('order_status')->where('status',1)->get();
         return view('frontend.admin.orders.index',$orders);
     }
 
