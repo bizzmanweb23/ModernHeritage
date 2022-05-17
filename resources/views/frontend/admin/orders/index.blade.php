@@ -6,9 +6,9 @@
 
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
+<h5>Order Management</h5>
 <div class="card" style="padding:15px;">
-    <h5>Order Management</h5>
+
     <form>
         <div class="col-md-6">
             <div class="form-group">

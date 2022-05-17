@@ -3,17 +3,28 @@
 @section('content')
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" />
+
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<h4 class="font-weight-bolder mb-2 mt-2">Product Categories</h4>
-<a href="{{ route('addproductcategory') }}" class="btn btn-primary">Create</a>
-<div class="container card" style="padding:15px;">
-    @if(Session::has('message'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong> {{ Session::get('message') }}</strong>
 
+<div class="row">
+    <div class="col-md-4">
+        <a href="{{ route('addcolors') }}" class="btn btn-primary">Add colors</a>
     </div>
-    @endif 
+
+
+</div>
+</form>
+
+
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong> {{ Session::get('message') }}</strong>
+
+</div>
+@endif
+<div class="container card" style="padding:15px;">
+
     <form>
         <div class="col-md-6">
             <div class="form-group">
@@ -36,48 +47,47 @@
         <thead>
             <tr>
                 <th>Sl#</th>
-                <th>Category</th>
+                <th>Colors</th>
                 <th>Status</th>
                 <th>Action</th>
+
+
+
             </tr>
         </thead>
         <tbody>
-            @foreach($product_category as $key=>$pr_ct)
+            @foreach($data as $key=>$row)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$pr_ct->category_name}}</td>
-                @if($pr_ct->status == 1)
+                <td>{{$row->name}}</td>
+                @if($row->hex==1)
                 <td><span class="badge badge-success">Active</span></td>
                 @else
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
                 <td>
-                    <a href="editCategory/{{$pr_ct->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-
-                    <a href="javascript:void(0)" onclick="return delete_cat(this.id)" id="{{$pr_ct->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
-
+                <a href="editColor/{{$row->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+              
+                <a href="javascript:void(0)" onclick="return delete_color(this.id)" id="{{$row->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
                 </td>
             </tr>
+
             @endforeach
+
 
 
         </tbody>
     </table>
+
 </div>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-    $(function() {
-        $('#tableId').DataTable({
-            responsive: true
-        });
-    });
-
-    function delete_cat(id) {
+    function delete_color(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteCategory')}}",
+                url: "{{route('deleteColor')}}",
                 type: 'GET',
                 data: {
                     id: id
@@ -95,12 +105,18 @@
             console.log('Thing was not saved to the database.');
         }
     }
+    $(function() {
+        $('#tableId').DataTable({
+            responsive: true
+        });
+    });
+
     $('#status').change(function(e) {
         e.preventDefault();
         var status = $('#status').val();
 
         $.ajax({
-            url: "{{route('allproductcategory')}}",
+            url: "{{route('colors')}}",
             type: 'GET',
             data: {
                 status: status

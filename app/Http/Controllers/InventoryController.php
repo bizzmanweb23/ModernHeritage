@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Models\UomCategory;
 use App\Models\UOM;
 use App\Models\Tax;
+use DB;
 
 
 class InventoryController extends Controller
@@ -38,9 +39,25 @@ class InventoryController extends Controller
     {
         return view('frontend.admin.inventory.configuration.allwarehouse');
     }
-    public function allProductCategory()
+    public function allProductCategory(Request $request)
     {
-        $product_category = ProductCategory::get();
+        $data = DB::table('product_categories');
+            if(isset($request->status))
+            {
+                if($request->status!='all')
+                {
+                    $product_category = $data->where('status',$request->status)->get();
+                }
+                else
+                {
+                    $product_category = $data->get();
+                }
+           
+            }
+            else
+            {
+                $product_category = $data->get();
+            }
 
         return view('frontend.admin.inventory.configuration.allproductcategory',['product_category' => $product_category]);
     }
@@ -55,6 +72,7 @@ class InventoryController extends Controller
         ]);
         $category = new ProductCategory;
         $category->category_name = $request->category_name;
+        $category->status = $request->status;
         $category->save();
 
         return redirect(route('allproductcategory'));
@@ -164,5 +182,26 @@ class InventoryController extends Controller
         $service->save();
 
         return redirect(route('allServices'));
+    }
+    public function editCategory($id)
+    {
+        $product_category= ProductCategory::where('id',$id)->first();
+       return view('frontend.admin.inventory.configuration.editCategory',['product_category' => $product_category]);
+    }
+    public function  updateproductcategory(Request $request)
+    {
+        $cat = ProductCategory::find($request->id);
+        $cat->category_name = $request->category_name;
+        $cat->status = $request->status;
+        $cat->save();
+        return redirect(route('allproductcategory'))->with('message','Prodict Updated Successfully');
+       
+
+    }
+    public function deleteCategory(Request $request)
+    {
+       $data = ProductCategory::where('id',$request->id)->delete();
+       return json_encode(1);
+       
     }
 }

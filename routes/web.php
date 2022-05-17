@@ -17,7 +17,7 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrdersController;
-
+use App\Http\Controllers\ColorController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -131,7 +131,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/allservices', [InventoryController::class,'allServices'])->name('allServices');
     Route::post('/saveservices', [InventoryController::class,'saveServices'])->name('saveServices');
     Route::post('/order_update', [OrdersController::class,'orderUpdate'])->name('order_update');
-
+    Route::get('/editCategory/{id}', [InventoryController::class,'editCategory'])->name('editCategory');
+    Route::post('/updateproductcategory', [InventoryController::class,'updateproductcategory'])->name('updateproductcategory');
+    Route::get('/deleteCategory', [InventoryController::class,'deleteCategory'])->name('deleteCategory');
      //order management
      Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
      Route::get('/order-details/{id}', [OrdersController::class,'orderDetails'])->name('orderDetails');
@@ -156,6 +158,14 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/addDriver', [DriverController::class,'addDriver'])->name('addDriver');
      Route::get('/viewDriver/{id}', [DriverController::class,'viewDriver'])->name('viewDriver');
      Route::get('/editDriver/{id}', [DriverController::class,'editDriver'])->name('editDriver');
+
+     //color
+     Route::get('/colors', [ColorController::class,'index'])->name('colors');
+     Route::get('/addcolors', [ColorController::class,'addcolors'])->name('addcolors');
+     Route::post('/savecolors', [ColorController::class,'savecolors'])->name('saveColors');
+     Route::get('/editColor/{id}', [ColorController::class,'editcolors'])->name('editColors');
+     Route::post('/editColor', [ColorController::class,'updatecolors'])->name('updateColors');
+     Route::get('/deleteColor', [ColorController::class,'deletecolor'])->name('deleteColor');
 
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
