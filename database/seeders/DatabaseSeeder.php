@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(OrderSeeder::class);
         $this->call(OrderProducts::class);
         $this->call(userAddressSeeder::class);
-     
+        $this->call(UnitSeeder::class);
     }
 }

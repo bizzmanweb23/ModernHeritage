@@ -18,6 +18,7 @@ use App\Http\Controllers\FleetController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\SizeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -167,6 +168,13 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/editColor', [ColorController::class,'updatecolors'])->name('updateColors');
      Route::get('/deleteColor', [ColorController::class,'deletecolor'])->name('deleteColor');
 
+     //sizes
+     Route::get('/sizes', [SizeController::class,'index'])->name('sizes');
+     Route::get('/addsizes', [SizeController::class,'addSizes'])->name('addSizes');
+     Route::post('/addSize', [SizeController::class,'saveSize'])->name('saveSize');
+     Route::get('/editSize/{id}', [SizeController::class,'editSize'])->name('editSize');
+     Route::post('/updateSize', [SizeController::class,'updateSize'])->name('updateSize');
+     Route::get('/deleteSize', [SizeController::class,'deleteSize'])->name('deleteSize');
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

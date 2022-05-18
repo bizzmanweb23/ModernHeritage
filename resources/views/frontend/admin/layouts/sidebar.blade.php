@@ -150,7 +150,7 @@
 					<div class="collapse" id="pagesExamples5" style="">
 						<ul class="nav ms-4 ps-3">
 							<li class="nav-item ">
-							<a class="nav-link " href="#">
+							<a class="nav-link " href="{{route('allproducts')}}">
 									<span class="sidenav-mini-icon">  </span>
 									<span class="sidenav-normal"> Products </span>
 								</a>
@@ -168,7 +168,7 @@
 								</a>
 							</li>
               <li class="nav-item ">
-							<a class="nav-link " href="#">
+							<a class="nav-link " href="{{route('sizes')}}">
 									<span class="sidenav-mini-icon">  </span>
 									<span class="sidenav-normal"> Sizes </span>
 								</a>

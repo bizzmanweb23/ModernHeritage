@@ -1,6 +1,6 @@
 @extends('frontend.admin.inventory.index')
 
-@section('inventory_content')   
+@section('content')   
 <h4 class="font-weight-bolder mb-2 mt-2">Products</h4> 
 <a href="{{ route('addproduct') }}" class="btn btn-primary">Create</a>
 <div class="container-fluid d-flex flex-row flex-wrap">

@@ -6,13 +6,18 @@
     <div class="card">
 
         <div class="card-body">
+            @if(Session::has('message'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> {{ Session::get('message') }}</strong>
 
+            </div>
+            @endif
             <form action="{{ route('saveColors') }}" method="post">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <span class="mb-2 ">Color
-                            <input type="text" name="color_name" id="color_name" value="" placeholder="Add Color Name" class="form-control" required />
+                            <input type="text" name="name" id="name" value="" placeholder="Add Color Name" class="form-control" required />
                         </span>
                     </div>
                     <div class="col-md-6">
@@ -29,8 +34,7 @@
                 <div class="row mt-2">
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-primary">Save</button>
-                        <a class="btn btn-info" id="back"
-                        href="{{ route('colors') }}">Back</a>
+                        <a class="btn btn-info" id="back" href="{{ route('colors') }}">Back</a>
                     </div>
                 </div>
             </form>

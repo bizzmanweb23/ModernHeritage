@@ -6,7 +6,12 @@
     <div class="card">
 
         <div class="card-body">
+        @if(Session::has('message'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong> {{ Session::get('message') }}</strong>
 
+            </div>
+            @endif
             <form action="{{ route('updateColors') }}" method="post">
                 @csrf
                 <div class="row">
