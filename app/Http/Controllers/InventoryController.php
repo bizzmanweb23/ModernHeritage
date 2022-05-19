@@ -76,9 +76,6 @@ class InventoryController extends Controller
     public function saveProduct(Request $request)
     {
 
-      
-      
-
         $unique_id = DB::table('products')->orderBy('id', 'desc')->first();
         if ($unique_id) {
             $number = str_replace('MHP', '', $unique_id->unique_id);
@@ -103,7 +100,7 @@ class InventoryController extends Controller
                     'size'=>$request->size,
                     'price'=>$request->price,
                     'mrp_price'=>$request->mrp_price,
-                    'available_quantity'=>$request->available_quantity,
+                    'available_quantity'=>$request->available_quantity.$request->unit_1,
                     'sku'=>$request->sku,
                     'tax'=>$request->tax,
                     'material'=>$request->material,
@@ -115,6 +112,7 @@ class InventoryController extends Controller
                     'status'=>$request->status,
                     'description'=>$request->description
                ]);
+               
                return redirect(route('allproducts'));
     }
     public function updateProduct(Request $request)
@@ -129,7 +127,7 @@ class InventoryController extends Controller
             'size'=>$request->size,
             'price'=>$request->price,
             'mrp_price'=>$request->mrp_price,
-            'available_quantity'=>$request->available_quantity,
+            'available_quantity'=>$request->available_quantity.$request->unit_1,
             'sku'=>$request->sku,
             'tax'=>$request->tax,
             'material'=>$request->material,

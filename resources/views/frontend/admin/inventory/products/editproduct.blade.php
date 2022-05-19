@@ -86,8 +86,29 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Available Quantity<span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="available_quantity" name="available_quantity" value="{{$data->available_quantity}}"required>
+                        <label>Available Quantity <span style="color:red">*</span></label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                <?php 
+                                    $a_qty=$data->available_quantity;
+                                    $qt=intval($a_qty);
+                                 
+                                    $result_u = preg_replace("/[^a-zA-Z]+/", "", $data->available_quantity);
+                                  
+                                    ?>
+                                    <input type="number" value="{{$qt}}" class="form-control" id="available_quantity" name="available_quantity" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_1" class="form-control" id="unit_1" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}" @if($u->unit == $result_u) selected @endif>{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">

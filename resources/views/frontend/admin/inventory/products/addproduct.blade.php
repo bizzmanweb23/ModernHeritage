@@ -6,9 +6,9 @@
     @csrf
     <div class="container">
         <div class="card">
-    
+
             <div class="card-body">
-            <h5>Add New Product</h5>
+                <h5>Add New Product</h5>
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -79,10 +79,25 @@
                             <input type="number" class="form-control" id="mrp_price" name="mrp_price" required>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Available Quantity <span style="color:red">*</span></label>
-                            <input type="number" class="form-control" id="available_quantity" name="available_quantity" required>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="available_quantity" name="available_quantity" required>
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_1" class="form-control" id="unit_1" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -108,7 +123,7 @@
                             <label for="mobile">Weight</label>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <input type="number" class="form-control" id="weight" name="weight" >
+                                    <input type="number" class="form-control" id="weight" name="weight">
                                 </div>
                                 <div class="col-md-3">
                                     <select name="unit" class="form-control" id="unit">
@@ -161,11 +176,18 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Description</label>
-                            <textarea name="description" id="description" class="form-control" rows="5"></textarea>
-                          
+                            <label>Product Images</label>
+                            <input  type="file" class="form-control" name="images[]"  multiple>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+
+                        </div>
+                    </div>
+
                     <div class="ms-auto text-end">
                         <button class="btn btn-primary" id="save">Save</button>
                         <a class="btn btn-info" id="back" href="{{ route('allproducts') }}">Back</a>
