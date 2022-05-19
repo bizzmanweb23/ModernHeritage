@@ -25,16 +25,125 @@ class InventoryController extends Controller
     }
     public function allproducts()
     {
-        $products = Product::get();
+        $products = Product::select('products.*','product_categories.category_name')->join('product_categories','product_categories.id','products.cat_id')->get();
         return view('frontend.admin.inventory.products.allproducts',['products' => $products]);
     }
     public function addproduct()
     {
-       $product_categories = ProductCategory::get();
-        $tax = Tax::get();
-        $uom = UOM::get();
-        return view('frontend.admin.inventory.products.addproduct',['product_categories' => $product_categories,'tax' => $tax,'uom' => $uom]);
+       $data['product_categories'] =DB::table('product_categories')->where('status',1)->get();
+        $data['colors'] = DB::table('colors')->where('hex',1)->get();
+        $data['size'] = DB::table('size')->where('size.status',1)->join('units','units.id','size.unit')->get();
+        $data['unit'] =DB::table('units')->get();
+        return view('frontend.admin.inventory.products.addproduct',$data);
     }
+    public function viewProduct($id)
+    {
+        $data = Product::select('products.*','product_categories.category_name','size.height','size.width','units.unit')
+        ->join('product_categories','product_categories.id','products.cat_id')
+        ->join('size','size.id','products.size')
+        ->join('units','units.id','size.unit')
+        ->where('products.id',$id)->first();
+  
+       $data['color'] = DB::table('colors')->whereIn('id', explode(',',$data->color))->get();
+
+        $data['unit'] = DB::table('units')->select('units.unit as ut')->join('size','size.unit','units.id')->where('units.id',$data->size)->first();
+
+        $data['data'] = $data;
+
+        
+        return view('frontend.admin.inventory.products.viewproduct',$data);
+    }
+
+    public function editProduct($id)
+    {
+        $data = Product::select('products.*','product_categories.category_name','size.height','size.width','units.unit')
+        ->join('product_categories','product_categories.id','products.cat_id')
+        ->join('size','size.id','products.size')
+        ->join('units','units.id','size.unit')
+        ->where('products.id',$id)->first();
+  
+       $data['s_color'] = DB::table('colors')->whereIn('id', explode(',',$data->color))->get();
+       $data['r_color'] = DB::table('colors')->whereNotIn('id', explode(',',$data->color))->get();
+
+        $data['unit'] = DB::table('units')->select('units.unit as ut')->join('size','size.unit','units.id')->where('units.id',$data->size)->first();
+        $data['product_categories'] =DB::table('product_categories')->where('status',1)->get();
+        $data['colors'] = DB::table('colors')->where('hex',1)->get();
+        $data['sizes'] = DB::table('size')->where('size.status',1)->join('units','units.id','size.unit')->get();
+        $data['unit'] =DB::table('units')->get();
+        $data['data'] = $data;
+        return view('frontend.admin.inventory.products.editproduct',$data);
+    }
+    public function saveProduct(Request $request)
+    {
+
+      
+      
+
+        $unique_id = DB::table('products')->orderBy('id', 'desc')->first();
+        if ($unique_id) {
+            $number = str_replace('MHP', '', $unique_id->unique_id);
+        } else {
+            $number = 0;
+        }
+        if ($number == 0) {
+            $number = 'MHP00001';
+        } else {
+            $number = "MHP" . sprintf("%05d", $number + 1);
+        }
+       
+     
+       
+        DB::table('products')->insert([
+
+                    'unique_id'=>$number,
+                    'product_name'=>$request->product_name,
+                    'brand'=>$request->brand,
+                    'cat_id'=>$request->cat_id,
+                    'color'=>implode(',', $request->color),
+                    'size'=>$request->size,
+                    'price'=>$request->price,
+                    'mrp_price'=>$request->mrp_price,
+                    'available_quantity'=>$request->available_quantity,
+                    'sku'=>$request->sku,
+                    'tax'=>$request->tax,
+                    'material'=>$request->material,
+                    'weight'=>$request->weight.$request->unit,
+                    'speed'=>$request->speed,
+                    'power_source'=>$request->power_source,
+                    'voltage'=>$request->voltage,
+                    'supplier_code'=>$request->supplier_code,
+                    'status'=>$request->status,
+                    'description'=>$request->description
+               ]);
+               return redirect(route('allproducts'));
+    }
+    public function updateProduct(Request $request)
+    {
+        DB::table('products')->where('id',$request->id)->update([
+
+         
+            'product_name'=>$request->product_name,
+            'brand'=>$request->brand,
+            'cat_id'=>$request->cat_id,
+            'color'=>implode(',', $request->color),
+            'size'=>$request->size,
+            'price'=>$request->price,
+            'mrp_price'=>$request->mrp_price,
+            'available_quantity'=>$request->available_quantity,
+            'sku'=>$request->sku,
+            'tax'=>$request->tax,
+            'material'=>$request->material,
+            'weight'=>$request->weight.$request->unit,
+            'speed'=>$request->speed,
+            'power_source'=>$request->power_source,
+            'voltage'=>$request->voltage,
+            'supplier_code'=>$request->supplier_code,
+            'status'=>$request->status,
+            'description'=>$request->description
+       ]);
+       return redirect(route('allproducts'));
+    }
+
     public function allwarehouse()
     {
         return view('frontend.admin.inventory.configuration.allwarehouse');
@@ -203,5 +312,10 @@ class InventoryController extends Controller
        $data = ProductCategory::where('id',$request->id)->delete();
        return json_encode(1);
        
+    }
+    public function deleteProduct(Request $request)
+    {
+        $data=DB::table('products')->where('id',$request->id)->delete();
+        return json_encode(1);
     }
 }

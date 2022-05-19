@@ -32,7 +32,7 @@ class UnitSeeder extends Seeder
             2 =>
             array(
                 'id'=>3,
-                'unit' => 'grm'
+                'unit' => 'gram'
               
             ),
             3 =>
@@ -47,6 +47,19 @@ class UnitSeeder extends Seeder
                 'unit' => 'pound'
               
             ),
+            5 =>
+            array(
+                'id'=>6,
+                'unit' => 'piece'
+              
+            ),
+            6 =>
+            array(
+                'id'=>7,
+                'unit' => 'dozen'
+              
+            ),
+            
         ));
     }
 }

@@ -135,6 +135,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/editCategory/{id}', [InventoryController::class,'editCategory'])->name('editCategory');
     Route::post('/updateproductcategory', [InventoryController::class,'updateproductcategory'])->name('updateproductcategory');
     Route::get('/deleteCategory', [InventoryController::class,'deleteCategory'])->name('deleteCategory');
+    Route::post('/saveProduct', [InventoryController::class,'saveProduct'])->name('saveProduct');
+    Route::get('/viewProduct/{id}', [InventoryController::class,'viewProduct'])->name('viewProduct');
+    Route::get('/editProduct/{id}', [InventoryController::class,'editProduct'])->name('editProduct');
+    Route::post('/updateProduct', [InventoryController::class,'updateProduct'])->name('updateProduct');
+    Route::get('/deleteProduct', [InventoryController::class,'deleteProduct'])->name('deleteProduct');
+   
+
+
      //order management
      Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
      Route::get('/order-details/{id}', [OrdersController::class,'orderDetails'])->name('orderDetails');
