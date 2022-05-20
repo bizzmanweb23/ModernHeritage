@@ -6,21 +6,21 @@
     @csrf
     <div class="container">
         <div class="card">
-    
+
             <div class="card-body">
-            <h5>Update Product</h5>
+                <h5>Update Product</h5>
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Product Name <span style="color:red">*</span></label>
                             <input type="hidden" class="form-control" id="id" name="id" value="{{$data->id}}">
-                            <input type="text" class="form-control" id="product_name" name="product_name" value="{{$data->product_name}}"required>
+                            <input type="text" class="form-control" id="product_name" name="product_name" value="{{$data->product_name}}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Brand <span style="color:red">*</span></label>
-                            <input type="text" class="form-control" id="brand" name="brand" value="{{$data->brand}}"required>
+                            <input type="text" class="form-control" id="brand" name="brand" value="{{$data->brand}}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -74,7 +74,7 @@
                         <div class="form-group">
                             <label>Price <span style="color:red">*</span></label>
 
-                            <input type="number" class="form-control" id="price" name="price" value="{{$data->price}}"required>
+                            <input type="number" class="form-control" id="price" name="price" value="{{$data->price}}" required>
 
                         </div>
                     </div>
@@ -86,15 +86,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                        <label>Available Quantity <span style="color:red">*</span></label>
+                            <label>Available Quantity <span style="color:red">*</span></label>
                             <div class="row">
                                 <div class="col-md-9">
-                                <?php 
-                                    $a_qty=$data->available_quantity;
-                                    $qt=intval($a_qty);
-                                 
+                                    <?php
+                                    $a_qty = $data->available_quantity;
+                                    $qt = intval($a_qty);
+
                                     $result_u = preg_replace("/[^a-zA-Z]+/", "", $data->available_quantity);
-                                  
+
                                     ?>
                                     <input type="number" value="{{$qt}}" class="form-control" id="available_quantity" name="available_quantity" required>
                                 </div>
@@ -114,13 +114,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>SKU <span style="color:red">*</span></label>
-                            <input type="text" class="form-control" id="sku" name="sku" value="{{$data->sku}}"required>
+                            <input type="text" class="form-control" id="sku" name="sku" value="{{$data->sku}}" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" id="gst">
                             <label>Tax % </label>
-                            <input type="number" class="form-control" id="tax" name="tax"  value="{{$data->tax}}">
+                            <input type="number" class="form-control" id="tax" name="tax" value="{{$data->tax}}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -134,17 +134,17 @@
                             <label for="mobile">Weight</label>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <?php 
-                                    $weight=$data->weight;
-                                    $w=intval($weight);
-                                 
+                                    <?php
+                                    $weight = $data->weight;
+                                    $w = intval($weight);
+
                                     $result = preg_replace("/[^a-zA-Z]+/", "", $data->weight);
-                                  
+
                                     ?>
-                                    <input type="number" class="form-control" id="weight" name="weight" value="{{$w}}" >
+                                    <input type="number" class="form-control" id="weight" name="weight" value="{{$w}}">
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit" >
+                                    <select name="unit" class="form-control" id="unit">
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
                                         <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif>{{ $u->unit }}
@@ -192,11 +192,31 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Product Images</label>
+                            <input type="file" class="form-control" name="images[]" multiple>
+                            <input type="hidden" class="form-control" name="old_images" value="{{$data->product_image}}">
+                        </div>
+
+                        <div class="form-group">
+
+                            <?php
+                            $pr_img = $data->product_image;
+                            $img = explode(',', $pr_img);
+                            ?>
+                            @foreach($img as $p)
+                            <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
+                            @endforeach
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label>Description</label>
                             <textarea name="description" id="description" class="form-control" rows="5">{{$data->description}}</textarea>
-                          
+
                         </div>
                     </div>
                     <div class="ms-auto text-end">

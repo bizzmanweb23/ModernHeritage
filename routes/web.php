@@ -140,6 +140,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/editProduct/{id}', [InventoryController::class,'editProduct'])->name('editProduct');
     Route::post('/updateProduct', [InventoryController::class,'updateProduct'])->name('updateProduct');
     Route::get('/deleteProduct', [InventoryController::class,'deleteProduct'])->name('deleteProduct');
+    Route::get('/generateBarcode', [InventoryController::class,'generateBarcode'])->name('generateBarcode');
    
 
 
