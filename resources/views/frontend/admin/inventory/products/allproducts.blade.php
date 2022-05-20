@@ -10,7 +10,25 @@
 <h4 class="font-weight-bolder mb-2 mt-2">Products</h4> 
 <a href="{{ route('addproduct') }}" class="btn btn-primary">Create</a>
 <div class="container card" style="padding:15px">
+<form>
+        <div class="col-md-6">
+            <div class="form-group">
 
+
+                <div class="col-md-5">
+                    <select name="category" class="form-control" id="category">
+                        <option value="">Search By Category</option>
+                         @foreach($product_categories as $p_c)
+                         <option value="{{$p_c->id}}" @if(isset($_GET['type']) && $_GET['type']== $p_c->id )selected @endif>{{$p_c->category_name}}</option>
+                         @endforeach
+
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
     <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>
             <tr>
@@ -47,8 +65,10 @@
                 <td>{{$c->product_name}}</td>
                 <td>{{$c->category_name}}</td>
                 <td>
-                {!!DNS1D::getBarcodeHTML(8889899, 'C39')!!}
-                {{$c->unique_id}}
+                <a href="data:image/png;base64,{{DNS1D::getBarcodePNG($c->unique_id, 'C39',1,55,array(0,0,0), true)}}" title="download" download>
+                <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($c->unique_id, 'C39',1,55,array(0,0,0), true)}}" alt="barcode" />
+   
+                 </a>
                 </td>
                 <td>{{$c->price}}</td>
                 @if($c->status==1)
@@ -103,12 +123,12 @@
         });
     });
 
-    $('#customer_type').change(function(e) {
+    $('#category').change(function(e) {
         e.preventDefault();
-        var type = $('#customer_type').val();
+        var type = $('#category').val();
 
         $.ajax({
-            url: "{{route('allcustomer')}}",
+            url: "{{route('allproducts')}}",
             type: 'GET',
             data: {
                 type: type

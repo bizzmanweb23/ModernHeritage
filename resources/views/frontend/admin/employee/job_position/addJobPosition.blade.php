@@ -39,6 +39,7 @@
                     <div class="col-md-6">
                         <div class="form-group company" id="employee">
                             <label for="manager">Manager</label>
+                            
                             <select name="manager" id="manager" class="form-control">
                                 <option value=""> --Select-- </option>
                                 @foreach($employee as $e)

@@ -25,10 +25,20 @@ class InventoryController extends Controller
     {
         return view('frontend.admin.inventory.overview');
     }
-    public function allproducts()
+    public function allproducts(Request $request)
     {
-        $products = Product::select('products.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'products.cat_id')->get();
-        return view('frontend.admin.inventory.products.allproducts', ['products' => $products]);
+        $products_p = Product::select('products.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'products.cat_id');
+
+      if(isset($request->type))
+      {
+        $products['products'] = $products_p->where('products.cat_id',$request->type)->get();
+      }
+      else
+      {
+        $products['products'] = $products_p->get();
+      }
+        $products['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
+        return view('frontend.admin.inventory.products.allproducts', $products);
     }
     public function addproduct()
     {
