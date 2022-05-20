@@ -2,12 +2,12 @@
 
 @section('content')
 <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" />
-
+<link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css"/>
+    
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-<h4 class="font-weight-bolder mb-2 mt-2">Products</h4>
+<h4 class="font-weight-bolder mb-2 mt-2">Products</h4> 
 <a href="{{ route('addproduct') }}" class="btn btn-primary">Create</a>
 <div class="container card" style="padding:15px">
 
@@ -18,7 +18,7 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Category</th>
-                <th>Generate Barcode</th>
+                <th>Barcode</th>
                 <th>Price</th>
 
                 <th>Status</th>
@@ -30,15 +30,15 @@
             <tr>
                 <td>{{$key+1}}</td>
                 <td>
-                    <?php
-                    $pr_img = $c->product_image;
-                    $img = explode(',', $pr_img);
+                <?php
+                 $pr_img=$c->product_image;
+                 $img=explode(',',$pr_img);
+                // echo $img[0]
 
 
-
-                    ?>
-
-                    @if(isset($c->product_image))
+                ?>
+                
+                @if(isset($c->product_image))
                     <img src="{{ asset('images/products') }}/{{$img[0]}}" alt="Product" style="height: 6rem; width:6rem">
                     @else
                     <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
@@ -47,9 +47,8 @@
                 <td>{{$c->product_name}}</td>
                 <td>{{$c->category_name}}</td>
                 <td>
-
-  
-                    <a href="javascript:void(0)" id="{{$c->unique_id}}" onclick="generate_barcode(this.id)" class="btn btn-info" title="generate barcode">Generate Barcode</a>
+                {!!DNS1D::getBarcodeHTML(8889899, 'C39')!!}
+                {{$c->unique_id}}
                 </td>
                 <td>{{$c->price}}</td>
                 @if($c->status==1)
@@ -58,9 +57,9 @@
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
                 <td>
-
-                    <a href="editProduct/{{$c->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
-                    <a href="viewProduct/{{$c->id}}" title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                    
+                    <a href="editProduct/{{$c->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
+                    <a href="viewProduct/{{$c->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
                     <a href="javascript:void(0)" onclick="return delete_product(this.id)" id="{{$c->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
@@ -76,42 +75,23 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-    function generate_barcode(uniqid) {
-        $.ajax({
-            url: "{{route('generateBarcode')}}",
-            type: 'GET',
-            data: {
-                uniqid: uniqid
-            },
-            success: function(data) {
-                if (data == 1) {
-
-                    location.reload();
-                }
-
-            }
-        });
-    }
-
-
-
     function delete_product(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteProduct')}}",
-                type: 'GET',
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    if (data == 1) {
+            url: "{{route('deleteProduct')}}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(data) {
+           if(data == 1){
 
-                        location.reload();
-                    }
+            location.reload();
+           }
 
-                }
-            });
+            }
+        });
         } else {
 
             console.log('Thing was not saved to the database.');
@@ -142,4 +122,4 @@
 
     });
 </script>
-@endsection
+@endsection 

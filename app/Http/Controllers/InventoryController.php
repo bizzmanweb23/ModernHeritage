@@ -10,8 +10,8 @@ use App\Models\Service;
 use App\Models\UomCategory;
 use App\Models\UOM;
 use App\Models\Tax;
-
-
+use Picqer;
+use DNS2D;
 use DB;
 
 
@@ -352,13 +352,6 @@ class InventoryController extends Controller
 
     public function generateBarcode(Request $request)
     {
-        $product = new Product;
-
-        $number = $request->uniqid;
-        $generator = new Picqer\Barcode\BarcodeGeneratorHTML();
-        $barcode = $generator->getBarcode($number, $generator::TYPE_CODE_128);
-        
-        $product->material = $barcode;
-        $product->save();
+        \Storage::disk('public')->put('test.png',base64_decode(DNS2D::getBarcodePNG("4", "PDF417")));
     }
 }
