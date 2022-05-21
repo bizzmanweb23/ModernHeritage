@@ -188,7 +188,8 @@ Route::group(['prefix' => 'admin'], function () {
      //user profile
      Route::get('/profile', [UserController::class,'userProfile'])->name('user_profile');
      Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('updateProfile');
-   
+     Route::get('/changePassword', [UserController::class,'changePassword'])->name('changePassword');
+     Route::post('/updatePassword', [UserController::class,'updatePassword'])->name('updatePassword');
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

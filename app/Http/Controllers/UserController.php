@@ -318,4 +318,13 @@ class UserController extends Controller
                 ]);
          return back()->with('message','Your Profile Updated Successfully');
     }
+
+    public function changePassword()
+    {
+        return view('frontend.admin.user.changePassword');
+    }
+    public function updatePassword(Request $request)
+    {
+
+    }
 }
