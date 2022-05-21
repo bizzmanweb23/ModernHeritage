@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Models\Employee;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use DB;
 
 class UserController extends Controller
 {
@@ -287,5 +289,33 @@ class UserController extends Controller
 
         return redirect(route('index'));
     }
+    public function userProfile()
+    {
+        $id = Auth::user()->id;
+      
+        $data['data'] = User::where('users.id',$id)
+                            ->join('user_address','user_address.user_id','users.id')
+                            ->first();
+        return view('frontend.admin.user.profile',$data);
+    }
 
+    public function updateProfile(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->user_name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+
+        $data = DB::table('user_address')->where('id',$request->id)->update([
+                 'address_1'=>$request->address_1,
+                 'address_2'=>$request->address_2,
+                 'address_3'=>$request->address_3,
+                 'country'=>$request->country,
+                 'state'=>$request->state,
+                 'mobile'=>$request->mobile,
+                 'zipcode'=>$request->zipcode,
+                ]);
+         return back()->with('message','Your Profile Updated Successfully');
+    }
 }

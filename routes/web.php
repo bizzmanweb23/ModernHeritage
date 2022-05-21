@@ -142,7 +142,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/deleteProduct', [InventoryController::class,'deleteProduct'])->name('deleteProduct');
     Route::get('/generateBarcode', [InventoryController::class,'generateBarcode'])->name('generateBarcode');
    
-
+    
 
      //order management
      Route::get('/order-management', [OrdersController::class,'index'])->name('orderList');
@@ -184,6 +184,11 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/editSize/{id}', [SizeController::class,'editSize'])->name('editSize');
      Route::post('/updateSize', [SizeController::class,'updateSize'])->name('updateSize');
      Route::get('/deleteSize', [SizeController::class,'deleteSize'])->name('deleteSize');
+
+     //user profile
+     Route::get('/profile', [UserController::class,'userProfile'])->name('user_profile');
+     Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('updateProfile');
+   
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         
