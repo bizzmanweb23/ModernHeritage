@@ -19,6 +19,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -92,8 +93,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //admin--role
-    Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
-    Route::post('/role', [DashboardController::class, 'saveRole'])->name('saveRole');
+   // Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
+
+
+
 
     //admin--CRM
     Route::get('/crm', [CrmController::class,'getRequest'])->name('getRequest');
@@ -190,6 +193,15 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('updateProfile');
      Route::get('/changePassword', [UserController::class,'changePassword'])->name('changePassword');
      Route::post('/updatePassword', [UserController::class,'updatePassword'])->name('updatePassword');
+
+
+     //role management
+     Route::get('/roles', [RoleController::class,'allRoles'])->name('roles');
+     Route::get('/createRole', [RoleController::class, 'createRole'])->name('createRole');
+     Route::post('/role', [RoleController::class, 'saveRole'])->name('saveRole');
+     Route::get('/editRole/{id}', [RoleController::class, 'editRole'])->name('editRole');
+     Route::post('/updateRole', [RoleController::class, 'updateRole'])->name('updateRole');
+     Route::get('/deleteRole', [RoleController::class, 'deleteRole'])->name('deleteRole');
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

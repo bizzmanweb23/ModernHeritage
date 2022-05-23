@@ -29,10 +29,11 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link  " href="{{ route('index') }}">
-            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-              <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+        <li class="nav-item" >
+					<a data-bs-toggle="collapse" href="#pagesExamples7" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
+					<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center" >
+          <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
@@ -45,10 +46,28 @@
                   </g>
                 </g>
               </svg>
-            </div>
-            <span class="nav-link-text ms-1">User</span>
-          </a>
-        </li>
+					</div>
+						<span class="nav-link-text ms-1" >User Management</span>
+					</a>
+					<div class="collapse" id="pagesExamples7" style="">
+						<ul class="nav ms-4 ps-3">
+							<li class="nav-item ">
+							<a class="nav-link " href="{{ route('index') }}">
+									<span class="sidenav-mini-icon"> S </span>
+									<span class="sidenav-normal">Users </span>
+								</a>
+							</li>
+							<li class="nav-item ">
+							<a class="nav-link " href="{{ route('roles')}}">
+									<span class="sidenav-mini-icon"> C </span>
+									<span class="sidenav-normal">Roles </span>
+								</a>
+							</li>
+						
+							
+						</ul>
+					</div>
+				</li>
         <li class="nav-item">
           <a class="nav-link  " href="{{ route('allcustomer')}}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">

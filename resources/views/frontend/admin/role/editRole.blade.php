@@ -6,20 +6,21 @@
     <div class="content-header row">
     </div>
     <div class="content-body card-body">
-        <form action="{{route('saveRole')}}" method="POST">
+        <form action="{{route('updateRole')}}" method="POST">
             @csrf
             <div class="row">
                 <div class="form-group col-md-6">
                     <label for="role_name">Role Name</label>
-                    <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Enter a role name" required>
+                    <input type="hidden" class="form-control" id="id" name="id" placeholder="Enter a role name" value="{{$data->id}}" required>
+                    <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Enter a role name" value="{{$data->name}}" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="role_name">Status</label>
 
                       <select name="status" id="status" class="form-control">
              
-                                <option value="1"> Active </option>
-                                <option value="0"> Inactive </option>
+                                <option value="1" @if($data->guard_name == 1) selected @endif> Active </option>
+                                <option value="0" @if($data->guard_name == 0) selected @endif> Inactive </option>
                             </select>
                 </div>
                 <br> <br>

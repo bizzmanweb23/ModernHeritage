@@ -19,13 +19,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">New Password:</label>
-                            <input type="password" class="form-control" id="new_password" name="new_password" value="">
+                            <input type="password" class="form-control" id="password" name="password" value="" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Confirm Password:</label>
-                            <input type="password" class="form-control" value="" id="con_password" name="con_password">
+                            <input type="password" class="form-control" value="" id="confirm_password" name="confirm_password" required>
                         </div>
                     </div>
                 </div>
@@ -40,4 +40,15 @@
         </div>
     </div>
 </form>
+<script>
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ $error }}");
+    @endforeach
+    @endif
+</script>
 @endsection

@@ -23,26 +23,8 @@ class UserController extends Controller
 
     public function allUser()
     {
-        $customers = User::leftjoin('customers', 'customers.unique_id', 'users.user_id')
-                        ->where('users.user_type', 'customer')
-                        ->select('users.*','customers.customer_image as user_image', 'customers.mobile as user_mobile')
-                        ->get();
-        $allUser = [];
-        foreach ($customers as $c) {
-            array_push($allUser, $c);
-        }
-
-        $employees = User::leftjoin('employees', 'employees.unique_id', 'users.user_id')
-                            ->where('users.user_type', 'employee')
-                            ->select('users.*','employees.emp_image as user_image', 'employees.work_mobile as user_mobile')
-                            ->get();
-        
-        foreach ($employees as $e) {
-            array_push($allUser, $e);
-        }
-        return view('frontend.admin.user.index', [
-            'allUser' => $allUser,
-        ]);
+        $allUser['allUser'] = User::all();
+        return view('frontend.admin.user.index',$allUser);
     }
 
     public function addUser()
@@ -325,6 +307,17 @@ class UserController extends Controller
     }
     public function updatePassword(Request $request)
     {
+        $request->validate([
+            'confirm_password' => 'required_with:password|same:password',
+                  
+        ]);
 
+
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $user->password = Hash::make($request-> password);
+     
+        $user->save();
+        return back()->with('message','Your Password Updated Successfully');
     }
 }
