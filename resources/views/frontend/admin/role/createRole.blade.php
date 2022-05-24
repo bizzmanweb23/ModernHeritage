@@ -26,7 +26,7 @@
                 <div class="form-group col-md-6">
                     <button type="submit" class="btn btn-primary">Save</button>
 
-                    <a href="{{route('roles')}}" class="btn btn-info">Back</a>
+                    <a href="{{route('roles')}}" class="btn btn-primary">Back</a>
                 </div>
             </div>
         </form>

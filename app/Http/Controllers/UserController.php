@@ -24,13 +24,15 @@ class UserController extends Controller
     public function allUser()
     {
         $allUser['allUser'] = User::all();
+
         return view('frontend.admin.user.index',$allUser);
     }
 
     public function addUser()
     {
         $countryCodes = CountryCode::get();
-        return view('frontend.admin.user.addUser', ['countryCodes' => $countryCodes]);
+        $user['roles'] = DB::table('roles')->get();
+        return view('frontend.admin.user.addUser', ['countryCodes' => $countryCodes],$user);
     }
 
     public function saveUser(Request $request)

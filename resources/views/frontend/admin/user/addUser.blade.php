@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label for="mobile">Mobile</label>
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <select name="country_code_m" class="form-control" id="country_code_m">
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
@@ -75,7 +75,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-9">
                                     <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
                                 </div>
 
@@ -85,10 +85,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Role</label>
-                            <select name="country_code_m" class="form-control" id="country_code_m">
+                            <select name="role_id" class="form-control" id="role_id">
                                 <option value="">--Select--</option>
-                                @foreach($countryCodes as $c)
-                                <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                @foreach($roles as $r)
+                                <option value="{{ $r->id }}">{{ $r->name }}
                                 </option>
                                 @endforeach
                             </select>
@@ -110,6 +110,46 @@
                     </div>
                 </div>
 
+                <hr>
+                <h4>Address Details</h4>
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Address Line 1</label>
+                            <input type="password" class="form-control" id="address_1" name="address_1" placeholder="Address Line 1" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Address Line 2</label>
+                            <input type="password" class="form-control" id="address_2" name="address_2" placeholder="Address Line 2" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Address Line 3</label>
+                            <input type="password" class="form-control" id="address_3" name="address_3" placeholder="Address Line 3" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Country</label>
+                            <input type="password" class="form-control" id="country" name="country" placeholder="Country" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">State</label>
+                            <input type="password" class="form-control" id="state" name="state" placeholder="State" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="password">Zipcode</label>
+                            <input type="password" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode" required>
+                        </div>
+                    </div>
+                </div>
                 <div class="ms-auto text-end">
                     <button class="btn btn-primary" id="save">Save</button>
                     <a class="btn btn-info" id="back" href="{{ route('index') }}">Back</a>
@@ -121,8 +161,5 @@
     </div>
 </form>
 
-<script>
 
-
-</script>
 @endsection
