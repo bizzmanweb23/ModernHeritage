@@ -128,9 +128,11 @@
                         $pr_img = $data->product_image;
                         $img = explode(',', $pr_img);
                         ?>
+                        @if($data->product_image!='')
                         @foreach($img as $p)
                         <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
                         @endforeach
+                        @endif
 
                     </div>
                 </div>
