@@ -134,6 +134,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="password">Country</label>
+                            
                             <input type="password" class="form-control" id="country" name="country" placeholder="Country" required>
                         </div>
                     </div>
