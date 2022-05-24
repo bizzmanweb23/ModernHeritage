@@ -14,6 +14,12 @@
      
     </div>
 </form>
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong> {{ Session::get('message') }}</strong>
+
+</div>
+@endif
 <div class="container card" style="padding:16px">
 
         
@@ -36,8 +42,8 @@
             @foreach($allUser as $key=>$u )
             <tr>
                 <td style="text-align:center">{{$key+1}}</td>
-                <td> @if(isset($u->image))
-                    <img src="{{ asset($u->image) }}" alt="Product" style="height: 6rem; width:6rem">
+                <td> @if(isset($u->user_image))
+                    <img src="{{ asset($u->user_image) }}" alt="User Image" style="height: 6rem; width:6rem">
                     @else
                     <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
                     @endif
@@ -48,7 +54,7 @@
           
                 <td>
                     <a href="editCustomer/{{$u->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                    <a href="viewCustomer/{{$u->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye"></i></span></a>
+                    <a href="viewUser/{{$u->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye"></i></span></a>
                     <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$u->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
                 </td>
 
@@ -71,5 +77,27 @@
             responsive: true
         });
     });
+    function delete_user(id) {
+        if (confirm('Are you sure you want to delete?')) {
+
+            $.ajax({
+            url: "{{route('deleteUser')}}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(data) {
+           if(data == 1){
+
+            location.reload();
+           }
+
+            }
+        });
+        } else {
+
+            console.log('Thing was not saved to the database.');
+        }
+    }
     </script>
 @endsection

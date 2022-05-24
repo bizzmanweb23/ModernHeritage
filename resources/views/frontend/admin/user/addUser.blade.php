@@ -1,68 +1,32 @@
 @extends('frontend.admin.layouts.master')
 
 @section('content')
-<style>
-    .upload {
-        height: 100px;
-        width: 100px;
-        position: relative;
-    }
 
-    .upload:hover>.edit {
-        display: block;
-    }
-
-    .edit {
-        display: none;
-        position: absolute;
-        top: 1px;
-        right: 1px;
-        cursor: pointer;
-    }
-</style>
-<form action="{{ route('saveUser') }}" method="POST" enctype="multipart/form-data" id="addUser">
+<form action="{{ route('save_user') }}" method="POST" enctype="multipart/form-data" id="addUser">
     @csrf
     <div class="container">
         <div class="card">
+       
             <div class="card-body">
-
-                @if($errors->any())
-                <div class="alert alert-warning">
-                    <ul>
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
+            <h5>New User</h5>
+              
                 <div class="row mt-1">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="user_name">Name</label>
+                            <label>Name</label>
                             <input type="text" class="form-control" id="user_name" name="user_name" placeholder="Name" required>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-2">
-                        <div class="upload">
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 100px; width:100px">
-                            <label for="user_image" class="edit">
-                                <i class="fas fa-pencil-alt"></i>
-                                <input id="user_image" type="file" style="display: none" name="user_image">
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-1">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label>Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         </div>
                     </div>
+                   
                 </div>
                 <div class="row mt-1">
-                    <div class="col-md-6">
+                <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Mobile</label>
                             <div class="row">
@@ -76,7 +40,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" required>
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"required>
                                 </div>
 
                             </div>
@@ -84,7 +48,16 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="mobile">Role</label>
+                            <label>User Image</label>
+                            <input type="file" class="form-control" id="user_image" name="user_image" >
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-1">
+             
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Role</label>
                             <select name="role_id" class="form-control" id="role_id">
                                 <option value="">--Select--</option>
                                 @foreach($roles as $r)
@@ -94,17 +67,27 @@
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                    <label>Status</label>
+                            <select name="status" id="status" class="form-control">
+
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+
+                            </select>
+                      
+                    </div>
                 </div>
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Password:</label>
+                            <label>Password:</label>
                             <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="confirm_password">Confirm Password:</label>
+                            <label>Confirm Password:</label>
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required data-rule-equalTo="#password">
                         </div>
                     </div>
@@ -115,39 +98,45 @@
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Address Line 1</label>
-                            <input type="password" class="form-control" id="address_1" name="address_1" placeholder="Address Line 1" required>
+                            <label>Address Line 1</label>
+                            <input type="text" class="form-control" id="address_1" name="address_1" placeholder="Address Line 1">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Address Line 2</label>
-                            <input type="password" class="form-control" id="address_2" name="address_2" placeholder="Address Line 2" required>
+                            <label>Address Line 2</label>
+                            <input type="text" class="form-control" id="address_2" name="address_2" placeholder="Address Line 2">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Address Line 3</label>
-                            <input type="password" class="form-control" id="address_3" name="address_3" placeholder="Address Line 3" required>
+                            <label>Address Line 3</label>
+                            <input type="text" class="form-control" id="address_3" name="address_3" placeholder="Address Line 3">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Country</label>
+                            <label>Country</label>
                             
-                            <input type="password" class="form-control" id="country" name="country" placeholder="Country" required>
+                            <select name="country" class="form-control" id="country" >
+                                <option value="">--Select--</option>
+                                @foreach($countries as $c)
+                                <option value="{{ $c->id }}">{{ $c->country }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">State</label>
-                            <input type="password" class="form-control" id="state" name="state" placeholder="State" required>
+                            <label>State</label>
+                            <input type="text" class="form-control" id="state" name="state" placeholder="State">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="password">Zipcode</label>
-                            <input type="password" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode" required>
+                            <label>Zipcode</label>
+                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode"  maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
                     </div>
                 </div>
@@ -161,6 +150,23 @@
         </div>
     </div>
 </form>
-
+<script>
+    $('#country').select2({
+        width: '100%',
+        height:'150px',
+        placeholder: "Select a Country",
+        allowClear: true
+    });
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
+</script>
 
 @endsection

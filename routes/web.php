@@ -61,7 +61,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/saveUser', [UserController::class,'saveUser'])->name('saveUser');
     Route::get('/userdetails/{id}', [UserController::class,'userData']);
     Route::post('/useredit/{id}', [UserController::class,'editUser']);
-
+    Route::post('/save_user', [UserController::class,'save_user'])->name('save_user');
+    Route::get('/deleteUser', [UserController::class,'deleteUser'])->name('deleteUser');
+    Route::get('/viewUser/{id}', [UserController::class,'viewUser'])->name('viewUser');
     //admin--customerManagement
     Route::get('/allcustomers', [CustomerController::class,'allCustomerDetails'])->name('allcustomer');
     Route::get('/customer', [CustomerController::class,'customerDetails'])->name('customer');
