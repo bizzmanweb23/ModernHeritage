@@ -22,6 +22,15 @@
                             <input type="text" class="form-control" id="name" name="name" value="{{$data->user_name}}">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>User Image</label>
+                            <input type="file" class="form-control" id="user_image" name="user_image" >
+                            <input type="hidden" class="form-control" id="user_old_image" name="user_old_image" value="{{$data->user_image}}">
+                            <br>
+                            <img src="{{ asset($data->user_image) }}" alt="User Image" style="height: 6rem; width:6rem">
+                        </div>
+                    </div>
                
 
                 </div>
@@ -67,8 +76,15 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="">Country</label>
-                            <input type="text" class="form-control" value="{{$data->country}}" id="country" name="country">
+                            <label>Country</label>
+                            
+                            <select name="country" class="form-control" id="country" >
+                                <option value="">--Select--</option>
+                                @foreach($countries as $c)
+                                <option value="{{ $c->id }}" @if($c->id == $data->country) selected @endif>{{ $c->country }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -101,7 +117,14 @@
     </div>
 </form>
 
-
+<script>
+  $('#country').select2({
+        width: '100%',
+        height:'150px',
+        placeholder: "Select a Country",
+        allowClear: true
+    });
+    </script>
 
 
 

@@ -252,14 +252,24 @@ class UserController extends Controller
         $data['data'] = User::where('users.id', $id)
             ->join('user_address', 'user_address.user_id', 'users.id')
             ->first();
+        $data['countries'] = DB::table('countries')->get();
         return view('frontend.admin.user.profile', $data);
     }
 
     public function updateProfile(Request $request)
     {
         $user = User::find($request->id);
+        if ($request->file('user_image')) {
+            $file_type = $request->file('user_image')->extension();
+            $file_path = $request->file('user_image')->storeAs('images/users', $user->unique_id . '.' . $file_type, 'public');
+            $request->file('user_image')->move(public_path('images/users'), $user->unique_id . '.' . $file_type);
+        } else {
+            $file_path = $request->user_old_image;
+        }
+
         $user->user_name = $request->name;
         $user->email = $request->email;
+        $user->user_image =  $file_path;
         $user->save();
 
 
