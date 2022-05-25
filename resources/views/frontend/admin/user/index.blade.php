@@ -31,7 +31,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-      
+                <th>Status</th>
                 <th>Action</th>
 
 
@@ -50,10 +50,14 @@
                 </td>
                 <td>{{$u->user_name}}</td>
                 <td>{{ $u->email  }}</td>
-                <td>{{ $u->user_mobile  }}</td>
-          
+                <td>+{{ $u->mobile  }}</td>
+                @if($u->status==1)
+                <td><span class="badge badge-success">Active</span></td>
+                @else
+                <td><span class="badge badge-danger">Inactive</span></td>
+                @endif
                 <td>
-                    <a href="editCustomer/{{$u->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+                    <a href="editUser/{{$u->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
                     <a href="viewUser/{{$u->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye"></i></span></a>
                     <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$u->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
                 </td>

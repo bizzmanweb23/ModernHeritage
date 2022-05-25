@@ -23,7 +23,7 @@ class UserController extends Controller
 
     public function allUser()
     {
-        $allUser['allUser'] = User::all();
+        $allUser['allUser'] = User::select('users.*','user_address.mobile')->join('user_address', 'user_address.user_id', 'users.id')->get();
 
         return view('frontend.admin.user.index', $allUser);
     }
@@ -173,7 +173,7 @@ class UserController extends Controller
         return view('frontend.admin.user.userData', ['user' => $user, 'countryCodes' => $countryCodes]);
     }
 
-    public function editUser(Request $request, $id)
+    public function editUser1(Request $request, $id)
     {
         $data = $request->validate([
             'user_name' => 'required',
@@ -299,7 +299,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_name' => 'required',
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|unique:users',
             'country_code_m' => 'required',
             'mobile' => 'required',
             'password' => 'required_with:confirm_password|same:confirm_password',
@@ -354,11 +354,76 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
         User::where('id', $request->id)->delete();
+        DB::table('user_address')->where('user_id',$request->id)->delete();
         return json_encode(1);
     }
     public function viewUser($id)
     {
-        $data['data'] = DB::table('users')->where('users.id', $id)->first();
+        $data['data'] = DB::table('users')
+                            ->join('user_address','user_address.user_id','users.id')
+                            ->join('countries','countries.id','user_address.country')
+                            ->join('roles','roles.id','users.role_id')
+
+                            ->where('users.id', $id)
+                            ->first();
+      
         return view('frontend.admin.user.view', $data);
     }
+    public function editUser($id)
+    {   
+        $user['countryCodes'] = CountryCode::get();
+        $user['roles'] = DB::table('roles')->get();
+        $user['countries'] = DB::table('countries')->get();
+        $user['user'] = DB::table('users')
+                             ->select('users.*','user_address.address_1','user_address.address_2','user_address.address_3','user_address.mobile','user_address.country','user_address.state','user_address.zipcode')
+                            ->join('user_address','user_address.user_id','users.id')
+                            ->where('users.id', $id)
+                            ->first();
+        return view('frontend.admin.user.edit',$user);
+    }
+    public function  update_user(Request $request)
+    {
+        $request->validate([
+            'user_name' => 'required',
+            'email' => 'unique:users,email,'.$request->id,
+            'country_code_m' => 'required',
+            'mobile' => 'required',
+            'role_id' => 'required',
+        ]);
+      
+
+        $user = User::find($request->id);
+
+        if ($request->file('user_image')) {
+            $file_type = $request->file('user_image')->extension();
+            $file_path = $request->file('user_image')->storeAs('images/users', $user->unique_id . '.' . $file_type, 'public');
+            $request->file('user_image')->move(public_path('images/users'), $user->unique_id . '.' . $file_type);
+        } else {
+            $file_path = $request->user_old_image;
+        }
+
+        $user->user_name = $request->user_name;
+        $user->email = $request->email;
+
+        $user->user_type = $request->role_id;
+        $user->role_id = $request->role_id;
+        $user->status = $request->status;
+        $user->user_image = $file_path;
+
+        $user->save();
+
+        DB::table('user_address')->where('user_id',$request->id)->update([
+            'user_id' => $request->id,
+            'address_1'=>$request->address_1,
+            'address_2'=>$request->address_2,
+            'address_3'=>$request->address_3,
+            'country'=>$request->country,
+            'state'=>$request->state,
+            'zipcode'=>$request->zipcode,
+            'mobile'=>$request->country_code_m.$request->mobile
+
+        ]);
+        return redirect(route('index'))->with('message', 'User Updated Successfully');
+    }
+        
 }

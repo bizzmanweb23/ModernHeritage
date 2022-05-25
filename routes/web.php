@@ -64,6 +64,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/save_user', [UserController::class,'save_user'])->name('save_user');
     Route::get('/deleteUser', [UserController::class,'deleteUser'])->name('deleteUser');
     Route::get('/viewUser/{id}', [UserController::class,'viewUser'])->name('viewUser');
+    Route::get('/editUser/{id}', [UserController::class,'editUser'])->name('editUser');
+    Route::post('/update_user', [UserController::class,'update_user'])->name('update_user');
     //admin--customerManagement
     Route::get('/allcustomers', [CustomerController::class,'allCustomerDetails'])->name('allcustomer');
     Route::get('/customer', [CustomerController::class,'customerDetails'])->name('customer');
@@ -195,6 +197,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/updateProfile', [UserController::class,'updateProfile'])->name('updateProfile');
      Route::get('/changePassword', [UserController::class,'changePassword'])->name('changePassword');
      Route::post('/updatePassword', [UserController::class,'updatePassword'])->name('updatePassword');
+     
 
 
      //role management

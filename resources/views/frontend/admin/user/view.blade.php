@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mobile">Mobile:</label>
-              
+                        
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -47,7 +47,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Role:</label>
-                      
+                        {{$data->name}}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -63,43 +63,43 @@
 
 
             <hr>
-            <h4>Address Details</h4>
+            <h4>Address Details</h4><br>
             <div class="row mt-1">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Address Line 1:</label>
-               
+                        {{$data->address_1}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Address Line 2:</label>
-                    
+                        {{$data->address_2}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Address Line 3:</label>
-                   
+                        {{$data->address_3}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Country:</label>
                      
-
+                        {{$data->country}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>State:</label>
-                      
+                        {{$data->state}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Zipcode:</label>
-             
+                        {{$data->zipcode}}
                     </div>
                 </div>
             </div>
