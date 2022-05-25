@@ -360,8 +360,5 @@ class InventoryController extends Controller
         return json_encode(1);
     }
 
-    public function generateBarcode(Request $request)
-    {
-        \Storage::disk('public')->put('test.png',base64_decode(DNS2D::getBarcodePNG("4", "PDF417")));
-    }
+   
 }

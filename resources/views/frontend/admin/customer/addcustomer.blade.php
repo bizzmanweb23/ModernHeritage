@@ -26,13 +26,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <div class="ms-auto text-end">
-                    <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
-                            aria-hidden="true"></i>Save</button>
-                    <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ route('allcustomer') }}"><i class="fas fa-arrow-left text-dark me-2"
-                            aria-hidden="true"></i>Back</a>
-                </div>
+              
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
@@ -97,13 +91,7 @@
                 </div>
 
                 <div class="row mt-1">
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="address"
-                                placeholder="Street Name, House No, Door No, City" required>
-                        </div>
-                    </div> -->
+                  
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -120,27 +108,7 @@
                     </div>
                 </div>
 
-                <div class="row mt-1">
-                    <!--div class="col-md-2">
-                        <div class="form-group">
-                            <label for="state">State</label>
-                            <input type="text" class="form-control" id="state" name="state" placeholder="State">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="zipcode">Zipcode</label>
-                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="country">Country</label>
-                            <input type="text" class="form-control" id="country" name="country" placeholder="Country">
-                        </div>
-                    </div-->
-                   
-                </div>
+             
 
                 <div class="row mt-1">
                     <div class="col-md-6">
@@ -161,12 +129,7 @@
                                 placeholder="Enter GST No.">
                         </div>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
-                        </div>
-                    </div> -->
+                  
                 </div>
                 <div class="row mt-1">
                     <h5>Delivery Details</h5>
@@ -198,12 +161,7 @@
                                 placeholder="Delivery zipcode">
                         </div>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
-                        </div>
-                    </div> -->
+                   
                 </div>
                 <div class="row mt-1">
                     <h5>Billing Details</h5>
@@ -235,95 +193,19 @@
                                 placeholder="Billing zipcode">
                         </div>
                     </div>
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="website">Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
-                        </div>
-                    </div> -->
-                </div>
-                <div class="row mt-1">
                    
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="website">Tags</label>
-                            <select multiple="multiple" name="tag[]" id="tag" class="form-control">
-                                @foreach($tag as $t)
-                                    <option value="{{ $t->id }}">
-                                        {{ $t->tag_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div> -->
                 </div>
+                <div class="ms-auto text-end">
+                    <button class="btn btn-primary" id="save">Save</button>
+                    <a class="btn btn-info" id="back"
+                        href="{{ route('allcustomer') }}">Back</a>
+                </div>
+               
 
-                {{-- Tab lists --}}
-                <!-- <ul class="nav nav-tabs mt-4" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" data-bs-toggle="tab" href="#contact_address">Contact & Address</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#sales">Sales</a>
-                    </li>
-                </ul> -->
+               
 
 
-                {{-- Tab Panes --}}
-                <!--div class="tab-content mb-3">
-
-                    {{-- contact_address --}}
-                    <div id="contact_address" class="container tab-pane active"><br>
-
-                        <input type="hidden" name="address_row_count" id="address_row_count" value=0>
-                        <div id="more_address"></div>
-                        
-                        <a class="btn btn-link text-dark px-3 mb-0" id="add_more" href="#">
-                            <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
-                            Add Address
-                        </a>
-
-                    </div>
-
-                    {{-- sales --}}
-                    <div id="sales" class="container tab-pane fade"><br>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="salesperson">Salesperson:</label>
-                                <select name="salesperson" id="salesperson" class="form-control">
-                                    <option value=""> --Select-- </option>
-                                    @foreach($salesPerson as $sp)
-                                        <option value="{{ $sp->unique_id }}">{{ $sp->emp_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="deliveryMethod">Delivery Method:</label>
-                                <select name="deliveryMethod" id="deliveryMethod" class="form-control">
-                                    <option value=""> --Select-- </option>
-                                    @foreach($deliveryMethod as $dm)
-                                        <option value="{{ $dm->method_type }}">{{ $dm->method_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="paymentTerms">Payment Terms:</label>
-                                <select name="paymentTerms" id="paymentTerms" class="form-control">
-                                    <option value=""> --Select-- </option>
-                                    @foreach($paymentTerms as $pt)
-                                        <option value="{{ $pt->terms_of_payment }}">{{ $pt->terms_of_payment }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div-->
+               
             </div>
         </div>
     </div>

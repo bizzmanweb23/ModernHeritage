@@ -10,7 +10,7 @@
         
             <div class="ms-auto text-end">
                     
-                    <a class="btn btn-link" id="back" href="{{ route('index') }}"><i class="fa fa-arrow-left"></i></a>
+                    <a class="btn btn-link" id="back" href="{{ route('index') }}"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Back</a>
                 </div>
             <div class="row mt-1">
                 <div class="col-md-6">

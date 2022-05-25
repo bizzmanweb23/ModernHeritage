@@ -21,10 +21,24 @@ class UserController extends Controller
 
     // User - Management
 
-    public function allUser()
+    public function allUser(Request $request)
     {
-        $allUser['allUser'] = User::select('users.*','user_address.mobile')->join('user_address', 'user_address.user_id', 'users.id')->get();
+        $data = User::select('users.*','user_address.mobile')
+                                    ->join('user_address', 'user_address.user_id', 'users.id');
+        
+        if(isset($request->role))
+        {
+            $allUser['allUser']=$data->where('users.role_id',$request->role)->get();
+        }
+        else
+        {
+            $allUser['allUser']=$data->get();
+        }
+        
+    
 
+                                  
+        $allUser['roles'] = DB::table('roles')->get();
         return view('frontend.admin.user.index', $allUser);
     }
 

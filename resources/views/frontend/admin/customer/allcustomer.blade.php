@@ -30,7 +30,7 @@
             <div class="form-group">
 
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select name="customer_type" class="form-control" id="customer_type">
                         <option value="all">All</option>
                         <option value="individual" @if(isset($_GET['type']) && $_GET['type']=='individual' )selected @endif>Individual</option>
@@ -73,9 +73,9 @@
                 <td>+{{ $c->mobile }}</td>
                 <td>{{$c->customer_type}}</td>
                 <td>
-                    <a href="editCustomer/{{$c->id}}" class="btn btn-info btn-md" title="edit"><i class="fas fa-edit"></i></a>
-                    <a href="viewCustomer/{{$c->id}}" class="btn btn-warning btn-md" title="view"><i class="fa fa-eye" aria-hidden="true"></i></a>
-                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$c->id}}"class="btn btn-danger btn-md" title="delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    <a href="editCustomer/{{$c->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                    <a href="viewCustomer/{{$c->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$c->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
 

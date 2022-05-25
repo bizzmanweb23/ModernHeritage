@@ -105,6 +105,7 @@ class OrdersController extends Controller
     {
         $data['data'] = Order::select('orders.*')->where('orders.id',$id)->first();
         $data['admin']=DB::table('users')->select('users.user_name','users.email','user_address.*')->where('user_name','Admin')->join('user_address','user_address.user_id','user_address.id')->first();
+        $data['countries'] = DB::table('countries')->get();
         return view('frontend.admin.orders.assign_to_delivery',$data);
     }
 

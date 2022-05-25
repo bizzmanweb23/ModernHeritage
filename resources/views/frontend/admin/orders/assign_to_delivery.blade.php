@@ -15,8 +15,8 @@
                 <div class="row mb-2">
                     <div class="col-md-6">
                         <span>
-                        <input type="hidden" class="form-control" id="order_id" name="order_id" value="{{$data->id}}" required>
-                        <input type="hidden" class="form-control" id="status" name="status" value="{{$data->order_status}}" required>
+                            <input type="hidden" class="form-control" id="order_id" name="order_id" value="{{$data->id}}" required>
+                            <input type="hidden" class="form-control" id="status" name="status" value="{{$data->order_status}}" required>
                             <label for="client_id">Customer/Company Name</label>
                             <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{$data->customer_name}}" placeholder="Contact Person" required>
                         </span>
@@ -58,7 +58,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_client">Pickup Customer/Company</label>
-                        <input type="text" class="form-control" id="pickup_client" name="pickup_client" value="{{$admin->user_name}}"required>
+                        <input type="text" class="form-control" id="pickup_client" name="pickup_client" value="{{$admin->user_name}}" required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -115,13 +115,13 @@
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_pin">ZipCode</label>
-                        <input type="text" class="form-control" id="pickup_pin" name="pickup_pin" value="{{$admin->zipcode}}"required>
+                        <input type="text" class="form-control" id="pickup_pin" name="pickup_pin" value="{{$admin->zipcode}}" required>
                     </span>
                 </div>
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_state">State</label>
-                        <input type="text" class="form-control" id="pickup_state" name="pickup_state"  value="{{$admin->state}}"required>
+                        <input type="text" class="form-control" id="pickup_state" name="pickup_state" value="{{$admin->state}}" required>
                     </span>
                 </div>
                 <div class="col-md-3">
@@ -141,7 +141,14 @@
                 <div class="col-md-3">
                     <span>
                         <label for="pickup_country">Country</label>
-                        <input type="text" class="form-control" id="pickup_country" name="pickup_country" value="{{$admin->country}}"required>
+
+                        <select name="country" class="form-control" id="country" required>
+                            <option value="">--Select--</option>
+                            @foreach($countries as $c)
+                            <option value="{{ $c->id }}" @if($c->id == $admin->country) selected @endif>{{ $c->country }}
+                            </option>
+                            @endforeach
+                        </select>
                     </span>
                 </div>
                 <div class="col-md-3">
@@ -167,7 +174,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_email">Email</label>
-                        <input type="text" class="form-control" id="pickup_email" name="pickup_email" value="{{$admin->email}}"required>
+                        <input type="text" class="form-control" id="pickup_email" name="pickup_email" value="{{$admin->email}}" required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -181,7 +188,7 @@
                 <div class="col-md-6">
                     <span>
                         <label for="pickup_phone">Phone</label>
-                        <input type="text" class="form-control" id="pickup_phone" name="pickup_phone" value="{{$admin->mobile}}"required>
+                        <input type="text" class="form-control" id="pickup_phone" name="pickup_phone" value="{{$admin->mobile}}" required>
                     </span>
                 </div>
                 <div class="col-md-6">
@@ -204,8 +211,13 @@
 </form>
 
 <script>
+  $('#country').select2({
+        width: '100%',
+        height:'150px',
+        placeholder: "Select a Country",
+        allowClear: true
+    });
 
-   
     $('#pickup_client').autocomplete({
         source: function(request, response) {
             $.ajax({

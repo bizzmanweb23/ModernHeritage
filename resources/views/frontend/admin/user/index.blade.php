@@ -11,7 +11,7 @@
         <div class="col-md-4">
             <a href="{{ route('addUser') }}" class="btn btn-primary">Add User</a>
         </div>
-     
+
     </div>
 </form>
 @if(Session::has('message'))
@@ -22,8 +22,25 @@
 @endif
 <div class="container card" style="padding:16px">
 
-        
-        <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
+    <form>
+        <div class="col-md-6">
+            <div class="form-group">
+
+
+                <div class="col-md-5">
+                    <select name="role" class="form-control" id="role">
+                        <option value="all">All</option>
+                        @foreach($roles as $key=>$st)
+                        <option value="{{$st->id}}" @if(isset($_GET['role']) && $_GET['role']==$st->id )selected @endif>{{$st->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>
             <tr>
                 <th>Sl#</th>
@@ -57,8 +74,8 @@
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
                 <td>
-                    <a href="editUser/{{$u->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
-                    <a href="viewUser/{{$u->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye"></i></span></a>
+                    <a href="editUser/{{$u->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+                    <a href="viewUser/{{$u->id}}" title="view"><span class="badge badge-info"><i class="fa fa-eye"></i></span></a>
                     <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$u->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
                 </td>
 
@@ -76,32 +93,52 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-     $(function() {
+    $(function() {
         $('#tableId').DataTable({
             responsive: true
         });
     });
-    function delete_user(id) {
+
+    function delete_user(id) 
+    {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-            url: "{{route('deleteUser')}}",
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(data) {
-           if(data == 1){
+                url: "{{route('deleteUser')}}",
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data == 1) {
 
-            location.reload();
-           }
+                        location.reload();
+                    }
 
-            }
-        });
+                }
+            });
         } else {
 
             console.log('Thing was not saved to the database.');
         }
     }
-    </script>
+    $('#role').change(function(e) {
+        e.preventDefault();
+        var role = $('#role').val();
+
+        $.ajax({
+            url: "{{route('index')}}",
+            type: 'GET',
+            data: {
+                role: role
+            },
+            success: function(data) {
+                location.replace('?role=' + role);
+
+            }
+        });
+
+
+    });
+</script>
 @endsection
