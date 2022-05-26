@@ -59,24 +59,18 @@ class CustomerController extends Controller
 
     public function addCustomer(Request $request)
     {
-        $countryCodes = CountryCode::get();
-        $gst = GST::get();
-        $tag = Tag::get();
-        $paymentTerms = PaymentTerms::get();
-        $salesPerson = Employee::where('job_position', 8)->get();
-        $deliveryMethod = DeliveryMethod::get();
-        return view('frontend.admin.customer.addcustomer',['countryCodes' => $countryCodes,
-                                                            'gst' => $gst, 
-                                                            'tag' => $tag, 
-                                                            'paymentTerms' => $paymentTerms, 
-                                                            'salesPerson' => $salesPerson,
-                                                            'deliveryMethod' => $deliveryMethod
-                                                        ]);   
+        $user['countryCodes'] = CountryCode::get();
+        $user['gst'] = GST::get();
+      
+        $user['countries'] = DB::table('countries')->get();
+
+        return view('frontend.admin.customer.addcustomer',$user);   
     }
     public function saveCustomer(Request $request)
     {
         $request->validate([
             'email' => 'required|email|unique:customer_management',
+            'website'=>'url'
         ]);
         if($request->file('customer_image')){
             $file_type = $request->file('customer_image')->extension();
@@ -105,6 +99,10 @@ class CustomerController extends Controller
            'billing_state'=>$request->billing_state,
            'billing_country'=>$request->billing_country,
            'billing_zipcode'=>$request->billing_zipcode,
+           'phone'=>$request->country_code_p . $request->phone,
+           'delivery_address_1'=>$request->delivery_address_1,
+           'billing_address_1'=>$request->billing_address_1,
+           'website'=>$request->website,
          
 
        ]);
@@ -406,6 +404,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'email' => 'required|email|unique:customer_management,email,'.$request->id,
+            'website'=>'url'
         ]);
 
         if($request->hasFile('customer_image')){
@@ -435,7 +434,10 @@ class CustomerController extends Controller
            'billing_state'=>$request->billing_state,
            'billing_country'=>$request->billing_country,
            'billing_zipcode'=>$request->billing_zipcode,
-         
+           'phone'=>$request->country_code_p . $request->phone,
+           'delivery_address_1'=>$request->delivery_address_1,
+           'billing_address_1'=>$request->billing_address_1,
+           'website'=>$request->website,
 
        ]);
        return redirect(route('allcustomer'))->with('message','Customer updated successfully');

@@ -88,6 +88,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Phone</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select name="country_code_p" class="form-control" id="country_code_p" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($countryCodes as $c)
+                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        placeholder="Phone" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website"
+                             required>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row mt-1">
@@ -132,33 +160,40 @@
                   
                 </div>
                 <div class="row mt-1">
-                    <h5>Delivery Details</h5>
+              
                     <div class="col-md-6">
                         <div class="form-group" >
-                            <label for="gst">Address</label>
+                            <label for="gst">Address Line 1</label>
                             <input type="text" class="form-control" id="delivery_address" name="delivery_address"
-                                placeholder="Delivery address">
+                                placeholder="Address Line ">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address Line 2</label>
+                            <input type="text" class="form-control" id="delivery_address_1" name="delivery_address_1"
+                                placeholder="Address Line 2">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">State</label>
                             <input type="text" class="form-control" id="delivery_state" name="delivery_state"
-                                placeholder="Delivery state">
+                                placeholder="State">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">Country</label>
                             <input type="text" class="form-control" id="delivery_country" name="delivery_country"
-                                placeholder="Delivery country">
+                                placeholder="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">Zipcode</label>
                             <input type="text" class="form-control" id="delivery_zipcode" name="delivery_zipcode"
-                                placeholder="Delivery zipcode">
+                                placeholder="Zipcode">
                         </div>
                     </div>
                    
@@ -167,8 +202,15 @@
                     <h5>Billing Details</h5>
                     <div class="col-md-6">
                         <div class="form-group" >
-                            <label for="gst">Address</label>
+                            <label for="gst">Address Line 1</label>
                             <input type="text" class="form-control" id="billing_address" name="billing_address"
+                                placeholder="Billing address">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address Line 2</label>
+                            <input type="text" class="form-control" id="billing_address_1" name="billing_address_1"
                                 placeholder="Billing address">
                         </div>
                     </div>

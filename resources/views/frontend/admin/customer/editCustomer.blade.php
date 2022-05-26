@@ -27,13 +27,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <div class="ms-auto text-end">
-                    <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
-                            aria-hidden="true"></i>Update</button>
-                    <a class="btn btn-link text-dark px-3 mb-0" id="back"
-                        href="{{ route('allcustomer') }}"><i class="fas fa-arrow-left text-dark me-2"
-                            aria-hidden="true"></i>Back</a>
-                </div>
+              
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
@@ -106,10 +100,41 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Phone</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                <?php
+                                  $cod= substr($data->phone,0, -10);
+                                   
+                                        ?>
+                                    <select name="country_code_p" class="form-control" id="country_code_p">
+                                       
+                                        <option value="">--Select--</option>
+                                        @foreach($countryCodes as $c)
+                                            <option value="+{{ $c->code }}" @if($cod == $c->code) selected @endif>+{{ $c->code }}({{ $c->name }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="phone" name="phone"
+                                        placeholder="Phone" value="<?php echo substr($data->phone,-10); ?>" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" >
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row mt-1">
-                  
+                <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website"
+                            value="{{$data->website}}" required>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -118,13 +143,7 @@
                         </div>
                     </div>
                  
-                    <!-- <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Password" required>
-                        </div>
-                    </div> -->
+                  
                 </div>
 
              
@@ -157,33 +176,41 @@
               
 
                 <div class="row mt-1">
-                    <h5>Delivery Details</h5>
+           
                     <div class="col-md-6">
                         <div class="form-group" >
-                            <label for="gst">Address</label>
+                            <label for="gst">Address Line 1</label>
                             <input type="text" class="form-control" id="delivery_address" name="delivery_address"
                                 placeholder="Delivery address"  value="{{$data->delivery_address}}">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address Line 2</label>
+                            <input type="text" class="form-control" id="delivery_address_1" name="delivery_address_1"
+                                placeholder="Address"  value="{{$data->delivery_address_1}}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">State</label>
                             <input type="text" class="form-control" id="delivery_state" name="delivery_state"
-                                placeholder="Delivery state" value="{{$data->delivery_state}}">
+                                placeholder="State" value="{{$data->delivery_state}}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">Country</label>
                             <input type="text" class="form-control" id="delivery_country" name="delivery_country"
-                                placeholder="Delivery country" value="{{$data->delivery_country}}" >
+                                placeholder="Country" value="{{$data->delivery_country}}" >
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group" >
                             <label for="gst">Zipcode</label>
                             <input type="text" class="form-control" id="delivery_zipcode" name="delivery_zipcode"
-                                placeholder="Delivery zipcode" value="{{$data->delivery_zipcode}}">
+                                placeholder="Zipcode" value="{{$data->delivery_zipcode}}">
                         </div>
                     </div>
                    
@@ -192,9 +219,16 @@
                     <h5>Billing Details</h5>
                     <div class="col-md-6">
                         <div class="form-group" >
-                            <label for="gst">Address</label>
+                            <label for="gst">Address Line 1</label>
                             <input type="text" class="form-control" id="billing_address" name="billing_address"
-                                placeholder="Billing address" value="{{$data->billing_address}}">
+                                placeholder="Billing address 1" value="{{$data->billing_address}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group" >
+                            <label for="gst">Address Line 2</label>
+                            <input type="text" class="form-control" id="billing_address_1" name="billing_address_1"
+                                placeholder="Billing address 2" value="{{$data->billing_address_1}}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -220,9 +254,10 @@
                     </div>
                    
                 </div>
-                <div class="row mt-1">
-                   
-                  
+                <div class="ms-auto text-end">
+                    <button class="btn btn-primary" id="save">Update</button>
+                    <a class="btn btn-info" id="back"
+                        href="{{ route('allcustomer') }}">Back</a>
                 </div>
 
                

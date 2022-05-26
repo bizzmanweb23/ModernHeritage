@@ -58,6 +58,20 @@
 
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Phone:</label>
+                            +{{$data->phone}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Website:</label>
+                            {{$data->website}}
+
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row mt-1">
@@ -94,13 +108,20 @@
 
                 </div>
                 @endif
-                <hr>
+
                 <div class="row mt-1">
-                    <h5>Delivery Details-</h5>
+                   
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="gst">Address:</label>
+                            <label for="gst">Address 1:</label>
                             {{$data->delivery_address}}
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="gst">Address 2:</label>
+                            {{$data->delivery_address_1}}
 
                         </div>
                     </div>
@@ -125,12 +146,19 @@
                     </div>
 
                 </div>
+                <hr>
                 <div class="row mt-1">
                     <h5>Billing Details-</h5>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="gst">Address</label>
+                            <label for="gst">Address 1</label>
                             {{$data->billing_address}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="gst">Address 2</label>
+                            {{$data->billing_address_1}}
                         </div>
                     </div>
                     <div class="col-md-6">
