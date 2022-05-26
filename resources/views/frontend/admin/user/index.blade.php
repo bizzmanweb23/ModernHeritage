@@ -48,6 +48,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Title</th>
                 <th>Status</th>
                 <th>Action</th>
 
@@ -68,6 +69,7 @@
                 <td>{{$u->user_name}}</td>
                 <td>{{ $u->email  }}</td>
                 <td>+{{ $u->mobile  }}</td>
+                <td>{{ $u->user_type }}</td>
                 @if($u->status==1)
                 <td><span class="badge badge-success">Active</span></td>
                 @else

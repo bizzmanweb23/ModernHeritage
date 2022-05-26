@@ -328,7 +328,8 @@ class UserController extends Controller
             'mobile' => 'required',
             'password' => 'required_with:confirm_password|same:confirm_password',
             'confirm_password' => 'required',
-            'role_id' => 'required',
+            'user_type'=>'required'
+          
         ]);
 
         $unique_id = User::orderBy('id', 'desc')->first();
@@ -356,8 +357,8 @@ class UserController extends Controller
         $user->user_name = $request->user_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->user_type = $request->role_id;
-        $user->role_id = $request->role_id;
+        $user->user_type = $request->user_type;
+
         $user->status = $request->status;
         $user->user_image =  $file_path;
         $user->save();
@@ -386,7 +387,7 @@ class UserController extends Controller
         $data['data'] = DB::table('users')
                             ->join('user_address','user_address.user_id','users.id')
                             ->join('countries','countries.id','user_address.country')
-                            ->join('roles','roles.id','users.role_id')
+                 
 
                             ->where('users.id', $id)
                             ->first();
@@ -412,7 +413,7 @@ class UserController extends Controller
             'email' => 'unique:users,email,'.$request->id,
             'country_code_m' => 'required',
             'mobile' => 'required',
-            'role_id' => 'required',
+            'user_type'=>'required'
         ]);
       
 
@@ -429,8 +430,8 @@ class UserController extends Controller
         $user->user_name = $request->user_name;
         $user->email = $request->email;
 
-        $user->user_type = $request->role_id;
-        $user->role_id = $request->role_id;
+        $user->user_type = $request->user_type;
+   
         $user->status = $request->status;
         $user->user_image = $file_path;
 
@@ -448,6 +449,12 @@ class UserController extends Controller
 
         ]);
         return redirect(route('index'))->with('message', 'User Updated Successfully');
+    }
+    public function givePermission($type)
+    {
+      
+
+        return view('frontend.admin.user.permission',compact('type'));
     }
         
 }

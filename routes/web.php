@@ -66,6 +66,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/viewUser/{id}', [UserController::class,'viewUser'])->name('viewUser');
     Route::get('/editUser/{id}', [UserController::class,'editUser'])->name('editUser');
     Route::post('/update_user', [UserController::class,'update_user'])->name('update_user');
+    Route::get('/givePermission/{type}/', [UserController::class,'givePermission']);
     //admin--customerManagement
     Route::get('/allcustomers', [CustomerController::class,'allCustomerDetails'])->name('allcustomer');
     Route::get('/customer', [CustomerController::class,'customerDetails'])->name('customer');
@@ -79,6 +80,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/deleteCustomer/', [CustomerController::class,'deleteCustomer'])->name('deleteCustomer');
     Route::get('/editCustomer/{id}/', [CustomerController::class,'editCustomer']);
     Route::post('/updateCustomer/', [CustomerController::class,'updateCustomer'])->name('updateCustomer');
+   
  
     
     //admin--employeeManagement

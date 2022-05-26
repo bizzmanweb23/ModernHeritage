@@ -57,14 +57,9 @@
              
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Role</label>
-                            <select name="role_id" class="form-control" id="role_id">
-                                <option value="">--Select--</option>
-                                @foreach($roles as $r)
-                                <option value="{{ $r->id }}">{{ $r->name }}
-                                </option>
-                                @endforeach
-                            </select>
+                            <label>Title</label>
+                            <input type="text" class="form-control" id="user_type" name="user_type" >
+                            <span style="font-size:12px;">Eg:Hr/admin/director/Sales</span>
                         </div>
                     </div>
                     <div class="col-md-6">

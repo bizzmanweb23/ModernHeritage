@@ -8,9 +8,9 @@
 
 
 <div class="row">
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
         <a href="{{ route('createRole') }}" class="btn btn-primary">New Role</a>
-    </div>
+    </div> -->
 
 
 </div>
@@ -25,30 +25,14 @@
 @endif
 <div class="container card" style="padding:15px;">
 
-    <form>
-        <div class="col-md-6">
-            <div class="form-group">
 
-
-                <div class="col-md-3">
-                    <select name="type" class="form-control" id="type">
-                        <option value="all">All</option>
-                        <option value="1" @if(isset($_GET['type']) && $_GET['type'] == 1 )selected @endif>Active</option>
-                        <option value="0" @if(isset($_GET['type']) && $_GET['type'] == 0)selected @endif>Inactive</option>
-                    </select>
-                </div>
-
-
-            </div>
-        </div>
-    </form>
 
     <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>
             <tr>
                 <th>Sl#</th>
-                <th>Role</th>
-                <th>Status</th>
+                <th>Title</th>
+                <th>Permitions </th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -56,16 +40,13 @@
             @foreach($allRoles as $key=>$rl)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$rl->name}}</td>
-                @if($rl->guard_name == 1)
-                <td><span class="badge badge-success">Active</span></td>
-                @else
-                <td><span class="badge badge-danger">Inactive</span></td>
-                @endif
+                <td>{{$rl->user_type}}</td>
+                <td></td>
                 <td>
-                <a href="editRole/{{$rl->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+           
+                <a href="givePermission/{{$rl->user_type}}" class="btn btn-info" title="edit">Give Permitions</a>
               
-                <a href="javascript:void(0)" onclick="return delete_role(this.id)" id="{{$rl->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
+              
                 </td>
             </tr>
             @endforeach
@@ -85,47 +66,8 @@
             responsive: true
         });
     });
-    function delete_role(id) {
-        if (confirm('Are you sure you want to delete?')) {
-
-            $.ajax({
-            url: "{{route('deleteRole')}}",
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(data) {
-           if(data == 1){
-
-            location.reload();
-           }
-
-            }
-        });
-        } else {
-
-            console.log('Thing was not saved to the database.');
-        }
-    }
-    $('#type').change(function(e) {
-        e.preventDefault();
-        var type = $('#type').val();
-
-        $.ajax({
-            url: "{{route('drivers')}}",
-            type: 'GET',
-            data: {
-                type: type
-            },
-            success: function(data) {
-                location.replace('?type=' + type);
-
-            }
-        });
-
-
-    });
-   
+  
+  
 </script>
 
 

@@ -60,7 +60,7 @@
 							<li class="nav-item ">
 							<a class="nav-link " href="{{ route('roles')}}">
 									<span class="sidenav-mini-icon"> C </span>
-									<span class="sidenav-normal">Roles </span>
+									<span class="sidenav-normal">Acess Rights </span>
 								</a>
 							</li>
 						

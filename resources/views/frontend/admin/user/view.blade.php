@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mobile">Mobile:</label>
-                        
+                        {{$data->mobile}}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -46,8 +46,8 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Role:</label>
-                        {{$data->name}}
+                        <label>Title:</label>
+                       {{$data->user_type}}
                     </div>
                 </div>
                 <div class="col-md-6">
