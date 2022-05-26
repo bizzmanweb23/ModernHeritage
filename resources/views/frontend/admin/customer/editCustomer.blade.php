@@ -52,10 +52,10 @@
                     <div class="col-md-2">
                         <div class="upload">
                             @if($data->image=='')
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                            <img src="{{ asset('images/products/default.jpg') }}" alt="Customer img"
                                 style="height: 100px; width:100px">
                             @else
-                            <img src="{{ asset($data->image) }}" alt="Product" style="height: 5rem; width:5rem">
+                            <img src="{{ asset($data->image) }}" alt="Customer img" style="height: 5rem; width:5rem">
                             @endif
 
                             <label for="customer_image" class="edit">

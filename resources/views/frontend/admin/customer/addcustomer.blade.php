@@ -50,7 +50,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="upload">
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                            <img src="{{ asset('images/products/default.jpg') }}" alt="Customer img"
                                 style="height: 100px; width:100px">
                             <label for="customer_image" class="edit">
                                 <i class="fas fa-pencil-alt"></i>
