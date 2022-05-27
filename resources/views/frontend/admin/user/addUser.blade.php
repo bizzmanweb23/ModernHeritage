@@ -6,10 +6,10 @@
     @csrf
     <div class="container">
         <div class="card">
-       
+
             <div class="card-body">
-            <h5>New User</h5>
-              
+                <h5>New User</h5>
+
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -23,10 +23,10 @@
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                         </div>
                     </div>
-                   
+
                 </div>
                 <div class="row mt-1">
-                <div class="col-md-6">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Mobile</label>
                             <div class="row">
@@ -40,7 +40,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')"required>
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
                                 </div>
 
                             </div>
@@ -49,28 +49,35 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>User Image</label>
-                            <input type="file" class="form-control" id="user_image" name="user_image" >
+                            <input type="file" class="form-control" id="user_image" name="user_image">
                         </div>
                     </div>
                 </div>
                 <div class="row mt-1">
-             
+
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Title</label>
-                            <input type="text" class="form-control" id="user_type" name="user_type" >
-                            <span style="font-size:12px;">Eg:Hr/admin/director/Sales</span>
+                            <label>Role</label>
+                            <select name="role_id" id="role_id" class="form-control" required>
+                            <option value="">--Select--</option>
+                                @foreach($roles as $rl)
+                                <option value="{{$rl->id}}">{{$rl->name}}</option>
+                                @endforeach
+
+                            </select>
+
+
                         </div>
                     </div>
                     <div class="col-md-6">
-                    <label>Status</label>
-                            <select name="status" id="status" class="form-control">
+                        <label>Status</label>
+                        <select name="status" id="status" class="form-control">
 
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
 
-                            </select>
-                      
+                        </select>
+
                     </div>
                 </div>
                 <div class="row mt-1">
@@ -112,7 +119,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Country</label>
-                            
+
                             <select name="country" class="form-control" id="country" required>
                                 <option value="">--Select--</option>
                                 @foreach($countries as $c)
@@ -131,7 +138,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Zipcode</label>
-                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode"  maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
                     </div>
                 </div>
@@ -146,22 +153,8 @@
     </div>
 </form>
 <script>
-    $('#country').select2({
-        width: '100%',
-        height:'150px',
-        placeholder: "Select a Country",
-        allowClear: true
-    });
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
-            }
-            toastr.success("{{ $error }}");
-        @endforeach
-    @endif
+
+
 </script>
 
 @endsection

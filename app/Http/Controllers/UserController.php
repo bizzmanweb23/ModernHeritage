@@ -23,21 +23,18 @@ class UserController extends Controller
 
     public function allUser(Request $request)
     {
-        $data = User::select('users.*','user_address.mobile')
-                                    ->join('user_address', 'user_address.user_id', 'users.id');
-        
-        if(isset($request->role))
-        {
-            $allUser['allUser']=$data->where('users.role_id',$request->role)->get();
-        }
-        else
-        {
-            $allUser['allUser']=$data->get();
-        }
-        
-    
+        $data = User::select('users.*', 'user_address.mobile')
+            ->join('user_address', 'user_address.user_id', 'users.id');
 
-                                  
+        if (isset($request->role)) {
+            $allUser['allUser'] = $data->where('users.role_id', $request->role)->get();
+        } else {
+            $allUser['allUser'] = $data->get();
+        }
+
+
+
+
         $allUser['roles'] = DB::table('roles')->get();
         return view('frontend.admin.user.index', $allUser);
     }
@@ -328,8 +325,8 @@ class UserController extends Controller
             'mobile' => 'required',
             'password' => 'required_with:confirm_password|same:confirm_password',
             'confirm_password' => 'required',
-            'user_type'=>'required'
-          
+            'role_id' => 'required'
+
         ]);
 
         $unique_id = User::orderBy('id', 'desc')->first();
@@ -357,7 +354,8 @@ class UserController extends Controller
         $user->user_name = $request->user_name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->user_type = $request->user_type;
+        $user->user_type = $request->role_id;
+        $user->role_id = $request->role_id;
 
         $user->status = $request->status;
         $user->user_image =  $file_path;
@@ -365,13 +363,13 @@ class UserController extends Controller
 
         DB::table('user_address')->insert([
             'user_id' => $user->id,
-            'address_1'=>$request->address_1,
-            'address_2'=>$request->address_2,
-            'address_3'=>$request->address_3,
-            'country'=>$request->country,
-            'state'=>$request->state,
-            'zipcode'=>$request->zipcode,
-            'mobile'=>$request->country_code_m.$request->mobile
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'address_3' => $request->address_3,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zipcode' => $request->zipcode,
+            'mobile' => $request->country_code_m . $request->mobile
 
         ]);
         return redirect(route('index'))->with('message', 'User Added Successfully');
@@ -379,43 +377,43 @@ class UserController extends Controller
     public function deleteUser(Request $request)
     {
         User::where('id', $request->id)->delete();
-        DB::table('user_address')->where('user_id',$request->id)->delete();
+        DB::table('user_address')->where('user_id', $request->id)->delete();
         return json_encode(1);
     }
     public function viewUser($id)
     {
         $data['data'] = DB::table('users')
-                            ->join('user_address','user_address.user_id','users.id')
-                            ->join('countries','countries.id','user_address.country')
-                 
+            ->select('users.id','user_address.*','users.user_name','users.email','users.user_image','users.status','roles.name as role','countries.country as Con')
+            ->join('user_address', 'user_address.user_id', 'users.id')
+            ->join('roles','roles.id','users.role_id')
+            ->join('countries','countries.id','user_address.country')
+            ->where('users.id', $id)
+            ->first();
 
-                            ->where('users.id', $id)
-                            ->first();
-      
         return view('frontend.admin.user.view', $data);
     }
     public function editUser($id)
-    {   
+    {
         $user['countryCodes'] = CountryCode::get();
         $user['roles'] = DB::table('roles')->get();
         $user['countries'] = DB::table('countries')->get();
         $user['user'] = DB::table('users')
-                             ->select('users.*','user_address.address_1','user_address.address_2','user_address.address_3','user_address.mobile','user_address.country','user_address.state','user_address.zipcode')
-                            ->join('user_address','user_address.user_id','users.id')
-                            ->where('users.id', $id)
-                            ->first();
-        return view('frontend.admin.user.edit',$user);
+            ->select('users.*', 'user_address.address_1', 'user_address.address_2', 'user_address.address_3', 'user_address.mobile', 'user_address.country', 'user_address.state', 'user_address.zipcode')
+            ->join('user_address', 'user_address.user_id', 'users.id')
+            ->where('users.id', $id)
+            ->first();
+        return view('frontend.admin.user.edit', $user);
     }
     public function  update_user(Request $request)
     {
         $request->validate([
             'user_name' => 'required',
-            'email' => 'unique:users,email,'.$request->id,
+            'email' => 'unique:users,email,' . $request->id,
             'country_code_m' => 'required',
             'mobile' => 'required',
-            'user_type'=>'required'
+            'role_id' => 'required'
         ]);
-      
+
 
         $user = User::find($request->id);
 
@@ -430,41 +428,62 @@ class UserController extends Controller
         $user->user_name = $request->user_name;
         $user->email = $request->email;
 
-        $user->user_type = $request->user_type;
-   
+        $user->user_type = $request->role_id;
+        $user->role_id = $request->role_id;
         $user->status = $request->status;
         $user->user_image = $file_path;
 
         $user->save();
 
-        DB::table('user_address')->where('user_id',$request->id)->update([
+        DB::table('user_address')->where('user_id', $request->id)->update([
             'user_id' => $request->id,
-            'address_1'=>$request->address_1,
-            'address_2'=>$request->address_2,
-            'address_3'=>$request->address_3,
-            'country'=>$request->country,
-            'state'=>$request->state,
-            'zipcode'=>$request->zipcode,
-            'mobile'=>$request->country_code_m.$request->mobile
+            'address_1' => $request->address_1,
+            'address_2' => $request->address_2,
+            'address_3' => $request->address_3,
+            'country' => $request->country,
+            'state' => $request->state,
+            'zipcode' => $request->zipcode,
+            'mobile' => $request->country_code_m . $request->mobile
 
         ]);
         return redirect(route('index'))->with('message', 'User Updated Successfully');
     }
-    public function givePermission($type)
+    public function givePermission($id)
     {
-      
-       $data['data'] = DB::table('permission')->where('title',$type)->first();
 
-        return view('frontend.admin.user.permission',compact('type'),$data);
-    }
-    public function givePermission_post (Request $request)
-    {
-        DB::table('permission')->insert([
-            'permissions' =>  implode(',', $request->permission),
-            'title' => $request->title,
-        ]);
-        return redirect(route('roles'))->with('message', 'User Updated Successfully');
+        $data['data']= DB::table('roles')->where('id', $id)->first();
+
       
+    
+
+
+
+        $data['permissions'] = DB::table('permissions')->get();
+   
+  
+      
+        return view('frontend.admin.user.permission', $data);
     }
-        
+    public function givePermission_post(Request $request)
+    {
+
+        if($request->update=='')
+        {
+            DB::table('permission')->insert([
+                'permissions' =>  implode(',', $request->permission),
+                'title' => $request->title,
+            ]);
+
+        }
+        else
+        {
+            DB::table('permission')->where('title', $request->title)->update([
+                'permissions' =>  implode(',', $request->permission),
+                'title' => $request->title,
+            ]);
+        }
+      
+        return redirect(route('roles'))->with('message', 'Permissions Given Successfully');
+       
+    }
 }

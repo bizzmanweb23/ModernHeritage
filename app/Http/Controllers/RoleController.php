@@ -10,7 +10,7 @@ class RoleController extends Controller
     //
     public function allRoles()
     {
-       $allRoles['allRoles'] = DB::table('users')->select('user_type')->distinct()->get();
+       $allRoles['allRoles'] = DB::table('roles')->get();
        
     
         return view('frontend.admin.role.index',$allRoles);

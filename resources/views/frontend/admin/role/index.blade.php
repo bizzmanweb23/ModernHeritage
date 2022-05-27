@@ -8,9 +8,9 @@
 
 
 <div class="row">
-    <!-- <div class="col-md-4">
+    <div class="col-md-4">
         <a href="{{ route('createRole') }}" class="btn btn-primary">New Role</a>
-    </div> -->
+    </div>
 
 
 </div>
@@ -32,7 +32,8 @@
             <tr>
                 <th>Sl#</th>
                 <th>Title</th>
-             
+                <th>Status </th>
+                <th>Give Permission </th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -40,13 +41,22 @@
             @foreach($allRoles as $key=>$rl)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$rl->user_type}}</td>
-            
+                <td>{{$rl->name}}</td>
+                @if($rl->guard_name == 1)
+                <td>Active</td>
+                @else
+                <td>Inactive</td>
+                @endif
                 <td>
            
-                <a href="givePermission/{{$rl->user_type}}" class="btn btn-info" title="edit">Give Permitions</a>
+                <a href="givePermission/{{$rl->id}}" class="btn btn-info" title="edit">Give Permitions</a>
               
               
+                </td>
+                <td>
+                <a href="editRole/{{$rl->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit"></i></span></a>
+              
+              <a href="javascript:void(0)" onclick="return delete_role(this.id)" id="{{$rl->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
                 </td>
             </tr>
             @endforeach
@@ -66,6 +76,29 @@
             responsive: true
         });
     });
+    function delete_role(id) {
+        if (confirm('Are you sure you want to delete?')) {
+
+            $.ajax({
+            url: "{{route('deleteRole')}}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(data) {
+           if(data == 1){
+
+            location.reload();
+           }
+
+            }
+        });
+        } else {
+
+            console.log('Thing was not saved to the database.');
+        }
+    }
+
   
   
 </script>

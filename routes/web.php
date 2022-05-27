@@ -66,9 +66,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/viewUser/{id}', [UserController::class,'viewUser'])->name('viewUser');
     Route::get('/editUser/{id}', [UserController::class,'editUser'])->name('editUser');
     Route::post('/update_user', [UserController::class,'update_user'])->name('update_user');
-    Route::get('/givePermission/{type}/', [UserController::class,'givePermission'])->name('permission');
-    Route::post('/givePermission_post', [UserController::class,'givePermission_post'])->name('givePermission');
-  
+    Route::get('/givePermission/{type}/', [UserController::class,'givePermission']);
+    Route::post('/givePermission', [UserController::class,'givePermission_post'])->name('givePermission');
+   
     //admin--customerManagement
     Route::get('/allcustomers', [CustomerController::class,'allCustomerDetails'])->name('allcustomer');
     Route::get('/customer', [CustomerController::class,'customerDetails'])->name('customer');

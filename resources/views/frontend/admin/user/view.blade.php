@@ -32,7 +32,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="mobile">Mobile:</label>
-                        {{$data->mobile}}
+                        +{{$data->mobile}}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -46,8 +46,8 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Title:</label>
-                       {{$data->user_type}}
+                        <label>Role:</label>
+                        {{$data->role}}
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -87,7 +87,7 @@
                     <div class="form-group">
                         <label>Country:</label>
                      
-                        {{$data->country}}
+                        {{$data->Con}}
                     </div>
                 </div>
                 <div class="col-md-6">

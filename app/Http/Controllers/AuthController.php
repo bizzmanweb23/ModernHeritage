@@ -26,6 +26,7 @@ class AuthController extends Controller
         elseif(Auth::check() && Auth::user()->isClient()){
             return redirect(route('home'));
         }
+      
 
         if($request->path()=='login')
         {
@@ -41,6 +42,8 @@ class AuthController extends Controller
     public function userlogin(LoginValidation $request)
     {
         $validData = $request->validated();
+
+   
         if (
             !Auth::attempt([
                 'email' => $validData['email'],
@@ -67,6 +70,8 @@ class AuthController extends Controller
                 'email' => __('auth.failed'),
             ]);
         }
+
+        
         Session::put('username', Auth::user()->user_name);
         Session::put('userid', Auth::user()->unique_id);
         $request->session()->regenerate();

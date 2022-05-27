@@ -66,7 +66,14 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Title</label>
-                            <input type="text" class="form-control" id="user_type" name="user_type"  value="{{$user->user_type}}" >
+                            <select name="role_id" id="role_id" class="form-control" required>
+                            <option value="">--Select--</option>
+                                @foreach($roles as $rl)
+                                <option value="{{$rl->id}}" @if($rl->id == $user->role_id) selected @endif>{{$rl->name}}</option>
+                                @endforeach
+
+                            </select>
+
                         </div>
                     </div>
                     <div class="col-md-6">
