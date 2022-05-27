@@ -453,8 +453,18 @@ class UserController extends Controller
     public function givePermission($type)
     {
       
+       $data['data'] = DB::table('permission')->where('title',$type)->first();
 
-        return view('frontend.admin.user.permission',compact('type'));
+        return view('frontend.admin.user.permission',compact('type'),$data);
+    }
+    public function givePermission_post (Request $request)
+    {
+        DB::table('permission')->insert([
+            'permissions' =>  implode(',', $request->permission),
+            'title' => $request->title,
+        ]);
+        return redirect(route('roles'))->with('message', 'User Updated Successfully');
+      
     }
         
 }

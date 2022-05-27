@@ -32,7 +32,7 @@
             <tr>
                 <th>Sl#</th>
                 <th>Title</th>
-                <th>Permitions </th>
+             
                 <th>Action</th>
             </tr>
         </thead>
@@ -41,7 +41,7 @@
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$rl->user_type}}</td>
-                <td></td>
+            
                 <td>
            
                 <a href="givePermission/{{$rl->user_type}}" class="btn btn-info" title="edit">Give Permitions</a>
