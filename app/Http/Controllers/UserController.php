@@ -451,12 +451,14 @@ class UserController extends Controller
     public function givePermission($id)
     {
 
-        $data['data']= DB::table('roles')->where('id', $id)->first();
+        $data_r= DB::table('roles')->where('id', $id)->first();
 
       
-    
+        $data['s_per'] = DB::table('permissions')->whereIn('id', explode(',', $data_r->permissions))->get();
+        $data['r_per'] = DB::table('permissions')->whereNotIn('id', explode(',', $data_r->permissions))->get();
 
 
+        $data['data']=$data_r;
 
         $data['permissions'] = DB::table('permissions')->get();
    
@@ -467,21 +469,14 @@ class UserController extends Controller
     public function givePermission_post(Request $request)
     {
 
-        if($request->update=='')
-        {
-            DB::table('permission')->insert([
-                'permissions' =>  implode(',', $request->permission),
-                'title' => $request->title,
+      
+            DB::table('roles')->where('id',$request->role_id)->update([
+                'permissions' =>  implode(',', $request->permissions),
+         
             ]);
 
-        }
-        else
-        {
-            DB::table('permission')->where('title', $request->title)->update([
-                'permissions' =>  implode(',', $request->permission),
-                'title' => $request->title,
-            ]);
-        }
+   
+       
       
         return redirect(route('roles'))->with('message', 'Permissions Given Successfully');
        

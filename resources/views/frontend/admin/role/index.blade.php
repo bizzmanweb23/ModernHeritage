@@ -31,7 +31,7 @@
         <thead>
             <tr>
                 <th>Sl#</th>
-                <th>Title</th>
+                <th>Role</th>
                 <th>Status </th>
                 <th>Give Permission </th>
                 <th>Action</th>
@@ -43,9 +43,9 @@
                 <td>{{$key+1}}</td>
                 <td>{{$rl->name}}</td>
                 @if($rl->guard_name == 1)
-                <td>Active</td>
+                <td><span class="badge badge-success">Active</span></td>
                 @else
-                <td>Inactive</td>
+                <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
                 <td>
            

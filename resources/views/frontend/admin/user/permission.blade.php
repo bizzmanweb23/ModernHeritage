@@ -18,12 +18,15 @@
 
                 <div class="col-md-12">
                         <div class="form-group">
-                            <input value="" type="hidden" name="title" id="title"/>
+                            <input value="{{$data->id}}" type="hidden" name="role_id" id="role_id"/>
                             <h6>Permissions to all '{{$data->name}}' </h6>
-                            <select name="permission[]" id="permission" class="form-control" required multiple>
+                            <select name="permissions[]" id="permissions" class="form-control" required multiple>
                          
-                                 @foreach($permissions as $per)
-                                 <option value="{{$per->id}}">{{$per->name}}</option>
+                                 @foreach($s_per as $per)
+                                 <option value="{{$per->id}}" selected>{{$per->name}}</option>
+                                 @endforeach
+                                 @foreach($r_per as $per)
+                                 <option value="{{$per->id}}" >{{$per->name}}</option>
                                  @endforeach
                             </select>
                         </div>
@@ -43,7 +46,7 @@
 </form>
 
 <script>
-    $('#permission').select2({
+    $('#permissions').select2({
         width: '100%',
         placeholder: "Select Permissions",
         allowClear: true
