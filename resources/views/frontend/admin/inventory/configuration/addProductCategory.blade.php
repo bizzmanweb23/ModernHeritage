@@ -6,24 +6,25 @@
     <div class="card">
 
         <div class="card-body">
-        <h5>Add Product Category</h5>
+        <h5>Add Product Category</h5><br>
             <form action="{{ route('addproductcategory') }}" method="post">
                 @csrf
                 <div class="row">
+             
                     <div class="col-md-6">
-                        <span class="mb-2 ">Category Name
+                    <label>Category</label>
                             <input type="text" name="category_name" id="category_name" value="" placeholder="Add Category Name" class="form-control" required />
-                        </span>
+                      
                     </div>
                     <div class="col-md-6">
-                        <span class="mb-2">Status
+                    <label>Status</label>
                             <select name="status" id="status" class="form-control">
 
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
 
                             </select>
-                        </span>
+                  
                     </div>
                 </div><br>
                 <div class="row mt-2">

@@ -211,6 +211,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/editRole/{id}', [RoleController::class, 'editRole'])->name('editRole');
      Route::post('/updateRole', [RoleController::class, 'updateRole'])->name('updateRole');
      Route::get('/deleteRole', [RoleController::class, 'deleteRole'])->name('deleteRole');
+
+
+     //sub category
+     Route::get('/subCategory', [InventoryController::class,'allSubCategory'])->name('allproductsubcategory');
+     Route::get('/addsubCategory', [InventoryController::class,'addsubcategory'])->name('addsubcategory');
+     Route::post('/addprosubCategory', [InventoryController::class,'addproductsubcategory'])->name('addproductsubcategory');
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

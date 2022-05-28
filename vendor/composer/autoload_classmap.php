@@ -80,6 +80,7 @@ return array(
     'App\\Models\\Service' => $baseDir . '/app/Models/Service.php',
     'App\\Models\\Stage' => $baseDir . '/app/Models/Stage.php',
     'App\\Models\\State' => $baseDir . '/app/Models/State.php',
+    'App\\Models\\Subcategory' => $baseDir . '/app/Models/Subcategory.php',
     'App\\Models\\Tag' => $baseDir . '/app/Models/Tag.php',
     'App\\Models\\Tax' => $baseDir . '/app/Models/Tax.php',
     'App\\Models\\UOM' => $baseDir . '/app/Models/UOM.php',

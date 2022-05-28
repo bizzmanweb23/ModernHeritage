@@ -29,14 +29,11 @@ class InventoryController extends Controller
     {
         $products_p = Product::select('products.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'products.cat_id');
 
-      if(isset($request->type))
-      {
-        $products['products'] = $products_p->where('products.cat_id',$request->type)->get();
-      }
-      else
-      {
-        $products['products'] = $products_p->get();
-      }
+        if (isset($request->type)) {
+            $products['products'] = $products_p->where('products.cat_id', $request->type)->get();
+        } else {
+            $products['products'] = $products_p->get();
+        }
         $products['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
         return view('frontend.admin.inventory.products.allproducts', $products);
     }
@@ -148,12 +145,12 @@ class InventoryController extends Controller
 
             $data = DB::table('products')->where('id', $request->id)->first();
 
-       
 
-            foreach (explode(',',$data->product_image) as $img) {
+
+            foreach (explode(',', $data->product_image) as $img) {
                 $image_path = public_path('images/products/' . $img);
 
-           
+
                 if (file_exists($image_path)) {
                     unlink($image_path);
                 }
@@ -170,7 +167,7 @@ class InventoryController extends Controller
             $image = $request->old_images;
         }
 
-       DB::table('products')->where('id', $request->id)->update([
+        DB::table('products')->where('id', $request->id)->update([
 
 
             'product_name' => $request->product_name,
@@ -359,6 +356,30 @@ class InventoryController extends Controller
         $data = DB::table('products')->where('id', $request->id)->delete();
         return json_encode(1);
     }
+    public function allSubCategory()
+    {
+         $data['sub_category'] = DB::table('subcategories')->select('subcategories.*','product_categories.category_name')->join('product_categories','product_categories.id','subcategories.cat_id')->get();
 
-   
+
+         return view('frontend.admin.inventory.products.subCategory', $data);
+       
+        
+       
+    }
+    public function addsubcategory()
+    {
+        $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
+        return view('frontend.admin.inventory.products.addsubCategory', $data);
+    }
+
+    public function  addproductsubcategory(Request $request)
+    {
+        DB::table('subcategories')->insert([
+            'cat_id'=>$request->cat_id,
+            'sub_category'=>$request->sub_category,
+            'status'=>$request->status
+        ]);
+        return redirect(route('allproductsubcategory'))->with('message', 'Subcategory Added Successfully');
+    }
+
 }

@@ -162,6 +162,12 @@
 								</a>
 							</li>
               <li class="nav-item ">
+							<a class="nav-link " href="{{route('allproductsubcategory')}}">
+									<span class="sidenav-mini-icon">  </span>
+									<span class="sidenav-normal"> Product's Sub Categories </span>
+								</a>
+							</li>
+              <!-- <li class="nav-item ">
 							<a class="nav-link " href="{{route('colors')}}">
 									<span class="sidenav-mini-icon">  </span>
 									<span class="sidenav-normal"> Colors </span>
@@ -172,7 +178,7 @@
 									<span class="sidenav-mini-icon">  </span>
 									<span class="sidenav-normal"> Sizes </span>
 								</a>
-							</li>
+							</li> -->
 				
 						
 							

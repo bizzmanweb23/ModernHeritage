@@ -622,6 +622,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Models\\Service' => __DIR__ . '/../..' . '/app/Models/Service.php',
         'App\\Models\\Stage' => __DIR__ . '/../..' . '/app/Models/Stage.php',
         'App\\Models\\State' => __DIR__ . '/../..' . '/app/Models/State.php',
+        'App\\Models\\Subcategory' => __DIR__ . '/../..' . '/app/Models/Subcategory.php',
         'App\\Models\\Tag' => __DIR__ . '/../..' . '/app/Models/Tag.php',
         'App\\Models\\Tax' => __DIR__ . '/../..' . '/app/Models/Tax.php',
         'App\\Models\\UOM' => __DIR__ . '/../..' . '/app/Models/UOM.php',
