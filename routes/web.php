@@ -217,6 +217,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/subCategory', [InventoryController::class,'allSubCategory'])->name('allproductsubcategory');
      Route::get('/addsubCategory', [InventoryController::class,'addsubcategory'])->name('addsubcategory');
      Route::post('/addprosubCategory', [InventoryController::class,'addproductsubcategory'])->name('addproductsubcategory');
+     Route::get('/deleteSubCategory', [InventoryController::class,'deleteSubCategory'])->name('deleteSubCategory');
+     Route::get('/editSubCategory/{id}', [InventoryController::class,'editSubCategory'])->name('editSubCategory');
+     Route::post('/updateproductsubcategory', [InventoryController::class,'updateproductsubcategory'])->name('updateproductsubcategory');
+
+
+
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {
         

@@ -47,15 +47,14 @@ class InventoryController extends Controller
     }
     public function viewProduct($id)
     {
-        $data = Product::select('products.*', 'product_categories.category_name', 'size.height', 'size.width', 'units.unit')
+        $data = Product::select('products.*', 'product_categories.category_name')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
-            ->join('size', 'size.id', 'products.size')
-            ->join('units', 'units.id', 'size.unit')
+
             ->where('products.id', $id)->first();
 
-        $data['color'] = DB::table('colors')->whereIn('id', explode(',', $data->color))->get();
+ 
 
-        $data['unit'] = DB::table('units')->select('units.unit as ut')->join('size', 'size.unit', 'units.id')->where('units.id', $data->size)->first();
+      
 
         $data['data'] = $data;
 
@@ -65,19 +64,17 @@ class InventoryController extends Controller
 
     public function editProduct($id)
     {
-        $data = Product::select('products.*', 'product_categories.category_name', 'size.height', 'size.width', 'units.unit')
+        $data = Product::select('products.*', 'product_categories.category_name')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
-            ->join('size', 'size.id', 'products.size')
-            ->join('units', 'units.id', 'size.unit')
+
+
             ->where('products.id', $id)->first();
 
-        $data['s_color'] = DB::table('colors')->whereIn('id', explode(',', $data->color))->get();
-        $data['r_color'] = DB::table('colors')->whereNotIn('id', explode(',', $data->color))->get();
-
-        $data['unit'] = DB::table('units')->select('units.unit as ut')->join('size', 'size.unit', 'units.id')->where('units.id', $data->size)->first();
+     
+    
+            
         $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
-        $data['colors'] = DB::table('colors')->where('hex', 1)->get();
-        $data['sizes'] = DB::table('size')->where('size.status', 1)->join('units', 'units.id', 'size.unit')->get();
+      
         $data['unit'] = DB::table('units')->get();
         $data['data'] = $data;
         return view('frontend.admin.inventory.products.editproduct', $data);
@@ -118,18 +115,23 @@ class InventoryController extends Controller
             'product_name' => $request->product_name,
             'brand' => $request->brand,
             'cat_id' => $request->cat_id,
-            'color' => implode(',', $request->color),
+            'sub_cat' => $request->sub_cat,
+            'color' => $request->color,
             'size' => $request->size,
+            'length' => $request->length,
+            'width' => $request->width,
+            'height' => $request->height,
+            'thickness' => $request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
             'sku' => $request->sku,
             'tax' => $request->tax,
-            'material' => $request->material,
-            'weight' => $request->weight . $request->unit,
-            'speed' => $request->speed,
-            'power_source' => $request->power_source,
-            'voltage' => $request->voltage,
+            'coverage' => $request->coverage,
+            'per_pallet' => $request->per_pallet . $request->unit_p,
+            'per_box' => $request->per_box.$request->unit_b,
+            'pac_bags' => $request->pac_bags . $request->unit_p_b,
+            'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
             'supplier_code' => $request->supplier_code,
             'status' => $request->status,
             'description' => $request->description,
@@ -169,22 +171,26 @@ class InventoryController extends Controller
 
         DB::table('products')->where('id', $request->id)->update([
 
-
             'product_name' => $request->product_name,
             'brand' => $request->brand,
             'cat_id' => $request->cat_id,
-            'color' => implode(',', $request->color),
+            'sub_cat' => $request->sub_cat,
+            'color' => $request->color,
             'size' => $request->size,
+            'length' => $request->length,
+            'width' => $request->width,
+            'height' => $request->height,
+            'thickness' => $request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
             'sku' => $request->sku,
             'tax' => $request->tax,
-            'material' => $request->material,
-            'weight' => $request->weight . $request->unit,
-            'speed' => $request->speed,
-            'power_source' => $request->power_source,
-            'voltage' => $request->voltage,
+            'coverage' => $request->coverage,
+            'per_pallet' => $request->per_pallet . $request->unit_p,
+            'per_box' => $request->per_box.$request->unit_b,
+            'pac_bags' => $request->pac_bags . $request->unit_p_b,
+            'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
             'supplier_code' => $request->supplier_code,
             'status' => $request->status,
             'description' => $request->description,
@@ -356,10 +362,26 @@ class InventoryController extends Controller
         $data = DB::table('products')->where('id', $request->id)->delete();
         return json_encode(1);
     }
-    public function allSubCategory()
+    public function allSubCategory(Request $request)
     {
-         $data['sub_category'] = DB::table('subcategories')->select('subcategories.*','product_categories.category_name')->join('product_categories','product_categories.id','subcategories.cat_id')->get();
+         $data_s = DB::table('subcategories')->select('subcategories.*','product_categories.category_name')->join('product_categories','product_categories.id','subcategories.cat_id');
 
+         if(isset($request->status))
+         {
+             if($request->status != 'all')
+             {
+                $data['sub_category'] = $data_s->where('subcategories.status',$request->status)->get();
+             }
+             else
+             {
+                $data['sub_category'] = $data_s->get();
+             }
+          
+         }
+         else{
+            $data['sub_category'] = $data_s->get();
+         }
+         
 
          return view('frontend.admin.inventory.products.subCategory', $data);
        
@@ -380,6 +402,27 @@ class InventoryController extends Controller
             'status'=>$request->status
         ]);
         return redirect(route('allproductsubcategory'))->with('message', 'Subcategory Added Successfully');
+    }
+    public function deleteSubCategory(Request $request)
+    {
+        DB::table('subcategories')->where('id',$request->id)->delete();
+        return json_encode(1);
+           
+    }
+    public function editSubCategory($id)
+    {
+        $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
+        $data['data']=DB::table('subcategories')->where('id',$id)->first();
+        return view('frontend.admin.inventory.products.editSubCategory', $data);
+    }
+    public function  updateproductsubcategory(Request $request)
+    {
+        DB::table('subcategories')->where('id',$request->id)->update([
+            'cat_id'=>$request->cat_id,
+            'sub_category'=>$request->sub_category,
+            'status'=>$request->status
+        ]);
+        return redirect(route('allproductsubcategory'))->with('message', 'Subcategory Updated Successfully');
     }
 
 }

@@ -59,7 +59,24 @@ class UnitSeeder extends Seeder
                 'unit' => 'dozen'
               
             ),
-            
+            7 =>
+            array(
+                'id'=>8,
+                'unit' => 'tons'
+              
+            ),
+            8 =>
+            array(
+                'id'=>9,
+                'unit' => 'bags'
+              
+            ),
+            9 =>
+            array(
+                'id'=>10,
+                'unit' => 'mm'
+              
+            ),
         ));
     }
 }

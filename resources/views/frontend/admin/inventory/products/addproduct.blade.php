@@ -36,35 +36,58 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Color <span style="color:red">*</span></label>
-                            <select name="color[]" id="color" class="form-control" required multiple>
+                            <label>Sub Category</label>
 
-                                @foreach($colors as $col)
-                                <option value="{{ $col->id}}">{{ $col->name}}</option>
-
-                                @endforeach
+                            <select name="sub_cat" id="sub_cat" class="form-control">
+                       
+                              
 
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Size <span style="color:red">*</span></label>
-
-                            <select name="size" id="size" class="form-control" required>
-                                <option>--Select--</option>
-                                @foreach($size as $siz)
-                                <option value="{{ $siz->id}}">{{ $siz->height}} × {{ $siz->width}} {{ $siz->unit}}</option>
-
-                                @endforeach
-
-                            </select>
+                            <label>Color </label>
+                            <input type="text" class="form-control" id="color" name="color">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Size</label>
 
+                            <input type="text" class="form-control" id="size" name="size" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Length</label>
+
+                            <input type="text" class="form-control" id="length" name="length" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Width</label>
+
+                            <input type="text" class="form-control" id="width" name="width" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Height</label>
+
+                            <input type="text" class="form-control" id="height" name="height" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Thickness</label>
+
+                            <input type="text" class="form-control" id="thicknee" name="thickness" >
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Price <span style="color:red">*</span></label>
@@ -114,19 +137,19 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Material</label>
-                            <input type="text" class="form-control" id="material" name="material">
+                            <label>Coverage</label>
+                            <input type="text" class="form-control" id="coverage" name="coverage">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="mobile">Weight</label>
+                            <label for="mobile">Per Pallet</label>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <input type="number" class="form-control" id="weight" name="weight">
+                                    <input type="number" class="form-control" id="per_pallet" name="per_pallet">
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit">
+                                    <select name="unit" class="form-control" id="unit_p">
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
                                         <option value="{{ $u->unit }}">{{ $u->unit }}
@@ -140,22 +163,65 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Speed (RPM)</label>
-                            <input type="number" class="form-control" id="speed" name="speed">
+                            <label for="mobile">Per Box</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="per_box" name="per_box">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_b">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Power Source</label>
-                            <input type="text" class="form-control" id="power_source" name="power_source">
+                            <label for="mobile">Packing in bags</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="pac_bags" name="pac_bags">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_p_b">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Voltage</label>
-                            <input type="number" class="form-control" id="voltage" name="voltage">
+                            <label for="mobile">Loose, Per Lorry</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="loose_per_lorry" name="loose_per_lorry">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_l">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+                   
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier Code</label>

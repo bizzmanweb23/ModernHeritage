@@ -36,21 +36,41 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Color -</label>
-                        @foreach($color as $cl)
-                        {{$cl->name}},
+                   
+                        {{$data->color}}
 
-                        @endforeach
+       
 
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Size -</label>
-                        {{$data->height}} × {{$data->width}} {{$unit->ut}}
+                        {{$data->size}}
 
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Length -</label>
+                        {{$data->length}}
 
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Width -</label>
+                        {{$data->width}}
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Height -</label>
+                        {{$data->height}}
+
+                    </div>
+                </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Price -</label>
@@ -84,32 +104,32 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Material -</label>
-                        {{$data->material}}
+                        <label>Coverage -</label>
+                        {{$data->coverage}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="mobile">Weight -</label>
-                        {{$data->weight}}
+                        <label for="mobile">Per Pallet -</label>
+                        {{$data->per_pallet}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Speed (RPM) -</label>
-                        {{$data->speed}}
+                        <label>Per Box -</label>
+                        {{$data->per_box}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Power Source -</label>
-                        {{$data->power_source}}
+                        <label>Packing in bags -</label>
+                        {{$data->pac_bags}}
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Voltage -</label>
-                        {{$data->voltage}}volt
+                        <label>Loose, Per Lorry -</label>
+                        {{$data->loose_per_lorry}}
                     </div>
                 </div>
                 <div class="col-md-6">

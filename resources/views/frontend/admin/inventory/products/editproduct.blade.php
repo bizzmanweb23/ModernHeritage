@@ -37,36 +37,56 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Color <span style="color:red">*</span></label>
-                            <select name="color[]" id="color" class="form-control" required multiple>
+                            <label>Sub Category</label>
 
-                                @foreach($s_color as $col)
-                                <option value="{{ $col->id}}" selected>{{ $col->name}}</option>
-
-                                @endforeach
-                                @foreach($r_color as $col)
-                                <option value="{{ $col->id}}">{{ $col->name}}</option>
-
-                                @endforeach
+                            <select name="sub_cat" id="sub_cat" class="form-control">
+                       
+                              
 
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label>Color</label>
+                            <input type="text" class="form-control" id="color" name="color" value="{{$data->color}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label>Size <span style="color:red">*</span></label>
 
-                            <select name="size" id="size" class="form-control" required>
-                                <option>--Select--</option>
-                                @foreach($sizes as $siz)
-                                <option value="{{ $siz->id}}" @if($siz->id == $data->size) selected @endif>{{ $siz->height}} × {{ $siz->width}} {{ $siz->unit}}</option>
+                            <input type="text" class="form-control" id="size" name="size" value="{{$data->size}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Length</label>
 
-                                @endforeach
+                            <input type="text" class="form-control" id="length" name="length" value="{{$data->length}}" >
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Width</label>
 
-                            </select>
+                            <input type="text" class="form-control" id="width" name="width" value="{{$data->width}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Height</label>
+
+                            <input type="text" class="form-control" id="height" name="height" value="{{$data->height}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Thickness</label>
+
+                            <input type="text" class="form-control" id="thicknee" name="thickness" value="{{$data->thickness}}">
                         </div>
                     </div>
 
@@ -125,26 +145,84 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Material</label>
-                            <input type="text" class="form-control" id="material" value="{{$data->material}}" name="material">
+                            <label>Coverage</label>
+                            <input type="text" class="form-control" id="material" value="{{$data->coverage}}" name="material">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="mobile">Weight</label>
+                            <label for="mobile">Per Pallet</label>
                             <div class="row">
-                                <div class="col-md-9">
-                                    <?php
-                                    $weight = $data->weight;
-                                    $w = intval($weight);
+                            <?php
+                                    $per_pallet = $data->per_pallet;
+                                    $p = intval($per_pallet);
 
-                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->weight);
+                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_pallet);
 
                                     ?>
-                                    <input type="number" class="form-control" id="weight" name="weight" value="{{$w}}">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="per_pallet" name="per_pallet"  value="{{$p}}">
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit">
+                                    <select name="unit" class="form-control" id="unit_p">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}"  @if($u->unit==$result) selected @endif>{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Per Box</label>
+                            <div class="row"> 
+                                <?php
+                                    $per_box = $data->per_box;
+                                    $b = intval($per_box);
+
+
+                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_box);
+ 
+
+                                    ?>
+
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="per_box" name="per_box" value="{{$b}}">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_b" >
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif >{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Packing in bags</label>
+                            <div class="row">
+                            <?php
+                                    $pac_bags = $data->pac_bags;
+                                    $pb = intval($pac_bags);
+
+                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->pac_bags);
+ 
+
+                                    ?>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="pac_bags" name="pac_bags" value="{{$pb}}">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_p_b">
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
                                         <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif>{{ $u->unit }}
@@ -158,22 +236,34 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Speed (RPM)</label>
-                            <input type="number" class="form-control" id="speed" name="speed" value="{{$data->speed}}">
+                            <label for="mobile">Loose, Per Lorry</label>
+                            <div class="row">
+                            <?php
+                                    $loose_per_lorry = $data->loose_per_lorry;
+                                    $l = intval($loose_per_lorry);
+
+                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->loose_per_lorry);
+ 
+
+                                    ?>
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="loose_per_lorry" name="loose_per_lorry" value="{{$l}}" >
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_l">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif>{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Power Source</label>
-                            <input type="text" class="form-control" id="power_source" name="power_source" value="{{$data->power_source}}">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Voltage</label>
-                            <input type="number" class="form-control" id="voltage" name="voltage" value="{{$data->voltage}}">
-                        </div>
-                    </div>
+                   
+                   
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier Code</label>

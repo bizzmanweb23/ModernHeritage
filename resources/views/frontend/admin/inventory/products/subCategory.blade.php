@@ -79,7 +79,7 @@
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteCategory')}}",
+                url: "{{route('deleteSubCategory')}}",
                 type: 'GET',
                 data: {
                     id: id
@@ -102,7 +102,7 @@
         var status = $('#status').val();
 
         $.ajax({
-            url: "{{route('allproductcategory')}}",
+            url: "{{route('allproductsubcategory')}}",
             type: 'GET',
             data: {
                 status: status
