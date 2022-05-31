@@ -41,9 +41,12 @@
                         <div class="form-group">
                             <label>Sub Category</label>
 
-                            <select name="sub_cat" id="sub_cat" class="form-control">
-                       
-                              
+                            <select name="subcategory" id="subcategory" class="form-control">
+                            @foreach($sub_category as $s_cat)
+                                <option value="{{$s_cat->id}}" @if($s_cat->id == $data->sub_cat) selected @endif>{{ $s_cat->sub_category}}</option>
+
+                                @endforeach
+
 
                             </select>
                         </div>
@@ -56,7 +59,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Size <span style="color:red">*</span></label>
+                            <label>Size</label>
 
                             <input type="text" class="form-control" id="size" name="size" value="{{$data->size}}">
                         </div>
@@ -86,7 +89,7 @@
                         <div class="form-group">
                             <label>Thickness</label>
 
-                            <input type="text" class="form-control" id="thicknee" name="thickness" value="{{$data->thickness}}">
+                            <input type="text" class="form-control" id="thickness" name="thickness" value="{{$data->thickness}}">
                         </div>
                     </div>
 
@@ -209,29 +212,11 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Packing in bags</label>
-                            <div class="row">
-                            <?php
-                                    $pac_bags = $data->pac_bags;
-                                    $pb = intval($pac_bags);
-
-                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->pac_bags);
- 
-
-                                    ?>
-                                <div class="col-md-9">
-                                    <input type="number" class="form-control" id="pac_bags" name="pac_bags" value="{{$pb}}">
-                                </div>
-                                <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit_p_b">
-                                        <option value="">--Select--</option>
-                                        @foreach($unit as $u)
-                                        <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif>{{ $u->unit }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
+                           
+                            
+                              
+                                    <input type="text" class="form-control" id="pac_bags" name="pac_bags" value="{{$data->pac_bags}}">
+                               
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -326,6 +311,34 @@
         width: '100%',
         placeholder: "Select a Color",
         allowClear: true
+    });
+</script>
+<script type="text/javascript">
+  
+    $(document).ready(function() {
+        $('#cat_id').on('change', function(e) {
+            var cat_id = e.target.value;
+            $.ajax({
+                url: "{{ route('subCat') }}",
+                type: "GET",
+                data: {
+                    cat_id: cat_id
+                },
+                success: function(data) {
+              
+                    
+                         if(data){
+                            $('#subcategory').empty();
+                            $('#subcategory').append('<option hidden>Choose Sub Category</option>'); 
+                            $.each(data, function(key, subcat){
+                                $('select[name="subcategory"]').append('<option value="'+ subcat.id +'">' + subcat.sub_category+ '</option>');
+                            });
+                        }else{
+                            $('#subcategory').empty();
+                        }
+                }
+            })
+        });
     });
 </script>
 @endsection

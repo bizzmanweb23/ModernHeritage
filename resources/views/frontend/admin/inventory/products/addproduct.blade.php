@@ -40,9 +40,9 @@
                         <div class="form-group">
                             <label>Sub Category</label>
 
-                            <select name="sub_cat" id="sub_cat" class="form-control">
-                       
-                              
+                            <select name="subcategory" id="subcategory" class="form-control">
+
+
 
                             </select>
                         </div>
@@ -57,35 +57,35 @@
                         <div class="form-group">
                             <label>Size</label>
 
-                            <input type="text" class="form-control" id="size" name="size" >
+                            <input type="text" class="form-control" id="size" name="size">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Length</label>
 
-                            <input type="text" class="form-control" id="length" name="length" >
+                            <input type="text" class="form-control" id="length" name="length">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Width</label>
 
-                            <input type="text" class="form-control" id="width" name="width" >
+                            <input type="text" class="form-control" id="width" name="width">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Height</label>
 
-                            <input type="text" class="form-control" id="height" name="height" >
+                            <input type="text" class="form-control" id="height" name="height">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Thickness</label>
 
-                            <input type="text" class="form-control" id="thicknee" name="thickness" >
+                            <input type="text" class="form-control" id="thicknee" name="thickness">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -184,21 +184,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Packing in bags</label>
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <input type="number" class="form-control" id="pac_bags" name="pac_bags">
-                                </div>
-                                <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit_p_b">
-                                        <option value="">--Select--</option>
-                                        @foreach($unit as $u)
-                                        <option value="{{ $u->unit }}">{{ $u->unit }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
+             
+                                    <input type="text" class="form-control" id="pac_bags" name="pac_bags">
+                              
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -221,7 +209,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier Code</label>
@@ -243,7 +231,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Product Images</label>
-                            <input  type="file" class="form-control" name="images[]"  multiple>
+                            <input type="file" class="form-control" name="images[]" multiple>
                         </div>
                     </div>
                     <div class="col-md-12">
@@ -269,6 +257,34 @@
         width: '100%',
         placeholder: "Select a Color",
         allowClear: true
+    });
+</script>
+<script type="text/javascript">
+  
+    $(document).ready(function() {
+        $('#cat_id').on('change', function(e) {
+            var cat_id = e.target.value;
+            $.ajax({
+                url: "{{ route('subCat') }}",
+                type: "GET",
+                data: {
+                    cat_id: cat_id
+                },
+                success: function(data) {
+              
+                    
+                         if(data){
+                            $('#subcategory').empty();
+                            $('#subcategory').append('<option hidden>Choose Sub Category</option>'); 
+                            $.each(data, function(key, subcat){
+                                $('select[name="subcategory"]').append('<option value="'+ subcat.id +'">' + subcat.sub_category+ '</option>');
+                            });
+                        }else{
+                            $('#subcategory').empty();
+                        }
+                }
+            })
+        });
     });
 </script>
 @endsection

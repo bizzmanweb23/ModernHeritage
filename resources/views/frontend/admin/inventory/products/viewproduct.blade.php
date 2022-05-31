@@ -32,6 +32,13 @@
 
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Sub Category -</label>
+                        {{$data->sub_category}}
+
+                    </div>
+                </div>
 
                 <div class="col-md-6">
                     <div class="form-group">

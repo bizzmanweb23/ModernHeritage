@@ -220,7 +220,7 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/deleteSubCategory', [InventoryController::class,'deleteSubCategory'])->name('deleteSubCategory');
      Route::get('/editSubCategory/{id}', [InventoryController::class,'editSubCategory'])->name('editSubCategory');
      Route::post('/updateproductsubcategory', [InventoryController::class,'updateproductsubcategory'])->name('updateproductsubcategory');
-
+     Route::get('/subcat', [InventoryController::class, 'subCat'])->name('subCat');
 
 
     //admin--logistic

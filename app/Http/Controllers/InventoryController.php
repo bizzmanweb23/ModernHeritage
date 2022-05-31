@@ -47,19 +47,38 @@ class InventoryController extends Controller
     }
     public function viewProduct($id)
     {
-        $data = Product::select('products.*', 'product_categories.category_name')
+        $data = Product::select('products.*', 'product_categories.category_name','subcategories.sub_category')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
-
+            ->join('subcategories', 'subcategories.id', 'products.sub_cat')
             ->where('products.id', $id)->first();
-
- 
-
-      
 
         $data['data'] = $data;
 
 
         return view('frontend.admin.inventory.products.viewproduct', $data);
+
+
+        // $ch = curl_init();
+
+        // curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/v13.0/114093384643374/messages');
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // curl_setopt($ch, CURLOPT_POST, 1);
+        // curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"messaging_product\": \"whatsapp\", \"to\": \"916289621701\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" }  } }");
+
+        // $headers = array();
+        // $headers[] = 'Authorization: Bearer EAAFz4Pls8ZAgBAOmqBZCTkOkgmq9fukT3QMLXCWtbZAJXy5ZAQdUmvrZA6NOJjflRwrowwD5Gk4nT2Gv1prtXL8I8ZBiAlZCsJ6KVgOPhnSjnXqSg3gliavyp9kZBkbK9XFbHhYWWRJ5FELSMJajoZAnlGATeHfKJoMYV3tPYll8GrnLMdRdZA9mIy';
+        // $headers[] = 'Content-Type: application/json';
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        // $result = curl_exec($ch);
+        // if (curl_errno($ch)) {
+        //     echo 'Error:' . curl_error($ch);
+        // }
+        // else
+        // {
+        //     echo $result;
+        // }
+        // curl_close($ch);
     }
 
     public function editProduct($id)
@@ -70,11 +89,13 @@ class InventoryController extends Controller
 
             ->where('products.id', $id)->first();
 
-     
-    
-            
+
+
+
         $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
-      
+        $data['sub_category'] = DB::table('subcategories')->where('cat_id', $data->cat_id)->where('status', 1)->get();
+
+
         $data['unit'] = DB::table('units')->get();
         $data['data'] = $data;
         return view('frontend.admin.inventory.products.editproduct', $data);
@@ -115,13 +136,13 @@ class InventoryController extends Controller
             'product_name' => $request->product_name,
             'brand' => $request->brand,
             'cat_id' => $request->cat_id,
-            'sub_cat' => $request->sub_cat,
+            'sub_cat' => $request->subcategory,
             'color' => $request->color,
             'size' => $request->size,
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'thickness' => $request->thickness,
+            'material'=>$request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
@@ -129,8 +150,8 @@ class InventoryController extends Controller
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
-            'per_box' => $request->per_box.$request->unit_b,
-            'pac_bags' => $request->pac_bags . $request->unit_p_b,
+            'per_box' => $request->per_box . $request->unit_b,
+            'pac_bags' => $request->pac_bags,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
             'supplier_code' => $request->supplier_code,
             'status' => $request->status,
@@ -150,12 +171,16 @@ class InventoryController extends Controller
 
 
             foreach (explode(',', $data->product_image) as $img) {
-                $image_path = public_path('images/products/' . $img);
+                if($img != '')
+                {
+                    $image_path = public_path('images/products/' . $img);
 
-
-                if (file_exists($image_path)) {
-                    unlink($image_path);
+               
+                    if (file_exists($image_path)) {
+                        unlink($image_path);
+                    }
                 }
+             
             }
             foreach ($images as $item) {
                 $var = date_create();
@@ -174,13 +199,13 @@ class InventoryController extends Controller
             'product_name' => $request->product_name,
             'brand' => $request->brand,
             'cat_id' => $request->cat_id,
-            'sub_cat' => $request->sub_cat,
+            'sub_cat' => $request->subcategory,
             'color' => $request->color,
             'size' => $request->size,
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'thickness' => $request->thickness,
+            'material'=>$request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
@@ -188,7 +213,7 @@ class InventoryController extends Controller
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
-            'per_box' => $request->per_box.$request->unit_b,
+            'per_box' => $request->per_box . $request->unit_b,
             'pac_bags' => $request->pac_bags . $request->unit_p_b,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
             'supplier_code' => $request->supplier_code,
@@ -364,29 +389,20 @@ class InventoryController extends Controller
     }
     public function allSubCategory(Request $request)
     {
-         $data_s = DB::table('subcategories')->select('subcategories.*','product_categories.category_name')->join('product_categories','product_categories.id','subcategories.cat_id');
+        $data_s = DB::table('subcategories')->select('subcategories.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'subcategories.cat_id');
 
-         if(isset($request->status))
-         {
-             if($request->status != 'all')
-             {
-                $data['sub_category'] = $data_s->where('subcategories.status',$request->status)->get();
-             }
-             else
-             {
+        if (isset($request->status)) {
+            if ($request->status != 'all') {
+                $data['sub_category'] = $data_s->where('subcategories.status', $request->status)->get();
+            } else {
                 $data['sub_category'] = $data_s->get();
-             }
-          
-         }
-         else{
+            }
+        } else {
             $data['sub_category'] = $data_s->get();
-         }
-         
+        }
 
-         return view('frontend.admin.inventory.products.subCategory', $data);
-       
-        
-       
+
+        return view('frontend.admin.inventory.products.subCategory', $data);
     }
     public function addsubcategory()
     {
@@ -397,32 +413,40 @@ class InventoryController extends Controller
     public function  addproductsubcategory(Request $request)
     {
         DB::table('subcategories')->insert([
-            'cat_id'=>$request->cat_id,
-            'sub_category'=>$request->sub_category,
-            'status'=>$request->status
+            'cat_id' => $request->cat_id,
+            'sub_category' => $request->sub_category,
+            'status' => $request->status
         ]);
         return redirect(route('allproductsubcategory'))->with('message', 'Subcategory Added Successfully');
     }
     public function deleteSubCategory(Request $request)
     {
-        DB::table('subcategories')->where('id',$request->id)->delete();
+        DB::table('subcategories')->where('id', $request->id)->delete();
         return json_encode(1);
-           
     }
     public function editSubCategory($id)
     {
         $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
-        $data['data']=DB::table('subcategories')->where('id',$id)->first();
+        $data['data'] = DB::table('subcategories')->where('id', $id)->first();
         return view('frontend.admin.inventory.products.editSubCategory', $data);
     }
     public function  updateproductsubcategory(Request $request)
     {
-        DB::table('subcategories')->where('id',$request->id)->update([
-            'cat_id'=>$request->cat_id,
-            'sub_category'=>$request->sub_category,
-            'status'=>$request->status
+        DB::table('subcategories')->where('id', $request->id)->update([
+            'cat_id' => $request->cat_id,
+            'sub_category' => $request->sub_category,
+            'status' => $request->status
         ]);
         return redirect(route('allproductsubcategory'))->with('message', 'Subcategory Updated Successfully');
     }
-
+    public function subCat(Request $request)
+    {
+         
+        $parent_id = $request->cat_id;
+         
+        $subcategories =  DB::table('subcategories')->where('cat_id',$parent_id)
+                          
+                              ->get();
+        return response()->json($subcategories);
+    }
 }

@@ -15,7 +15,7 @@
             <div class="form-group">
 
 
-                <div class="col-md-5">
+                <div class="col-md-9">
                     <select name="category" class="form-control" id="category">
                         <option value="">Search By Category</option>
                          @foreach($product_categories as $p_c)
