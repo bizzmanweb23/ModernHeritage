@@ -103,6 +103,12 @@ class InventoryController extends Controller
     public function saveProduct(Request $request)
     {
 
+        $request->validate([
+
+            'sku' => 'required|unique:products',
+          
+
+        ]);
         $unique_id = DB::table('products')->orderBy('id', 'desc')->first();
         if ($unique_id) {
             $number = str_replace('MHP', '', $unique_id->unique_id);
@@ -163,6 +169,12 @@ class InventoryController extends Controller
     }
     public function updateProduct(Request $request)
     {
+        $request->validate([
+
+            'sku' => 'required|unique:products,sku,'.$request->id,
+            
+        ]);
+
         $images = $request->file('images');
         if ($request->hasFile('images')) {
 

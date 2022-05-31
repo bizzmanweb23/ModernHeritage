@@ -42,7 +42,7 @@
                             <label>Sub Category</label>
 
                             <select name="subcategory" id="subcategory" class="form-control">
-                            @foreach($sub_category as $s_cat)
+                                @foreach($sub_category as $s_cat)
                                 <option value="{{$s_cat->id}}" @if($s_cat->id == $data->sub_cat) selected @endif>{{ $s_cat->sub_category}}</option>
 
                                 @endforeach
@@ -68,7 +68,7 @@
                         <div class="form-group">
                             <label>Length</label>
 
-                            <input type="text" class="form-control" id="length" name="length" value="{{$data->length}}" >
+                            <input type="text" class="form-control" id="length" name="length" value="{{$data->length}}">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -156,21 +156,21 @@
                         <div class="form-group">
                             <label for="mobile">Per Pallet</label>
                             <div class="row">
-                            <?php
-                                    $per_pallet = $data->per_pallet;
-                                    $p = intval($per_pallet);
+                                <?php
+                                $per_pallet = $data->per_pallet;
+                                $p = intval($per_pallet);
 
-                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_pallet);
+                                $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_pallet);
 
-                                    ?>
+                                ?>
                                 <div class="col-md-9">
-                                    <input type="number" class="form-control" id="per_pallet" name="per_pallet"  value="{{$p}}">
+                                    <input type="number" class="form-control" id="per_pallet" name="per_pallet" value="{{$p}}">
                                 </div>
                                 <div class="col-md-3">
                                     <select name="unit" class="form-control" id="unit_p">
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
-                                        <option value="{{ $u->unit }}"  @if($u->unit==$result) selected @endif>{{ $u->unit }}
+                                        <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif>{{ $u->unit }}
                                         </option>
                                         @endforeach
                                     </select>
@@ -182,22 +182,22 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Per Box</label>
-                            <div class="row"> 
+                            <div class="row">
                                 <?php
-                                    $per_box = $data->per_box;
-                                    $b = intval($per_box);
+                                $per_box = $data->per_box;
+                                $b = intval($per_box);
 
 
-                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_box);
- 
+                                $result = preg_replace("/[^a-zA-Z]+/", "", $data->per_box);
 
-                                    ?>
+
+                                ?>
 
                                 <div class="col-md-9">
                                     <input type="number" class="form-control" id="per_box" name="per_box" value="{{$b}}">
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="unit" class="form-control" id="unit_b" >
+                                    <select name="unit" class="form-control" id="unit_b">
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
                                         <option value="{{ $u->unit }}" @if($u->unit==$result) selected @endif >{{ $u->unit }}
@@ -212,27 +212,27 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Packing in bags</label>
-                           
-                            
-                              
-                                    <input type="text" class="form-control" id="pac_bags" name="pac_bags" value="{{$data->pac_bags}}">
-                               
+
+
+
+                            <input type="text" class="form-control" id="pac_bags" name="pac_bags" value="{{$data->pac_bags}}">
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Loose, Per Lorry</label>
                             <div class="row">
-                            <?php
-                                    $loose_per_lorry = $data->loose_per_lorry;
-                                    $l = intval($loose_per_lorry);
+                                <?php
+                                $loose_per_lorry = $data->loose_per_lorry;
+                                $l = intval($loose_per_lorry);
 
-                                    $result = preg_replace("/[^a-zA-Z]+/", "", $data->loose_per_lorry);
- 
+                                $result = preg_replace("/[^a-zA-Z]+/", "", $data->loose_per_lorry);
 
-                                    ?>
+
+                                ?>
                                 <div class="col-md-9">
-                                    <input type="number" class="form-control" id="loose_per_lorry" name="loose_per_lorry" value="{{$l}}" >
+                                    <input type="number" class="form-control" id="loose_per_lorry" name="loose_per_lorry" value="{{$l}}">
                                 </div>
                                 <div class="col-md-3">
                                     <select name="unit" class="form-control" id="unit_l">
@@ -247,8 +247,8 @@
                             </div>
                         </div>
                     </div>
-                   
-                   
+
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier Code</label>
@@ -307,6 +307,17 @@
     </div>
 </form>
 <script>
+
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ $error }}");
+    @endforeach
+    @endif
+
     $('#color').select2({
         width: '100%',
         placeholder: "Select a Color",
@@ -314,7 +325,6 @@
     });
 </script>
 <script type="text/javascript">
-  
     $(document).ready(function() {
         $('#cat_id').on('change', function(e) {
             var cat_id = e.target.value;
@@ -325,17 +335,17 @@
                     cat_id: cat_id
                 },
                 success: function(data) {
-              
-                    
-                         if(data){
-                            $('#subcategory').empty();
-                            $('#subcategory').append('<option hidden>Choose Sub Category</option>'); 
-                            $.each(data, function(key, subcat){
-                                $('select[name="subcategory"]').append('<option value="'+ subcat.id +'">' + subcat.sub_category+ '</option>');
-                            });
-                        }else{
-                            $('#subcategory').empty();
-                        }
+
+
+                    if (data) {
+                        $('#subcategory').empty();
+                        $('#subcategory').append('<option hidden>Choose Sub Category</option>');
+                        $.each(data, function(key, subcat) {
+                            $('select[name="subcategory"]').append('<option value="' + subcat.id + '">' + subcat.sub_category + '</option>');
+                        });
+                    } else {
+                        $('#subcategory').empty();
+                    }
                 }
             })
         });

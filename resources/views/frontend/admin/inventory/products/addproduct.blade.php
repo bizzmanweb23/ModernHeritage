@@ -18,8 +18,8 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Brand <span style="color:red">*</span></label>
-                            <input type="text" class="form-control" id="brand" name="brand" required>
+                            <label>Brand </label>
+                            <input type="text" class="form-control" id="brand" name="brand">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -253,6 +253,16 @@
     </div>
 </form>
 <script>
+     @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
     $('#color').select2({
         width: '100%',
         placeholder: "Select a Color",
