@@ -20,6 +20,8 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\WarehouseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -222,6 +224,9 @@ Route::group(['prefix' => 'admin'], function () {
      Route::post('/updateproductsubcategory', [InventoryController::class,'updateproductsubcategory'])->name('updateproductsubcategory');
      Route::get('/subcat', [InventoryController::class, 'subCat'])->name('subCat');
 
+     //warehouse management
+     Route::get('/warehouses', [WarehouseController::class,'index'])->name('wareHouses');
+     Route::get('/addWarehouse', [WarehouseController::class,'addWarehouse'])->name('addWarehouse');
 
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {

@@ -14,6 +14,10 @@ use DB;
 class OrdersController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
         $data = Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status');

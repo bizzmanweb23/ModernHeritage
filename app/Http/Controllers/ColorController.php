@@ -9,6 +9,10 @@ use Validator;
 class ColorController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index(Request $request)
     {
         $data_c = DB::table('colors');
