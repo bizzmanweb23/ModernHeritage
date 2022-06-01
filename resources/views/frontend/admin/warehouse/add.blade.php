@@ -37,7 +37,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                                    <input type="text" class="form-control" id="mobile_no" name="mobile_no" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
                                 </div>
 
                             </div>

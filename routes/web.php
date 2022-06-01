@@ -228,8 +228,12 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/warehouses', [WarehouseController::class,'index'])->name('wareHouses');
      Route::get('/addWarehouse', [WarehouseController::class,'addWarehouse'])->name('addWarehouse');
      Route::post('/saveWarehouse', [WarehouseController::class,'saveWarehouse'])->name('saveWarehouse');
+     Route::get('/editWarehouse/{id}', [WarehouseController::class,'editWarehouse'])->name('editwareHouses');
+     Route::post('/updateWarehouse', [WarehouseController::class,'updateWarehouse'])->name('updateWarehouse');
+     Route::get('/viewWarehouse/{id}', [WarehouseController::class,'viewWarehouse'])->name('viewWarehouse');
+     Route::get('/deleteWarehouse', [WarehouseController::class,'deleteWarehouse'])->name('deleteWarehouse');
 
-  
+ 
 
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {

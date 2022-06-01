@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <a href="{{ route('addWarehouse') }}" class="btn btn-primary">Create</a>
+        <a href="{{ route('addWarehouse') }}" class="btn btn-primary">Create Warehouse</a>
     </div>
 
 
@@ -66,7 +66,7 @@
                 <td>
                     <a href="editWarehouse/{{$ware_house->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
                     <a href="viewWarehouse/{{$ware_house->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$ware_house->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_warehouse(this.id)" id="{{$ware_house->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
             </tr>
@@ -80,11 +80,11 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-    function delete_color(id) {
+    function delete_warehouse(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteColor')}}",
+                url: "{{route('deleteWarehouse')}}",
                 type: 'GET',
                 data: {
                     id: id

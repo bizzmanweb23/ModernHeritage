@@ -59,28 +59,7 @@ class InventoryController extends Controller
         return view('frontend.admin.inventory.products.viewproduct', $data);
 
 
-        // $ch = curl_init();
-
-        // curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/v13.0/102003562541579/messages');
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS,"{\"messaging_product\":\"whatsapp\",\"recipient_type\":\"individual\",\"to\":\"919830726908\",\"type\":\"template\",\"template\":{\"name\":\"order\",\"language\":{\"code\":\"en_US\"},\"components\":[{\"type\":\"body\",\"parameters\":[{\"type\":\"text\",\"text\":\"$id\"}]}]}}");
-
-
-        // $headers = array();
-        // $headers[] = 'Authorization: Bearer EAAFz4Pls8ZAgBAGhQTXjwdZA1oDQ616dPhRvJqqGrXm4nIzO583gmo6Onf0zu0Yfvkta04afodEAZBR5dH1a1v1bS01J6r1GhOnzpZBfal41V3zdrmcuEYqVpytZAa3SbwzibB4TXRfpHPUI8LxTcFdDBKo80R1SLn2HfcQZBPLMDK48Ub0Up2';
-        // $headers[] = 'Content-Type: application/json';
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        // $result = curl_exec($ch);
-        // if (curl_errno($ch)) {
-        //     echo 'Error:' . curl_error($ch);
-        // }
-        // else
-        // {
-        //     echo $result;
-        // }
-        // curl_close($ch);
+        
     }
 
     public function editProduct($id)
