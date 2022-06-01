@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form action="{{ route('saveProduct') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('saveWarehouse') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="card">
@@ -19,28 +19,54 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" class="form-control" id="email" name="email">
+                            <input type="text" class="form-control" id="email" name="email" required>
                         </div>
                     </div>
                   
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Mobile no</label>
-                            <input type="number" class="form-control" id="mobile_no" name="mobile_no">
-                           
+                            <label for="mobile">Mobile</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select name="country_code_m" class="form-control" id="country_code_m" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($countryCodes as $c)
+                                        <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Phone no</label>
-                            <input type="number" class="form-control" id="phone" name="phone">
-                           
+                            <label for="mobile">Phone</label>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select name="country_code_p" class="form-control" id="country_code_p" required>
+                                        <option value="">--Select--</option>
+                                        @foreach($countryCodes as $c)
+                                        <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
+                            <input type="password" class="form-control" id="password" name="password" required>
                            
                         </div>
                     </div>
@@ -55,7 +81,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Status</label>
-                            <select name="status" id="status" class="form-control" required>
+                            <select name="status" id="status" class="form-control">
 
                                 <option value="1">Active</option>
                                 <option value="0">Inactive</option>
@@ -68,38 +94,45 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Address Line 1</label>
-                            <input type="text" class="form-control" id="adddress_1" name="adddress_1" required>
+                            <input type="text" class="form-control" id="address_1" name="address_1" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Address Line 2</label>
-                            <input type="text" class="form-control" id="adddress_2" name="adddress_2">
+                            <input type="text" class="form-control" id="address_2" name="address_2">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Address Line 3</label>
-                            <input type="text" class="form-control" id="adddress_3" name="adddress_3">
+                            <input type="text" class="form-control" id="address_3" name="address_3">
                         </div>
                     </div>
                     
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>State</label>
-                            <input type="text" class="form-control" id="state" name="state">
+                            <input type="text" class="form-control" id="state" name="state" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Country</label>
-                            <input type="text" class="form-control" id="country_id" name="country_id">
+
+                            <select name="country_id" class="form-control" id="country_id" required>
+                                <option value="">--Select--</option>
+                                @foreach($country as $c)
+                                <option value="{{ $c->id }}">{{ $c->country }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Zipcode</label>
-                            <input type="number" class="form-control" id="zipcode" name="zipcode">
+                            <input type="number" class="form-control" id="zipcode" name="zipcode" required>
                         </div>
                     </div>
                     <div class="ms-auto text-end">

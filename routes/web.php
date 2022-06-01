@@ -227,6 +227,9 @@ Route::group(['prefix' => 'admin'], function () {
      //warehouse management
      Route::get('/warehouses', [WarehouseController::class,'index'])->name('wareHouses');
      Route::get('/addWarehouse', [WarehouseController::class,'addWarehouse'])->name('addWarehouse');
+     Route::post('/saveWarehouse', [WarehouseController::class,'saveWarehouse'])->name('saveWarehouse');
+
+  
 
     //admin--logistic
     Route::group(['prefix' => 'logistic'], function () {

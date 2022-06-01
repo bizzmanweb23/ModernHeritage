@@ -46,7 +46,8 @@ class InventoryController extends Controller
         return view('frontend.admin.inventory.products.addproduct', $data);
     }
     public function viewProduct($id)
-    {
+    
+     {
         $data = Product::select('products.*', 'product_categories.category_name','subcategories.sub_category')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
             ->join('subcategories', 'subcategories.id', 'products.sub_cat')
@@ -60,13 +61,14 @@ class InventoryController extends Controller
 
         // $ch = curl_init();
 
-        // curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/v13.0/114093384643374/messages');
+        // curl_setopt($ch, CURLOPT_URL, 'https://graph.facebook.com/v13.0/102003562541579/messages');
         // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         // curl_setopt($ch, CURLOPT_POST, 1);
-        // curl_setopt($ch, CURLOPT_POSTFIELDS, "{ \"messaging_product\": \"whatsapp\", \"to\": \"916289621701\", \"type\": \"template\", \"template\": { \"name\": \"hello_world\", \"language\": { \"code\": \"en_US\" }  } }");
+        // curl_setopt($ch, CURLOPT_POSTFIELDS,"{\"messaging_product\":\"whatsapp\",\"recipient_type\":\"individual\",\"to\":\"919830726908\",\"type\":\"template\",\"template\":{\"name\":\"order\",\"language\":{\"code\":\"en_US\"},\"components\":[{\"type\":\"body\",\"parameters\":[{\"type\":\"text\",\"text\":\"$id\"}]}]}}");
+
 
         // $headers = array();
-        // $headers[] = 'Authorization: Bearer EAAFz4Pls8ZAgBAOmqBZCTkOkgmq9fukT3QMLXCWtbZAJXy5ZAQdUmvrZA6NOJjflRwrowwD5Gk4nT2Gv1prtXL8I8ZBiAlZCsJ6KVgOPhnSjnXqSg3gliavyp9kZBkbK9XFbHhYWWRJ5FELSMJajoZAnlGATeHfKJoMYV3tPYll8GrnLMdRdZA9mIy';
+        // $headers[] = 'Authorization: Bearer EAAFz4Pls8ZAgBAGhQTXjwdZA1oDQ616dPhRvJqqGrXm4nIzO583gmo6Onf0zu0Yfvkta04afodEAZBR5dH1a1v1bS01J6r1GhOnzpZBfal41V3zdrmcuEYqVpytZAa3SbwzibB4TXRfpHPUI8LxTcFdDBKo80R1SLn2HfcQZBPLMDK48Ub0Up2';
         // $headers[] = 'Content-Type: application/json';
         // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 

@@ -17,11 +17,11 @@ class CreateWareHousesTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->nullable();
-            $table->integer('mobile_no')->nullable();
-            $table->integer('phone')->nullable();
-            $table->string('adddress_1')->nullable();
-            $table->string('adddress_2')->nullable();
-            $table->string('adddress_3')->nullable();
+            $table->bigInteger('mobile_no')->nullable();
+            $table->bigInteger('phone')->nullable();
+            $table->string('address_1')->nullable();
+            $table->string('address_2')->nullable();
+            $table->string('address_3')->nullable();
             $table->integer('country_id')->nullable();
             $table->string('state')->nullable();
             $table->integer('zipcode')->nullable();

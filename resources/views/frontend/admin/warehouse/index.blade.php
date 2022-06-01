@@ -48,15 +48,29 @@
             <tr>
                 <th>Sl#</th>
                 <th>Name</th>
-                <th>Status</th>
+                <th>Email</th>
+                <th>Mobile</th>
                 <th>Action</th>
-
 
 
             </tr>
         </thead>
         <tbody>
-          
+            @foreach($data as $key=>$ware_house )
+            <tr>
+                <td style="text-align:center">{{$key+1}}</td>
+                
+                <td>{{$ware_house->name}}</td>
+                <td>{{$ware_house->email }}</td>
+                <td>+{{$ware_house->mobile_no }}</td>
+                <td>
+                    <a href="editWarehouse/{{$ware_house->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                    <a href="viewWarehouse/{{$ware_house->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$ware_house->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                </td>
+
+            </tr>
+            @endforeach
 
 
         </tbody>
