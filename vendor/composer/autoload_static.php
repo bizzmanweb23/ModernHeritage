@@ -38,6 +38,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ed962a97bd972bc82007176b647d4e36' => __DIR__ . '/..' . '/facade/ignition/src/helpers.php',
         '377b22b161c09ed6e5152de788ca020a' => __DIR__ . '/..' . '/spatie/laravel-permission/src/helpers.php',
+        'b4e3f29b106af37a2bb239f73cdf68c7' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -753,6 +754,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'Database\\Seeders\\OrderSeeder' => __DIR__ . '/../..' . '/database/seeders/OrderSeeder.php',
         'Database\\Seeders\\OrderStatusSeeder' => __DIR__ . '/../..' . '/database/seeders/OrderStatusSeeder.php',
         'Database\\Seeders\\Permissions' => __DIR__ . '/../..' . '/database/seeders/Permissions.php',
+        'Database\\Seeders\\RoleSeeder' => __DIR__ . '/../..' . '/database/seeders/RoleSeeder.php',
         'Database\\Seeders\\StateSeeder' => __DIR__ . '/../..' . '/database/seeders/StateSeeder.php',
         'Database\\Seeders\\UnitSeeder' => __DIR__ . '/../..' . '/database/seeders/UnitSeeder.php',
         'Database\\Seeders\\userAddressSeeder' => __DIR__ . '/../..' . '/database/seeders/userAddressSeeder.php',

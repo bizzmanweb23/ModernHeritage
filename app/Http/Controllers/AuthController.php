@@ -169,7 +169,7 @@ class AuthController extends Controller
             $request->session()->put('ADMIN_USER_LOGIN',true);
             $request->session()->put('ADMIN_USER_ID',$data->id);
             return view('frontend.admin.dashboard.index');
-
+    
         }
         else{
        

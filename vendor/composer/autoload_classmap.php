@@ -211,6 +211,7 @@ return array(
     'Database\\Seeders\\OrderSeeder' => $baseDir . '/database/seeders/OrderSeeder.php',
     'Database\\Seeders\\OrderStatusSeeder' => $baseDir . '/database/seeders/OrderStatusSeeder.php',
     'Database\\Seeders\\Permissions' => $baseDir . '/database/seeders/Permissions.php',
+    'Database\\Seeders\\RoleSeeder' => $baseDir . '/database/seeders/RoleSeeder.php',
     'Database\\Seeders\\StateSeeder' => $baseDir . '/database/seeders/StateSeeder.php',
     'Database\\Seeders\\UnitSeeder' => $baseDir . '/database/seeders/UnitSeeder.php',
     'Database\\Seeders\\userAddressSeeder' => $baseDir . '/database/seeders/userAddressSeeder.php',

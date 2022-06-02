@@ -48,13 +48,15 @@ Route::post("/register/{path?}", [AuthController::class, "register"]);
 //login
 Route::get("/login", [AuthController::class, "login"])->name("userlogin");
 Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
+Route::get("admin/login", [AuthController::class, "login"])->name("adminlogin");
+Route::post("/adminlogin", [AuthController::class, "adminlogin"])->name("adminLogin");
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin','middleware'=>'admin_auth'], function () {
 
-    Route::get("/login", [AuthController::class, "login"])->name("adminlogin");
-    Route::post("/login", [AuthController::class, "userlogin"])->name("adminlogin");
+ 
+  //  Route::post("/login", [AuthController::class, "userlogin"])->name("adminlogin");
 
-    Route::post("/adminlogin", [AuthController::class, "adminlogin"])->name("adminLogin");
+
 
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
@@ -246,7 +248,7 @@ Route::group(['prefix' => 'admin'], function () {
  
 
     //admin--logistic
-    Route::group(['prefix' => 'logistic'], function () {
+    Route::group(['prefix' => 'logistic','middleware'=>'admin_auth'], function () {
         
         //admin--logistic--client
         Route::get("/allclients", [LogisticController::class, "allClients"])->name("allclients");
