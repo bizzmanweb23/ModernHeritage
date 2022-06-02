@@ -54,6 +54,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get("/login", [AuthController::class, "login"])->name("adminlogin");
     Route::post("/login", [AuthController::class, "userlogin"])->name("adminlogin");
 
+    Route::post("/adminlogin", [AuthController::class, "adminlogin"])->name("adminLogin");
+
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
 
@@ -235,7 +237,7 @@ Route::group(['prefix' => 'admin'], function () {
 
      //warehouse product management
      Route::get('/proList/{id}', [WarehouseController::class,'proList'])->name('proList');
-     Route::get('/addProductStock', [WarehouseController::class,'addProductStock'])->name('addProductStock');
+     Route::get('/addProductStock/{id}', [WarehouseController::class,'addProductStock'])->name('addProductStock');
 
 
 

@@ -17,10 +17,7 @@ use DB;
 
 class InventoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+ 
     public function getInventory()
     {
         return view('frontend.admin.inventory.overview');

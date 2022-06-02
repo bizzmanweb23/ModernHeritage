@@ -13,10 +13,7 @@ use DB;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+ 
 
 
     // User - Management
@@ -258,7 +255,9 @@ class UserController extends Controller
     }
     public function userProfile()
     {
-        $id = Auth::user()->id;
+        $id = session()->get('ADMIN_USER_ID');
+
+  
 
         $data['data'] = User::where('users.id', $id)
             ->join('user_address', 'user_address.user_id', 'users.id')

@@ -68,7 +68,7 @@
                                 <p class="mb-0">Enter your email and password to sign in</p>
                             </div>
                             <div class="card-body">
-                                <form method="POST" action="{{ route('adminlogin') }}">
+                                <form method="POST" action="{{ route('adminLogin') }}">
                                     @csrf
                                     @if(isset($error))
                                         <h4>{{ $error }}</h4>

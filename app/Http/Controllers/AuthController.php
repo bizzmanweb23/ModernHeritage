@@ -149,11 +149,35 @@ class AuthController extends Controller
     public function logoutUser(Request $request)
     {
         Auth::logout();
-
+        session()->forget('FRONT_USER_LOGIN');
+        session()->forget('FRONT_USER_ID');
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
         return redirect(route('userlogin'));
+    }
+
+    public function adminlogin(Request $request)
+    {
+       $data=User::where('email',$request->email)->first();
+       if($data)
+       {
+        if(Hash::check($request->password,$data->password)){
+
+
+            $request->session()->put('ADMIN_USER_LOGIN',true);
+            $request->session()->put('ADMIN_USER_ID',$data->id);
+            return view('frontend.admin.dashboard.index');
+
+        }
+        else{
+       
+            return back();
+
+         
+          }
+       }
+ 
     }
 }

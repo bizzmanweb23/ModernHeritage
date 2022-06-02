@@ -18,10 +18,7 @@ use DB;
 
 class CustomerController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
 
     //customer management
 
