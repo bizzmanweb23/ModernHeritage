@@ -58,6 +58,12 @@ class Permissions extends Seeder
                 'name' => 'User Management',
                 'guard_name'=> 1
             ),
+            8 =>
+            array(
+                'id'=>8,
+                'name' => 'Warehouse Product Stock',
+                'guard_name'=> 1
+            ),
         ));
     }
 }

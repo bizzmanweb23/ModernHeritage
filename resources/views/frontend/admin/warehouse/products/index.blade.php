@@ -7,14 +7,6 @@
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-<div class="row">
-    <div class="col-md-4">
-        <a href="{{ route('addWarehouse') }}" class="btn btn-primary">Create Warehouse </a>
-    </div>
-
-
-</div>
-
 
 
 @if(Session::has('message'))
@@ -23,6 +15,7 @@
 
 </div>
 @endif
+
 <div class="container card" style="padding:15px;">
 
     <form>
@@ -57,22 +50,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($data as $key=>$ware_house )
-            <tr>
-                <td style="text-align:center">{{$key+1}}</td>
-                
-                <td>{{$ware_house->name}}</td>
-                <td>{{$ware_house->email }}</td>
-                <td>+{{$ware_house->mobile_no }}</td>
-                <td> <a href="proList/{{$ware_house->id}}" class="btn btn-info" title="edit">List of Products</a></td>
-                <td>
-                    <a href="editWarehouse/{{$ware_house->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                    <a href="viewWarehouse/{{$ware_house->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_warehouse(this.id)" id="{{$ware_house->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
-                </td>
-
-            </tr>
-            @endforeach
+           
 
 
         </tbody>
@@ -81,6 +59,7 @@
 </div>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
+
 <script>
     function delete_warehouse(id) {
         if (confirm('Are you sure you want to delete?')) {
@@ -129,4 +108,7 @@
 
     });
 </script>
+
+
+
 @endsection

@@ -233,6 +233,14 @@ Route::group(['prefix' => 'admin'], function () {
      Route::get('/viewWarehouse/{id}', [WarehouseController::class,'viewWarehouse'])->name('viewWarehouse');
      Route::get('/deleteWarehouse', [WarehouseController::class,'deleteWarehouse'])->name('deleteWarehouse');
 
+     //warehouse product management
+     Route::get('/proList/{id}', [WarehouseController::class,'proList'])->name('proList');
+     Route::get('/addProductStock', [WarehouseController::class,'addProductStock'])->name('addProductStock');
+
+
+
+  
+
  
 
     //admin--logistic

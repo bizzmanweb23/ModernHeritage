@@ -170,4 +170,13 @@ class WarehouseController extends Controller
         WareHouse::where('id',$request->id)->delete();
         return json_encode(1);
     }
+    public function  proList($id)
+    {
+
+        return view('frontend.admin.warehouse.products.index',compact('id'));
+    }
+    public function addProductStock()
+    {
+        return view('frontend.admin.warehouse.products.add');
+    }
 }
