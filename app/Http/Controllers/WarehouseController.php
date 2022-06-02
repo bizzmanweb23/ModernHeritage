@@ -7,6 +7,8 @@ use App\Models\WareHouse;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Models\CountryCode;
+use App\Models\Product;
+use App\Models\WarehouseProducts;
 use DB;
 
 
@@ -173,7 +175,32 @@ class WarehouseController extends Controller
         return view('frontend.admin.warehouse.products.index',compact('id'));
     }
     public function addProductStock()
-    {
-        return view('frontend.admin.warehouse.products.add');
+    {   
+        $data['unit'] = DB::table('units')->get();
+        $data['products'] = Product::where('status',1)->get();
+        return view('frontend.admin.warehouse.products.add',$data);
     }
+    public function warehouseProducts()
+    { 
+       
+        return view('frontend.admin.warehouse.products.list');
+    }
+    public function saveWarePro(Request $request)
+    {
+
+        $uid=session()->get('ADMIN_USER_ID');
+
+        WarehouseProducts::insert([
+              'pro_id'=>$request->pro_id,
+              'selling_price'=>$request->selling_price,
+              'min_stock'=>$request->min_stock,
+              'max_stock'=>$request->max_stock,
+              'avl_stock'=>$request->avl_stock,
+              'ware_house_id'=>$uid,
+              'sku'=>$request->sku,
+              'status'=>1
+        ]);
+        return redirect(route('warehouseProducts'));
+    }
+
 }

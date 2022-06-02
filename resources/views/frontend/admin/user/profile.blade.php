@@ -14,7 +14,7 @@
         <div class="card">
             <div class="card-body">
                 <h5>Update Profile</h5>
-                <input type="hidden" class="form-control" id="id" name="id" value="{{$data->id}}">
+                <input type="hidden" class="form-control" id="id" name="id" value="{{$data->userId}}">
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -46,7 +46,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Mobile:</label>
-                            <input type="text" class="form-control" value="{{$data->mobile}}" id="mobile" name="mobile">
+                            <input type="text" class="form-control" value="{{$data->mobile}}" id="mobile" name="mobile"  maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Zipcode</label>
-                            <input type="text" class="form-control" value="{{$data->zipcode}}" id="zipcode" name="zipcode">
+                            <input type="text" class="form-control" value="{{$data->zipcode}}" id="zipcode" name="zipcode" maxlength="6" oninput="this.value=this.value.replace(/[^0-9]/g,'')" >
                         </div>
                     </div>
 

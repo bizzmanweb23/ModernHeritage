@@ -259,7 +259,7 @@ class UserController extends Controller
 
   
 
-        $data['data'] = User::where('users.id', $id)
+        $data['data'] = User::select('users.id','users.user_name','users.email','users.user_image','users.id as userId','user_address.*')->where('users.id', $id)
             ->join('user_address', 'user_address.user_id', 'users.id')
             ->first();
         $data['countries'] = DB::table('countries')->get();

@@ -2,50 +2,104 @@
 
 @section('content')
 
-<form action="{{ route('saveWarehouse') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('saveWarePro') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">
         <div class="card">
 
             <div class="card-body">
-             
+
                 <div class="row mt-1">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Product</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <select name="pro_id" class="form-control" id="pro_id" required>
+                                <option value="">--Select--</option>
+                                @foreach($products as $p)
+                                <option value="{{ $p->id }}">{{ $p->product_name }} </option>
+                                @endforeach
+                            </select>
+
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Selling Price</label>
-                            <input type="text" class="form-control" id="address_1" name="address_1" required>
-                        </div>
-                    </div>
-                  
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Min Stock</label>
-                            <input type="text" class="form-control" id="address_1" name="address_1" required>
-                        </div>
-                    </div>
-         
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Max Stock</label>
-                            <input type="text" class="form-control" id="address_1" name="address_1" required>
+                            <input type="number" class="form-control" id="selling_price" name="selling_price" required>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Available Stock</label>
-                            <input type="text" class="form-control" id="address_1" name="address_1" required>
+                            <label for="mobile">Min Stock</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="min_stock" name="min_stock">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_1" class="form-control" id="unit_1">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Max Stock</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="max_stock" name="max_stock">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_2" class="form-control" id="unit_2">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Available Stock</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="avl_stock" name="avl_stock">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_3" class="form-control" id="unit_3">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>SKU</label>
+                            <input type="text" class="form-control" id="sku" name="sku" required>
+                        </div>
+                    </div>
+                    
                     <div class="ms-auto text-end">
                         <button class="btn btn-primary" id="save">Save</button>
-                        <a class="btn btn-info" id="back" href="{{ route('wareHouses') }}">Back</a>
+                        <a class="btn btn-info" id="back" href="{{ route('warehouseProducts') }}">Back</a>
                     </div>
+                   
                 </div>
 
             </div>
@@ -53,17 +107,7 @@
     </div>
 </form>
 <script>
-     @if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
-            }
-            toastr.success("{{ $error }}");
-        @endforeach
-    @endif
-   
+
 </script>
 
 @endsection
