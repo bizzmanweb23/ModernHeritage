@@ -29,9 +29,9 @@
           <span class="nav-link-text ms-1">Dashboard</span>
         </a>
       </li>
-      @if(role_test()==4)
+      @if(role_test()!=4)
 
-      @else
+ 
 
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#pagesExamples7" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
@@ -418,7 +418,7 @@
           </a>
         </li> -->
 
-      @endif
+      @else
       <li class="nav-item">
         <a class="nav-link  " href="{{route('warehouseProducts')}}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -461,6 +461,7 @@
           <span class="nav-link-text ms-1">Orders</span>
         </a>
       </li>
+      @endif
 
       <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Account pages</h6>
