@@ -83,7 +83,7 @@ class InventoryController extends Controller
 
         $request->validate([
 
-            'sku' => 'required|unique:products',
+            'cat_id' => 'required',
           
 
         ]);
@@ -130,14 +130,14 @@ class InventoryController extends Controller
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
-            'sku' => $request->sku,
+  
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
             'per_box' => $request->per_box . $request->unit_b,
             'pac_bags' => $request->pac_bags,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
-            'supplier_code' => $request->supplier_code,
+         
             'status' => $request->status,
             'description' => $request->description,
             'product_image' => $image
@@ -149,8 +149,9 @@ class InventoryController extends Controller
     {
         $request->validate([
 
-            'sku' => 'required|unique:products,sku,'.$request->id,
-            
+            'cat_id' => 'required',
+          
+
         ]);
 
         $images = $request->file('images');
@@ -199,14 +200,14 @@ class InventoryController extends Controller
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
-            'sku' => $request->sku,
+         
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
             'per_box' => $request->per_box . $request->unit_b,
             'pac_bags' => $request->pac_bags . $request->unit_p_b,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
-            'supplier_code' => $request->supplier_code,
+         
             'status' => $request->status,
             'description' => $request->description,
             'product_image' => $image

@@ -108,10 +108,10 @@
                             <label>Available Quantity <span style="color:red">*</span></label>
                             <div class="row">
                                 <div class="col-md-9">
-                                    <input type="number" class="form-control" id="available_quantity" name="available_quantity" required>
+                                    <input type="number" class="form-control" id="available_quantity" name="available_quantity" >
                                 </div>
                                 <div class="col-md-3">
-                                    <select name="unit_1" class="form-control" id="unit_1" required>
+                                    <select name="unit_1" class="form-control" id="unit_1" >
                                         <option value="">--Select--</option>
                                         @foreach($unit as $u)
                                         <option value="{{ $u->unit }}">{{ $u->unit }}
@@ -123,12 +123,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label>SKU <span style="color:red">*</span></label>
                             <input type="text" class="form-control" id="sku" name="sku" required>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group" id="gst">
                             <label>Tax %</label>
@@ -210,12 +210,12 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <!-- <div class="col-md-6">
                         <div class="form-group">
                             <label>Supplier Code</label>
                             <input type="text" class="form-control" id="supplier_code" name="supplier_code">
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -253,8 +253,8 @@
     </div>
 </form>
 <script>
-    @if($errors - > any())
-    @foreach($errors - > all() as $error)
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
     toastr.options = {
         "closeButton": true,
         "progressBar": true

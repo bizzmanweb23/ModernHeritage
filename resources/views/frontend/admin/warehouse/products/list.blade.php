@@ -10,28 +10,12 @@
 
 <div class="row">
     <div class="col-md-4">
-        <a href="{{ route('addProductStock') }}" class="btn btn-primary">Add </a>
+        <a href="{{ route('addProductStock') }}" class="btn btn-primary">Add Stock</a>
     </div>
 
 
 </div>
-    <form>
-        <div class="col-md-6">
-            <div class="form-group">
 
-
-                <div class="col-md-4">
-                    <select name="status" class="form-control" id="status">
-                        <option value="all">All</option>
-                        <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Available</option>
-                        <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Unavailable</option>
-                    </select>
-                </div>
-
-
-            </div>
-        </div>
-    </form>
 
     <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>

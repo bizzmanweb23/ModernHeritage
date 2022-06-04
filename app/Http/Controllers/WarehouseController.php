@@ -181,6 +181,7 @@ class WarehouseController extends Controller
             ->join('products', 'products.id', 'warehouse_products.pro_id')
             ->where('warehouse_products.ware_house_id', $user->id)
             ->get();
+        $data['wareHouse']=$warehouse->name;
 
         return view('frontend.admin.warehouse.products.index', $data);
     }
@@ -203,12 +204,20 @@ class WarehouseController extends Controller
     }
     public function saveWarePro(Request $request)
     {
+
         $data = $request->validate([
-            'pro_id' => 'required|unique:warehouse_products,pro_id',
+           
             'sku' => 'required|unique:warehouse_products,sku',
         ]);
 
         $uid = session()->get('ADMIN_USER_ID');
+
+        $data=DB::table('warehouse_products')->where('pro_id',$request->pro_id)->where('ware_house_id',$uid)->first();
+
+        if($data)
+        {
+            return back()->with('message','Product already inserted');
+        }
 
         WarehouseProducts::insert([
             'pro_id' => $request->pro_id,
@@ -237,7 +246,7 @@ class WarehouseController extends Controller
     public function updateWarePro(Request $request)
     {
         $data = $request->validate([
-            'pro_id' => 'required|unique:warehouse_products,pro_id,' . $request->id,
+         
             'sku' => 'required|unique:warehouse_products,sku,' . $request->id,
         ]);
 

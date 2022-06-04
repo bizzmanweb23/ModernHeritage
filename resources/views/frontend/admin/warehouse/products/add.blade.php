@@ -1,7 +1,12 @@
 @extends('frontend.admin.layouts.master')
 
 @section('content')
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong> {{ Session::get('message') }}</strong>
 
+</div>
+@endif
 <form action="{{ route('saveWarePro') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="container">

@@ -130,8 +130,8 @@
     </div>
 </form>
 <script>
-    @if($errors - > any())
-    @foreach($errors - > all() as $error)
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
     toastr.options = {
         "closeButton": true,
         "progressBar": true
