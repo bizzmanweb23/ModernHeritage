@@ -242,9 +242,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/addProductStock', [WarehouseController::class, 'addProductStock'])->name('addProductStock');
     Route::get('/warehouseProducts', [WarehouseController::class, 'warehouseProducts'])->name('warehouseProducts');
     Route::post('/saveWarePro', [WarehouseController::class, 'saveWarePro'])->name('saveWarePro');
+    Route::get('/editWarePro/{id}', [WarehouseController::class, 'editWarePro'])->name('editWarePro');
+    Route::post('/updateWarePro', [WarehouseController::class, 'updateWarePro'])->name('updateWarePro');
+    Route::get('/viewWarePro/{id}', [WarehouseController::class, 'viewWarePro'])->name('viewWarePro');
 
     
-
+   
 
 
     //admin--logistic

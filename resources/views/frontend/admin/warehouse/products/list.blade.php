@@ -20,11 +20,11 @@
             <div class="form-group">
 
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <select name="status" class="form-control" id="status">
                         <option value="all">All</option>
-                        <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Active</option>
-                        <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Inactive</option>
+                        <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Available</option>
+                        <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Unavailable</option>
                     </select>
                 </div>
 
@@ -38,8 +38,9 @@
             <tr>
                 <th>Sl#</th>
                 <th>Product Name</th>
-                <th></th>
-                <th></th>
+                <th>Barcode</th>
+                <th>Status</th>
+            
              
                 <th>Action</th>
 
@@ -47,7 +48,38 @@
             </tr>
         </thead>
         <tbody>
-        
+        @foreach($data as $key=>$pro )
+            <tr>
+                <td style="text-align:center">{{$key+1}}</td>
+                
+                <td>{{$pro->product_name}}</td>
+                <td>
+                <a href="data:image/png;base64,{{DNS1D::getBarcodePNG($pro->sku, 'C39',1,55,array(0,0,0), true)}}" title="download" download>
+                <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($pro->sku, 'C39',1,55,array(0,0,0), true)}}" alt="barcode" />
+   
+                 </a>
+
+                </td>
+                @if(intval($pro->min_stock) > intval($pro-> avl_stock))
+                <td>
+                <span class="badge badge-danger"> unavailable</span>
+                </td>
+                @else
+                <td>
+                <span class="badge badge-warning">available</span>
+                </td>
+                @endif
+            
+          
+                <td>
+                    <a href="editWarePro/{{$pro->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                    <a href="viewWarePro/{{$pro->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                   
+                </td>
+
+            </tr>
+            @endforeach
+
         </tbody>
 
     </table>

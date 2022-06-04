@@ -184,9 +184,9 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="mobile">Packing in bags</label>
-             
-                                    <input type="text" class="form-control" id="pac_bags" name="pac_bags">
-                              
+
+                            <input type="text" class="form-control" id="pac_bags" name="pac_bags">
+
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -253,15 +253,14 @@
     </div>
 </form>
 <script>
-     @if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
-            }
-            toastr.success("{{ $error }}");
-        @endforeach
+    @if($errors - > any())
+    @foreach($errors - > all() as $error)
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ $error }}");
+    @endforeach
     @endif
     $('#color').select2({
         width: '100%',
@@ -270,7 +269,6 @@
     });
 </script>
 <script type="text/javascript">
-  
     $(document).ready(function() {
         $('#cat_id').on('change', function(e) {
             var cat_id = e.target.value;
@@ -281,17 +279,17 @@
                     cat_id: cat_id
                 },
                 success: function(data) {
-              
-                    
-                         if(data){
-                            $('#subcategory').empty();
-                            $('#subcategory').append('<option hidden>Choose Sub Category</option>'); 
-                            $.each(data, function(key, subcat){
-                                $('select[name="subcategory"]').append('<option value="'+ subcat.id +'">' + subcat.sub_category+ '</option>');
-                            });
-                        }else{
-                            $('#subcategory').empty();
-                        }
+
+
+                    if (data) {
+                        $('#subcategory').empty();
+                        $('#subcategory').append('<option hidden>Choose Sub Category</option>');
+                        $.each(data, function(key, subcat) {
+                            $('select[name="subcategory"]').append('<option value="' + subcat.id + '">' + subcat.sub_category + '</option>');
+                        });
+                    } else {
+                        $('#subcategory').empty();
+                    }
                 }
             })
         });

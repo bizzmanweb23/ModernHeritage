@@ -36,7 +36,7 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Category</th>
-                <th>Barcode</th>
+         
                 <th>Price</th>
 
                 <th>Status</th>
@@ -64,12 +64,7 @@
                 </td>
                 <td>{{$c->product_name}}</td>
                 <td>{{$c->category_name}}</td>
-                <td>
-                <a href="data:image/png;base64,{{DNS1D::getBarcodePNG($c->unique_id, 'C39',1,55,array(0,0,0), true)}}" title="download" download>
-                <img src="data:image/png;base64,{{DNS1D::getBarcodePNG($c->unique_id, 'C39',1,55,array(0,0,0), true)}}" alt="barcode" />
-   
-                 </a>
-                </td>
+              
                 <td>{{$c->price}}</td>
                 @if($c->status==1)
                 <td><span class="badge badge-success">Active</span></td>
