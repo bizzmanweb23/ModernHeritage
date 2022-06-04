@@ -273,4 +273,8 @@ class WarehouseController extends Controller
                             ->first();
         return view('frontend.admin.warehouse.products.view', $data);
     }
+    public function otherWareHouse()
+    {
+        return view('frontend.admin.warehouse.other_ware_house');
+    }
 }

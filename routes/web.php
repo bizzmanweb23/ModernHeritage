@@ -246,6 +246,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/updateWarePro', [WarehouseController::class, 'updateWarePro'])->name('updateWarePro');
     Route::get('/viewWarePro/{id}', [WarehouseController::class, 'viewWarePro'])->name('viewWarePro');
 
+
+    //warehouses
+    Route::get('/otherWareHouse', [WarehouseController::class, 'otherWareHouse'])->name('otherWareHouse');
+
     
    
 
