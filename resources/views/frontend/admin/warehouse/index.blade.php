@@ -50,6 +50,7 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
+                <th>Status</th>
                 <th> </th>
                 <th>Action</th>
 
@@ -64,6 +65,11 @@
                 <td>{{$ware_house->name}}</td>
                 <td>{{$ware_house->email }}</td>
                 <td>+{{$ware_house->mobile_no }}</td>
+                @if($ware_house->status==1)
+                <td><span class="badge badge-success">Active</span></td>
+                @else
+                <td><span class="badge badge-danger">Inactive</span></td>
+                @endif
                 <td> <a href="proList/{{$ware_house->id}}" class="btn btn-info" title="edit">List of Products</a></td>
                 <td>
                     <a href="editWarehouse/{{$ware_house->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
@@ -115,7 +121,7 @@
         var status = $('#status').val();
 
         $.ajax({
-            url: "{{route('colors')}}",
+            url: "{{route('wareHouses')}}",
             type: 'GET',
             data: {
                 status: status

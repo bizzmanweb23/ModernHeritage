@@ -17,9 +17,26 @@ class WarehouseController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $data['data'] = WareHouse::get();
+        if(isset($request->status))
+        {
+            if($request->status!='all')
+            {
+                $data['data'] = DB::table('ware_houses')->where('status',$request->status)->get();
+            }
+            else
+            {
+                $data['data'] = DB::table('ware_houses')->get();
+            }
+       
+        }
+        else
+        {
+            $data['data'] = DB::table('ware_houses')->get();
+        }
+     
+
         return view('frontend.admin.warehouse.index', $data);
     }
     public function addWarehouse()
@@ -273,8 +290,30 @@ class WarehouseController extends Controller
                             ->first();
         return view('frontend.admin.warehouse.products.view', $data);
     }
-    public function otherWareHouse()
+    public function otherWareHouse(Request $request)
     {
-        return view('frontend.admin.warehouse.other_ware_house');
+        $uid = session()->get('ADMIN_USER_ID');
+
+ 
+        $user = User::where('id', $uid)->first();
+        $warehouse = DB::table('ware_houses')->where('email',$user->email)->first();
+        if(isset($request->status))
+        {
+            if($request->status != 'all')
+            {
+                $data['data'] = DB::table('ware_houses')->where('status',$request->status)->whereNotIn('id',[$warehouse->id])->get();
+            }
+            else
+            {
+                $data['data'] = DB::table('ware_houses')->whereNotIn('id',[$warehouse->id])->get();
+            }
+           
+        }
+        else
+        {
+            $data['data'] = DB::table('ware_houses')->whereNotIn('id',[$warehouse->id])->get();
+        }
+     
+        return view('frontend.admin.warehouse.other_ware_house',$data);
     }
 }

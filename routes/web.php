@@ -97,10 +97,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/addemployee', [EmployeeController::class, 'saveEmployee'])->name('saveEmployee');
     Route::get('/employeedetails/{id}', [EmployeeController::class, 'employeeData']);
     Route::post('/employeeedit/{id}', [EmployeeController::class, 'employeeEdit']);
+    //Departments
     Route::get('/departments', [EmployeeController::class, 'allDepartment'])->name('departments');
     Route::get('/createdepartment', [EmployeeController::class, 'addDepartment'])->name('addDepartment');
     Route::post('/savedepartment', [EmployeeController::class, 'saveDepartment'])->name('saveDepartment');
     Route::get('/department-employees/{dept_id}', [EmployeeController::class, 'departmentEmployee'])->name('department.employees');
+    Route::get('/editDepartment/{id}', [EmployeeController::class, 'editDepartment'])->name('editDepartment');
+   
+
+    //Job Positions
     Route::get('/jobpositions', [EmployeeController::class, 'allJobPosition'])->name('allJobPosition');
     Route::get('/addjobposition', [EmployeeController::class, 'addJobPosition'])->name('addJobPosition');
     Route::post('/savejobposition', [EmployeeController::class, 'saveJobPosition'])->name('saveJobPosition');

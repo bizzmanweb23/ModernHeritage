@@ -295,11 +295,12 @@ class EmployeeController extends Controller
 
     public function saveDepartment(Request $request)
     {
-        $data = $request->validate(['department_name' => 'required']);
+      $request->validate(['department_name' => 'required|unique:departments,department_name']);
 
         $department = new Department;
         $department->department_name = $request->department_name;
         $department->manager = $request->manager;
+        $department->status = $request->status;
         $department->save();
 
         return redirect(route('departments'));
@@ -336,5 +337,8 @@ class EmployeeController extends Controller
         
         return redirect(route('allJobPosition'));
     }
-  
+    public function  editDepartment($id)
+    {
+
+    }
 }

@@ -1,6 +1,6 @@
-@extends('frontend.admin.employee.index')
+@extends('frontend.admin.layouts.master')
 
-@section('employee_content')
+@section('content')
 <form action="{{ route('saveDepartment') }}" method="post">
     @csrf
         <div class="card">
@@ -14,13 +14,7 @@
                         </ul>
                     </div>
                 @endif
-                <div class="ms-auto text-end">
-                    <button class="btn btn-primary px-3 mb-0" id="save"><i class="fas fa-save me-2"
-                            aria-hidden="true"></i>Save</button>
-                    <a class="btn btn-secondary px-3 mb-0" id="back"
-                        href="{{ route('departments') }}"><i class="fas fa-arrow-left text-dark me-2"
-                            aria-hidden="true"></i>Back</a>
-                </div>
+               
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -35,11 +29,26 @@
                             <select name="manager" id="manager" class="form-control">
                                 <option value=""> --Select-- </option>
                                 @foreach($employee as $e)
-                                    <option value="{{ $e->unique_id }}">{{ $e->emp_name }}</option>
+                                    <option value="{{ $e->emp_name }}">{{ $e->emp_name }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group company" id="employee">
+                            <label for="manager">Status</label>
+                            <select name="status" id="status" class="form-control">
+                                <option value="1"> Active </option>
+                                <option value="0"> Inactive</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="ms-auto text-end">
+                    <button class="btn btn-primary px-3 mb-0" id="save">Save</button>
+                    <a class="btn btn-secondary px-3 mb-0" id="back"
+                        href="{{ route('departments') }}">Back</a>
                 </div>
             </div>
         </div>

@@ -18,12 +18,15 @@
 
 <div class="container card" style="padding:15px;">
 
-<div class="ms-auto text-end">
-                     
-                     <a class="btn btn-link" id="back" href="{{ route('wareHouses') }}"><i class="fa fa-arrow-left"></i>Back</a>
-                 </div>
+    <div class="ms-auto text-end">
+         @if(session('FRONT_ADMIN_ID')==1)
+        <a class="btn btn-link" id="back" href="{{ route('wareHouses') }}"><i class="fa fa-arrow-left"></i>Back</a>
+        @else
+        <a class="btn btn-link" id="back" href="{{ route('otherWareHouse') }}"><i class="fa fa-arrow-left"></i>Back</a>
+        @endif
+    </div>
     <form>
-    <h5>Product List of {{$wareHouse}}</h5>
+        <h5>Product List of {{$wareHouse}}</h5>
         <div class="col-md-6">
             <div class="form-group">
 
@@ -74,7 +77,7 @@
 
 
                 <td>
-                    
+
                     <a href="../viewWarePro/{{$pro->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
 
                 </td>
