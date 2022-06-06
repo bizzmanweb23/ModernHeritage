@@ -281,9 +281,25 @@ class EmployeeController extends Controller
       //  return redirect('admin/employeedetails/'.$id);
     }
 
-    public function allDepartment()
+    public function allDepartment(Request $request)
     {
-        $departments = Department::get();
+        if(isset($request->status))
+        {
+            if($request->status != 'all')
+            {
+                $departments = Department::where('status',$request->status)->get();
+            }
+            else
+            {
+                $departments = Department::get();
+            }
+           
+        }
+        else
+        {
+            $departments = Department::get();
+        }
+      
         return view('frontend.admin.employee.department.departments',['departments' => $departments]);
     }
 
@@ -303,7 +319,7 @@ class EmployeeController extends Controller
         $department->status = $request->status;
         $department->save();
 
-        return redirect(route('departments'));
+        return redirect(route('departments'))->with('message','Department inserted successfully');
     }
 
     public function departmentEmployee($dept_id)
@@ -335,10 +351,36 @@ class EmployeeController extends Controller
         $jobPosition->manager = $request->manager;
         $jobPosition->save();
         
-        return redirect(route('allJobPosition'));
+        return redirect(route('allJobPosition'))->with('message','Department inserted successfully');
     }
     public function  editDepartment($id)
     {
+        $employee = Employee::get();
+        $department = Department::where('id',$id)->first();
+        return view('frontend.admin.employee.department.edit',['department' => $department,'employee'=>$employee]);
+    }
+    public function updateDepartment(Request $request)
+    {
+        $request->validate(['department_name' => 'required|unique:departments,department_name,'.$request->id]);
 
+        $department = Department::find($request->id);
+        $department->department_name = $request->department_name;
+        $department->manager = $request->manager;
+        $department->status = $request->status;
+        $department->save();
+
+        return redirect(route('departments'))->with('message','Department updated successfully');
+    }
+
+    public function deleteDepartment(Request $request)
+    {
+        Department::where('id',$request->id)->delete();
+        return json_encode(1);
+    }
+
+    public function viewDepartment($id)
+    {
+        $data['data']=Department::where('id',$id)->first();
+        return view('frontend.admin.employee.department.view',$data);
     }
 }

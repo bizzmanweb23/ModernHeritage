@@ -23,9 +23,10 @@
 
 
                 <div class="col-md-5">
-                    <select name="status" class="form-control" id="status">
+                <select name="status" class="form-control" id="status">
                         <option value="all">All</option>
-                        
+                        <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Active</option>
+                        <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Inactive</option>
                     </select>
                 </div>
 
@@ -65,7 +66,7 @@
                 <td>
                     <a href="editDepartment/{{$dpt->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
                     <a href="viewDepartment/{{$dpt->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_warehouse(this.id)" id="{{$dpt->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_department(this.id)" id="{{$dpt->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
             </tr>
@@ -88,21 +89,45 @@
     });
     $('#status').change(function(e) {
         e.preventDefault();
-        var order_status = $('#status').val();
+        var status = $('#status').val();
 
         $.ajax({
-            url: "{{route('orderList')}}",
+            url: "{{route('departments')}}",
             type: 'GET',
             data: {
-                order_status: order_status
+                status: status
             },
             success: function(data) {
-                location.replace('?order_status=' + order_status);
+                location.replace('?status=' + status);
 
             }
         });
 
 
     });
+    function delete_department(id) {
+        if (confirm('Are you sure you want to delete?')) {
+
+            $.ajax({
+            url: "{{route('deleteDepartment')}}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(data) {
+           if(data == 1){
+
+            location.reload();
+           }
+
+            }
+        });
+        } else {
+
+            console.log('Thing was not saved to the database.');
+        }
+    }
+
+    
 </script>
 @endsection

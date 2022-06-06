@@ -103,7 +103,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/savedepartment', [EmployeeController::class, 'saveDepartment'])->name('saveDepartment');
     Route::get('/department-employees/{dept_id}', [EmployeeController::class, 'departmentEmployee'])->name('department.employees');
     Route::get('/editDepartment/{id}', [EmployeeController::class, 'editDepartment'])->name('editDepartment');
-   
+    Route::post('/updateDepartment', [EmployeeController::class, 'updateDepartment'])->name('updateDepartment');
+    Route::get('/deleteDepartment', [EmployeeController::class, 'deleteDepartment'])->name('deleteDepartment');
+    Route::get('/viewDepartment/{id}', [EmployeeController::class, 'viewDepartment'])->name('viewDepartment');
+
+    
 
     //Job Positions
     Route::get('/jobpositions', [EmployeeController::class, 'allJobPosition'])->name('allJobPosition');
