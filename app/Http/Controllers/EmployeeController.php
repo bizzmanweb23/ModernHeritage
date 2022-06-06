@@ -338,7 +338,8 @@ class EmployeeController extends Controller
     public function addJobPosition()
     {
         $employee = Employee::get();
-        return view('frontend.admin.employee.job_position.addJobPosition',['employee' => $employee]);
+        $data['department']=Department::where('status',1)->get();
+        return view('frontend.admin.employee.job_position.addJobPosition',['employee' => $employee],$data);
     }
     
     public function saveJobPosition(Request $request)
@@ -349,9 +350,11 @@ class EmployeeController extends Controller
         $jobPosition->position_name = $request->position_name;
         $jobPosition->position_description = $request->position_description;
         $jobPosition->manager = $request->manager;
+        $jobPosition->dpt_id = $request->dpt_id;
+        $jobPosition->status = $request->status;
         $jobPosition->save();
         
-        return redirect(route('allJobPosition'))->with('message','Department inserted successfully');
+        return redirect(route('allJobPosition'))->with('message','Job position inserted successfully');
     }
     public function  editDepartment($id)
     {
