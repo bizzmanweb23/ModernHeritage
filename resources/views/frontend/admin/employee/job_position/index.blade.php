@@ -13,7 +13,12 @@
 
 
 </div>
+@if(Session::has('message'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong> {{ Session::get('message') }}</strong>
 
+</div>
+@endif
 <div class="card" style="padding:15px;">
 
     <form>
@@ -22,7 +27,7 @@
 
 
                 <div class="col-md-5">
-                <select name="status" class="form-control" id="status">
+                    <select name="status" class="form-control" id="status">
                         <option value="all">All</option>
                         <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Active</option>
                         <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Inactive</option>
@@ -40,7 +45,7 @@
         <thead>
             <tr>
                 <th>Sl#</th>
-                
+
                 <th>Job Positions</th>
                 <th>Department</th>
                 <th>Status</th>
@@ -51,23 +56,23 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($jobPositions as $key=>$j_pos )
+            @foreach($jobPositions as $key=>$j_pos )
             <tr>
                 <td style="text-align:center">{{$key+1}}</td>
                 <td>{{$j_pos->position_name }}</td>
                 <td>{{$j_pos->department_name }}</td>
 
-           
+
                 @if($j_pos->status==1)
                 <td><span class="badge badge-success">Active</span></td>
                 @else
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
-               
+
                 <td>
-                    <a href="editJobPosition/{{$j_pos->id}}"  title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                    <a href="viewDepartment/{{$j_pos->id}}"  title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_department(this.id)" id="{{$j_pos->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                    <a href="editJobPosition/{{$j_pos->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                    <a href="viewJobPosition/{{$j_pos->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_job(this.id)" id="{{$j_pos->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
             </tr>
@@ -94,7 +99,7 @@
         var status = $('#status').val();
 
         $.ajax({
-            url: "{{route('departments')}}",
+            url: "{{route('allJobPosition')}}",
             type: 'GET',
             data: {
                 status: status
@@ -107,29 +112,28 @@
 
 
     });
-    function delete_department(id) {
+
+    function delete_job(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-            url: "{{route('deleteDepartment')}}",
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(data) {
-           if(data == 1){
+                url: "{{route('deleteJob')}}",
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data == 1) {
 
-            location.reload();
-           }
+                        location.reload();
+                    }
 
-            }
-        });
+                }
+            });
         } else {
 
             console.log('Thing was not saved to the database.');
         }
     }
-
-    
 </script>
 @endsection

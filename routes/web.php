@@ -113,8 +113,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/jobpositions', [EmployeeController::class, 'allJobPosition'])->name('allJobPosition');
     Route::get('/addjobposition', [EmployeeController::class, 'addJobPosition'])->name('addJobPosition');
     Route::post('/savejobposition', [EmployeeController::class, 'saveJobPosition'])->name('saveJobPosition');
+    Route::get('/editJobPosition/{id}', [EmployeeController::class, 'editJobPosition'])->name('editJobPosition');
+    Route::post('/updateJobPosition', [EmployeeController::class, 'updateJobPosition'])->name('updateJobPosition');
+    Route::get('/deleteJob', [EmployeeController::class, 'deleteJob'])->name('deleteJob');
+    Route::get('/viewJobPosition/{id}', [EmployeeController::class, 'viewJobPosition'])->name('viewJobPosition');
 
 
+    
+    
+  
     //admin--role
     // Route::get('/role', [DashboardController::class, 'createRole'])->name('createRole');
 

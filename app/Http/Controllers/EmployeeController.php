@@ -328,10 +328,35 @@ class EmployeeController extends Controller
 
         return view('frontend.admin.employee.allEmployee',['employees' => $employees]);
     }
-
-    public function allJobPosition()
+    public function allJobPosition(Request $request)
     {
-        $jobPositions = JobPosition::get();
+         if(isset($request->status))
+         {
+             if($request->status != 'all')
+             {
+                $jobPositions = JobPosition::select('departments.department_name','job_positions.*')
+                ->join('departments','departments.id','job_positions.dpt_id')
+                ->where('job_positions.status',$request->status)
+                ->get();
+             }
+             else
+             {
+                $jobPositions = JobPosition::select('departments.department_name','job_positions.*')
+                ->join('departments','departments.id','job_positions.dpt_id')
+         
+                ->get();
+             }
+          
+         }
+         else
+         {
+            $jobPositions = JobPosition::select('departments.department_name','job_positions.*')
+                                        ->join('departments','departments.id','job_positions.dpt_id')
+                                    
+                                        ->get();
+         }
+       
+    
         return view('frontend.admin.employee.job_position.index',['jobPositions' => $jobPositions]);
     }
 
@@ -341,7 +366,6 @@ class EmployeeController extends Controller
         $data['department']=Department::where('status',1)->get();
         return view('frontend.admin.employee.job_position.addJobPosition',['employee' => $employee],$data);
     }
-    
     public function saveJobPosition(Request $request)
     {
         $data = $request->validate(['position_name' => 'required']);
@@ -385,5 +409,40 @@ class EmployeeController extends Controller
     {
         $data['data']=Department::where('id',$id)->first();
         return view('frontend.admin.employee.department.view',$data);
+    }
+    public function editJobPosition($id)
+    {
+        $data['employee'] = Employee::get();
+        $data['department'] = Department::where('status',1)->get();
+        $data['data'] = JobPosition::where('id',$id)->first();
+        return view('frontend.admin.employee.job_position.edit',$data);
+    }
+
+    public function updateJobPosition(Request $request)
+    {
+        $data = $request->validate(['position_name' => 'required']);
+        
+        $jobPosition = JobPosition::find($request->id);
+        $jobPosition->position_name = $request->position_name;
+        $jobPosition->position_description = $request->position_description;
+        $jobPosition->manager = $request->manager;
+        $jobPosition->dpt_id = $request->dpt_id;
+        $jobPosition->status = $request->status;
+        $jobPosition->save();
+        
+        return redirect(route('allJobPosition'))->with('message','Job position updated successfully');
+    }
+    public function deleteJob(Request $request)
+    {
+        JobPosition::where('id',$request->id)->delete();
+        return json_encode(1);
+    }
+    public function viewJobPosition($id)
+    {
+        $data['data'] = JobPosition::select('departments.department_name','job_positions.*')
+                                    ->join('departments','departments.id','job_positions.dpt_id')
+                                    ->where('job_positions.id',$id)
+                                    ->first();
+        return view('frontend.admin.employee.job_position.view',$data);
     }
 }
