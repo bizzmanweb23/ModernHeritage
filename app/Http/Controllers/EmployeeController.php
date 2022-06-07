@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Customer;
 use App\Models\Department;
 use App\Models\JobPosition;
+use App\Models\Country;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use DB;
@@ -27,15 +28,17 @@ class EmployeeController extends Controller
     public function addEmployee()
     {
         $countryCodes = CountryCode::get();
-        $customer = Customer::get();
+        $customer = DB::table('customer_management')->get();
         $employee = Employee::get();
         $department = Department::get();
         $jobPosition = JobPosition::get();
+        $countries = Country::get();
         return view('frontend.admin.employee.addEmployee',['customer' => $customer,
                                                             'countryCodes' => $countryCodes,
                                                             'employee' => $employee,
                                                             'department' => $department,
                                                             'jobPosition' => $jobPosition,
+                                                            'countries' => $countries,
                                                         ]);
     }
     
@@ -82,6 +85,15 @@ class EmployeeController extends Controller
         {
             $other_id_file_path = null;
         }
+        if($request->file('driving_license')){
+            $driving_license = $request->file('driving_license')->extension();
+            $driving_license_path = $request->file('driving_license')->storeAs('images/employees/ids',$number.'.'.$driving_license,'public');
+            $request->file('driving_license')->move(public_path('images/employees/ids'),$number.'.'.$driving_license_path);
+        }
+        else
+        {
+            $driving_license_path = null;
+        }
 
         //user table unique_id
         $unique_id_user = User::orderBy('id', 'desc')->first();
@@ -99,16 +111,26 @@ class EmployeeController extends Controller
             $number_user = "MHU" . sprintf("%05d", $number_user + 1);
         }
 
-        // $user = new User;
-        // $user->unique_id = $number_user;
-        // $user->user_name = $request->emp_name;
-        // $user->email = $request->work_email;
-        // $user->password = Hash::make($data['password']);
-        // $user->user_id = $number;
-        // $user->status = 1;
-        // $user->user_type = "employee";
-        // $user->role_id = 3;
-        // $user->save();
+        $user = new User;
+        $user->unique_id = $number_user;
+        $user->user_name = $request->emp_name;
+        $user->email = $request->work_email;
+        $user->password = Hash::make($request->work_email);
+        $user->user_id = $number;
+        $user->status = 1;
+        $user->user_type = "employee";
+        $user->role_id = 3;
+        $user->user_image = $file_path;
+        $user->save();
+
+        DB::table('user_address')->insert([
+             'address_1'=>$request->contact_address,
+             'country'=>$request->country,
+             'mobile'=>$request->country_code_m . $request->work_mobile,
+             'user_id'=>$user->id,
+        ]);
+
+
 
         $employee = new Employee;
         $employee->unique_id = $number;
@@ -140,26 +162,18 @@ class EmployeeController extends Controller
         $employee->other_id_name = $request->other_id_name;
         $employee->other_id_no = $request->other_id_no;
         $employee->other_id_file = $other_id_file_path;
-        if($request->type =='D')
-        {
-            $max=DB::table('employees')->max('order_id');
-        
-            $employee->order_id = $max+1;
-        }
-        else{
-            $employee->order_id = '';
-        }
-        $employee->	status = 1;
-        
+        $employee->ren_rate = $request->ren_rate;
+        $employee->blood_grp = $request->blood_grp;
+        $employee->medical_con = $request->medical_con;
+        $employee->drug_allergy = $request->drug_allergy;
+        $employee->vehicle_no = $request->vehicle_no;
+        $employee->driving_license = $driving_license_path;
+        $employee->expiry_date = $request->expiry_date;
+        $employee->status = 1;
         $employee->save();
-        if($request->type =='D')
-        {
-            
-            return redirect(route('drivers'));
-        }
-      else{
+      
         return redirect(route('allEmployee'));
-      }
+      
        
     }
 
@@ -440,9 +454,9 @@ class EmployeeController extends Controller
     public function viewJobPosition($id)
     {
         $data['data'] = JobPosition::select('departments.department_name','job_positions.*')
-                                    ->join('departments','departments.id','job_positions.dpt_id')
-                                    ->where('job_positions.id',$id)
-                                    ->first();
+                                ->join('departments','departments.id','job_positions.dpt_id')
+                                ->where('job_positions.id',$id)
+                                ->first();
         return view('frontend.admin.employee.job_position.view',$data);
     }
 }
