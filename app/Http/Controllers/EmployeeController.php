@@ -44,6 +44,7 @@ class EmployeeController extends Controller
     
     public function saveEmployee(Request $request)
     {
+        
         $data = $request->validate([
             'emp_name' => 'required',
             'job_position' => 'required',
@@ -141,7 +142,7 @@ class EmployeeController extends Controller
         $employee->work_email = $request->work_email;
         $employee->department = $request->department;
         $employee->manager = $request->manager;
-        $employee->default_customer = json_encode($request->default_customer);
+        $employee->default_customer = implode(',',$request->default_customer);
         $employee->emp_image = $file_path;
         $employee->contact_address = $request->contact_address;
         $employee->contact_email = $request->contact_email;
@@ -259,7 +260,7 @@ class EmployeeController extends Controller
         $employee->work_email = $request->work_email;
         $employee->department = $request->department;
         $employee->manager = $request->manager;
-        $employee->default_customer = json_encode($request->default_customer);
+        $employee->default_customer = implode(',',$request->default_customer);
         $employee->emp_image = $file_path;
         $employee->contact_address = $request->contact_address;
         $employee->contact_email = $request->contact_email;
@@ -458,5 +459,27 @@ class EmployeeController extends Controller
                                 ->where('job_positions.id',$id)
                                 ->first();
         return view('frontend.admin.employee.job_position.view',$data);
+    }
+    public function job_positions(Request $request)
+    {
+        $dpt_id = $request->department;
+         
+        $jobPositions =  DB::table('job_positions')->where('dpt_id',$dpt_id)
+                          
+                              ->get();
+        return response()->json($jobPositions);
+    }
+    public function viewEmployee($id)
+    {
+       $emp = Employee::select('employees.*','departments.department_name','job_positions.position_name')
+                                        ->join('departments','departments.id','employees.department')
+                                        ->join('job_positions','job_positions.id','employees.job_position')
+                                        ->where('employees.id',$id)
+                                        ->first();
+       $employee['dft_customer']=DB::table('customer_management')->whereIn('id',explode(',',$emp->default_customer))->get();
+
+       $employee['employee'] = $emp;
+    
+       return view('frontend.admin.employee.viewEmployee',$employee);
     }
 }

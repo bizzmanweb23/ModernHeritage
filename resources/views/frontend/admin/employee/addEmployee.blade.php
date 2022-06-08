@@ -39,10 +39,7 @@
                     <div class="form-group">
                         <label for="job_position">Job Position:</label>
                         <select name="job_position" class="form-control" id="job_position" required>
-                            <option value="">--Select--</option>
-                            @foreach($jobPosition as $jp)
-                            <option value="{{ $jp->id }}">{{ $jp->position_name }}</option>
-                            @endforeach
+                            
                         </select>
                     </div>
                 </div>
@@ -339,8 +336,8 @@
                         <label for="school">Drug Allergy:</label>
                         <select class="form-control" id="drug_allergy" name="drug_allergy">
                             <option value="">--select--</option>
-                            <option value="Graduate">Yes</option>
-                            <option value="Bachelor">No</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                            
                         </select>
                     </div>
@@ -390,6 +387,33 @@
         width: '100%',
         placeholder: "Select a Customer",
         allowClear: true
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#department').on('change', function(e) {
+            var department = e.target.value;
+            $.ajax({
+                url: "{{ route('job_positions') }}",
+                type: "GET",
+                data: {
+                    department: department
+                },
+                success: function(data) {
+
+
+                    if (data) {
+                        $('#job_position').empty();
+                        $('#job_position').append('<option hidden>Choose Job Position</option>');
+                        $.each(data, function(key, job_p) {
+                            $('select[name="job_position"]').append('<option value="' + job_p.id + '">' + job_p.position_name + '</option>');
+                        });
+                    } else {
+                        $('#job_position').empty();
+                    }
+                }
+            })
+        });
     });
 </script>
 @endsection

@@ -97,6 +97,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/addemployee', [EmployeeController::class, 'saveEmployee'])->name('saveEmployee');
     Route::get('/employeedetails/{id}', [EmployeeController::class, 'employeeData']);
     Route::post('/employeeedit/{id}', [EmployeeController::class, 'employeeEdit']);
+    Route::get('/job_positions', [EmployeeController::class, 'job_positions'])->name('job_positions');
+    Route::get('/viewEmployee/{id}', [EmployeeController::class, 'viewEmployee'])->name('viewEmployee');
+
+   
+
     //Departments
     Route::get('/departments', [EmployeeController::class, 'allDepartment'])->name('departments');
     Route::get('/createdepartment', [EmployeeController::class, 'addDepartment'])->name('addDepartment');
