@@ -388,6 +388,16 @@
         placeholder: "Select a Customer",
         allowClear: true
     });
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
 </script>
 <script type="text/javascript">
     $(document).ready(function() {

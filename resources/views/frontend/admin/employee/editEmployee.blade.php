@@ -115,8 +115,13 @@
                     <div class="form-group">
                         <label for="default_customer">Default Customer:</label>
                         <select multiple="multiple" name="default_customer[]" id="default_customer" class="form-control">
-                            @foreach($customer as $c)
-                            <option value="{{ $c->id }}">
+                            @foreach($s_customer as $c)
+                            <option value="{{ $c->id }}" selected>
+                                {{ $c->name }}
+                            </option>
+                            @endforeach
+                            @foreach($ns_customer as $c)
+                            <option value="{{ $c->id }}" >
                                 {{ $c->name }}
                             </option>
                             @endforeach
@@ -398,6 +403,18 @@
 
 
 </form>
+<script>
+     @if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
+    </script>
 
 <script>
     $('#default_customer').select2({

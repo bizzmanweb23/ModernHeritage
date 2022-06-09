@@ -27,11 +27,12 @@
             <div class="form-group">
 
 
-                <div class="col-md-5">
-                    <select name="status" class="form-control" id="status">
-                        <option value="all">All</option>
-                        <option value="1" @if(isset($_GET['status']) && $_GET['status']==1 )selected @endif>Active</option>
-                        <option value="0" @if(isset($_GET['status']) && $_GET['status']==0 )selected @endif>Inactive</option>
+                <div class="col-md-6">
+                    <select name="job_position_id" class="form-control" id="job_position_id">
+                        <option value="all">Search By Job Positions</option>
+                        @foreach($jobPositions as $j_pos)
+                        <option value="{{$j_pos->id}}"  @if(isset($_GET['job_position_id']) && $_GET['job_position_id'] == $j_pos->id) selected @endif>{{$j_pos->position_name}}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -49,6 +50,7 @@
 
                 <th>Employee Name</th>
                 <th>Work Email</th>
+                <th>Expiry Date</th>
                 <th>Status</th>
                 <th>Action</th>
 
@@ -62,13 +64,21 @@
                 <td style="text-align:center">{{$key+1}}</td>
                 <td>{{$emp->emp_name }}</td>
                 <td>{{$emp->work_email }}</td>
-
-
+                @if($emp->expiry_date !='')
+                @if(date_diff_day($emp->expiry_date)=='E')
+                <td style="color:red;cursor:pointer;"  title="Driving License Expired"><b>{{date("d/m/Y", strtotime($emp->expiry_date))}}</b></td>
+                @else
+                <td><b>{{date("d/m/Y", strtotime($emp->expiry_date))}}</b></td>
+                @endif
+             @else
+             <td>-</td>
+                @endif
                 @if($emp->status==1)
                 <td><span class="badge badge-success">Active</span></td>
                 @else
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
+              
 
                 <td>
                     <a href="editEmployee/{{$emp->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
@@ -95,18 +105,18 @@
             responsive: true
         });
     });
-    $('#status').change(function(e) {
+    $('#job_position_id').change(function(e) {
         e.preventDefault();
-        var status = $('#status').val();
+        var job_position_id = $('#job_position_id').val();
 
         $.ajax({
-            url: "{{route('allJobPosition')}}",
+            url: "{{route('allEmployee')}}",
             type: 'GET',
             data: {
-                status: status
+                job_position_id : job_position_id
             },
             success: function(data) {
-                location.replace('?status=' + status);
+                location.replace('?job_position_id='+job_position_id);
 
             }
         });

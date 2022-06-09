@@ -12,6 +12,7 @@ use App\Models\JobPosition;
 use App\Models\Country;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
 use DB;
 
 class EmployeeController extends Controller
@@ -19,10 +20,22 @@ class EmployeeController extends Controller
 
 
     //employeeManagement
-    public function allEmployee()
+    public function allEmployee(Request $request)
     {
-        $employees = Employee::get();
-        return view('frontend.admin.employee.allEmployee', ['employees' => $employees]);
+
+       
+        $jobPositions=JobPosition::where('status',1)->get();
+        if(isset($request->job_position_id))
+        {
+            $employees = Employee::where('job_position',$request->job_position_id)->get();
+ 
+        }
+        else
+        {
+            $employees = Employee::get();
+        }
+
+        return view('frontend.admin.employee.allEmployee', ['employees' => $employees,'jobPositions' => $jobPositions]);
     }
 
     public function addEmployee()
@@ -30,8 +43,8 @@ class EmployeeController extends Controller
         $countryCodes = CountryCode::get();
         $customer = DB::table('customer_management')->get();
         $employee = Employee::get();
-        $department = Department::get();
-        $jobPosition = JobPosition::get();
+        $department = Department::where('status',1)->get();
+        $jobPosition = JobPosition::where('status',1)->get();
         $countries = Country::get();
         return view('frontend.admin.employee.addEmployee', [
             'customer' => $customer,
@@ -46,11 +59,11 @@ class EmployeeController extends Controller
     public function saveEmployee(Request $request)
     {
 
+      
         $data = $request->validate([
             'emp_name' => 'required',
             'job_position' => 'required',
-            'work_email' => 'required|email:rfc,dns|unique:employees',
-
+            'work_email' => 'required|email|unique:users,email',
         ]);
 
         $unique_id = Employee::orderBy('id', 'desc')->first();
@@ -210,7 +223,7 @@ class EmployeeController extends Controller
         $data = $request->validate([
             'emp_name' => 'required',
             'job_position' => 'required',
-            'work_email' => 'required|email:rfc,dns',
+            'work_email' => 'required|email|unique:users',
         ]);
         $employee = Employee::findOrFail($id);
 
@@ -431,9 +444,7 @@ class EmployeeController extends Controller
     {
         $dpt_id = $request->department;
 
-        $jobPositions =  DB::table('job_positions')->where('dpt_id', $dpt_id)
-
-            ->get();
+        $jobPositions =  DB::table('job_positions')->where('dpt_id', $dpt_id)->where('status',1)->get();
         return response()->json($jobPositions);
     }
     public function viewEmployee($id)
@@ -444,6 +455,7 @@ class EmployeeController extends Controller
             ->where('employees.id', $id)
             ->first();
         $employee['dft_customer'] = DB::table('customer_management')->whereIn('id', explode(',', $emp->default_customer))->get();
+
 
         $employee['employee'] = $emp;
 
@@ -461,13 +473,14 @@ class EmployeeController extends Controller
 
         $employee['employee'] = $emp;
         $countryCodes = CountryCode::get();
-        $customer = DB::table('customer_management')->get();
-
+        $s_customer = DB::table('customer_management')->whereIn('id',explode(',',$emp->default_customer))->get();
+        $ns_customer = DB::table('customer_management')->whereNotIn('id',explode(',',$emp->default_customer))->get();
         $department = Department::get();
         $jobPosition = JobPosition::where('dpt_id',$emp->department)->get();
         $countries = Country::get();
         return view('frontend.admin.employee.editEmployee', $employee,[
-            'customer' => $customer,
+            's_customer' => $s_customer,
+            'ns_customer' => $ns_customer,
             'countryCodes' => $countryCodes,
             'department' => $department,
             'jobPosition' => $jobPosition,
@@ -477,13 +490,18 @@ class EmployeeController extends Controller
 
     public function updateEmployee(Request $request)
     {
-        // $data = $request->validate([
-        //     'emp_name' => 'required',
-        //     'job_position' => 'required',
-        //     'work_email' => 'required|email:rfc,dns|unique:employees',
+       
+        $emp=DB::table('employees')->where('id',$request->id)->first();
 
-        // ]);
+   
+      
+        $user_data=DB::table('users')->where('email',$emp->work_email)->first();
 
+        $data = $request->validate([
+            'emp_name' => 'required',
+            'job_position' => 'required',
+            'work_email' => 'required|email|unique:users,email,'.$user_data->id,
+        ]);
         
 
         if ($request->file('emp_image')) {
@@ -510,11 +528,7 @@ class EmployeeController extends Controller
         }
 
         //user table unique_id
-      $emp=DB::table('employees')->where('id',$request->id)->first();
-
-   
-      
-      $user_data=DB::table('users')->where('email',$emp->work_email)->first();
+     
 
         $user =  User::find($user_data->id);
        
@@ -544,7 +558,7 @@ class EmployeeController extends Controller
         $employee->work_email = $request->work_email;
         $employee->department = $request->department;
         $employee->manager = $request->manager;
-       // $employee->default_customer = implode(',', $request->default_customer);
+        $employee->default_customer = implode(',', $request->default_customer);
         $employee->emp_image = $file_path;
         $employee->contact_address = $request->contact_address;
         $employee->contact_email = $request->contact_email;
