@@ -333,6 +333,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::get('/addvehicles', [FleetController::class, 'addVehicles'])->name('addVehicles');
         Route::post('/savevehicle', [FleetController::class, 'saveVehicle'])->name('saveVehicle');
         Route::get('/allbrands', [FleetController::class, 'allBrands'])->name('allBrands');
+        Route::get('/addbrands', [FleetController::class, 'addBrands'])->name('addBrands');
         Route::post('/savebrands', [FleetController::class, 'saveBrands'])->name('saveBrands');
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
         Route::post('/savemodels', [FleetController::class, 'saveModels'])->name('saveModels');

@@ -80,10 +80,7 @@ class FleetController extends Controller
     public function allBrands()
     {
         $brands = VehicleBrand::get();
-        foreach ($brands as $b) {
-            $count = VehicleModel::where('brand_id', $b->id)->get()->count();
-            $b->count = $count;
-        }
+       
         return view('frontend.admin.fleet.brands.allBrands', ['brands' => $brands]);
     }
 
@@ -91,7 +88,7 @@ class FleetController extends Controller
     {
         $data = $request->validate([
             'brand_name' => 'required',
-            'brand_image' => 'required',
+            
         ]);
         $str_time = time();
         if($request->file('brand_image')){
@@ -107,6 +104,7 @@ class FleetController extends Controller
         $brand = new VehicleBrand;
         $brand->brand_name = $request->brand_name;
         $brand->brand_image = $file_path;
+        $brand->status = $request->status;
         $brand->save();
 
         return redirect(route('allBrands'));
@@ -136,5 +134,9 @@ class FleetController extends Controller
         $model->save();
 
         return redirect(route('allModels'));
+    }
+    public function addBrands()
+    {
+        return view('frontend.admin.fleet.brands.addBrands');
     }
 }

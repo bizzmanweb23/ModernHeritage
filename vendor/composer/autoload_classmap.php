@@ -209,6 +209,8 @@ return array(
     'Database\\Factories\\UserFactory' => $baseDir . '/database/factories/UserFactory.php',
     'Database\\Seeders\\CountrySeeder' => $baseDir . '/database/seeders/CountrySeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
+    'Database\\Seeders\\DepartmentSeeder' => $baseDir . '/database/seeders/DepartmentSeeder.php',
+    'Database\\Seeders\\JobPosition' => $baseDir . '/database/seeders/JobPosition.php',
     'Database\\Seeders\\OrderProducts' => $baseDir . '/database/seeders/OrderProducts.php',
     'Database\\Seeders\\OrderSeeder' => $baseDir . '/database/seeders/OrderSeeder.php',
     'Database\\Seeders\\OrderStatusSeeder' => $baseDir . '/database/seeders/OrderStatusSeeder.php',

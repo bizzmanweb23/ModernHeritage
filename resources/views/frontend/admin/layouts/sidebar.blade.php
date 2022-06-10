@@ -350,25 +350,25 @@
         <div class="collapse" id="pagesExamples10" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allEmployee') }}">
+              <a class="nav-link" href="#">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal">Vehicles </span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('departments') }}">
+            <li class="nav-item">
+              <a class="nav-link" href="{{route('allBrands')}}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Brand</span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
+            <li class="nav-item">
+              <a class="nav-link " href="#">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Model </span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
+            <li class="nav-item">
+              <a class="nav-link" href="#">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Maintenance  </span>
               </a>
