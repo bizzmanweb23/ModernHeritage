@@ -139,4 +139,13 @@ class FleetController extends Controller
     {
         return view('frontend.admin.fleet.brands.addBrands');
     }
+    public function  deleteBrand(Request $request)
+    {
+       $brand = VehicleBrand::where('id',$request->id)->delete();
+        
+       return json_encode(1);
+   
+
+     
+    }
 }

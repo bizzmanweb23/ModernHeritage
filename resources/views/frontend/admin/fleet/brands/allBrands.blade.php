@@ -64,8 +64,7 @@
                   
                     <td>
                         <a href="editCustomer/{{$b->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                        <a href="viewCustomer/{{$b->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                        <a href="javascript:void(0)" onclick="return delete_user(this.id)" id="{{$b->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                        <a href="javascript:void(0)" onclick="return delete_brand(this.id)" id="{{$b->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                     </td>
 
 
@@ -80,11 +79,11 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
     <script>
-    function delete_user(id) {
+    function delete_brand(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-            url: "{{route('deleteCustomer')}}",
+            url: "{{route('deleteBrand')}}",
             type: 'GET',
             data: {
                 id: id
