@@ -63,7 +63,7 @@
                     <td>{{$b->brand_name}}</td>
                   
                     <td>
-                        <a href="editCustomer/{{$b->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                        <a href="editBrand/{{$b->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
                         <a href="javascript:void(0)" onclick="return delete_brand(this.id)" id="{{$b->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                     </td>
 

@@ -336,10 +336,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::get('/addbrands', [FleetController::class, 'addBrands'])->name('addBrands');
         Route::post('/savebrands', [FleetController::class, 'saveBrands'])->name('saveBrands');
         Route::get('/deleteBrand', [FleetController::class, 'deleteBrand'])->name('deleteBrand');
+        Route::get('/editBrand/{id}', [FleetController::class, 'editBrand'])->name('editBrand');
+        Route::post('/updateBrands', [FleetController::class, 'updateBrands'])->name('updateBrands');
+      
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
         Route::post('/savemodels', [FleetController::class, 'saveModels'])->name('saveModels');
 
-
+        
 
 
         //driver-management

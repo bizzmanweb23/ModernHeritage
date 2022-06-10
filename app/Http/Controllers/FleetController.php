@@ -148,4 +148,36 @@ class FleetController extends Controller
 
      
     }
+    public function editBrand($id)
+    {
+        $brand['brand'] = VehicleBrand::find($id);
+        return view('frontend.admin.fleet.brands.editBrands',$brand);
+        
+    }
+    public function updateBrands(Request $request)
+    {
+        $data = $request->validate([
+            'brand_name' => 'required',
+            
+        ]);
+        $str_time = time();
+        if($request->file('brand_image')){
+            $file_type = $request->file('brand_image')->extension();
+            $file_path = $request->file('brand_image')->storeAs('images/vehicle_brands','Brand_'.$str_time.'.'.$file_type,'public');
+            $request->file('brand_image')->move(public_path('images/vehicle_brands'),'Brand_'.$str_time.'.'.$file_type);
+        }
+        else
+        {
+            $file_path = $request->brand_image_old;
+        }
+
+        $brand = VehicleBrand::find($request->id);
+        $brand->brand_name = $request->brand_name;
+        $brand->brand_image = $file_path;
+        $brand->status = $request->status;
+        $brand->save();
+
+        return redirect(route('allBrands'));
+    }
+
 }
