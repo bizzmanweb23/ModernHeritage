@@ -340,6 +340,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::post('/updateBrands', [FleetController::class, 'updateBrands'])->name('updateBrands');
       
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
+        Route::get('/addmodels', [FleetController::class, 'addModels'])->name('addModels');
         Route::post('/savemodels', [FleetController::class, 'saveModels'])->name('saveModels');
 
         

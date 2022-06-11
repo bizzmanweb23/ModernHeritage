@@ -112,12 +112,9 @@ class FleetController extends Controller
     
     public function allModels()
     {
-        $brands = VehicleBrand::get();
-        foreach ($brands as $b) {
-            $models = VehicleModel::where('brand_id', $b->id)->get();
-            $b->models = $models;
-        }
-        return view('frontend.admin.fleet.models.allModels', ['brands' => $brands]);
+        $models['models'] = VehicleModel::get();
+      
+        return view('frontend.admin.fleet.models.allModels', $models);
     }
 
     public function saveModels(Request $request)
@@ -178,6 +175,12 @@ class FleetController extends Controller
         $brand->save();
 
         return redirect(route('allBrands'));
+    }
+
+    public function addModels(Request $request)
+    {
+   
+        return view('frontend.admin.fleet.models.add');
     }
 
 }

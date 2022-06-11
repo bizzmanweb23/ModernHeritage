@@ -45,9 +45,6 @@
                     <th>Image</th>
                     <th>Brand Name</th>
                     <th>Action</th>
-
-
-
                 </tr>
             </thead>
             <tbody>
