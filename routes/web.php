@@ -342,10 +342,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
         Route::get('/addmodels', [FleetController::class, 'addModels'])->name('addModels');
         Route::post('/savemodels', [FleetController::class, 'saveModels'])->name('saveModels');
+        Route::get('/editModel/{id}', [FleetController::class, 'editModel'])->name('editModel');
+        Route::post('/updateModels', [FleetController::class, 'updateModels'])->name('updateModels');
+        Route::get('/deleteModel/', [FleetController::class, 'deleteModel'])->name('deleteModel');
 
+
+       
+      
         
-
-
         //driver-management
         Route::get('/driver-overview', [DriverController::class, 'driverOverview'])->name('driverOverview');
         Route::get('/deliveries/{delivery_time}', [DriverController::class, 'allDeliveries'])->name('allDeliveries');

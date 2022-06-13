@@ -112,25 +112,22 @@ class FleetController extends Controller
     
     public function allModels()
     {
-        $models['models'] = VehicleModel::get();
+        $models['models'] = VehicleModel::select('vehicle_models.*','vehicle_brands.brand_name')->join('vehicle_brands','vehicle_brands.id','vehicle_models.brand_id')->get();
       
         return view('frontend.admin.fleet.models.allModels', $models);
     }
 
     public function saveModels(Request $request)
     {
-        $data = $request->validate([
-            'model_name' => 'required',
-            'brand_id' => 'required',
-            'vehicle_type' => 'required',
-        ]);
+        
         $model = new VehicleModel;
         $model->model_name = $request->model_name;
         $model->brand_id = $request->brand_id;
         $model->vehicle_type = $request->vehicle_type;
+        $model->status = $request->status;
         $model->save();
 
-        return redirect(route('allModels'));
+        return redirect(route('allModels'))->with('message', 'Model added successfully !');
     }
     public function addBrands()
     {
@@ -179,8 +176,34 @@ class FleetController extends Controller
 
     public function addModels(Request $request)
     {
-   
-        return view('frontend.admin.fleet.models.add');
+        $brand['brand'] = VehicleBrand::where('status',1)->get();
+        return view('frontend.admin.fleet.models.add',$brand);
     }
 
+    public function editModel($id)
+    {
+        $model['model'] = VehicleModel::select('vehicle_models.*','vehicle_brands.brand_name')
+                                        ->where('vehicle_models.id',$id)
+                                        ->join('vehicle_brands','vehicle_brands.id','vehicle_models.brand_id')
+                                        ->first();
+         $model['brand'] = VehicleBrand::where('status',1)->get();
+        return view('frontend.admin.fleet.models.edit',$model);
+    }
+
+    public function updateModels(Request $request)
+    {
+        $model =  VehicleModel::find($request->id);
+        $model->model_name = $request->model_name;
+        $model->brand_id = $request->brand_id;
+        $model->vehicle_type = $request->vehicle_type;
+        $model->status = $request->status;
+        $model->save();
+
+        return redirect(route('allModels'))->with('message', 'Model updated successfully !');
+    }
+    public function deleteModel(Request $request)
+    {
+        VehicleModel::where('id',$request->id)->delete();
+        return json_encode(1);
+    }
 }
