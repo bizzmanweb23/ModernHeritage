@@ -350,7 +350,7 @@
         <div class="collapse" id="pagesExamples10" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{route('allVehicles')}}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal">Vehicles </span>
               </a>

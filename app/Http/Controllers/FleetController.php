@@ -23,7 +23,8 @@ class FleetController extends Controller
 
     public function addVehicles()
     {
-        $drivers = Employee::where('job_position', '9')->get();
+        $drivers = Employee::where('job_position', '1')->get();
+        $brands = VehicleBrand::where('status', '1')->get();
         $models = VehicleModel::leftjoin('vehicle_brands', 'vehicle_brands.id', '=', 'vehicle_models.brand_id')
                                 ->select('vehicle_brands.brand_image', 'vehicle_models.*')
                                 ->get();
@@ -31,6 +32,7 @@ class FleetController extends Controller
                             [
                                 'drivers' => $drivers,
                                 'models' => $models,
+                                'brands' => $brands,
                             ]);
     }
 
@@ -66,12 +68,7 @@ class FleetController extends Controller
         $vehicle->capacity = $request->capacity;
         $vehicle->trip_hour = $request->trip_hour;
         $vehicle->trip_price = $request->trip_price;
-        $vehicle->after_trip_price = $request->after_trip_price;
-        $vehicle->additional_locn_price = $request->additional_locn_price;
-        $vehicle->after_6pm_price = floatval($request->after_trip_price)*1.5;
-        $vehicle->after_10pm_price = floatval($request->after_trip_price)*2;
-        $vehicle->full_day_price = floatval($request->after_trip_price)*8;
-        $vehicle->sunday_price = floatval($request->after_trip_price)*2;
+       
         $vehicle->save();
 
         return redirect()->route('allVehicles')->with('success', 'Vehicle saved successfully !');
