@@ -44,12 +44,12 @@
         <thead>
             <tr>
                 <th>Sl#</th>
-                <th>Image</th>
+         
                 <th>Vehicle no</th>
-                <th>Brand</th>
-                <th>Model name</th>
+                <th>Current Mileage</th>
+                <th>Dealer</th>
                
-                <th>Vehicle Type</th>
+                <th>Service Performed</th>
 
                 <th>Action</th>
 
@@ -58,6 +58,27 @@
             </tr>
         </thead>
         <tbody>
+        @foreach($data as $key=>$d )
+            <tr>
+                <td>{{$key+1}}</td>
+                
+                <td>{{$d->Vehicleno}}</td>
+                <td>{{$d->current_mileage}}</td>
+              
+                <td>{{$d->dealer}}</td>
+                <td>{{$d->service_performed}}</td>
+
+              
+                <td>
+                    
+                    <a href="editMaintenance/{{$d->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
+                    <a href="viewMaintenance/{{$d->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_maintenance(this.id)" id="{{$d->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                </td>
+
+
+            </tr>
+            @endforeach
        
 
         </tbody>
@@ -68,7 +89,7 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-function delete_vehicle(id) {
+function delete_maintenance(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({

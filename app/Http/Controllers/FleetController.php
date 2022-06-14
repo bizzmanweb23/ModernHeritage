@@ -7,6 +7,7 @@ use App\Models\Vehicle;
 use App\Models\VehicleBrand;
 use App\Models\VehicleModel;
 use Illuminate\Http\Request;
+use DB;
 
 
 class FleetController extends Controller
@@ -295,12 +296,30 @@ class FleetController extends Controller
 
     public function maintenance()
     {
-
-        return view('frontend.admin.maintenance.index');
+        $data['data']=DB::table('maintenance')
+        ->select('maintenance.*','vehicles.vehicle_no as Vehicleno')
+        ->join('vehicles','vehicles.id','maintenance.vehicle_no')
+        ->get();
+        return view('frontend.admin.maintenance.index',$data);
     }
 
     public function  addMaintenance()
     {
-        return view('frontend.admin.maintenance.add');
+        $vehicles['vehicles'] = Vehicle::all();
+        return view('frontend.admin.maintenance.add',$vehicles);
     }
+    public function saveMaintenance(Request $request)
+    {
+         DB::table('maintenance')->insert([
+           'vehicle_no'=>$request->vehicle_no_id,
+           'date'=>$request->service_date,
+           'current_mileage'=>$request->current_mileage,
+           'dealer'=>$request->dealer,
+           'service_performed'=>$request->service_performed,
+           'invoice_no'=>$request->invoice_no,
+           'charges'=>$request->charges
+         ]);
+         return redirect()->route('maintenance')->with('success', 'Vehicle maintenance added successfully !');
+    }
+
 }

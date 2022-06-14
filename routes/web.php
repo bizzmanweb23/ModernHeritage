@@ -346,6 +346,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         //maintance
         Route::get('/maintenance', [FleetController::class, 'maintenance'])->name('maintenance');
         Route::get('/addMaintenance', [FleetController::class, 'addMaintenance'])->name('addMaintenance');
+        Route::post('/saveMaintenance', [FleetController::class, 'saveMaintenance'])->name('saveMaintenance');
+
+
+        
      
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
         Route::get('/addmodels', [FleetController::class, 'addModels'])->name('addModels');
