@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <a href="{{route('addVehicles')}}" class="btn btn-primary">Add Vehicle</a>
+        <a href="{{route('addMaintenance')}}" class="btn btn-primary">Add Maintance</a>
     </div>
 
 
@@ -58,35 +58,7 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($vehicle as $key=>$v )
-            <tr>
-                <td>{{$key+1}}</td>
-                <td>
-              
-             
-                    <img src="{{ asset($v->vehicle_image) }}" alt="Product" style="height: 6rem; width:6rem">
-                
-                </td>
-                <td>{{$v->vehicle_no}}</td>
-                <td>{{$v->brand_name}}</td>
-              
-                <td>{{$v->model_name}}</td>
-                @if($v->status==1)
-                <td><span class="badge badge-success">Active</span></td>
-                @else
-                <td><span class="badge badge-danger">Inactive</span></td>
-                @endif
-                <td>
-                    
-                    <a href="editVehicle/{{$v->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
-                    <a href="viewVehicle/{{$v->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_vehicle(this.id)" id="{{$v->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
-                </td>
-
-
-            </tr>
-            @endforeach
-
+       
 
         </tbody>
     </table>

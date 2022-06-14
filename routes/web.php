@@ -338,7 +338,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::get('/deleteBrand', [FleetController::class, 'deleteBrand'])->name('deleteBrand');
         Route::get('/editBrand/{id}', [FleetController::class, 'editBrand'])->name('editBrand');
         Route::post('/updateBrands', [FleetController::class, 'updateBrands'])->name('updateBrands');
-      
+        Route::get('/deleteVehicle', [FleetController::class, 'deleteVehicle'])->name('deleteVehicle');
+        Route::get('/editVehicle/{id}', [FleetController::class, 'editVehicle'])->name('editVehicle');
+        Route::get('/viewVehicle/{id}', [FleetController::class, 'viewVehicle'])->name('viewVehicle');
+
+
+        //maintance
+        Route::get('/maintenance', [FleetController::class, 'maintenance'])->name('maintenance');
+        Route::get('/addMaintenance', [FleetController::class, 'addMaintenance'])->name('addMaintenance');
+     
         Route::get('/allmodels', [FleetController::class, 'allModels'])->name('allModels');
         Route::get('/addmodels', [FleetController::class, 'addModels'])->name('addModels');
         Route::post('/savemodels', [FleetController::class, 'saveModels'])->name('saveModels');
@@ -346,7 +354,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::post('/updateModels', [FleetController::class, 'updateModels'])->name('updateModels');
         Route::get('/deleteModel/', [FleetController::class, 'deleteModel'])->name('deleteModel');
 
+       
+       Route::get('/models', [FleetController::class, 'models'])->name('model');
 
+       Route::post('/updateVehicle', [FleetController::class, 'updateVehicle'])->name('updateVehicle');
        
       
         
