@@ -34,6 +34,13 @@
 
             {{$data->order_mode}}
         </div>
+    
+        <div class="col-md-3">
+            <h6>Other Info:</h6>
+            Type of renal: <br>
+            Lorry Crane (Ton)*:<br>
+            Remark(s):
+        </div>
     </div>
 
 </div>

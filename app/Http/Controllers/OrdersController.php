@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProducts;
 use App\Models\Vehicle;
+use App\Models\Employee;
 use App\Models\LogisticDashboard;
 use Calendar;
 use DB;
@@ -176,5 +177,12 @@ class OrdersController extends Controller
 
 
     return view('frontend.admin.logisticManagement.logistic_dashboard.index1', $data);
+    }
+
+    public function  assign_driver($id)
+    {
+       $data['drivers'] = Employee::where('job_position',1)->get();
+      $data['warehouse'] = DB::table('ware_houses')->where('status',1)->get();
+        return view('frontend.admin.orders.assign_driver',$data);
     }
 }

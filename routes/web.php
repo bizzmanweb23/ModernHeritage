@@ -276,8 +276,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/otherWareHouse', [WarehouseController::class, 'otherWareHouse'])->name('otherWareHouse');
 
     
-   
-
+    Route::get('/assign_driver/{id}', [OrdersController::class, 'assign_driver'])->name('assign_driver_for_collection');
+    
 
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {

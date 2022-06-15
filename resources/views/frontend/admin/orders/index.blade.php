@@ -78,12 +78,13 @@
                 <td>
 
                     <a href="order-details/{{$c->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                    @if($c->order_status == 1)
+                    <a href="assign_driver/{{$c->id}}" title="assign to driver"><span class="badge badge-info"><i class="fa fa-car"></i></span></a>
+                    <!-- @if($c->order_status == 1)
                     <a href="assign_to_delivery/{{$c->id}}" title="assign to delivery"><span class="badge badge-primary"><i class="fa fa-truck"></i></span></a>
                     @endif
                     @if($c->order_status == 4)
                     <a href="assign_to_driver/{{$c->id}}" title="assign to driver"><span class="badge badge-info"><i class="fa fa-car"></i></span></a>
-                    @endif
+                    @endif -->
                 </td>
 
 

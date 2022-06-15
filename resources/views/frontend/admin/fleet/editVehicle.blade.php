@@ -135,7 +135,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="trip_price">Status:</label>
-                        <select name="vehicle_type" id="vehicle_type" class="form-control" required>
+                        <select name="status" id="status" class="form-control" required>
 
                             <option value="1" @if($data->status == 1) selected @endif>Active </option>
                             <option value="0" @if($data->status == 0) selected @endif>Inactive </option>
