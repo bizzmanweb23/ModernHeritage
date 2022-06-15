@@ -12,15 +12,29 @@ use DB;
 
 class FleetController extends Controller
 {
-    public function allVehicles()
+    public function allVehicles(Request $request)
     {
-        $vehicle = Vehicle::select('vehicles.*','vehicle_brands.brand_name','vehicle_models.model_name')
+        $d_vehicle = Vehicle::select('vehicles.*','vehicle_brands.brand_name','vehicle_models.model_name')
                         ->join('vehicle_brands','vehicle_brands.id','vehicles.brand_id')
-                        ->join('vehicle_models','vehicle_models.id','vehicles.model_name')
-                        ->get();
-           
-         
-         
+                        ->join('vehicle_models','vehicle_models.id','vehicles.model_name');
+        
+        if(isset($request->status))
+        {
+            if($request->status!='all')
+            {
+                $vehicle =  $d_vehicle->where('vehicles.status',$request->status)->get();
+            }
+            else
+            {
+                $vehicle =  $d_vehicle->get();
+            }
+        
+        }
+        else
+        {
+            $vehicle =  $d_vehicle->get();
+        }
+        
         return view('frontend.admin.fleet.allVehicles', ['vehicle' => $vehicle]);
     }
 
@@ -259,7 +273,7 @@ class FleetController extends Controller
         $vehicle->vehicle_image = $file_path;
         $vehicle->model_colour = $request->model_colour;
         $vehicle->model_year = $request->model_year;
-        $vehicle->status = '1';
+        $vehicle->status = $request->status;
         $vehicle->capacity = $request->capacity;
         $vehicle->trip_hour = $request->trip_hour;
         $vehicle->trip_price = $request->trip_price;
@@ -294,12 +308,23 @@ class FleetController extends Controller
 
     }
 
-    public function maintenance()
+    public function maintenance(Request $request)
     {
-        $data['data']=DB::table('maintenance')
+        $data['vehicles'] = Vehicle::all();
+        $data_m=DB::table('maintenance')
         ->select('maintenance.*','vehicles.vehicle_no as Vehicleno')
-        ->join('vehicles','vehicles.id','maintenance.vehicle_no')
-        ->get();
+        ->join('vehicles','vehicles.id','maintenance.vehicle_no');
+        if(isset($request->vehicle_no_id))
+        {
+           $data['data']= $data_m->where('maintenance.vehicle_no',$request->vehicle_no_id)->get();
+        }
+        else
+        {
+            $data['data'] = $data_m->get();
+        }
+        
+
+     
         return view('frontend.admin.maintenance.index',$data);
     }
 
@@ -320,6 +345,41 @@ class FleetController extends Controller
            'charges'=>$request->charges
          ]);
          return redirect()->route('maintenance')->with('success', 'Vehicle maintenance added successfully !');
+    }
+    public function editMaintenance($id)
+    {
+        $maintain['vehicles'] = Vehicle::all();
+        $maintain['maintain'] = DB::table('maintenance')->where('id',$id)->first();
+        return view('frontend.admin.maintenance.edit',$maintain);
+    }
+
+    public function updateMaintenance(Request $request)
+    {
+        DB::table('maintenance')->where('id',$request->id)->update([
+            'vehicle_no'=>$request->vehicle_no_id,
+            'date'=>$request->service_date,
+            'current_mileage'=>$request->current_mileage,
+            'dealer'=>$request->dealer,
+            'service_performed'=>$request->service_performed,
+            'invoice_no'=>$request->invoice_no,
+            'charges'=>$request->charges
+          ]);
+          return redirect()->route('maintenance')->with('success', 'Vehicle maintenance updated successfully !');
+    }
+
+    public function viewMaintenance($id)
+    {
+        $maintain['maintain'] = DB::table('maintenance')
+        ->select('maintenance.*','vehicles.vehicle_no as vehicleNo')
+        ->where('maintenance.id',$id)
+        ->join('vehicles','vehicles.id','maintenance.vehicle_no')
+        ->first();
+        return view('frontend.admin.maintenance.view',$maintain);
+    }
+    public function deleteMaintenance(Request $request)
+    {
+        DB::table('maintenance')->where('id',$request->id)->delete();
+        return json_encode(1);
     }
 
 }

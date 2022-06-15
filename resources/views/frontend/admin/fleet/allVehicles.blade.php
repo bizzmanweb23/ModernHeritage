@@ -25,8 +25,8 @@
                 <div class="col-md-4">
                     <select name="status" class="form-control" id="status">
                         <option value="all">All</option>
-                        <option value="Active" @if(isset($_GET['type']) && $_GET['type']=='individual' )selected @endif>Active</option>
-                        <option value="Inactive" @if(isset($_GET['type']) && $_GET['type']=='company' )selected @endif>Inactive</option>
+                        <option value="1" @if(isset($_GET['status']) && $_GET['status']== 1 )selected @endif>Active</option>
+                        <option value="0" @if(isset($_GET['status']) && $_GET['status']== 0 )selected @endif>Inactive</option>
                     </select>
                 </div>
 
@@ -46,10 +46,11 @@
                 <th>Sl#</th>
                 <th>Image</th>
                 <th>Vehicle no</th>
-                <th>Brand</th>
-                <th>Model name</th>
-               
-                <th>Vehicle Type</th>
+                
+                <th>Road Tax Expiry</th>
+                <th>Inspection Due Date</th>
+                <th>COE Expiry Date</th>
+                <th>Status</th>
 
                 <th>Action</th>
 
@@ -58,28 +59,41 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($vehicle as $key=>$v )
+            @foreach($vehicle as $key=>$v )
             <tr>
                 <td>{{$key+1}}</td>
                 <td>
-              
-             
+
+
                     <img src="{{ asset($v->vehicle_image) }}" alt="Product" style="height: 6rem; width:6rem">
-                
+
                 </td>
                 <td>{{$v->vehicle_no}}</td>
-                <td>{{$v->brand_name}}</td>
-              
-                <td>{{$v->model_name}}</td>
+                
+                @if(road_tax_expiry($v->road_tax_expiry)=='E')
+                <td style="color:red;cursor:pointer;"  title="Driving License Expired"><b>{{date("d/m/Y", strtotime($v->road_tax_expiry))}}</b></td>
+                @else
+                <td><b>{{date("d/m/Y", strtotime($v->road_tax_expiry))}}</b></td>
+                @endif
+                @if(inspection_due_date($v->inspection_due_date)=='E')
+                <td style="color:red;cursor:pointer;"  title="Driving License Expired"><b>{{date("d/m/Y", strtotime($v->inspection_due_date))}}</b></td>
+                @else
+                <td><b>{{date("d/m/Y", strtotime($v->inspection_due_date))}}</b></td>
+                @endif
+                @if(coe_expiry_date($v->coe_expiry_date)=='E')
+                <td style="color:red;cursor:pointer;"  title="Driving License Expired"><b>{{date("d/m/Y", strtotime($v->coe_expiry_date))}}</b></td>
+                @else
+                <td><b>{{date("d/m/Y", strtotime($v->coe_expiry_date))}}</b></td>
+                @endif
                 @if($v->status==1)
                 <td><span class="badge badge-success">Active</span></td>
                 @else
                 <td><span class="badge badge-danger">Inactive</span></td>
                 @endif
                 <td>
-                    
-                    <a href="editVehicle/{{$v->id}}"  title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
-                    <a href="viewVehicle/{{$v->id}}"  title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+
+                    <a href="editVehicle/{{$v->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
+                    <a href="viewVehicle/{{$v->id}}" title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
                     <a href="javascript:void(0)" onclick="return delete_vehicle(this.id)" id="{{$v->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
@@ -96,27 +110,50 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
-function delete_vehicle(id) {
+    function delete_vehicle(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-            url: "{{route('deleteVehicle')}}",
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(data) {
-           if(data == 1){
+                url: "{{route('deleteVehicle')}}",
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data == 1) {
 
-            location.reload();
-           }
+                        location.reload();
+                    }
 
-            }
-        });
+                }
+            });
         } else {
 
             console.log('Thing was not saved to the database.');
         }
     }
-    </script>
+    $(function() {
+        $('#tableId').DataTable({
+            responsive: true
+        });
+    });
+    $('#status').change(function(e) {
+        e.preventDefault();
+        var status = $('#status').val();
+
+        $.ajax({
+            url: "{{route('allVehicles')}}",
+            type: 'GET',
+            data: {
+                status: status
+            },
+            success: function(data) {
+                location.replace('?status=' + status);
+
+            }
+        });
+
+
+    });
+</script>
 @endsection

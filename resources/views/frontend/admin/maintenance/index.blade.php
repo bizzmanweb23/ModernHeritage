@@ -22,11 +22,12 @@
             <div class="form-group">
 
 
-                <div class="col-md-4">
-                    <select name="status" class="form-control" id="status">
-                        <option value="all">All</option>
-                        <option value="Active" @if(isset($_GET['type']) && $_GET['type']=='individual' )selected @endif>Active</option>
-                        <option value="Inactive" @if(isset($_GET['type']) && $_GET['type']=='company' )selected @endif>Inactive</option>
+                <div class="col-md-6">
+                    <select name="vehicle_no_id" class="form-control" id="vehicle_no_id">
+                        <option value="all">Search By Vehicle no</option>
+                        @foreach($vehicles as $row)
+                        <option value="{{$row->id}}" @if(isset($_GET['vehicle_no_id']) && $_GET['vehicle_no_id'] == $row->id )selected @endif>{{$row->vehicle_no}}</option>
+                       @endforeach
                     </select>
                 </div>
 
@@ -93,7 +94,7 @@ function delete_maintenance(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-            url: "{{route('deleteVehicle')}}",
+            url: "{{route('deleteMaintenance')}}",
             type: 'GET',
             data: {
                 id: id
@@ -111,5 +112,30 @@ function delete_maintenance(id) {
             console.log('Thing was not saved to the database.');
         }
     }
+
+    $(function() {
+        $('#tableId').DataTable({
+            responsive: true
+        });
+    });
+
+    $('#vehicle_no_id').change(function(e) {
+        e.preventDefault();
+        var vehicle_no_id = $('#vehicle_no_id').val();
+
+        $.ajax({
+            url: "{{route('maintenance')}}",
+            type: 'GET',
+            data: {
+                vehicle_no_id: vehicle_no_id
+            },
+            success: function(data) {
+                location.replace('?vehicle_no_id=' + vehicle_no_id);
+
+            }
+        });
+
+
+    });
     </script>
 @endsection
