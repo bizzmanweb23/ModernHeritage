@@ -47,6 +47,9 @@ class OrdersController extends Controller
         $data['data'] = Order::select('orders.*','order_status.order_status')->where('orders.id',$id)->join('order_status','order_status.id','orders.order_status')->first();
         $data['order_products'] = OrderProducts::where('order_id',$id)->get();
         $data['order_status']=DB::table('order_status')->where('status',1)->get();
+        $other_details=DB::table('collection')->where('order_id',$id)->first();
+        $data['vehicles']=DB::table('vehicles')->where('driver_id',$other_details->driver_id)->first();
+        $data['other_details'] = $other_details;
     
         return view('frontend.admin.orders.order_details',$data);
    
@@ -181,8 +184,39 @@ class OrdersController extends Controller
 
     public function  assign_driver($id)
     {
-       $data['drivers'] = Employee::where('job_position',1)->get();
-      $data['warehouse'] = DB::table('ware_houses')->where('status',1)->get();
+        $data['drivers'] = Employee::where('job_position',1)->get();
+        $data['warehouse'] = DB::table('ware_houses')->where('status',1)->get();
+        $data['collection'] = DB::table('collection')->where('order_id',$id)->first();
+    
+        $data['order_id'] = $id;
         return view('frontend.admin.orders.assign_driver',$data);
+    }
+    public function  saveCollection(Request $request)
+    {
+       $data = DB::table('collection')->where('order_id',$request->order_id)->get();
+       if($data)
+       {
+        DB::table('collection')->where('order_id',$request->order_id)->update([
+            'order_id'=>$request->order_id,
+            'driver_id'=>$request->driver_id,
+            'warehouse_id'=>$request->warehouse_id,
+            'type'=>$request->type,
+            'remarks'=>$request->remarks,
+        ]);
+       }
+       else{
+        DB::table('collection')->insert([
+            'order_id'=>$request->order_id,
+            'driver_id'=>$request->driver_id,
+            'warehouse_id'=>$request->warehouse_id,
+            'type'=>$request->type,
+            'remarks'=>$request->remarks,
+        ]);
+       }
+       
+      DB::table('orders')->where('id',$request->order_id)->update([
+                 'order_status'=>5,
+      ]);
+      return redirect(route('orderList'))->with('message','Driver assigned to order collection');
     }
 }
