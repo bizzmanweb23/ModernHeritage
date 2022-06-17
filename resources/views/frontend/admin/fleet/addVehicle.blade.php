@@ -20,7 +20,7 @@
                         <input type="file" class="form-control" id="vehicle_image" name="vehicle_image" placeholder="e.g - WB38M1347" required>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>Brand:</label>
                         <select class="form-control" id="brand_id" name="brand_id" required>
@@ -30,8 +30,8 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="col-md-6">
+                </div> -->
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>Model:</label>
                         <select class="form-control" id="model_name" name="model_name" >
@@ -39,7 +39,7 @@
                      
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>License Plate No:</label>

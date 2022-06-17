@@ -24,7 +24,7 @@
                       
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>Brand:</label>
                         {{$data->brand_name}}
@@ -35,7 +35,7 @@
                         <label>Model:</label>
                         {{$data->model_name}}
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>License Plate No:</label>

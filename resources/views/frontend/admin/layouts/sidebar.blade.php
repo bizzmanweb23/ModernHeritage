@@ -355,7 +355,7 @@
                 <span class="sidenav-normal">Vehicles </span>
               </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
               <a class="nav-link" href="{{route('allBrands')}}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Brand</span>
@@ -366,7 +366,7 @@
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Model </span>
               </a>
-            </li>
+            </li> -->
             <li class="nav-item">
               <a class="nav-link" href="{{route('maintenance')}}">
                 <span class="sidenav-mini-icon"> </span>

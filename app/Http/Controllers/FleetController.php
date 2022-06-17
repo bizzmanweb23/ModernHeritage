@@ -74,7 +74,7 @@ class FleetController extends Controller
         }
 
         $vehicle = new Vehicle;
-        $vehicle->model_name = $request->model_name;
+        $vehicle->model_name = 1;
         $vehicle->license_plate_no = 1;
         $vehicle->driver_id = $request->driver_id;
         $vehicle->chassis_no = $request->chassis_no;
@@ -85,7 +85,7 @@ class FleetController extends Controller
         $vehicle->capacity = $request->capacity;
         $vehicle->trip_hour = $request->trip_hour;
         $vehicle->trip_price = $request->trip_price;
-        $vehicle->brand_id = $request->brand_id;
+        $vehicle->brand_id = 1;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->vehicle_scheme =  $request->vehicle_scheme;
         $vehicle->engine_no = $request->engine_no;
@@ -266,7 +266,7 @@ class FleetController extends Controller
         }
 
         $vehicle = Vehicle::find($request->id);
-        $vehicle->model_name = $request->model_name;
+        $vehicle->model_name = 1;
         $vehicle->license_plate_no = 1;
         $vehicle->driver_id = $request->driver_id;
         $vehicle->chassis_no = $request->chassis_no;
@@ -277,7 +277,7 @@ class FleetController extends Controller
         $vehicle->capacity = $request->capacity;
         $vehicle->trip_hour = $request->trip_hour;
         $vehicle->trip_price = $request->trip_price;
-        $vehicle->brand_id = $request->brand_id;
+        $vehicle->brand_id = 1;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->vehicle_scheme =  $request->vehicle_scheme;
         $vehicle->engine_no = $request->engine_no;

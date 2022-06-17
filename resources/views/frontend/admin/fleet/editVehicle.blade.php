@@ -23,7 +23,7 @@
                         <img src="{{asset($data->vehicle_image)}}" style="height:60px; width:60px;" />
                     </div>
                 </div>
-                <div class="col-md-6">
+                <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>Brand:</label>
                         <select class="form-control" id="brand_id" name="brand_id" required>
@@ -44,7 +44,7 @@
 
                         </select>
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6">
                     <div class="form-group">
                         <label>License Plate No:</label>
