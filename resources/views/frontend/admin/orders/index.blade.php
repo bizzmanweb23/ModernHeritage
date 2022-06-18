@@ -7,6 +7,13 @@
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <h5>Order Management</h5>
+<div class="row">
+    <div class="col-md-4">
+        <a href="{{ route('createRole') }}" class="btn btn-primary">Create Order</a>
+    </div>
+
+
+</div>
 <div class="card" style="padding:15px;">
 
     <form>
