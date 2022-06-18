@@ -7,6 +7,7 @@
         <div class="card-body">
 
             <h5>Vehicle Details</h5>
+            <hr>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -89,89 +90,146 @@
                         <label for="capacity">Vehicle Type:</label>
                         <select name="vehicle_type" id="vehicle_type" class="form-control" required>
 
-                        <option value="Crane">Crane </option>
-                        <option value="Lorry">Lorry </option>
-                        <option value="Car">Car </option>
-                        <option value="Bike">Bike </option>
-                    </select>
+                            <option value="Lorry Crane">Lorry Crane </option>
+                            <option value="Lorry">Lorry </option>
+                            <option value="Crane">Crane </option>
+                            <option value="Car">Car </option>
+                            <option value="Bike">Bike </option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Vehicle Scheme:</label>
-                        <input type="text" class="form-control" id="vehicle_scheme" name="vehicle_scheme" placeholder="" >
+                        <input type="text" class="form-control" id="vehicle_scheme" name="vehicle_scheme" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Vehicle Capacity:</label>
-                        <input type="text" class="form-control" id="capacity" name="capacity" placeholder="10 Ton Lorry Crane" >
+                        <label>Vehicle Capacity (in Ton):</label>
+                        <input type="text" class="form-control" id="capacity" name="capacity" placeholder="10 Ton Lorry Crane">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Engine no:</label>
-                        <input type="text" class="form-control" id="engine_no" name="engine_no" placeholder="e.g- BWA190024" >
+                        <input type="text" class="form-control" id="engine_no" name="engine_no" placeholder="e.g- BWA190024">
                     </div>
                 </div>
 
-                <div class="col-md-2">
+
+
+            </div>
+        </div>
+    </div><br>
+    <div class="card">
+        <div class="card-body">
+            <h5>Trip Charges</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="trip_hour">Trip Hours:</label>
-                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="1" max="10" required>
+                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="2" max="10" required>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label for="trip_price">Per Trip Price (/Trip):</label>
                         <input type="text" class="form-control" id="trip_price" name="trip_price" required>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>OT After 2hrs (/Hr):</label>
+                        <input type="text" class="form-control" id="after_trip_price" name="after_trip_price">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Additional Location (/Locn):</label>
+                        <input type="text" class="form-control" id="additional_locn_price" name="additional_locn_price" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Rates After 6pm (1.5x):</label>
+                        <input type="text" class="form-control" id="after_6pm_price" name="after_6pm_price" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Rates After 10pm (2x):</label>
+                        <input type="text" class="form-control" id="after_10pm_price" name="after_10pm_price" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="trip_price">Half Day (4 Hrs):</label>
+                        <input type="text" class="form-control" id="half_day_price" name="half_day_price" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Full Day (8 Hrs):</label>
+                        <input type="text" class="form-control" id="full_day_price" name="full_day_price" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Sun & PH (/Hr) (min 3Hrs):</label>
+                        <input type="text" class="form-control" id="sunday_price" name="sunday_price" >
+                    </div>
+                </div>
             </div>
-            <hr>
+        </div>
+    </div><br>
+    <div class="card">
+        <div class="card-body">
             <h5>Key Dates & Rebates</h5>
+            <hr>
             <div class="row">
 
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Road Tax Expiry:</label>
-                        <input type="date" class="form-control" id="road_tax_expiry" name="road_tax_expiry" placeholder="" >
+                        <input type="date" class="form-control" id="road_tax_expiry" name="road_tax_expiry" placeholder="">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Inspection Due Date:</label>
-                        <input type="date" class="form-control" id="inspection_due_date" name="inspection_due_date"  >
+                        <input type="date" class="form-control" id="inspection_due_date" name="inspection_due_date">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>PARF Eligibility:</label>
-                        <input type="text" class="form-control" id="parf_eligibility" name="parf_eligibility"  >
+                        <input type="text" class="form-control" id="parf_eligibility" name="parf_eligibility">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>PARF Rebate Amount:</label>
-                        <input type="text" class="form-control" id="parf_rebate_amount" name="parf_rebate_amount"  >
+                        <input type="text" class="form-control" id="parf_rebate_amount" name="parf_rebate_amount">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>COE Expiry Date:</label>
-                        <input type="date" class="form-control" id="coe_expiry_date" name="coe_expiry_date" >
+                        <input type="date" class="form-control" id="coe_expiry_date" name="coe_expiry_date">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>COE Rebate Amount:</label>
-                        <input type="text" class="form-control" id="coe_rebate_amount" name="coe_rebate_amount"  >
+                        <input type="text" class="form-control" id="coe_rebate_amount" name="coe_rebate_amount">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Total Rebate Amount:</label>
-                        <input type="text" class="form-control" id="total_rebate_amount" name="total_rebate_amount" >
+                        <input type="text" class="form-control" id="total_rebate_amount" name="total_rebate_amount">
                     </div>
                 </div>
 
@@ -182,19 +240,20 @@
             </div>
         </div>
     </div>
+    </div>
+    </div>
 </form>
 <script>
-@if($errors->any())
-        @foreach($errors->all() as $error)
-            toastr.options =
-            {
-                "closeButton" : true,
-                "progressBar" : true
-            }
-            toastr.success("{{ $error }}");
-        @endforeach
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ $error }}");
+    @endforeach
     @endif
-    </script>
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         $('#brand_id').on('change', function(e) {
