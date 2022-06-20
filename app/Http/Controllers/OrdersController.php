@@ -219,4 +219,24 @@ class OrdersController extends Controller
       ]);
       return redirect(route('orderList'))->with('message','Driver assigned to order collection');
     }
+    public function createOrder()
+    {
+        $data['vehicles'] = Vehicle::all();
+        return view('frontend.admin.orders.add',$data);
+    }
+    public function addOrder(Request $request)
+    {
+        DB::table('fleet_orders')->insert([
+            'customer_id'=>$request->customer_id,
+            'order_date'=>$request->order_date,
+            'order_time'=>$request->order_time,
+            'vehicle_id'=>$request->vehicle_id,
+            'pickup_address'=>$request->pickup_address,
+            'delivery_address'=>$request->delivery_address,
+            'po_number'=>$request->po_number,
+            'type'=>$request->type,
+            'remarks'=>$request->remarks,
+        ]);
+        return redirect(route('orderList'))->with('message','Fleet Order Submitted');
+    }
 }

@@ -56,6 +56,7 @@ return array(
     'App\\Models\\DeliveryMethod' => $baseDir . '/app/Models/DeliveryMethod.php',
     'App\\Models\\Department' => $baseDir . '/app/Models/Department.php',
     'App\\Models\\Employee' => $baseDir . '/app/Models/Employee.php',
+    'App\\Models\\FleetOrder' => $baseDir . '/app/Models/FleetOrder.php',
     'App\\Models\\GST' => $baseDir . '/app/Models/GST.php',
     'App\\Models\\InvoicePriceBreakups' => $baseDir . '/app/Models/InvoicePriceBreakups.php',
     'App\\Models\\JobPosition' => $baseDir . '/app/Models/JobPosition.php',

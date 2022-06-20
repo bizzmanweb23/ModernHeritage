@@ -93,11 +93,12 @@
                     <div class="form-group">
                         <label for="capacity">Vehicle Type:</label>
                         <select name="vehicle_type" id="vehicle_type" class="form-control" required>
-
-                            <option value="Crane" @if($data->vehicle_type == 'Crane') selected @endif>Crane </option>
+                            <option value="Lorry Crane" @if($data->vehicle_type == 'Lorry Crane') selected @endif>Lorry Crane </option>
                             <option value="Lorry" @if($data->vehicle_type == 'Lorry') selected @endif>Lorry </option>
+                            <option value="Crane" @if($data->vehicle_type == 'Crane') selected @endif >Crane </option>
                             <option value="Car" @if($data->vehicle_type == 'Car') selected @endif>Car </option>
-                            <option value="Bike" @if($data->vehicle_type == 'Bike') selected @endif>Bike </option>
+                            <option value="Bike" @if($data->vehicle_type == 'Bike') selected @endif >Bike </option>
+
                         </select>
                     </div>
                 </div>
@@ -144,7 +145,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="trip_hour">Trip Hours:</label>
-                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="2" max="10" value="{{$data->trip_hour}}"required>
+                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="2" max="10" value="{{$data->trip_hour}}" required>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -186,7 +187,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Full Day (8 Hrs):</label>
-                        <input type="number" class="form-control" id="full_day_price" name="full_day_price" value="{{$data->full_day_price}}" >
+                        <input type="number" class="form-control" id="full_day_price" name="full_day_price" value="{{$data->full_day_price}}">
                     </div>
                 </div>
                 <div class="col-md-3">

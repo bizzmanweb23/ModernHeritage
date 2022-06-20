@@ -599,6 +599,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Models\\DeliveryMethod' => __DIR__ . '/../..' . '/app/Models/DeliveryMethod.php',
         'App\\Models\\Department' => __DIR__ . '/../..' . '/app/Models/Department.php',
         'App\\Models\\Employee' => __DIR__ . '/../..' . '/app/Models/Employee.php',
+        'App\\Models\\FleetOrder' => __DIR__ . '/../..' . '/app/Models/FleetOrder.php',
         'App\\Models\\GST' => __DIR__ . '/../..' . '/app/Models/GST.php',
         'App\\Models\\InvoicePriceBreakups' => __DIR__ . '/../..' . '/app/Models/InvoicePriceBreakups.php',
         'App\\Models\\JobPosition' => __DIR__ . '/../..' . '/app/Models/JobPosition.php',

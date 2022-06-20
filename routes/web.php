@@ -190,8 +190,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/order-management', [OrdersController::class, 'index'])->name('orderList');
     Route::get('/order-details/{id}', [OrdersController::class, 'orderDetails'])->name('orderDetails');
     Route::get('/assign_to_delivery/{id}', [OrdersController::class, 'assign_to_delivery'])->name('assign_to_delivery');
+    Route::get('/createOrder', [OrdersController::class, 'createOrder'])->name('createOrder');
+    Route::post('/addOrder', [OrdersController::class, 'addOrder'])->name('addOrder');
 
-
+  
 
     //order status
     Route::get('/order-status', [OrdersController::class, 'orderStatus'])->name('orderStatus');
