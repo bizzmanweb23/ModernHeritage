@@ -120,18 +120,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label for="trip_hour">Trip Hours:</label>
-                        <input type="number" class="form-control" id="trip_hour" value="{{$data->trip_hour}}" name="trip_hour" min="1" max="10" required>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="trip_price">Per Trip Price (/Trip):</label>
-                        <input type="text" class="form-control" id="trip_price" name="trip_price" value="{{$data->trip_price}}" required>
-                    </div>
-                </div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="trip_price">Status:</label>
@@ -139,13 +128,81 @@
 
                             <option value="1" @if($data->status == 1) selected @endif>Active </option>
                             <option value="0" @if($data->status == 0) selected @endif>Inactive </option>
-                          
+
                         </select>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-body">
+            <h5>Trip Charges</h5>
             <hr>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="trip_hour">Trip Hours:</label>
+                        <input type="number" class="form-control" id="trip_hour" name="trip_hour" min="2" max="10" value="{{$data->trip_hour}}"required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="trip_price">Per Trip Price (/Trip):</label>
+                        <input type="number" class="form-control" id="trip_price" name="trip_price" value="{{$data->trip_price}}" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>OT After 2hrs (/Hr):</label>
+                        <input type="number" class="form-control" id="after_trip_price" name="after_trip_price" value="{{$data->after_trip_price}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Additional Location (/Locn):</label>
+                        <input type="number" class="form-control" id="additional_locn_price" name="additional_locn_price" value="{{$data->additional_locn_price}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Rates After 6pm (1.5x):</label>
+                        <input type="number" class="form-control" id="after_6pm_price" name="after_6pm_price" value="{{$data->after_6pm_price}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Rates After 10pm (2x):</label>
+                        <input type="number" class="form-control" id="after_10pm_price" name="after_10pm_price" value="{{$data->after_10pm_price}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="trip_price">Half Day (4 Hrs):</label>
+                        <input type="number" class="form-control" id="half_day_price" name="half_day_price" value="{{$data->half_day_price}}">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Full Day (8 Hrs):</label>
+                        <input type="number" class="form-control" id="full_day_price" name="full_day_price" value="{{$data->full_day_price}}" >
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Sun & PH (/Hr) (min 3Hrs):</label>
+                        <input type="number" class="form-control" id="sunday_price" name="sunday_price" value="{{$data->sunday_price}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><br>
+    <div class="card">
+        <div class="card-body">
+
             <h5>Key Dates & Rebates</h5>
+            <hr>
             <div class="row">
 
                 <div class="col-md-6">
@@ -197,6 +254,8 @@
                 <a class="btn btn-info" id="back" href="{{ route('allVehicles') }}">Back</a>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 </form>
 <script>

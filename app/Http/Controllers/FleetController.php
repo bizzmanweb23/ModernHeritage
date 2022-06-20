@@ -249,7 +249,7 @@ class FleetController extends Controller
     public function updateVehicle(Request $request)
     {
         $data = $request->validate([
-            'model_name' => 'required',
+          
             'vehicle_no' => 'required|unique:vehicles,vehicle_no,' . $request->id,
             'driver_id' => 'required|unique:vehicles,driver_id,' . $request->id,
             'chassis_no' => 'required',
@@ -278,6 +278,12 @@ class FleetController extends Controller
         $vehicle->capacity = $request->capacity;
         $vehicle->trip_hour = $request->trip_hour;
         $vehicle->trip_price = $request->trip_price;
+        $vehicle->additional_locn_price = $request->additional_locn_price;
+        $vehicle->after_6pm_price = $request->after_6pm_price;
+        $vehicle->after_10pm_price = $request->after_10pm_price;
+        $vehicle->full_day_price = $request->full_day_price;
+        $vehicle->half_day_price = $request->half_day_price;
+        $vehicle->sunday_price = $request->sunday_price;
         $vehicle->brand_id = 1;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->vehicle_scheme =  $request->vehicle_scheme;
