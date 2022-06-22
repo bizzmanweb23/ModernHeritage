@@ -31,21 +31,10 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Type of renal</label>
-
-                    <select name="type" id="type" class="form-control" required>
-                       <option value="">--Select-- </option>
-                        <option value="1">Trip (Basis 3Hrs) </option>
-                        <option value="2">Daily (8hrs) </option>
-                  
-                        <option value="3">Weekly (Mon to Sat) </option>
-                        <option value="4">Other </option>
-                    </select>
-                </div>
-                <div class="form-group col-md-6">
                     <label>Remarks</label>
                     <textarea id="remarks" name="remarks" class="form-control"></textarea>
                     </div>
+              
                 <div class="ms-auto text-end">
                     <button type="submit" class="btn btn-primary">Save</button>
 
@@ -78,18 +67,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group col-md-6">
-                    <label>Type of renal</label>
-
-                    <select name="type" id="type" class="form-control" required>
-                       <option value="">--Select-- </option>
-                        <option value="1" @if($collection->type == 1) selected @endif>Trip (Basis 3Hrs) </option>
-                        <option value="2" @if($collection->type == 2) selected @endif >Daily (8hrs) </option>
-                  
-                        <option value="3" @if($collection->type == 3) selected @endif >Weekly (Mon to Sat) </option>
-                        <option value="4" @if($collection->type == 4) selected @endif>Other </option>
-                    </select>
-                </div>
+               
                 <div class="form-group col-md-6">
                     <label>Remarks</label>
                     <textarea id="remarks" name="remarks" class="form-control">{{$collection->remarks}}</textarea>

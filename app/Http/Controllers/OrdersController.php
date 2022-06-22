@@ -18,28 +18,34 @@ class OrdersController extends Controller
    
     public function index(Request $request)
     {
-        $data = Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status');
+     
+      
+            $data = Order::select('orders.*','order_status.order_status as ordStatus')->join('order_status','order_status.id','orders.order_status');
 
-        if(isset($request->order_status))
-        {
-            if($request->order_status!='all')
+            if(isset($request->order_status))
             {
-                $orders['orders'] = $data->where('orders.order_status',$request->order_status)->get();
+                if($request->order_status!='all')
+                {
+                    $orders['orders'] = $data->where('orders.order_status',$request->order_status)->get();
+                }
+                else
+                {
+                    $orders['orders'] = $data->get();
+                }
+             
             }
             else
             {
                 $orders['orders'] = $data->get();
             }
-         
-        }
-        else
-        {
-            $orders['orders'] = $data->get();
-        }
-
     
-        $orders['order_status']= DB::table('order_status')->where('status',1)->get();
-        return view('frontend.admin.orders.index',$orders);
+        
+            $orders['order_status']= DB::table('order_status')->where('status',1)->get();
+
+            $orders['fleet_order']= DB::table('fleet_orders')->get();
+            return view('frontend.admin.orders.index',$orders);
+        
+       
     }
 
     public function orderDetails($id)
@@ -238,5 +244,32 @@ class OrdersController extends Controller
             'remarks'=>$request->remarks,
         ]);
         return redirect(route('orderList'))->with('message','Fleet Order Submitted');
+    }
+    public function orderEdit($id)
+    {
+      
+        $data['fleet_order'] = DB::table('fleet_orders')->where('id',$id)->first();
+        return view('frontend.admin.orders.fleet_order_edit',$data);
+    }
+
+    public function updateOrder(Request $request)
+    {
+        DB::table('fleet_orders')->where('id',$request->id)->update([
+            'customer_id'=>$request->customer_id,
+            'order_date'=>$request->order_date,
+            'order_time'=>$request->order_time,
+            'vehicle_id'=>$request->vehicle_id,
+            'pickup_address'=>$request->pickup_address,
+            'delivery_address'=>$request->delivery_address,
+            'po_number'=>$request->po_number,
+            'type'=>$request->type,
+            'remarks'=>$request->remarks,
+        ]);
+        return redirect(route('orderList'))->with('message','Fleet Order Submitted');
+    }
+    public function  orderView($id)
+    {
+        $data['fleet_order'] = DB::table('fleet_orders')->where('id',$id)->first();
+        return view('frontend.admin.orders.fleet_order_view',$data);
     }
 }

@@ -36,19 +36,7 @@
         </div>
     
         <div class="col-md-4">
-            <h6>Other Info:</h6>
-            <b>Type of renal: </b>
-            @if($other_details->type == 1)
-            Trip (Basis 3Hrs)
-            @elseif($other_details->type == 2)
-            Daily (8hrs) 
-            @elseif($other_details->type == 3)
-            Weekly (Mon to Sat) 
-            @else
-            Other
-            @endif
-            <br>
-            <b>Lorry Crane (Ton)*: </b>{{$vehicles->capacity}} Ton<br>
+      
             <b>Remark(s):</b> {{$other_details->remarks}}
         </div>
     </div>

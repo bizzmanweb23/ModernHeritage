@@ -205,8 +205,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/orderStatusEdit/{id}', [OrdersController::class, 'orderStatusEdit'])->name('orderStatusEdit');
     Route::post('/addToDelivery', [DriverController::class, 'addToDelivery'])->name('addToDelivery');
     Route::get('/assign_to_driver/{id}', [OrdersController::class, 'assign_to_driver'])->name('assign_to_driver');
-
-
+    Route::get('/order-edit/{id}', [OrdersController::class, 'orderEdit'])->name('orderEdit');
+    Route::post('/order-update', [OrdersController::class, 'updateOrder'])->name('updateOrder');
+    Route::get('/order-view/{id}', [OrdersController::class, 'orderView'])->name('orderView');
     //driver management
     Route::get('/drivers', [DriverController::class, 'drivers'])->name('drivers');
     Route::get('/addDriver', [DriverController::class, 'addDriver'])->name('addDriver');
