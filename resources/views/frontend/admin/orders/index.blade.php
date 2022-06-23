@@ -221,9 +221,6 @@
             $('#orders').show();
         }
 
-
-
-
     });
 </script>
 @endsection

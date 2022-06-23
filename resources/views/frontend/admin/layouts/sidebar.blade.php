@@ -208,6 +208,9 @@
           <span class="nav-link-text ms-1">Warehouse Management</span>
         </a>
       </li>
+      <li class="nav-item mt-3">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">HRMS</h6>
+      </li>
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#pagesExamples9" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -247,45 +250,14 @@
                 <span class="sidenav-normal"> Job Position </span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Employee Salary </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Pay Structure </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Attendance </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Holiday List </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Leave Balancing </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Foreign works Management </span>
-              </a>
-            </li>
+        
+        
+           
+           
           </ul>
         </div>
       </li>
+      
       <!-- <li class="nav-item">
           <a class="nav-link  " href="{{ route('allEmployee') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -306,7 +278,9 @@
             <span class="nav-link-text ms-1">Employee Management</span>
           </a>
         </li> -->
-     
+        <li class="nav-item mt-3">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Logistic </h6>
+      </li>
       <li class="nav-item">
         <a class="nav-link  " href="{{ route('logistic_crm') }}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -512,7 +486,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('collection_form')}}">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>settings</title>

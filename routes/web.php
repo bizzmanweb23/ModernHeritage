@@ -192,9 +192,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/assign_to_delivery/{id}', [OrdersController::class, 'assign_to_delivery'])->name('assign_to_delivery');
     Route::get('/createOrder', [OrdersController::class, 'createOrder'])->name('createOrder');
     Route::post('/addOrder', [OrdersController::class, 'addOrder'])->name('addOrder');
-
+    Route::get('/collection_form', [OrdersController::class, 'collection_form'])->name('collection_form');
   
-
+    
     //order status
     Route::get('/order-status', [OrdersController::class, 'orderStatus'])->name('orderStatus');
     Route::get('/addOrderStatus', [OrdersController::class, 'addOrderStatus'])->name('addOrderStatus');

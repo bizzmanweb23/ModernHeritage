@@ -272,4 +272,14 @@ class OrdersController extends Controller
         $data['fleet_order'] = DB::table('fleet_orders')->where('id',$id)->first();
         return view('frontend.admin.orders.fleet_order_view',$data);
     }
+    public function collection_form()
+    {
+        $uid = session()->get('ADMIN_USER_ID');
+        $data = DB::table('users')->where('id',$uid)->first();
+        $data_w = DB::table('ware_houses')->where('email',$data->email)->first();
+
+     
+        return view('frontend.admin.orders.collection');
+  
+    }
 }
