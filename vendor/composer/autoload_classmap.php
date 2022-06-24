@@ -72,6 +72,7 @@ return array(
     'App\\Models\\Order' => $baseDir . '/app/Models/Order.php',
     'App\\Models\\OrderProducts' => $baseDir . '/app/Models/OrderProducts.php',
     'App\\Models\\OrserStatus' => $baseDir . '/app/Models/OrserStatus.php',
+    'App\\Models\\PayStructure' => $baseDir . '/app/Models/PayStructure.php',
     'App\\Models\\Payment' => $baseDir . '/app/Models/Payment.php',
     'App\\Models\\PaymentTerms' => $baseDir . '/app/Models/PaymentTerms.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',

@@ -10,6 +10,7 @@ use App\Models\Customer;
 use App\Models\Department;
 use App\Models\JobPosition;
 use App\Models\Country;
+use App\Models\PayStructure;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -590,5 +591,59 @@ class EmployeeController extends Controller
         $employee->save();
 
         return redirect(route('allEmployee'));
+    }
+
+    public function payStructure()
+    {
+        $data['data'] = PayStructure::all();
+        return view('frontend.admin.employee.pay_structure.index',$data);
+    }
+    public function payStructureAdd()
+    {
+        return view('frontend.admin.employee.pay_structure.add');
+    }
+    public function payStructureCreate(Request $request)
+    {
+        $request->validate([
+            'year' => 'required|unique:pay_structures,year',
+            
+        ]);
+        
+        $pay_structure = new PayStructure;
+        $pay_structure->year = $request->year;
+        $pay_structure->commission = $request->commission;
+        $pay_structure->cpf = $request->cpf;
+        $pay_structure->insurance = $request->insurance;
+        $pay_structure->medical_leave_entitlement =  $request->medical_leave_entitlement;
+        $pay_structure->medical_allowance =  $request->medical_allowance;
+        $pay_structure->save();
+
+        return redirect(route('payStructure'));
+    }
+    public function editPayStructure($id)
+    {
+        $data['data']=PayStructure::find($id);
+        return view('frontend.admin.employee.pay_structure.edit',$data);
+    }
+    public function payStructureUpdate(Request $request)
+    {
+        $request->validate([
+            'year' => 'required|unique:pay_structures,year,'.$request->id,
+            
+        ]);
+        $pay_structure = PayStructure::find($request->id);
+        $pay_structure->year = $request->year;
+        $pay_structure->commission = $request->commission;
+        $pay_structure->cpf = $request->cpf;
+        $pay_structure->insurance = $request->insurance;
+        $pay_structure->medical_leave_entitlement =  $request->medical_leave_entitlement;
+        $pay_structure->medical_allowance =  $request->medical_allowance;
+        $pay_structure->save();
+
+        return redirect(route('payStructure'));
+    }
+    public function salaryEmployee()
+    {
+        return view('frontend.admin.employee.employee_salary.index');
     }
 }

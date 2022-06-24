@@ -281,6 +281,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     
     Route::get('/assign_driver/{id}', [OrdersController::class, 'assign_driver'])->name('assign_driver_for_collection');
     Route::post('/saveCollection', [OrdersController::class, 'saveCollection'])->name('saveCollection');
+
+
+    Route::get('/payStructure', [EmployeeController::class, 'payStructure'])->name('payStructure');
+    Route::get('/payStructureAdd', [EmployeeController::class, 'payStructureAdd'])->name('payStructureAdd');
+    Route::post('/payStructureCreate', [EmployeeController::class, 'payStructureCreate'])->name('payStructureCreate');
+    Route::get('/editPayStructure/{id}', [EmployeeController::class, 'editPayStructure'])->name('editPayStructure');
+    Route::post('/payStructureUpdate', [EmployeeController::class, 'payStructureUpdate'])->name('payStructureUpdate');
+
+
+
+    Route::get('/salary', [EmployeeController::class, 'salaryEmployee'])->name('salaryEmployee');
+    Route::get('/addSalary', [EmployeeController::class, 'addSalary'])->name('addSalary');
+
+    
     
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
