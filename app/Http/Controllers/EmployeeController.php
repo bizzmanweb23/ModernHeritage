@@ -11,6 +11,7 @@ use App\Models\Department;
 use App\Models\JobPosition;
 use App\Models\Country;
 use App\Models\PayStructure;
+use App\Models\EmployeeSalary;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -644,6 +645,90 @@ class EmployeeController extends Controller
     }
     public function salaryEmployee()
     {
-        return view('frontend.admin.employee.employee_salary.index');
+        $data['emp_salary'] = DB::table('employee_salaries')
+        ->select('employee_salaries.*','job_positions.position_name','employees.emp_name')
+        ->join('job_positions','job_positions.id','employee_salaries.designation')
+        ->join('employees','employees.id','employee_salaries.emp_id')
+        ->get();
+        return view('frontend.admin.employee.employee_salary.index',$data);
+    }
+    public function addSalary()
+    {   
+        $data['pay_structures'] = PayStructure::where('year',2022)->first();
+        $data['employee']=Employee::where('status',1)->get();
+        $data['job_position']=JobPosition::where('status',1)->get();
+        return view('frontend.admin.employee.employee_salary.add',$data);
+    }
+    public function postSalary(Request $request)
+    {
+       
+        $request->validate([
+            'emp_id' => 'required|unique:employee_salaries,emp_id',
+            
+        ]);
+
+        $emp_salary = new EmployeeSalary;
+        $emp_salary->emp_id = $request->emp_id;
+        $emp_salary->designation =$request->designation;
+        $emp_salary->basic_pay =$request->basic_pay;
+        $emp_salary->commission =$request->commission;
+        $emp_salary->cpf =$request->cpf;
+        $emp_salary->insurance =$request->insurance;
+        $emp_salary->medical_leave =$request->medical_leave_entitlement;
+        $emp_salary->medical_allowance =$request->medical_allowance;
+        $emp_salary->earning =$request->earning;
+        $emp_salary->deduction =$request->deduction;
+        $emp_salary->net_pay =$request->net_pay;
+        $emp_salary->per_trip_charge =$request->per_trip_charge;
+        $emp_salary->no_trip =$request->no_trip;
+        $emp_salary->earning =$request->earning;
+        $emp_salary->total =$request->total;
+        $emp_salary->save();
+        return redirect(route('salaryEmployee'));
+    }
+
+
+    public function editSalary($id)
+    {
+        $data['pay_structures'] = PayStructure::where('year',2022)->first();
+        $data['job_position']=JobPosition::where('status',1)->get();
+        $data['employee']=Employee::where('status',1)->get();
+        $data['emp_salary']=EmployeeSalary::find($id);
+        if($data['emp_salary']['designation']==1)
+        {
+            return view('frontend.admin.employee.employee_salary.edit',$data);
+        }
+        else
+        {
+            return view('frontend.admin.employee.employee_salary.edit_a',$data);
+        }
+    
+      
+    }
+    public function updateSalary(Request $request)
+    {
+        $request->validate([
+            'emp_id' => 'required|unique:employee_salaries,emp_id,'.$request->id,
+            
+        ]);
+
+        $emp_salary = EmployeeSalary::find($request->id);
+        $emp_salary->emp_id = $request->emp_id;
+        $emp_salary->designation =$request->designation;
+        $emp_salary->basic_pay =$request->basic_pay;
+        $emp_salary->commission =$request->commission;
+        $emp_salary->cpf =$request->cpf;
+        $emp_salary->insurance =$request->insurance;
+        $emp_salary->medical_leave =$request->medical_leave_entitlement;
+        $emp_salary->medical_allowance =$request->medical_allowance;
+        $emp_salary->earning =$request->earning;
+        $emp_salary->deduction =$request->deduction;
+        $emp_salary->net_pay =$request->net_pay;
+        $emp_salary->per_trip_charge =$request->per_trip_charge;
+        $emp_salary->no_trip =$request->no_trip;
+        $emp_salary->earning =$request->earning;
+        $emp_salary->total =$request->total;
+        $emp_salary->save();
+        return redirect(route('salaryEmployee'));
     }
 }

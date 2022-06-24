@@ -288,12 +288,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/payStructureCreate', [EmployeeController::class, 'payStructureCreate'])->name('payStructureCreate');
     Route::get('/editPayStructure/{id}', [EmployeeController::class, 'editPayStructure'])->name('editPayStructure');
     Route::post('/payStructureUpdate', [EmployeeController::class, 'payStructureUpdate'])->name('payStructureUpdate');
-
+    Route::post('/postSalary', [EmployeeController::class, 'postSalary'])->name('postSalary');
 
 
     Route::get('/salary', [EmployeeController::class, 'salaryEmployee'])->name('salaryEmployee');
     Route::get('/addSalary', [EmployeeController::class, 'addSalary'])->name('addSalary');
-
+    Route::get('/editSalary/{id}', [EmployeeController::class, 'editSalary'])->name('editSalary');
+    Route::post('/updateSalary', [EmployeeController::class, 'updateSalary'])->name('updateSalary');
+    
     
     
     //admin--logistic

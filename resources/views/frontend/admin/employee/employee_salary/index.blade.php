@@ -28,11 +28,13 @@
     <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
         <thead>
             <tr>
-                <th>Sl#</th>
+                <th>Sl#</th> 
+                 <th>Employee Name</th>
 
-                <th>Job Positions</th>
-                <th>Department</th>
-                <th>Status</th>
+                <th>Designation</th>
+                <th>Total Earning</th>
+              
+           
                 <th>Action</th>
 
 
@@ -41,7 +43,22 @@
         </thead>
         <tbody>
             
+        @foreach($emp_salary as $key=>$e_sl)
+            <tr>
+                <td style="text-align:center">{{$key+1}}</td>
 
+                <td>{{$e_sl->emp_name }}</td>
+                <td>{{$e_sl->position_name }}</td>
+                <td>{{$e_sl->earning }}</td>
+            
+
+                <td>
+                    <a href="editSalary/{{$e_sl->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
+                   
+                </td>
+
+            </tr>
+            @endforeach
 
         </tbody>
     </table>
