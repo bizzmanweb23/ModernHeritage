@@ -21,6 +21,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\HolidayController;
 
 /*
 |--------------------------------------------------------------------------
@@ -296,8 +297,17 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/editSalary/{id}', [EmployeeController::class, 'editSalary'])->name('editSalary');
     Route::post('/updateSalary', [EmployeeController::class, 'updateSalary'])->name('updateSalary');
     Route::get('/deleteEmployeeSalary', [EmployeeController::class, 'deleteEmployeeSalary'])->name('deleteEmployeeSalary');
-    Route::get('/holidayList', [EmployeeController::class, 'holidayList'])->name('holidayList');
+    Route::get('/generatePayslip/{id}', [EmployeeController::class, 'generatePayslip'])->name('generatePayslip');
     
+
+    //Holiday
+    Route::get('/holidayList', [HolidayController::class, 'holidayList'])->name('holidayList');
+    Route::get('/addHoliday', [HolidayController::class, 'addHoliday'])->name('addHoliday');
+    Route::post('/saveHoliday', [HolidayController::class, 'saveHoliday'])->name('saveHoliday');
+    Route::get('/editHoliday/{id}', [HolidayController::class, 'editHoliday'])->name('editHoliday');
+    Route::post('/updateHoliday', [HolidayController::class, 'updateHoliday'])->name('updateHoliday');
+    Route::get('/deleteHoliday', [HolidayController::class, 'deleteHoliday'])->name('deleteHoliday');
+  
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

@@ -32,8 +32,8 @@
                  <th>Employee Name</th>
 
                 <th>Designation</th>
-                <th>Total Earning</th>
               
+                <th>Generate Payslip</th>
            
                 <th>Action</th>
 
@@ -49,7 +49,8 @@
 
                 <td>{{$e_sl->emp_name }}</td>
                 <td>{{$e_sl->position_name }}</td>
-                <td>{{$e_sl->earning }}</td>
+            
+                <td> <a href="generatePayslip/{{$e_sl->id}}" title="edit"><button class="btn btn-info">Generate Payslip</button></a></td>
             
 
                 <td>

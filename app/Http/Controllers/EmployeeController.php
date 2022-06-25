@@ -16,6 +16,8 @@ use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use DB;
+use PDF;
+
 
 class EmployeeController extends Controller
 {
@@ -737,8 +739,16 @@ class EmployeeController extends Controller
        return json_encode(1);
    
     }
-    public function holidayList()
+    public function generatePayslip($id)
     {
-        return view('frontend.admin.holiday.index');
+        $data = [
+            'title' => 'Payslip of ',
+            'date' => date('m/d/Y')
+        ];
+          
+        $pdf = PDF::loadView('myPDF', $data);
+    
+        return $pdf->download('itsolutionstuff.pdf');
     }
+   
 }
