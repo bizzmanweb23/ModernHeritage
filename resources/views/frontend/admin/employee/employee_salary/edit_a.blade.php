@@ -84,10 +84,7 @@
                         <label>No of Trip (this month)</label>
                         <input type="text" class="form-control" id="no_trip" name="no_trip" value="{{$emp_salary->no_trip}}" >
                     </div>
-                    <div class="form-group col-md-6">
-                        <label>Total Earning</label>
-                        <input type="text" class="form-control" id="total" name="total" value="{{$emp_salary->total}}">
-                    </div>
+                   
                 </div>
 
                 <br> <br>

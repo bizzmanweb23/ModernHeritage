@@ -74,5 +74,12 @@ class HolidayController extends Controller
         $data = Holiday::where('id',$request->id)->delete();
         return json_encode(1);
     }
-    
+    public function leaveStructure ()
+    {
+        return view('frontend.admin.holiday.leaveStructure');
+    }
+    public function addleaveStructure()
+    {
+        return view('frontend.admin.holiday.addLeave');
+    }
 }

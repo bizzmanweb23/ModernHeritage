@@ -64,6 +64,7 @@ return array(
     'App\\Models\\InvoicePriceBreakups' => $baseDir . '/app/Models/InvoicePriceBreakups.php',
     'App\\Models\\JobPosition' => $baseDir . '/app/Models/JobPosition.php',
     'App\\Models\\Lead' => $baseDir . '/app/Models/Lead.php',
+    'App\\Models\\Leavestructure' => $baseDir . '/app/Models/Leavestructure.php',
     'App\\Models\\LogisticDashboard' => $baseDir . '/app/Models/LogisticDashboard.php',
     'App\\Models\\LogisticLead' => $baseDir . '/app/Models/LogisticLead.php',
     'App\\Models\\LogisticLeadDriver' => $baseDir . '/app/Models/LogisticLeadDriver.php',

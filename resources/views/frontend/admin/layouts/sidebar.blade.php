@@ -315,12 +315,18 @@
         <div class="collapse" id="pagesExamples11" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allEmployee') }}">
+              <a class="nav-link " href="#">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal">Employee's Leave</span>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item">
+              <a class="nav-link " href="{{ route('leaveStructure') }}">
+                <span class="sidenav-mini-icon"> </span>
+                <span class="sidenav-normal">Leave Structure</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link " href="{{ route('holidayList') }}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Holiday List </span>
@@ -353,23 +359,12 @@
         <div class="collapse" id="pagesExamples12" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allEmployee') }}">
+              <a class="nav-link " href="#">
                 <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Employees </span>
+                <span class="sidenav-normal">Attendance Details</span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('departments') }}">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Department </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Job Position </span>
-              </a>
-            </li>
+            
           </ul>
         </div>
       </li>
@@ -397,21 +392,11 @@
             <li class="nav-item ">
               <a class="nav-link " href="{{ route('allEmployee') }}">
                 <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Employees </span>
+                <span class="sidenav-normal">Employees's Claims </span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('departments') }}">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Department </span>
-              </a>
-            </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Job Position </span>
-              </a>
-            </li>
+           
+            
           </ul>
         </div>
       </li>

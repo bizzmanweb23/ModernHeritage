@@ -632,6 +632,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Models\\InvoicePriceBreakups' => __DIR__ . '/../..' . '/app/Models/InvoicePriceBreakups.php',
         'App\\Models\\JobPosition' => __DIR__ . '/../..' . '/app/Models/JobPosition.php',
         'App\\Models\\Lead' => __DIR__ . '/../..' . '/app/Models/Lead.php',
+        'App\\Models\\Leavestructure' => __DIR__ . '/../..' . '/app/Models/Leavestructure.php',
         'App\\Models\\LogisticDashboard' => __DIR__ . '/../..' . '/app/Models/LogisticDashboard.php',
         'App\\Models\\LogisticLead' => __DIR__ . '/../..' . '/app/Models/LogisticLead.php',
         'App\\Models\\LogisticLeadDriver' => __DIR__ . '/../..' . '/app/Models/LogisticLeadDriver.php',

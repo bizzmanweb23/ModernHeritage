@@ -84,10 +84,7 @@
                         <label>No of Trip (this month)</label>
                         <input type="text" class="form-control" id="no_trip" name="no_trip"  >
                     </div>
-                    <div class="form-group col-md-6">
-                        <label>Total Earning</label>
-                        <input type="text" class="form-control" id="total" name="total" >
-                    </div>
+                  
                 </div>
 
                 <br> <br>

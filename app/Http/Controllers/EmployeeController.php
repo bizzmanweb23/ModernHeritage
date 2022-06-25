@@ -27,19 +27,15 @@ class EmployeeController extends Controller
     public function allEmployee(Request $request)
     {
 
-       
-        $jobPositions=JobPosition::where('status',1)->get();
-        if(isset($request->job_position_id))
-        {
-            $employees = Employee::where('job_position',$request->job_position_id)->get();
- 
-        }
-        else
-        {
+
+        $jobPositions = JobPosition::where('status', 1)->get();
+        if (isset($request->job_position_id)) {
+            $employees = Employee::where('job_position', $request->job_position_id)->get();
+        } else {
             $employees = Employee::get();
         }
 
-        return view('frontend.admin.employee.allEmployee', ['employees' => $employees,'jobPositions' => $jobPositions]);
+        return view('frontend.admin.employee.allEmployee', ['employees' => $employees, 'jobPositions' => $jobPositions]);
     }
 
     public function addEmployee()
@@ -47,8 +43,8 @@ class EmployeeController extends Controller
         $countryCodes = CountryCode::get();
         $customer = DB::table('customer_management')->get();
         $employee = Employee::get();
-        $department = Department::where('status',1)->get();
-        $jobPosition = JobPosition::where('status',1)->get();
+        $department = Department::where('status', 1)->get();
+        $jobPosition = JobPosition::where('status', 1)->get();
         $countries = Country::get();
         return view('frontend.admin.employee.addEmployee', [
             'customer' => $customer,
@@ -63,7 +59,7 @@ class EmployeeController extends Controller
     public function saveEmployee(Request $request)
     {
 
-      
+
         $data = $request->validate([
             'emp_name' => 'required',
             'job_position' => 'required',
@@ -448,7 +444,7 @@ class EmployeeController extends Controller
     {
         $dpt_id = $request->department;
 
-        $jobPositions =  DB::table('job_positions')->where('dpt_id', $dpt_id)->where('status',1)->get();
+        $jobPositions =  DB::table('job_positions')->where('dpt_id', $dpt_id)->where('status', 1)->get();
         return response()->json($jobPositions);
     }
     public function viewEmployee($id)
@@ -477,12 +473,12 @@ class EmployeeController extends Controller
 
         $employee['employee'] = $emp;
         $countryCodes = CountryCode::get();
-        $s_customer = DB::table('customer_management')->whereIn('id',explode(',',$emp->default_customer))->get();
-        $ns_customer = DB::table('customer_management')->whereNotIn('id',explode(',',$emp->default_customer))->get();
+        $s_customer = DB::table('customer_management')->whereIn('id', explode(',', $emp->default_customer))->get();
+        $ns_customer = DB::table('customer_management')->whereNotIn('id', explode(',', $emp->default_customer))->get();
         $department = Department::get();
-        $jobPosition = JobPosition::where('dpt_id',$emp->department)->get();
+        $jobPosition = JobPosition::where('dpt_id', $emp->department)->get();
         $countries = Country::get();
-        return view('frontend.admin.employee.editEmployee', $employee,[
+        return view('frontend.admin.employee.editEmployee', $employee, [
             's_customer' => $s_customer,
             'ns_customer' => $ns_customer,
             'countryCodes' => $countryCodes,
@@ -494,19 +490,19 @@ class EmployeeController extends Controller
 
     public function updateEmployee(Request $request)
     {
-       
-        $emp=DB::table('employees')->where('id',$request->id)->first();
 
-   
-      
-        $user_data=DB::table('users')->where('email',$emp->work_email)->first();
+        $emp = DB::table('employees')->where('id', $request->id)->first();
+
+
+
+        $user_data = DB::table('users')->where('email', $emp->work_email)->first();
 
         $data = $request->validate([
             'emp_name' => 'required',
             'job_position' => 'required',
-            'work_email' => 'required|email|unique:users,email,'.$user_data->id,
+            'work_email' => 'required|email|unique:users,email,' . $user_data->id,
         ]);
-        
+
 
         if ($request->file('emp_image')) {
             $file_type = $request->file('emp_image')->extension();
@@ -532,10 +528,10 @@ class EmployeeController extends Controller
         }
 
         //user table unique_id
-     
+
 
         $user =  User::find($user_data->id);
-       
+
         $user->user_name = $request->emp_name;
         $user->email = $request->work_email;
         $user->status = 1;
@@ -544,7 +540,7 @@ class EmployeeController extends Controller
         $user->user_image = $file_path;
         $user->save();
 
-        DB::table('user_address')->where('id',$request->id)->update([
+        DB::table('user_address')->where('id', $request->id)->update([
             'address_1' => $request->contact_address,
             'country' => $request->country,
             'mobile' => $request->country_code_m . $request->work_mobile,
@@ -554,7 +550,7 @@ class EmployeeController extends Controller
 
 
         $employee = Employee::find($request->id);
-     
+
         $employee->emp_name = $request->emp_name;
         $employee->job_position = $request->job_position;
         $employee->work_mobile = $request->country_code_m . $request->work_mobile;
@@ -599,7 +595,7 @@ class EmployeeController extends Controller
     public function payStructure()
     {
         $data['data'] = PayStructure::all();
-        return view('frontend.admin.employee.pay_structure.index',$data);
+        return view('frontend.admin.employee.pay_structure.index', $data);
     }
     public function payStructureAdd()
     {
@@ -609,9 +605,9 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'year' => 'required|unique:pay_structures,year',
-            
+
         ]);
-        
+
         $pay_structure = new PayStructure;
         $pay_structure->year = $request->year;
         $pay_structure->commission = $request->commission;
@@ -625,14 +621,14 @@ class EmployeeController extends Controller
     }
     public function editPayStructure($id)
     {
-        $data['data']=PayStructure::find($id);
-        return view('frontend.admin.employee.pay_structure.edit',$data);
+        $data['data'] = PayStructure::find($id);
+        return view('frontend.admin.employee.pay_structure.edit', $data);
     }
     public function payStructureUpdate(Request $request)
     {
         $request->validate([
-            'year' => 'required|unique:pay_structures,year,'.$request->id,
-            
+            'year' => 'required|unique:pay_structures,year,' . $request->id,
+
         ]);
         $pay_structure = PayStructure::find($request->id);
         $pay_structure->year = $request->year;
@@ -648,43 +644,43 @@ class EmployeeController extends Controller
     public function salaryEmployee()
     {
         $data['emp_salary'] = DB::table('employee_salaries')
-        ->select('employee_salaries.*','job_positions.position_name','employees.emp_name')
-        ->join('job_positions','job_positions.id','employee_salaries.designation')
-        ->join('employees','employees.id','employee_salaries.emp_id')
-        ->get();
-        return view('frontend.admin.employee.employee_salary.index',$data);
+            ->select('employee_salaries.*', 'job_positions.position_name', 'employees.emp_name')
+            ->join('job_positions', 'job_positions.id', 'employee_salaries.designation')
+            ->join('employees', 'employees.id', 'employee_salaries.emp_id')
+            ->get();
+        return view('frontend.admin.employee.employee_salary.index', $data);
     }
     public function addSalary()
-    {   
-        $data['pay_structures'] = PayStructure::where('year',2022)->first();
-        $data['employee']=Employee::where('status',1)->get();
-        $data['job_position']=JobPosition::where('status',1)->get();
-        return view('frontend.admin.employee.employee_salary.add',$data);
+    {
+        $data['pay_structures'] = PayStructure::where('year', 2022)->first();
+        $data['employee'] = Employee::where('status', 1)->get();
+        $data['job_position'] = JobPosition::where('status', 1)->get();
+        return view('frontend.admin.employee.employee_salary.add', $data);
     }
     public function postSalary(Request $request)
     {
-       
+
         $request->validate([
             'emp_id' => 'required|unique:employee_salaries,emp_id',
-            
+
         ]);
 
         $emp_salary = new EmployeeSalary;
         $emp_salary->emp_id = $request->emp_id;
-        $emp_salary->designation =$request->designation;
-        $emp_salary->basic_pay =$request->basic_pay;
-        $emp_salary->commission =$request->commission;
-        $emp_salary->cpf =$request->cpf;
-        $emp_salary->insurance =$request->insurance;
-        $emp_salary->medical_leave =$request->medical_leave_entitlement;
-        $emp_salary->medical_allowance =$request->medical_allowance;
-        $emp_salary->earning =$request->earning;
-        $emp_salary->deduction =$request->deduction;
-        $emp_salary->net_pay =$request->net_pay;
-        $emp_salary->per_trip_charge =$request->per_trip_charge;
-        $emp_salary->no_trip =$request->no_trip;
-        $emp_salary->earning =$request->earning;
-        $emp_salary->total =$request->total;
+        $emp_salary->designation = $request->designation;
+        $emp_salary->basic_pay = $request->basic_pay;
+        $emp_salary->commission = $request->commission;
+        $emp_salary->cpf = $request->cpf;
+        $emp_salary->insurance = $request->insurance;
+        $emp_salary->medical_leave = $request->medical_leave_entitlement;
+        $emp_salary->medical_allowance = $request->medical_allowance;
+        $emp_salary->earning = $request->earning;
+        $emp_salary->deduction = $request->deduction;
+        $emp_salary->net_pay = $request->net_pay;
+        $emp_salary->per_trip_charge = $request->per_trip_charge;
+        $emp_salary->no_trip = $request->no_trip;
+        $emp_salary->earning = $request->earning;
+        $emp_salary->total = $request->per_trip_charge * $request->no_trip;
         $emp_salary->save();
         return redirect(route('salaryEmployee'));
     }
@@ -692,63 +688,121 @@ class EmployeeController extends Controller
 
     public function editSalary($id)
     {
-        $data['pay_structures'] = PayStructure::where('year',2022)->first();
-        $data['job_position']=JobPosition::where('status',1)->get();
-        $data['employee']=Employee::where('status',1)->get();
-        $data['emp_salary']=EmployeeSalary::find($id);
-        if($data['emp_salary']['designation']==1)
-        {
-            return view('frontend.admin.employee.employee_salary.edit',$data);
+        $data['pay_structures'] = PayStructure::where('year', 2022)->first();
+        $data['job_position'] = JobPosition::where('status', 1)->get();
+        $data['employee'] = Employee::where('status', 1)->get();
+        $data['emp_salary'] = EmployeeSalary::find($id);
+        if ($data['emp_salary']['designation'] == 1) {
+            return view('frontend.admin.employee.employee_salary.edit', $data);
+        } else {
+            return view('frontend.admin.employee.employee_salary.edit_a', $data);
         }
-        else
-        {
-            return view('frontend.admin.employee.employee_salary.edit_a',$data);
-        }
-    
-      
     }
     public function updateSalary(Request $request)
     {
         $request->validate([
-            'emp_id' => 'required|unique:employee_salaries,emp_id,'.$request->id,
-            
+            'emp_id' => 'required|unique:employee_salaries,emp_id,' . $request->id,
+
         ]);
 
         $emp_salary = EmployeeSalary::find($request->id);
         $emp_salary->emp_id = $request->emp_id;
-        $emp_salary->designation =$request->designation;
-        $emp_salary->basic_pay =$request->basic_pay;
-        $emp_salary->commission =$request->commission;
-        $emp_salary->cpf =$request->cpf;
-        $emp_salary->insurance =$request->insurance;
-        $emp_salary->medical_leave =$request->medical_leave_entitlement;
-        $emp_salary->medical_allowance =$request->medical_allowance;
-        $emp_salary->earning =$request->earning;
-        $emp_salary->deduction =$request->deduction;
-        $emp_salary->net_pay =$request->net_pay;
-        $emp_salary->per_trip_charge =$request->per_trip_charge;
-        $emp_salary->no_trip =$request->no_trip;
-        $emp_salary->earning =$request->earning;
-        $emp_salary->total =$request->total;
+        $emp_salary->designation = $request->designation;
+        $emp_salary->basic_pay = $request->basic_pay;
+        $emp_salary->commission = $request->commission;
+        $emp_salary->cpf = $request->cpf;
+        $emp_salary->insurance = $request->insurance;
+        $emp_salary->medical_leave = $request->medical_leave_entitlement;
+        $emp_salary->medical_allowance = $request->medical_allowance;
+        $emp_salary->earning = $request->earning;
+        $emp_salary->deduction = $request->deduction;
+        $emp_salary->net_pay = $request->net_pay;
+        $emp_salary->per_trip_charge = $request->per_trip_charge;
+        $emp_salary->no_trip = $request->no_trip;
+        $emp_salary->earning = $request->earning;
+        $emp_salary->total = $request->per_trip_charge * $request->no_trip;
         $emp_salary->save();
         return redirect(route('salaryEmployee'));
     }
     public function deleteEmployeeSalary(Request $request)
     {
-       $data = EmployeeSalary::where('id',$request->id)->delete();
-       return json_encode(1);
-   
+        $data = EmployeeSalary::where('id', $request->id)->delete();
+        return json_encode(1);
     }
     public function generatePayslip($id)
     {
+        $emp = DB::table('employee_salaries')
+            ->select('employee_salaries.*', 'job_positions.position_name', 'employees.emp_name')
+            ->join('job_positions', 'job_positions.id', 'employee_salaries.designation')
+            ->join('employees', 'employees.id', 'employee_salaries.emp_id')
+            ->where('employee_salaries.id', $id)
+            ->first();
+      
+
+        $month = date('m');
+        if($month == 1)
+        {
+            $month = 'January';
+        }
+        else if($month == 2)
+        {
+            $month = 'February';
+        }
+        else if($month == 3)
+        {
+            $month = 'March';
+        }
+        else if($month == 4)
+        {
+            $month = 'April';
+        }
+        else if($month == 05)
+        {
+            $month = 'May';
+        }
+        else if($month == 6)
+        {
+            $month = 'June';
+        }
+        else if($month == 7)
+        {
+            $month = 'July';
+        }
+        else if($month == 8)
+        {
+            $month = 'August';
+        }
+        else if($month == 9)
+        {
+            $month = 'September';
+        }
+        else if($month == 10)
+        {
+            $month = 'October';
+        }
+        else if($month == 11)
+        {
+            $month = 'November';
+        }
+        else
+        {
+            $month = 'December';
+        }
+        
+
         $data = [
-            'title' => 'Payslip of ',
+            'title' => 'Payslip of ' . $month,
+            'per_trip_charge' => $emp->per_trip_charge,
+            'no_trip' => $emp->no_trip,
+            'total' => $emp->total,
+            'month' => $month,
+            'empName' =>$emp->emp_name,
+            'designation' => $emp->position_name,
             'date' => date('m/d/Y')
         ];
-          
+
         $pdf = PDF::loadView('myPDF', $data);
-    
-        return $pdf->download('itsolutionstuff.pdf');
+
+        return $pdf->download('employeePayslip.pdf');
     }
-   
 }
