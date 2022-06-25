@@ -31,7 +31,7 @@
       </li>
       @if(role_test()!=4)
 
- 
+
 
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#pagesExamples7" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
@@ -250,15 +250,15 @@
                 <span class="sidenav-normal"> Job Position </span>
               </a>
             </li>
-        
-        
-           
-           
+
+
+
+
           </ul>
         </div>
       </li>
       <li class="nav-item">
-        <a data-bs-toggle="collapse" href="#pagesExamples10" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
+        <a data-bs-toggle="collapse" href="#pagesExamples18" class="nav-link collapsed" aria-controls="pagesExamples4" role="button" aria-expanded="false">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <title>office</title>
@@ -276,7 +276,7 @@
           </div>
           <span class="nav-link-text ms-1">Payroll Management</span>
         </a>
-        <div class="collapse" id="pagesExamples10" style="">
+        <div class="collapse" id="pagesExamples18" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
               <a class="nav-link " href="{{ route('salaryEmployee') }}">
@@ -317,25 +317,17 @@
             <li class="nav-item ">
               <a class="nav-link " href="{{ route('allEmployee') }}">
                 <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal">Employees </span>
+                <span class="sidenav-normal">Employee's Leave</span>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('departments') }}">
+              <a class="nav-link " href="{{ route('holidayList') }}">
                 <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Department </span>
+                <span class="sidenav-normal"> Holiday List </span>
               </a>
             </li>
-            <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
-                <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Job Position </span>
-              </a>
-            </li>
-        
-        
-           
-           
+          
+
           </ul>
         </div>
       </li>
@@ -356,7 +348,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1"> Claim Management </span>
+          <span class="nav-link-text ms-1"> Employee Attendance </span>
         </a>
         <div class="collapse" id="pagesExamples12" style="">
           <ul class="nav ms-4 ps-3">
@@ -378,14 +370,10 @@
                 <span class="sidenav-normal"> Job Position </span>
               </a>
             </li>
-        
-        
-           
-           
           </ul>
         </div>
       </li>
-     
+
       <!-- <li class="nav-item">
           <a class="nav-link  " href="{{ route('allEmployee') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -406,7 +394,7 @@
             <span class="nav-link-text ms-1">Employee Management</span>
           </a>
         </li> -->
-        <li class="nav-item mt-3">
+      <li class="nav-item mt-3">
         <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Logistic </h6>
       </li>
       <li class="nav-item">
@@ -472,14 +460,14 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('maintenance')}}">
                 <span class="sidenav-mini-icon"> </span>
-                <span class="sidenav-normal"> Maintenance  </span>
+                <span class="sidenav-normal"> Maintenance </span>
               </a>
             </li>
-            
-           
-            
-           
-            
+
+
+
+
+
           </ul>
         </div>
       </li>

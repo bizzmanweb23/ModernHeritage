@@ -295,8 +295,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/addSalary', [EmployeeController::class, 'addSalary'])->name('addSalary');
     Route::get('/editSalary/{id}', [EmployeeController::class, 'editSalary'])->name('editSalary');
     Route::post('/updateSalary', [EmployeeController::class, 'updateSalary'])->name('updateSalary');
-    
-    
+    Route::get('/deleteEmployeeSalary', [EmployeeController::class, 'deleteEmployeeSalary'])->name('deleteEmployeeSalary');
+    Route::get('/holidayList', [EmployeeController::class, 'holidayList'])->name('holidayList');
     
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {

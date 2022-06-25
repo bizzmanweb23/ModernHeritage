@@ -12,7 +12,7 @@
 
                 <div class="form-group col-md-6">
                     <label>Employee</label>
-                    <input type="text" class="form-control" id="id" name="id" value="{{$emp_salary->id}}">
+                    <input type="hidden" class="form-control" id="id" name="id" value="{{$emp_salary->id}}">
                     <select name="emp_id" id="emp_id" class="form-control" required>
                         <option value="">--Select-- </option>
                         @foreach($employee as $key=>$emp )

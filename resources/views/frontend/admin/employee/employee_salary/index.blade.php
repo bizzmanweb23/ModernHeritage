@@ -54,7 +54,7 @@
 
                 <td>
                     <a href="editSalary/{{$e_sl->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                   
+                    <a href="javascript:void(0)" onclick="return delete_salary(this.id)" id="{{$e_sl->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
             </tr>
@@ -75,5 +75,28 @@
             responsive: true
         });
     });
+
+    function  delete_salary(id) {
+        if (confirm('Are you sure you want to delete?')) {
+
+            $.ajax({
+            url: "{{route('deleteEmployeeSalary')}}",
+            type: 'GET',
+            data: {
+                id: id
+            },
+            success: function(data) {
+           if(data == 1){
+
+            location.reload();
+           }
+
+            }
+        });
+        } else {
+
+            console.log('Thing was not saved to the database.');
+        }
+    }
     </script>
 @endsection

@@ -731,4 +731,14 @@ class EmployeeController extends Controller
         $emp_salary->save();
         return redirect(route('salaryEmployee'));
     }
+    public function deleteEmployeeSalary(Request $request)
+    {
+       $data = EmployeeSalary::where('id',$request->id)->delete();
+       return json_encode(1);
+   
+    }
+    public function holidayList()
+    {
+        return view('frontend.admin.holiday.index');
+    }
 }
