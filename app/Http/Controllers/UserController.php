@@ -257,11 +257,12 @@ class UserController extends Controller
     {
         $id = session()->get('ADMIN_USER_ID');
 
-  
+        
 
         $data['data'] = User::select('users.id','users.user_name','users.email','users.user_image','users.id as userId','user_address.*')->where('users.id', $id)
             ->join('user_address', 'user_address.user_id', 'users.id')
             ->first();
+     
         $data['countries'] = DB::table('countries')->get();
         return view('frontend.admin.user.profile', $data);
     }

@@ -315,6 +315,22 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/deleteLeaveStructure', [HolidayController::class, 'deleteLeaveStructure'])->name('deleteLeaveStructure');
     Route::get('/editLeave/{id}', [HolidayController::class, 'editLeave'])->name('editLeave');
     Route::post('/updateLeave', [HolidayController::class, 'updateLeave'])->name('updateLeave');
+
+    //attendance
+    Route::get('/attendanceDetails', [HolidayController::class, 'attendanceDetails'])->name('attendanceDetails');
+    Route::post('/exportAttendanceSheet', [HolidayController::class, 'exportAttendanceSheet'])->name('exportAttendanceSheet');
+
+    Route::get('/giveAttendance', [EmployeeController::class, 'giveAttendance'])->name('giveAttendance');
+    Route::get('/addAttendance', [EmployeeController::class, 'addAttendance'])->name('addAttendance');
+    Route::post('/postAttendance', [EmployeeController::class, 'postAttendance'])->name('postAttendance');
+    Route::get('/editLoginTime/{id}', [EmployeeController::class, 'editLoginTime'])->name('editLoginTime');
+    Route::post('/updateAttendance', [EmployeeController::class, 'updateAttendance'])->name('updateAttendance');
+    Route::get('/employeeLeave', [EmployeeController::class, 'employeeLeave'])->name('employeeLeave');
+    Route::get('/addLeave', [EmployeeController::class, 'addLeave'])->name('addLeave');
+    Route::post('/postLeave', [EmployeeController::class, 'postLeave'])->name('postLeave');
+    Route::get('/editLeave/{id}', [EmployeeController::class, 'editLeave'])->name('editLeave');
+    Route::post('/updateLeave', [EmployeeController::class, 'updateLeave'])->name('updateLeave');
+    
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

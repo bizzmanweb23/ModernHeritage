@@ -15,6 +15,7 @@ use App\Models\EmployeeSalary;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use DateTime;
 use DB;
 use PDF;
 
@@ -737,58 +738,35 @@ class EmployeeController extends Controller
             ->join('employees', 'employees.id', 'employee_salaries.emp_id')
             ->where('employee_salaries.id', $id)
             ->first();
-      
+
 
         $month = date('m');
-        if($month == 1)
-        {
+        if ($month == 1) {
             $month = 'January';
-        }
-        else if($month == 2)
-        {
+        } else if ($month == 2) {
             $month = 'February';
-        }
-        else if($month == 3)
-        {
+        } else if ($month == 3) {
             $month = 'March';
-        }
-        else if($month == 4)
-        {
+        } else if ($month == 4) {
             $month = 'April';
-        }
-        else if($month == 05)
-        {
+        } else if ($month == 05) {
             $month = 'May';
-        }
-        else if($month == 6)
-        {
+        } else if ($month == 6) {
             $month = 'June';
-        }
-        else if($month == 7)
-        {
+        } else if ($month == 7) {
             $month = 'July';
-        }
-        else if($month == 8)
-        {
+        } else if ($month == 8) {
             $month = 'August';
-        }
-        else if($month == 9)
-        {
+        } else if ($month == 9) {
             $month = 'September';
-        }
-        else if($month == 10)
-        {
+        } else if ($month == 10) {
             $month = 'October';
-        }
-        else if($month == 11)
-        {
+        } else if ($month == 11) {
             $month = 'November';
-        }
-        else
-        {
+        } else {
             $month = 'December';
         }
-        
+
 
         $data = [
             'title' => 'Payslip of ' . $month,
@@ -796,7 +774,7 @@ class EmployeeController extends Controller
             'no_trip' => $emp->no_trip,
             'total' => $emp->total,
             'month' => $month,
-            'empName' =>$emp->emp_name,
+            'empName' => $emp->emp_name,
             'designation' => $emp->position_name,
             'date' => date('m/d/Y')
         ];
@@ -804,5 +782,126 @@ class EmployeeController extends Controller
         $pdf = PDF::loadView('myPDF', $data);
 
         return $pdf->download('employeePayslip.pdf');
+    }
+    public function giveAttendance()
+    {
+        $id = session()->get('ADMIN_USER_ID');
+        $data_e = DB::table('users')->where('id', $id)->first();
+        $emp = DB::table('employees')->where('work_email', $data_e->email)->first();
+
+        $employee['employee'] = DB::table('employee_logins')
+                                ->select('employee_logins.*', 'employees.unique_id', 'employees.emp_name')
+                                ->join('employees', 'employees.id', 'employee_logins.emp_id')
+                                ->where('employee_logins.emp_id',$emp->id)
+                                ->get();
+        return view('frontend.admin.employeeProfile.index',$employee);
+    }
+    public function addAttendance()
+    {
+        return view('frontend.admin.employeeProfile.add');
+    }
+    public function postAttendance(Request $request)
+    {
+     
+        $id = session()->get('ADMIN_USER_ID');
+    
+     
+        $data = DB::table('users')->where('id', $id)->first();
+     
+     
+        
+        $emp = DB::table('employees')->where('work_email', $data->email)->first();
+
+        DB::table('employee_logins')->insert([
+            'emp_id' => $emp->id,
+            'login_date' => $request->login_date,
+
+        ]);
+        return redirect(route('giveAttendance'));
+    }
+    public function editLoginTime($id)
+    {
+       $data['data'] = DB::table('employee_logins')->where('id',$id)->first();
+        return view('frontend.admin.employeeProfile.edit',$data);
+    }
+    public function updateAttendance(Request $request)
+    {
+        DB::table('employee_logins')->where('id',$request->id)->update([
+            
+            'logout_date' => $request->logout_date,
+
+        ]);
+        return redirect(route('giveAttendance'));
+    }
+
+    public function employeeLeave()
+    {
+        $id = session()->get('ADMIN_USER_ID');
+        $data = DB::table('users')->where('id', $id)->first();
+        $emp = DB::table('employees')->where('work_email', $data->email)->first();
+        $employee['employee']=DB::table('employee_leave_models')
+        ->select('employee_leave_models.*', 'employees.unique_id', 'employees.emp_name')
+        ->join('employees', 'employees.id', 'employee_leave_models.emp_id')
+        ->where('employee_leave_models.emp_id',$emp->id)
+        ->get();
+
+        return view('frontend.admin.employeeProfile.leave',$employee);
+    }
+    public function addLeave()
+    {
+        return view('frontend.admin.employeeProfile.addLeave');
+    }
+    public function postLeave(Request $request)
+    {
+        $id = session()->get('ADMIN_USER_ID');
+        $data = DB::table('users')->where('id', $id)->first();
+        $emp = DB::table('employees')->where('work_email', $data->email)->first();
+
+        $today = new DateTime($request->start_date);
+        $date_1 = new DateTime($request->end_date);
+        $interval = $today->diff($date_1);
+
+     
+
+
+        DB::table('employee_leave_models')->insert([
+            'emp_id' => $emp->id,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'type' => $request->type,
+             'reason' => $request->reason,
+             'status' => 0,
+             'no_of_day'=>$interval->format("%r%a")+1
+             
+        ]);
+        return redirect(route('employeeLeave'));
+    }
+    public function editLeave($id)
+    {
+        $data['data'] = DB::table('employee_leave_models')->where('id',$id)->first();
+        return view('frontend.admin.employeeProfile.editLeave',$data);
+    }
+    public function updateLeave(Request $request)
+    {
+      
+
+        $today = new DateTime($request->start_date);
+        $date_1 = new DateTime($request->end_date);
+        $interval = $today->diff($date_1);
+
+     
+
+
+        DB::table('employee_leave_models')->where('id',$request->id)->update([
+           
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'type' => $request->type,
+             'reason' => $request->reason,
+             'status' => 0,
+             'no_of_day'=>$interval->format("%r%a")+1
+             
+        ]);
+        return redirect(route('employeeLeave'));
     }
 }

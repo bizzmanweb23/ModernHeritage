@@ -15,6 +15,9 @@ class CreateEmployeeLoginsTable extends Migration
     {
         Schema::create('employee_logins', function (Blueprint $table) {
             $table->id();
+            $table->integer('emp_id')->nullable();
+            $table->dateTime('login_date',3)->nullable();
+            $table->dateTime('logout_date',3)->nullable();
             $table->timestamps();
         });
     }
