@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Holiday;
+use DB;
 
 class HolidayController extends Controller
 {
@@ -76,10 +77,39 @@ class HolidayController extends Controller
     }
     public function leaveStructure ()
     {
-        return view('frontend.admin.holiday.leaveStructure');
+       $data['data'] = DB::table('leavestructures')->get();
+        return view('frontend.admin.holiday.leaveStructure',$data);
     }
     public function addleaveStructure()
     {
         return view('frontend.admin.holiday.addLeave');
+    }
+    public function addleave(Request $request)
+    {
+        DB::table('leavestructures')->insert([
+           'casual_leave'=>$request->casual_leave,
+           'sick_leave'=>$request->sick_leave
+        ]);
+        return redirect(route('leaveStructure'));
+    }
+    public function deleteLeaveStructure(Request $request)
+    {
+        
+        DB::table('leavestructures')->where('id',$request->id)->delete();
+        return json_encode(1);
+        
+    }
+    public function editLeave($id)
+    {
+       $data['data'] = DB::table('leavestructures')->where('id',$id)->first();
+        return view('frontend.admin.holiday.editLeave',$data);
+    }
+    public function  updateLeave(Request $request)
+    {
+        DB::table('leavestructures')->where('id',$request->id)->update([
+            'casual_leave'=>$request->casual_leave,
+            'sick_leave'=>$request->sick_leave
+         ]);
+         return redirect(route('leaveStructure'));
     }
 }

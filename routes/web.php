@@ -311,8 +311,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     //Leave structure
     Route::get('/leave_structure', [HolidayController::class, 'leaveStructure'])->name('leaveStructure');
     Route::get('/addleaveStructure', [HolidayController::class, 'addleaveStructure'])->name('addleaveStructure');
-    
-  
+    Route::post('/addleave', [HolidayController::class, 'addleave'])->name('addleave');
+    Route::get('/deleteLeaveStructure', [HolidayController::class, 'deleteLeaveStructure'])->name('deleteLeaveStructure');
+    Route::get('/editLeave/{id}', [HolidayController::class, 'editLeave'])->name('editLeave');
+    Route::post('/updateLeave', [HolidayController::class, 'updateLeave'])->name('updateLeave');
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 
