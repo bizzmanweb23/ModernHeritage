@@ -99,6 +99,7 @@ return array(
     'App\\Models\\VehicleModel' => $baseDir . '/app/Models/VehicleModel.php',
     'App\\Models\\WareHouse' => $baseDir . '/app/Models/WareHouse.php',
     'App\\Models\\WarehouseProducts' => $baseDir . '/app/Models/WarehouseProducts.php',
+    'App\\Models\\employeeLogin' => $baseDir . '/app/Models/employeeLogin.php',
     'App\\Models\\unit' => $baseDir . '/app/Models/unit.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

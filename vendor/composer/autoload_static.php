@@ -667,6 +667,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Models\\VehicleModel' => __DIR__ . '/../..' . '/app/Models/VehicleModel.php',
         'App\\Models\\WareHouse' => __DIR__ . '/../..' . '/app/Models/WareHouse.php',
         'App\\Models\\WarehouseProducts' => __DIR__ . '/../..' . '/app/Models/WarehouseProducts.php',
+        'App\\Models\\employeeLogin' => __DIR__ . '/../..' . '/app/Models/employeeLogin.php',
         'App\\Models\\unit' => __DIR__ . '/../..' . '/app/Models/unit.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
