@@ -59,13 +59,15 @@
                 @endif
                 @if($ld->status == 1)
                 <td><span class="badge badge-success">Approved</span></td>
-                @else
+                @elseif($ld->status == 2)
                 <td><span class="badge badge-danger">Not Approved</span></td>
+                @else
+                <td><span class="badge badge-warning">Applied</span></td>
                 @endif
                 <td>
 
                     <a href="editLeave/{{$ld->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_product(this.id)" id="{{$ld->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                  
                 </td>
 
             </tr>

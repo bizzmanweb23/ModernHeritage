@@ -16,7 +16,7 @@
                             <label>Period</label>
                             <div class="row">
                                 <div class="col-md-6">
-                                <input type="text" class="form-control" id="id" name="id" value="{{$data->id}}" required>
+                                <input type="hidden" class="form-control" id="id" name="id" value="{{$data->id}}" required>
                                     <input type="date" class="form-control" id="start_date" name="start_date" value="{{$data->start_date}}" required>
                                 </div>
                                 <div class="col-md-6">
@@ -53,5 +53,16 @@
         </div>
     </div>
 </div>
-
+<script>
+@if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
+</script>
 @endsection

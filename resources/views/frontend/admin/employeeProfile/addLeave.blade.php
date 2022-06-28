@@ -52,5 +52,16 @@
         </div>
     </div>
 </div>
-
+<script>
+@if($errors->any())
+        @foreach($errors->all() as $error)
+            toastr.options =
+            {
+                "closeButton" : true,
+                "progressBar" : true
+            }
+            toastr.success("{{ $error }}");
+        @endforeach
+    @endif
+</script>
 @endsection

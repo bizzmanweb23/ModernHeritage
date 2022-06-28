@@ -320,9 +320,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/attendanceDetails', [HolidayController::class, 'attendanceDetails'])->name('attendanceDetails');
     Route::post('/exportAttendanceSheet', [HolidayController::class, 'exportAttendanceSheet'])->name('exportAttendanceSheet');
     Route::get('/getEmployee', [HolidayController::class, 'getEmployee'])->name('getEmployee');
+    Route::post('/status_update_leave', [HolidayController::class, 'status_update_leave'])->name('status_update_leave');
 
-
-    
 
 
     Route::get('/giveAttendance', [EmployeeController::class, 'giveAttendance'])->name('giveAttendance');
@@ -347,9 +346,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/claims', [EmployeeController::class, 'claims'])->name('claims');
     Route::post('/status_update_claim', [EmployeeController::class, 'status_update_claim'])->name('status_update_claim');
     Route::get('/viewClaim/{id}', [EmployeeController::class, 'viewClaim'])->name('viewClaim');
+    //employee leave
+    Route::get('/employeeLeaves', [EmployeeController::class, 'employeeLeaves'])->name('employeeLeaves');
+
     
-
-
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

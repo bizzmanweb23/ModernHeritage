@@ -791,11 +791,11 @@ class EmployeeController extends Controller
         $emp = DB::table('employees')->where('work_email', $data_e->email)->first();
 
         $employee['employee'] = DB::table('employee_logins')
-                                ->select('employee_logins.*', 'employees.unique_id', 'employees.emp_name')
-                                ->join('employees', 'employees.id', 'employee_logins.emp_id')
-                                ->where('employee_logins.emp_id',$emp->id)
-                                ->get();
-        return view('frontend.admin.employeeProfile.index',$employee);
+            ->select('employee_logins.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'employee_logins.emp_id')
+            ->where('employee_logins.emp_id', $emp->id)
+            ->get();
+        return view('frontend.admin.employeeProfile.index', $employee);
     }
     public function addAttendance()
     {
@@ -803,14 +803,14 @@ class EmployeeController extends Controller
     }
     public function postAttendance(Request $request)
     {
-     
+
         $id = session()->get('ADMIN_USER_ID');
-    
-     
+
+
         $data = DB::table('users')->where('id', $id)->first();
-     
-     
-        
+
+
+
         $emp = DB::table('employees')->where('work_email', $data->email)->first();
 
         DB::table('employee_logins')->insert([
@@ -822,13 +822,13 @@ class EmployeeController extends Controller
     }
     public function editLoginTime($id)
     {
-       $data['data'] = DB::table('employee_logins')->where('id',$id)->first();
-        return view('frontend.admin.employeeProfile.edit',$data);
+        $data['data'] = DB::table('employee_logins')->where('id', $id)->first();
+        return view('frontend.admin.employeeProfile.edit', $data);
     }
     public function updateAttendance(Request $request)
     {
-        DB::table('employee_logins')->where('id',$request->id)->update([
-            
+        DB::table('employee_logins')->where('id', $request->id)->update([
+
             'logout_date' => $request->logout_date,
 
         ]);
@@ -840,13 +840,13 @@ class EmployeeController extends Controller
         $id = session()->get('ADMIN_USER_ID');
         $data = DB::table('users')->where('id', $id)->first();
         $emp = DB::table('employees')->where('work_email', $data->email)->first();
-        $employee['employee']=DB::table('employee_leave_models')
-        ->select('employee_leave_models.*', 'employees.unique_id', 'employees.emp_name')
-        ->join('employees', 'employees.id', 'employee_leave_models.emp_id')
-        ->where('employee_leave_models.emp_id',$emp->id)
-        ->get();
+        $employee['employee'] = DB::table('employee_leave_models')
+            ->select('employee_leave_models.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'employee_leave_models.emp_id')
+            ->where('employee_leave_models.emp_id', $emp->id)
+            ->get();
 
-        return view('frontend.admin.employeeProfile.leave',$employee);
+        return view('frontend.admin.employeeProfile.leave', $employee);
     }
     public function addLeave()
     {
@@ -854,6 +854,8 @@ class EmployeeController extends Controller
     }
     public function postLeave(Request $request)
     {
+
+        $data = DB::table('leavestructures')->first();
         $id = session()->get('ADMIN_USER_ID');
         $data = DB::table('users')->where('id', $id)->first();
         $emp = DB::table('employees')->where('work_email', $data->email)->first();
@@ -862,46 +864,64 @@ class EmployeeController extends Controller
         $date_1 = new DateTime($request->end_date);
         $interval = $today->diff($date_1);
 
-     
+        $data_l = DB::table('employee_leave_models')->where('emp_id', $emp->id)->orderBy('id', 'DESC')->first();
+        if (!empty($data_l)) {
+            DB::table('employee_leave_models')->insert([
+                'emp_id' => $emp->id,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'type' => $request->type,
+                'reason' => $request->reason,
+                'status' => 0,
+                'no_of_day' => $interval->format("%r%a") + 1,
+                'casual_leave' => $data_l->casual_leave,
+                'sick_leave' => $data_l->sick_leave,
 
+            ]);
+        } else {
+            DB::table('employee_leave_models')->insert([
+                'emp_id' => $emp->id,
+                'start_date' => $request->start_date,
+                'end_date' => $request->end_date,
+                'type' => $request->type,
+                'reason' => $request->reason,
+                'status' => 0,
+                'no_of_day' => $interval->format("%r%a") + 1,
+                'casual_leave' => $data->casual_leave,
+                'sick_leave' => $data->sick_leave,
 
-        DB::table('employee_leave_models')->insert([
-            'emp_id' => $emp->id,
-            'start_date' => $request->start_date,
-            'end_date' => $request->end_date,
-            'type' => $request->type,
-             'reason' => $request->reason,
-             'status' => 0,
-             'no_of_day'=>$interval->format("%r%a")+1
-             
-        ]);
+            ]);
+        }
+
         return redirect(route('employeeLeave'));
     }
     public function editLeave($id)
     {
-        $data['data'] = DB::table('employee_leave_models')->where('id',$id)->first();
-        return view('frontend.admin.employeeProfile.editLeave',$data);
+
+
+        $data['data'] = DB::table('employee_leave_models')->where('id', $id)->first();
+        return view('frontend.admin.employeeProfile.editLeave', $data);
     }
     public function updateLeave(Request $request)
     {
-      
+
 
         $today = new DateTime($request->start_date);
         $date_1 = new DateTime($request->end_date);
         $interval = $today->diff($date_1);
 
-     
 
 
-        DB::table('employee_leave_models')->where('id',$request->id)->update([
-           
+
+        DB::table('employee_leave_models')->where('id', $request->id)->update([
+
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
             'type' => $request->type,
-             'reason' => $request->reason,
-             'status' => 0,
-             'no_of_day'=>$interval->format("%r%a")+1
-             
+            'reason' => $request->reason,
+            'status' => 0,
+            'no_of_day' => $interval->format("%r%a") + 1
+
         ]);
         return redirect(route('employeeLeave'));
     }
@@ -910,11 +930,11 @@ class EmployeeController extends Controller
         $id = session()->get('ADMIN_USER_ID');
         $data_e = DB::table('users')->where('id', $id)->first();
         $emp = DB::table('employees')->where('work_email', $data_e->email)->first();
-        $data['claims']=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
-                                    ->join('employees', 'employees.id', 'claim_models.emp_id')
-                                    ->where('claim_models.emp_id',$emp->id)
-                                    ->get();
-        return view('frontend.admin.employeeProfile.claim',$data);
+        $data['claims'] = ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'claim_models.emp_id')
+            ->where('claim_models.emp_id', $emp->id)
+            ->get();
+        return view('frontend.admin.employeeProfile.claim', $data);
     }
     public function  addClaims()
     {
@@ -924,114 +944,107 @@ class EmployeeController extends Controller
     public function postClaim(Request $request)
     {
 
-       
+
         $id = session()->get('ADMIN_USER_ID');
         $data = DB::table('users')->where('id', $id)->first();
         $emp = DB::table('employees')->where('work_email', $data->email)->first();
-     
-        if($request->file('app_file')){
+
+        if ($request->file('app_file')) {
             $file_type = $request->file('app_file')->extension();
-            $file_path = $request->file('app_file')->storeAs('images/customers',time().'.'.$file_type,'public');
-            $request->file('app_file')->move(public_path('images/customers'),time().'.'.$file_type);
-        }
-        else
-        {
+            $file_path = $request->file('app_file')->storeAs('images/customers', time() . '.' . $file_type, 'public');
+            $request->file('app_file')->move(public_path('images/customers'), time() . '.' . $file_type);
+        } else {
             $file_path = null;
         }
         $claim = new ClaimModel;
-        $claim->claiming_amount	= $request->claiming_amount	;
-        $claim->app_file	=  $file_path ;
-        $claim->comment	= $request->comment	;
-        $claim->emp_id	= $emp->id	;
-        $claim->status	= 0	;
+        $claim->claiming_amount    = $request->claiming_amount;
+        $claim->app_file    =  $file_path;
+        $claim->comment    = $request->comment;
+        $claim->emp_id    = $emp->id;
+        $claim->status    = 0;
         $claim->save();
         return redirect(route('employeeClaims'));
     }
     public function editClaim($id)
     {
-        $data['claim']=ClaimModel::find($id);
-        return view('frontend.admin.employeeProfile.editClaim',$data);
+        $data['claim'] = ClaimModel::find($id);
+        return view('frontend.admin.employeeProfile.editClaim', $data);
     }
     public function updateClaim(Request $request)
     {
-        if($request->file('app_file')){
+        if ($request->file('app_file')) {
             $file_type = $request->file('app_file')->extension();
-            $file_path = $request->file('app_file')->storeAs('images/customers',time().'.'.$file_type,'public');
-            $request->file('app_file')->move(public_path('images/customers'),time().'.'.$file_type);
-        }
-        else
-        {
+            $file_path = $request->file('app_file')->storeAs('images/customers', time() . '.' . $file_type, 'public');
+            $request->file('app_file')->move(public_path('images/customers'), time() . '.' . $file_type);
+        } else {
             $file_path = $request->app_file_old;
         }
         $claim = ClaimModel::find($request->id);
-        $claim->claiming_amount	= $request->claiming_amount	;
-        $claim->app_file	=  $file_path ;
-        $claim->comment	= $request->comment	;
-     
-        $claim->status	= 0	;
+        $claim->claiming_amount    = $request->claiming_amount;
+        $claim->app_file    =  $file_path;
+        $claim->comment    = $request->comment;
+
+        $claim->status    = 0;
         $claim->save();
         return redirect(route('employeeClaims'));
     }
     public function deleteClaim(Request $request)
     {
-        ClaimModel::where('id',$request->id)->delete();
+        ClaimModel::where('id', $request->id)->delete();
         return json_encode(1);
     }
     public function claims(Request $request)
     {
         $data['employees'] = Employee::where('status', 1)->get();
-        $claim=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
-                                    ->join('employees', 'employees.id', 'claim_models.emp_id');
-                                   
-        if(isset($request->emp_id))
-        {
-            if($request->emp_id != 'all')
-            {
-                $data['claims'] = $claim->where('emp_id',$request->emp_id)->get();
-            }
-            else{
+        $claim = ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'claim_models.emp_id');
+
+        if (isset($request->emp_id)) {
+            if ($request->emp_id != 'all') {
+                $data['claims'] = $claim->where('emp_id', $request->emp_id)->get();
+            } else {
                 $data['claims'] = $claim->get();
             }
-           
-        }
-        else
-        {
+        } else {
             $data['claims'] = $claim->get();
         }
-            
-        return view('frontend.admin.claims.index',$data);
+
+        return view('frontend.admin.claims.index', $data);
     }
     public function status_update_claim(Request $request)
     {
-      
+
         $data = ClaimModel::find($request->id);
         $emp = Employee::find($data->emp_id);
-      
-        if($emp->job_position==1)
-        {
-           DB::table('employee_salaries')->where('emp_id',$data->emp_id)->update([
-            'per_trip_charge'=> $data->claiming_amount,
-           ]);
-        }
-        else{
-            DB::table('employee_salaries')->where('emp_id',$data->emp_id)->update([
-                'basic_pay'=> $data->claiming_amount,
-               ]);
 
+        if ($emp->job_position == 1) {
+            DB::table('employee_salaries')->where('emp_id', $data->emp_id)->update([
+                'per_trip_charge' => $data->claiming_amount,
+            ]);
+        } else {
+            DB::table('employee_salaries')->where('emp_id', $data->emp_id)->update([
+                'basic_pay' => $data->claiming_amount,
+            ]);
         }
-          ClaimModel::where('id',$request->id)->update([
-              'status'=>$request->status
+        ClaimModel::where('id', $request->id)->update([
+            'status' => $request->status
         ]);
-     
+
         return back();
     }
     public function viewClaim($id)
     {
-        $data['claim']=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
-                                 ->join('employees', 'employees.id', 'claim_models.emp_id')
-                                 ->where('claim_models.id',$id)
-                                 ->first();
-        return view('frontend.admin.claims.view',$data);
+        $data['claim'] = ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'claim_models.emp_id')
+            ->where('claim_models.id', $id)
+            ->first();
+        return view('frontend.admin.claims.view', $data);
     }
-    
+    public function  employeeLeaves()
+    {
+        $employees['employees'] = DB::table('employee_leave_models')->select('employee_leave_models.*', 'employees.unique_id', 'employees.emp_name')
+            ->join('employees', 'employees.id', 'employee_leave_models.emp_id')
+            ->get();
+        return view('frontend.admin.employee.employeeLeave', $employees);
+    }
 }

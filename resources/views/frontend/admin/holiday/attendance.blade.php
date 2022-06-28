@@ -21,7 +21,7 @@
         <div class="row">
             <div class="col-md-3">
                 <select name="deg_id" class="form-control" id="deg_id" required onChange="select_employee(this.value)">
-                    <option value="">Select Designation</option>
+                    <option value="">All</option>
                     @foreach($job_positions as $key=>$jb_p )
                     <option value="{{$jb_p->id}}">{{$jb_p->position_name}} </option>
                     @endforeach

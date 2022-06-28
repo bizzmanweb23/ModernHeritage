@@ -170,4 +170,25 @@ class HolidayController extends Controller
                               ->get();
         return response()->json($employee);
     }
+    public function status_update_leave(Request $request)
+    {
+     
+       $data = DB::table('employee_leave_models')->where('id',$request->id)->first();
+       if($request->type == 1)
+       {
+        DB::table('employee_leave_models')->where('id',$request->id)->update([
+            'status'=>$request->status,
+            'casual_leave'=>$data->casual_leave-$request->no_of_day
+      ]);
+       }
+       else{
+
+        DB::table('employee_leave_models')->where('id',$request->id)->update([
+            'status'=>$request->status,
+            'sick_leave'=>$data->sick_leave-$request->no_of_day
+      ]);
+       }
+       return back();
+      
+    }
 }
