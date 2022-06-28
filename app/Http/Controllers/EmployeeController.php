@@ -907,30 +907,68 @@ class EmployeeController extends Controller
     }
     public function employeeClaims()
     {
-        return view('frontend.admin.employeeProfile.claim');
+        $id = session()->get('ADMIN_USER_ID');
+        $data_e = DB::table('users')->where('id', $id)->first();
+        $emp = DB::table('employees')->where('work_email', $data_e->email)->first();
+        $data['claims']=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+                                    ->join('employees', 'employees.id', 'claim_models.emp_id')
+                                    ->where('claim_models.emp_id',$emp->id)
+                                    ->get();
+        return view('frontend.admin.employeeProfile.claim',$data);
     }
     public function  addClaims()
     {
+
         return view('frontend.admin.employeeProfile.addClaim');
     }
     public function postClaim(Request $request)
     {
+
+       
         $id = session()->get('ADMIN_USER_ID');
         $data = DB::table('users')->where('id', $id)->first();
         $emp = DB::table('employees')->where('work_email', $data->email)->first();
-        $str_time = time();
-        if ($request->file('app_file')) {
+     
+        if($request->file('app_file')){
             $file_type = $request->file('app_file')->extension();
-            $file_path = $request->file('app_file')->storeAs('images/employees' . $str_time . '.' . $file_type, 'public');
-            $request->file('app_file')->move(public_path('images/employees') . $str_time . '.' . $file_type);
-        } else {
-            $file_path = '';
+            $file_path = $request->file('app_file')->storeAs('images/customers',time().'.'.$file_type,'public');
+            $request->file('app_file')->move(public_path('images/customers'),time().'.'.$file_type);
+        }
+        else
+        {
+            $file_path = null;
         }
         $claim = new ClaimModel;
         $claim->claiming_amount	= $request->claiming_amount	;
         $claim->app_file	=  $file_path ;
         $claim->comment	= $request->comment	;
         $claim->emp_id	= $emp->id	;
+        $claim->status	= 0	;
+        $claim->save();
+        return redirect(route('employeeClaims'));
+    }
+    public function editClaim($id)
+    {
+        $data['claim']=ClaimModel::find($id);
+        return view('frontend.admin.employeeProfile.editClaim',$data);
+    }
+    public function updateClaim(Request $request)
+    {
+        if($request->file('app_file')){
+            $file_type = $request->file('app_file')->extension();
+            $file_path = $request->file('app_file')->storeAs('images/customers',time().'.'.$file_type,'public');
+            $request->file('app_file')->move(public_path('images/customers'),time().'.'.$file_type);
+        }
+        else
+        {
+            $file_path = $request->app_file_old;
+        }
+        $claim = ClaimModel::find($request->id);
+        $claim->claiming_amount	= $request->claiming_amount	;
+        $claim->app_file	=  $file_path ;
+        $claim->comment	= $request->comment	;
+     
+        $claim->status	= 0	;
         $claim->save();
         return redirect(route('employeeClaims'));
     }

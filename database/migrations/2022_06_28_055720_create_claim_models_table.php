@@ -19,6 +19,7 @@ class CreateClaimModelsTable extends Migration
             $table->string('app_file')->nullable();
             $table->integer('emp_id')->nullable();
             $table->string('comment')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

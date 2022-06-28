@@ -335,8 +335,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/employeeClaims', [EmployeeController::class, 'employeeClaims'])->name('employeeClaims');
     Route::get('/addClaims', [EmployeeController::class, 'addClaims'])->name('addClaims');
     Route::post('/addClaims', [EmployeeController::class, 'postClaim'])->name('postClaim');
+    Route::get('/editClaim/{id}', [EmployeeController::class, 'editClaim'])->name('editClaim');
+    Route::post('/updateClaim', [EmployeeController::class, 'updateClaim'])->name('updateClaim');
 
-    
+
+   
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

@@ -35,13 +35,33 @@
                 <th>Sl#</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
-                <th>Login Date / Time</th>
-                <th>Logout Date / Time </th>
+                <th>Claiming Amount(per month)</th>
+                <th>Status </th>
                 <th>Action </th>
             </tr>
         </thead>
         <tbody>
-           
+       
+        @foreach($claims as $key=>$ld)
+            <tr>
+                <td>{{$key+1}}</td>
+                <td>{{$ld->unique_id}}</td>
+                <td>{{$ld->emp_name}}</td>
+                <td>{{$ld->claiming_amount}}</td>
+                
+                @if($ld->status == 1)
+                <td><span class="badge badge-success">Approved</span></td>
+                @else
+                <td><span class="badge badge-danger">Not Approved</span></td>
+                @endif
+                <td>
+
+                    <a href="editClaim/{{$ld->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_product(this.id)" id="{{$ld->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                </td>
+
+            </tr>
+            @endforeach
 
 
         </tbody>
