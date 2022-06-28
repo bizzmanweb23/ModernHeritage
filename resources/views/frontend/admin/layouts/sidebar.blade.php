@@ -390,7 +390,7 @@
         <div class="collapse" id="pagesExamples13" style="">
           <ul class="nav ms-4 ps-3">
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allEmployee') }}">
+              <a class="nav-link " href="{{ route('claims') }}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal">Employees's Claims </span>
               </a>

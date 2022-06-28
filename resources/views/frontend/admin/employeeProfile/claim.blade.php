@@ -35,7 +35,7 @@
                 <th>Sl#</th>
                 <th>Employee ID</th>
                 <th>Employee Name</th>
-                <th>Claiming Amount(per month)</th>
+                <th>Claiming Amount</th>
                 <th>Status </th>
                 <th>Action </th>
             </tr>

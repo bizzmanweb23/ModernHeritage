@@ -108,6 +108,8 @@ class HolidayController extends Controller
     }
     public function attendanceDetails()
     {
+        $data['job_positions'] = DB::table('job_positions')->where('status', 1)->get();
+
         $data['employees'] = Employee::where('status', 1)->get();
 
         $data['data'] = DB::table('employee_logins')
@@ -155,5 +157,17 @@ class HolidayController extends Controller
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+
+    public function getEmployee(Request $request)
+    {
+         
+        $parent_id = $request->deg_id;
+         
+        $employee =  DB::table('employees')->where('job_position',$parent_id)
+                          
+                              ->get();
+        return response()->json($employee);
     }
 }

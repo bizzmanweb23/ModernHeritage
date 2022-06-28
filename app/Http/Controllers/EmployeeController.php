@@ -977,4 +977,61 @@ class EmployeeController extends Controller
         ClaimModel::where('id',$request->id)->delete();
         return json_encode(1);
     }
+    public function claims(Request $request)
+    {
+        $data['employees'] = Employee::where('status', 1)->get();
+        $claim=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+                                    ->join('employees', 'employees.id', 'claim_models.emp_id');
+                                   
+        if(isset($request->emp_id))
+        {
+            if($request->emp_id != 'all')
+            {
+                $data['claims'] = $claim->where('emp_id',$request->emp_id)->get();
+            }
+            else{
+                $data['claims'] = $claim->get();
+            }
+           
+        }
+        else
+        {
+            $data['claims'] = $claim->get();
+        }
+            
+        return view('frontend.admin.claims.index',$data);
+    }
+    public function status_update_claim(Request $request)
+    {
+      
+        $data = ClaimModel::find($request->id);
+        $emp = Employee::find($data->emp_id);
+      
+        if($emp->job_position==1)
+        {
+           DB::table('employee_salaries')->where('emp_id',$data->emp_id)->update([
+            'per_trip_charge'=> $data->claiming_amount,
+           ]);
+        }
+        else{
+            DB::table('employee_salaries')->where('emp_id',$data->emp_id)->update([
+                'basic_pay'=> $data->claiming_amount,
+               ]);
+
+        }
+          ClaimModel::where('id',$request->id)->update([
+              'status'=>$request->status
+        ]);
+     
+        return back();
+    }
+    public function viewClaim($id)
+    {
+        $data['claim']=ClaimModel::select('claim_models.*', 'employees.unique_id', 'employees.emp_name')
+                                 ->join('employees', 'employees.id', 'claim_models.emp_id')
+                                 ->where('claim_models.id',$id)
+                                 ->first();
+        return view('frontend.admin.claims.view',$data);
+    }
+    
 }

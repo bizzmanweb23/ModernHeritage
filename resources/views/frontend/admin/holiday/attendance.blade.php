@@ -19,15 +19,20 @@
     <form method="POST" action="{{ route('exportAttendanceSheet') }}">
         @csrf
         <div class="row">
-            <div class="col-md-4">
-                <select name="emp_id" class="form-control" id="emp_id" required>
-                    <option value="">Select Employee</option>
-                    @foreach($employees as $key=>$emp )
-                    <option value="{{$emp->id}}">{{$emp->emp_name}} </option>
+            <div class="col-md-3">
+                <select name="deg_id" class="form-control" id="deg_id" required onChange="select_employee(this.value)">
+                    <option value="">Select Designation</option>
+                    @foreach($job_positions as $key=>$jb_p )
+                    <option value="{{$jb_p->id}}">{{$jb_p->position_name}} </option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <select name="emp_id" class="form-control" id="emp_id" required>
+                   
+                </select>
+            </div>
+            <div class="col-md-3">
                 <select name="month" class="form-control" id="month" required>
                     <option value="">Select Month</option>
 
@@ -45,7 +50,7 @@
                     <option value="12">December</option>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
 
 
                 <button type="submit" class="btn btn-primary">Download</button>
@@ -90,17 +95,6 @@
 
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
@@ -110,23 +104,34 @@
         });
     });
 
-    $('#year').change(function(e) {
-        e.preventDefault();
-        var year = $('#year').val();
+ 
+ 
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#deg_id').on('change', function(e) {
+            var deg_id = e.target.value;
+            $.ajax({
+                url: "{{ route('getEmployee') }}",
+                type: "GET",
+                data: {
+                    deg_id: deg_id
+                },
+                success: function(data) {
 
-        $.ajax({
-            url: "{{route('holidayList')}}",
-            type: 'GET',
-            data: {
-                year: year
-            },
-            success: function(data) {
-                location.replace('?year=' + year);
 
-            }
+                    if (data) {
+                        $('#emp_id').empty();
+                        $('#emp_id').append('<option hidden>Choose Employee</option>');
+                        $.each(data, function(key, emp) {
+                            $('select[name="emp_id"]').append('<option value="' + emp.id + '">' + emp.emp_name + '</option>');
+                        });
+                    } else {
+                        $('#emp_id').empty();
+                    }
+                }
+            })
         });
-
-
     });
 </script>
 @endsection

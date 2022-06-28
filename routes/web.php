@@ -319,6 +319,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     //attendance
     Route::get('/attendanceDetails', [HolidayController::class, 'attendanceDetails'])->name('attendanceDetails');
     Route::post('/exportAttendanceSheet', [HolidayController::class, 'exportAttendanceSheet'])->name('exportAttendanceSheet');
+    Route::get('/getEmployee', [HolidayController::class, 'getEmployee'])->name('getEmployee');
+
+
+    
+
 
     Route::get('/giveAttendance', [EmployeeController::class, 'giveAttendance'])->name('giveAttendance');
     Route::get('/addAttendance', [EmployeeController::class, 'addAttendance'])->name('addAttendance');
@@ -338,8 +343,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/editClaim/{id}', [EmployeeController::class, 'editClaim'])->name('editClaim');
     Route::post('/updateClaim', [EmployeeController::class, 'updateClaim'])->name('updateClaim');
     Route::get('/deleteClaim', [EmployeeController::class, 'deleteClaim'])->name('deleteClaim');
+    //claim management admin panel
+    Route::get('/claims', [EmployeeController::class, 'claims'])->name('claims');
+    Route::post('/status_update_claim', [EmployeeController::class, 'status_update_claim'])->name('status_update_claim');
+    Route::get('/viewClaim/{id}', [EmployeeController::class, 'viewClaim'])->name('viewClaim');
+    
 
-   
+
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

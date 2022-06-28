@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Claiming Amount (per month)</label>
+                            <label>Claiming Amount (per month) (for drivers per trip charge)</label>
                             <input type="number" class="form-control" id="claiming_amount" name="claiming_amount" required>
                         </div>
 
