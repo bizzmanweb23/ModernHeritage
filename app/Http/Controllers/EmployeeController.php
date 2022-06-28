@@ -972,4 +972,9 @@ class EmployeeController extends Controller
         $claim->save();
         return redirect(route('employeeClaims'));
     }
+    public function deleteClaim(Request $request)
+    {
+        ClaimModel::where('id',$request->id)->delete();
+        return json_encode(1);
+    }
 }

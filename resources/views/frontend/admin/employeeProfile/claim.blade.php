@@ -57,7 +57,7 @@
                 <td>
 
                     <a href="editClaim/{{$ld->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_product(this.id)" id="{{$ld->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_claim(this.id)" id="{{$ld->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
                 </td>
 
             </tr>
@@ -78,24 +78,30 @@
         });
     });
 
-    $('#year').change(function(e) {
-        e.preventDefault();
-        var year = $('#year').val();
+    function delete_claim(id) {
+        if (confirm('Are you sure you want to delete?')) {
 
-        $.ajax({
-            url: "{{route('holidayList')}}",
-            type: 'GET',
-            data: {
-                year: year
-            },
-            success: function(data) {
-                location.replace('?year=' + year);
+            $.ajax({
+                url: "{{route('deleteClaim')}}",
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    if (data == 1) {
 
-            }
-        });
+                        location.reload();
+                    }
 
+                }
+            });
+        } else {
 
-    });
+            console.log('Thing was not saved to the database.');
+        }
+    }
+   
+   
 </script>
 
 
