@@ -12,6 +12,7 @@ use App\Models\JobPosition;
 use App\Models\Country;
 use App\Models\PayStructure;
 use App\Models\EmployeeSalary;
+use App\Models\ClaimModel;
 use Egulias\EmailValidator\Warning\DeprecatedComment;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -903,5 +904,34 @@ class EmployeeController extends Controller
              
         ]);
         return redirect(route('employeeLeave'));
+    }
+    public function employeeClaims()
+    {
+        return view('frontend.admin.employeeProfile.claim');
+    }
+    public function  addClaims()
+    {
+        return view('frontend.admin.employeeProfile.addClaim');
+    }
+    public function postClaim(Request $request)
+    {
+        $id = session()->get('ADMIN_USER_ID');
+        $data = DB::table('users')->where('id', $id)->first();
+        $emp = DB::table('employees')->where('work_email', $data->email)->first();
+        $str_time = time();
+        if ($request->file('app_file')) {
+            $file_type = $request->file('app_file')->extension();
+            $file_path = $request->file('app_file')->storeAs('images/employees' . $str_time . '.' . $file_type, 'public');
+            $request->file('app_file')->move(public_path('images/employees') . $str_time . '.' . $file_type);
+        } else {
+            $file_path = '';
+        }
+        $claim = new ClaimModel;
+        $claim->claiming_amount	= $request->claiming_amount	;
+        $claim->app_file	=  $file_path ;
+        $claim->comment	= $request->comment	;
+        $claim->emp_id	= $emp->id	;
+        $claim->save();
+        return redirect(route('employeeClaims'));
     }
 }

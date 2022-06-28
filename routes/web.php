@@ -330,6 +330,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::post('/postLeave', [EmployeeController::class, 'postLeave'])->name('postLeave');
     Route::get('/editLeave/{id}', [EmployeeController::class, 'editLeave'])->name('editLeave');
     Route::post('/updateLeave', [EmployeeController::class, 'updateLeave'])->name('updateLeave');
+
+    //claim management
+    Route::get('/employeeClaims', [EmployeeController::class, 'employeeClaims'])->name('employeeClaims');
+    Route::get('/addClaims', [EmployeeController::class, 'addClaims'])->name('addClaims');
+    Route::post('/addClaims', [EmployeeController::class, 'postClaim'])->name('postClaim');
+
     
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {

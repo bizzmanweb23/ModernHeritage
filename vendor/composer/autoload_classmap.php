@@ -49,6 +49,7 @@ return array(
     'App\\Http\\Requests\\LoginValidation' => $baseDir . '/app/Http/Requests/LoginValidation.php',
     'App\\Http\\Requests\\RegisterValidation' => $baseDir . '/app/Http/Requests/RegisterValidation.php',
     'App\\Models\\Attributes' => $baseDir . '/app/Models/Attributes.php',
+    'App\\Models\\ClaimModel' => $baseDir . '/app/Models/ClaimModel.php',
     'App\\Models\\Client' => $baseDir . '/app/Models/Client.php',
     'App\\Models\\Country' => $baseDir . '/app/Models/Country.php',
     'App\\Models\\CountryCode' => $baseDir . '/app/Models/CountryCode.php',

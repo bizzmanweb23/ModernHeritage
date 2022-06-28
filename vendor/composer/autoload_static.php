@@ -617,6 +617,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Http\\Requests\\LoginValidation' => __DIR__ . '/../..' . '/app/Http/Requests/LoginValidation.php',
         'App\\Http\\Requests\\RegisterValidation' => __DIR__ . '/../..' . '/app/Http/Requests/RegisterValidation.php',
         'App\\Models\\Attributes' => __DIR__ . '/../..' . '/app/Models/Attributes.php',
+        'App\\Models\\ClaimModel' => __DIR__ . '/../..' . '/app/Models/ClaimModel.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
         'App\\Models\\Country' => __DIR__ . '/../..' . '/app/Models/Country.php',
         'App\\Models\\CountryCode' => __DIR__ . '/../..' . '/app/Models/CountryCode.php',
