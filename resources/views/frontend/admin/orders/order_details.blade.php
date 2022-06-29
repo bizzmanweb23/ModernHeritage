@@ -35,10 +35,7 @@
             {{$data->order_mode}}
         </div>
     
-        <div class="col-md-4">
-      
-            <b>Remark(s):</b> {{$other_details->remarks}}
-        </div>
+       
     </div>
 
 </div>
@@ -108,7 +105,12 @@
             <div class="row mt-1">
                 <div class="col-md-6">
                     <button class="btn btn-primary" id="save">Update</button>
+                
+                    @if(Session::get('ADMIN_USER_ID') == 1)
                     <a class="btn btn-info" id="back" href="{{ route('orderList') }}">Back</a>
+                    @else
+                    <a class="btn btn-info" id="back" href="{{ route('collection_form') }}">Back</a>
+                    @endif
                 </div>
             </div>
         </form>

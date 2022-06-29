@@ -35,7 +35,26 @@ class OrderProducts extends Seeder
                 'product_price'=>10,
               
             ),
-           
+            2 =>
+            array(
+                'id'=>3,
+                'order_id' => 2,
+                'product_id'=>"MHP00001",
+                'product_name'=>"Chair",
+                'product_quantity'=>5,
+                'product_price'=>100,
+              
+            ),
+            3 =>
+            array(
+                'id'=>4,
+                'order_id' => 3,
+                'product_id'=>"MHP00002",
+                'product_name'=>"Pen",
+                'product_quantity'=>5,
+                'product_price'=>10,
+              
+            ),
         ));
     }
 }

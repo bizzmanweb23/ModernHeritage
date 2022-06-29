@@ -53,9 +53,9 @@ class OrdersController extends Controller
         $data['data'] = Order::select('orders.*','order_status.order_status')->where('orders.id',$id)->join('order_status','order_status.id','orders.order_status')->first();
         $data['order_products'] = OrderProducts::where('order_id',$id)->get();
         $data['order_status']=DB::table('order_status')->where('status',1)->get();
-        $other_details=DB::table('collection')->where('order_id',$id)->first();
-        $data['vehicles']=DB::table('vehicles')->where('driver_id',$other_details->driver_id)->first();
-        $data['other_details'] = $other_details;
+       // $other_details=DB::table('collection')->where('order_id',$id)->first();
+      
+        //$data['other_details'] = $other_details;
     
         return view('frontend.admin.orders.order_details',$data);
    
@@ -241,6 +241,7 @@ class OrdersController extends Controller
             'delivery_address'=>$request->delivery_address,
             'po_number'=>$request->po_number,
             'type'=>$request->type,
+            'order_status'=>1,
             'remarks'=>$request->remarks,
         ]);
         return redirect(route('orderList'))->with('message','Fleet Order Submitted');
@@ -278,8 +279,15 @@ class OrdersController extends Controller
         $data = DB::table('users')->where('id',$uid)->first();
         $data_w = DB::table('ware_houses')->where('email',$data->email)->first();
 
+        
+        $ware_collections['collections'] = DB::table('collection')
+        ->join('orders','orders.id','collection.order_id')
+        ->where('collection.warehouse_id',$data_w->id)
+        ->get();
+    
+
      
-        return view('frontend.admin.orders.collection');
+        return view('frontend.admin.orders.collection',$ware_collections);
   
     }
 }
