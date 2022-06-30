@@ -114,7 +114,7 @@
                     <button class="btn btn-primary" id="save">Update</button>
                 
                     @if(Session::get('ADMIN_USER_ID') == 1)
-                    <a class="btn btn-info" id="back" href="{{ route('orderList') }}">Back</a>
+                    <a class="btn btn-info" id="back" href="{{ url()->previous() }}">Back</a>
                     @else
                     <a class="btn btn-info" id="back" href="{{ route('collection_form') }}">Back</a>
                     @endif

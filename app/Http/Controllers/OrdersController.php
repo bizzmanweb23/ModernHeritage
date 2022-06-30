@@ -196,6 +196,7 @@ class OrdersController extends Controller
                 'warehouse_id' => $request->warehouse_id,
                 'type' => $request->type,
                 'remarks' => $request->remarks,
+                'created_at'=>date('Y-m-d H:i:s')
             ]);
         } else {
 
@@ -205,6 +206,7 @@ class OrdersController extends Controller
                 'warehouse_id' => $request->warehouse_id,
                 'type' => $request->type,
                 'remarks' => $request->remarks,
+                'created_at'=>date('Y-m-d H:i:s')
             ]);
         }
 

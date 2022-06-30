@@ -305,7 +305,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/deleteEmployeeSalary', [EmployeeController::class, 'deleteEmployeeSalary'])->name('deleteEmployeeSalary');
     Route::get('/generatePayslip/{id}', [EmployeeController::class, 'generatePayslip'])->name('generatePayslip');
     
-
+    Route::get('/tripDetails', [EmployeeController::class, 'tripDetails'])->name('tripDetails');
     //Holiday
     Route::get('/holidayList', [HolidayController::class, 'holidayList'])->name('holidayList');
     Route::get('/addHoliday', [HolidayController::class, 'addHoliday'])->name('addHoliday');

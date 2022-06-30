@@ -1047,4 +1047,29 @@ class EmployeeController extends Controller
             ->get();
         return view('frontend.admin.employee.employeeLeave', $employees);
     }
+
+    public function tripDetails (Request $request)
+    {
+  
+        $data['job_positions'] = DB::table('job_positions')->where('status', 1)->get();
+
+        $data['employees'] = Employee::where('status', 1)->where('job_position', 1)->get();
+        $data['trip_count'] = DB::table('collection')
+                                    ->join('orders', 'orders.id', 'collection.order_id')
+                                    ->join('employees', 'employees.unique_id', 'collection.driver_id')
+                                    ->where('orders.order_status',4)
+                                    ->where('collection.driver_id',$request->emp_id)
+                                    ->whereMonth('collection.created_at', '=', $request->month)
+                                    ->count();
+                           
+        $data['employees_c'] = DB::table('collection')
+                                    ->select('employees.*','collection.order_id')
+                                    ->join('orders', 'orders.id', 'collection.order_id')
+                                    ->join('employees', 'employees.unique_id', 'collection.driver_id')
+                                    ->where('orders.order_status',4)
+                                    ->where('collection.driver_id',$request->emp_id)
+                                    ->whereMonth('collection.created_at', '=', $request->month)
+                                    ->get();               
+        return view('frontend.admin.employee.employeeTrip',$data);
+    }
 }
