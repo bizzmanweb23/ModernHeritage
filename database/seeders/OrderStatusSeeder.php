@@ -46,7 +46,12 @@ class OrderStatusSeeder extends Seeder
                 'order_status' => 'Assign to Driver',
                 'status'=>1
             ),
-           
+            5 =>
+            array(
+                'id'=>6,
+                'order_status' => 'In transit',
+                'status'=>1
+            ),
         ));
     }
 }

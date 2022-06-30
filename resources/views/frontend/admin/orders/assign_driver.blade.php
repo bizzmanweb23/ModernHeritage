@@ -16,7 +16,7 @@
                     <select name="driver_id" id="driver_id" class="form-control" required>
                     <option value="">--Select-- </option>
                         @foreach($drivers as $row)
-                        <option value="{{$row->id}}"> {{$row->emp_name}} </option>
+                        <option value="{{$row->unique_id}}"> {{$row->emp_name}} </option>
                         @endforeach
                     </select>
                 </div>

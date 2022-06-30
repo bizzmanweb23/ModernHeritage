@@ -50,10 +50,10 @@
                         @if($c->order_status == 3)
                         <span class="badge badge-danger">Canceled</span>
                         @endif
-                        @if($c->order_status == 4)
+                        @if($c->order_status == 5)
                         <span class="badge badge-info">Assign to Driver</span>
                         @endif
-                        @if($c->order_status == 5)
+                        @if($c->order_status == 4)
                         <span class="badge badge-primary">Assign to Delivery</span>
                         @endif
                     </td>
@@ -63,9 +63,9 @@
 
                     <td>
 
-                        <a href="order-details/{{$c->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
-                        <a href="assign_driver/{{$c->id}}" title="assign to driver"><span class="badge badge-info"><i class="fa fa-car"></i></span></a>
-                     
+                        <a href="order-details/{{$c->order_id}}" title="view"><span class="badge badge-info"><i class="fa fa-eye" aria-hidden="true"></i></span></a>
+                        <a href="order_collection/{{$c->id}}" title="collection"><span class="badge badge-success"><i class="fa fa-plus"></i></span></a>
+                        <a href="other_collection/{{$c->id}}" title="other warehouse collection"><span class="badge badge-warning"><i class="fa fa-plus"></i><i class="fa fa-plus"></i></span></a>
                     </td>
 
 

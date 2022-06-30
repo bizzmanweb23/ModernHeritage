@@ -194,7 +194,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/createOrder', [OrdersController::class, 'createOrder'])->name('createOrder');
     Route::post('/addOrder', [OrdersController::class, 'addOrder'])->name('addOrder');
     Route::get('/collection_form', [OrdersController::class, 'collection_form'])->name('collection_form');
-  
+    Route::get('/order_collection', [OrdersController::class, 'order_collection'])->name('order_collection');
+    Route::get('/order_collection/{id}', [OrdersController::class, 'order_collection_form'])->name('order_collection_form');
     
     //order status
     Route::get('/order-status', [OrdersController::class, 'orderStatus'])->name('orderStatus');
@@ -282,8 +283,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     
     Route::get('/assign_driver/{id}', [OrdersController::class, 'assign_driver'])->name('assign_driver_for_collection');
     Route::post('/saveCollection', [OrdersController::class, 'saveCollection'])->name('saveCollection');
+    Route::get('/orderProductStatus', [OrdersController::class, 'orderProductStatus'])->name('orderProductStatus');
+    Route::get('/other_collection/{id}', [OrdersController::class, 'other_collection'])->name('other_collection');
+    Route::post('/otherCollection', [OrdersController::class, 'otherCollection'])->name('otherCollection');
 
 
+    
+ 
     Route::get('/payStructure', [EmployeeController::class, 'payStructure'])->name('payStructure');
     Route::get('/payStructureAdd', [EmployeeController::class, 'payStructureAdd'])->name('payStructureAdd');
     Route::post('/payStructureCreate', [EmployeeController::class, 'payStructureCreate'])->name('payStructureCreate');

@@ -48,6 +48,7 @@
                 <th scope="col">Qty</th>
                 <th scope="col">Image</th>
                 <th scope="col">Product Name</th>
+                <th scope="col">Collection Status</th>
                 <th scope="col">Product Price</th>
 
             </tr>
@@ -60,12 +61,18 @@
                 <td>{{$pro->product_quantity}}</td>
                 <td>{{$pro->product_image}}</td>
                 <td>{{$pro->product_name}}</td>
+                @if($pro->collection_status == 1)
+                <td><i class="fa fa-check" style="color:green"></i></td>
+                @else
+                <td><i class="fa fa-times" style="color:red"></i></td>
+                @endif
+
                 <td>{{$pro->product_price}}</td>
 
             </tr>
             @endforeach
             <tr>
-                <td colspan="3" style="text-align:right">Subtotal:</td>
+                <td colspan="4" style="text-align:right">Subtotal:</td>
                 <td>{{$data->order_amount}}</td>
             </tr>
 
