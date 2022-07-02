@@ -23,7 +23,7 @@
                             </select>
                 </div>
                 <br> <br>
-                <div class="form-group col-md-6">
+                <div class="ms-auto text-end">
                     <button type="submit" class="btn btn-primary">Save</button>
 
                     <a href="{{route('roles')}}" class="btn btn-primary">Back</a>

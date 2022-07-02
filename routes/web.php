@@ -22,6 +22,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\ExpenseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -355,6 +356,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     //employee leave
     Route::get('/employeeLeaves', [EmployeeController::class, 'employeeLeaves'])->name('employeeLeaves');
 
+    //Expense Reports
+    Route::get('/allExpenses', [ExpenseController::class, 'allExpenses'])->name('allExpenses');
+    Route::get('/addExpenses', [ExpenseController::class, 'addExpenses'])->name('addExpenses');
+    Route::post('/saveExpenses', [ExpenseController::class, 'saveExpenses'])->name('saveExpenses');
+    Route::get('/deleteExpense', [ExpenseController::class, 'deleteExpense'])->name('deleteExpense');
     
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
