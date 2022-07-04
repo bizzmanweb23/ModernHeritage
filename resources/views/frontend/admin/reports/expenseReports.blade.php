@@ -6,9 +6,7 @@
 
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<div class="col-md-4">
-    <a href="{{route('addExpenses')}}" class="btn btn-primary">Add Daily Expenses</a>
-</div>
+
 
 
 
@@ -20,29 +18,35 @@
 @endif
 <div class="container card" style="padding:15px;">
 
-    <form>
-        <div class="col-md-6">
+    <form method="POST" action="{{ route('exportExpensesReport') }}">
+        @csrf
             <div class="form-group">
 
-
+            <div class="row">
                 <div class="col-md-4">
-                    <select name="month" class="form-control" id="month">
-                        <option value="all">All</option>
+                    <select name="month" class="form-control" id="month" required>
+                        <option value="">All</option>
                         <option value="1" @if(isset($_GET['month']) && $_GET['month']==1 )selected @endif>January</option>
-                        <option value="2" @if(isset($_GET['month']) && $_GET['month']==2 )selected @endif >February</option>
+                        <option value="2" @if(isset($_GET['month']) && $_GET['month']==2 )selected @endif>February</option>
                         <option value="3" @if(isset($_GET['month']) && $_GET['month']==3 )selected @endif>March</option>
-                        <option value="4" @if(isset($_GET['month']) && $_GET['month']==4 )selected @endif >April</option>
+                        <option value="4" @if(isset($_GET['month']) && $_GET['month']==4 )selected @endif>April</option>
                         <option value="5" @if(isset($_GET['month']) && $_GET['month']==5 )selected @endif>May</option>
-                        <option value="6" @if(isset($_GET['month']) && $_GET['month']==6 )selected @endif >June</option>
-                        <option value="7" @if(isset($_GET['month']) && $_GET['month']==7 )selected @endif >July</option>
-                        <option value="8" @if(isset($_GET['month']) && $_GET['month']==8 )selected @endif >August</option>
-                        <option value="9" @if(isset($_GET['month']) && $_GET['month']==9 )selected @endif >September</option>
-                        <option value="10"@if(isset($_GET['month']) && $_GET['month']==10 )selected @endif >October</option>
-                        <option value="11"@if(isset($_GET['month']) && $_GET['month']==11 )selected @endif>November</option>
-                        <option value="12"@if(isset($_GET['month']) && $_GET['month']==12 )selected @endif>December</option>
+                        <option value="6" @if(isset($_GET['month']) && $_GET['month']==6 )selected @endif>June</option>
+                        <option value="7" @if(isset($_GET['month']) && $_GET['month']==7 )selected @endif>July</option>
+                        <option value="8" @if(isset($_GET['month']) && $_GET['month']==8 )selected @endif>August</option>
+                        <option value="9" @if(isset($_GET['month']) && $_GET['month']==9 )selected @endif>September</option>
+                        <option value="10" @if(isset($_GET['month']) && $_GET['month']==10 )selected @endif>October</option>
+                        <option value="11" @if(isset($_GET['month']) && $_GET['month']==11 )selected @endif>November</option>
+                        <option value="12" @if(isset($_GET['month']) && $_GET['month']==12 )selected @endif>December</option>
                     </select>
                 </div>
-                
+                <div class="col-md-3">
+
+
+                    <button type="submit" class="btn btn-primary">Download</button>
+
+
+                </div>
 
 
             </div>
@@ -57,12 +61,14 @@
                 <th>Details</th>
                 <th>Payment Mode</th>
                 <th>Amount</th>
-                <th>Action</th>
+
             </tr>
         </thead>
 
         <tbody>
-           
+            @php
+            $total = 0;
+            @endphp
             @foreach($expense as $key=>$ex)
             <tr>
                 <td>{{$key+1}}</td>
@@ -75,20 +81,18 @@
                 <td>ONLINE</td>
                 @endif
                 <td>{{$ex->expense_amount}}</td>
-                <td>
 
-
-                    <a href="javascript:void(0)" onclick="return delete_expense(this.id)" id="{{$ex->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
-
-                </td>
             </tr>
-          
+            @php
+            $total = $total+$ex->expense_amount;
+            @endphp
+
             @endforeach
-            
+
         </tbody>
 
     </table><br>
-    
+    <div style="background-color:green;color:white;padding:5px;">Total Expense : {{$total}}</div>
 </div>
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>

@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label>Payment</label>
-                    <select name="payment_mode" id="payment_mode" class="form-control">
+                    <select name="payment_mode" id="payment_mode" class="form-control" required>
                         <option value="">--Select-- </option>
                         <option value="1"> CASH </option>
                         <option value="2"> ONLINE </option>
