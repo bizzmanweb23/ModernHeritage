@@ -26,20 +26,19 @@
             <div class="row">
 
                 <div class="col-md-4">
-                    <select name="month" class="form-control" id="month" required>
-                        <option value="">All</option>
-                        <option value="1" @if(isset($_GET['month']) && $_GET['month']==1 )selected @endif>January</option>
-                        <option value="2" @if(isset($_GET['month']) && $_GET['month']==2 )selected @endif>February</option>
-                        <option value="3" @if(isset($_GET['month']) && $_GET['month']==3 )selected @endif>March</option>
-                        <option value="4" @if(isset($_GET['month']) && $_GET['month']==4 )selected @endif>April</option>
-                        <option value="5" @if(isset($_GET['month']) && $_GET['month']==5 )selected @endif>May</option>
-                        <option value="6" @if(isset($_GET['month']) && $_GET['month']==6 )selected @endif>June</option>
-                        <option value="7" @if(isset($_GET['month']) && $_GET['month']==7 )selected @endif>July</option>
-                        <option value="8" @if(isset($_GET['month']) && $_GET['month']==8 )selected @endif>August</option>
-                        <option value="9" @if(isset($_GET['month']) && $_GET['month']==9 )selected @endif>September</option>
-                        <option value="10" @if(isset($_GET['month']) && $_GET['month']==10 )selected @endif>October</option>
-                        <option value="11" @if(isset($_GET['month']) && $_GET['month']==11 )selected @endif>November</option>
-                        <option value="12" @if(isset($_GET['month']) && $_GET['month']==12 )selected @endif>December</option>
+                    <select name="year" class="form-control" id="year" required>
+                    <option value="">Any Year</option>
+                        <option value="2020" @if(isset($_GET['year']) && $_GET['year']==2020 )selected @endif>2020</option>
+                        <option value="2021" @if(isset($_GET['year']) && $_GET['year']==2021 )selected @endif>2021</option>
+                        <option value="2022" @if(isset($_GET['year']) && $_GET['year']==2022 )selected @endif>2022</option>
+                        <option value="2023" @if(isset($_GET['year']) && $_GET['year']==2023 )selected @endif>2023</option>
+                        <option value="2024" @if(isset($_GET['year']) && $_GET['year']==2024 )selected @endif>2024</option>
+                        <option value="2025" @if(isset($_GET['year']) && $_GET['year']==2025 )selected @endif>2025</option>
+                        <option value="2026" @if(isset($_GET['year']) && $_GET['year']==2026 )selected @endif>2026</option>
+                        <option value="2027" @if(isset($_GET['year']) && $_GET['year']==2027 )selected @endif>2027</option>
+                        <option value="2028" @if(isset($_GET['year']) && $_GET['year']==2028 )selected @endif>2028</option>
+                        <option value="2029" @if(isset($_GET['year']) && $_GET['year']==2029 )selected @endif>2029</option>
+                        <option value="2030" @if(isset($_GET['year']) && $_GET['year']==2030 )selected @endif>2030</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -126,18 +125,18 @@
             console.log('Thing was not saved to the database.');
         }
     }
-    $('#month').change(function(e) {
+    $('#year').change(function(e) {
         e.preventDefault();
-        var month = $('#month').val();
+        var year = $('#year').val();
 
         $.ajax({
             url: "{{route('allSalesReports')}}",
             type: 'GET',
             data: {
-                month: month
+                year: year
             },
             success: function(data) {
-                location.replace('?month=' + month);
+                location.replace('?year=' + year);
 
             }
         });

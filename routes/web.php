@@ -368,7 +368,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    Route::get('/allSalesReports', [ExpenseController::class, 'allSalesReports'])->name('allSalesReports');
    Route::post('/exportSalesReport', [ExpenseController::class, 'exportSalesReport'])->name('exportSalesReport');
    Route::post('/exportExpensesReport', [ExpenseController::class, 'exportExpensesReport'])->name('exportExpensesReport');
-   
+
+
+   //allClientReports
+   Route::get('/allClientReports', [ExpenseController::class, 'allClientReports'])->name('allClientReports');
+   Route::post('/exportCustomerReport', [ExpenseController::class, 'exportCustomerReport'])->name('exportCustomerReport');
+  
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

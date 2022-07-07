@@ -6,14 +6,9 @@
 
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-
-
-
-
 <div class="container card" style="padding:15px;">
 
-    <form method="POST" action="{{ route('exportExpensesReport') }}">
+    <form method="POST" action="{{ route('exportCustomerReport') }}">
         @csrf
         <div class="form-group">
 
@@ -32,6 +27,16 @@
                         <option value="2028" @if(isset($_GET['year']) && $_GET['year']==2028 )selected @endif>2028</option>
                         <option value="2029" @if(isset($_GET['year']) && $_GET['year']==2029 )selected @endif>2029</option>
                         <option value="2030" @if(isset($_GET['year']) && $_GET['year']==2030 )selected @endif>2030</option>
+
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select name="customer_id" class="form-control" id="customer_id" required>
+                        <option value="">All Customers</option>
+                        @foreach($customers as $c)
+                        <option value="{{ $c->id }}">{{ $c->name }}</option>
+                        @endforeach
+
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -54,40 +59,42 @@
                 <th>Date</th>
                 <th>Details</th>
                 <th>Payment Mode</th>
+              
                 <th>Amount</th>
-
+                <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
-            @php
-            $total = 0;
-            @endphp
-            @foreach($expense as $key=>$ex)
+        @foreach($customers_reports as $key=>$ex)
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{date("d/m/Y", strtotime($ex->date))}}</td>
+                <td>{{date("d/m/Y", strtotime($ex->created_at))}}</td>
 
-                <td>{{$ex->details}}</td>
-                @if($ex->payment_mode == 1)
-                <td>CASH</td>
-                @else
-                <td>ONLINE</td>
-                @endif
-                <td>{{$ex->expense_amount}}</td>
+                <td>{{$ex->customer_name}}<br>
+                    {{$ex->customer_email}}<br>
+                    {{$ex->customer_phone}}
+                </td>
+
+                <td>{{$ex->order_mode}}</td>
+
+                <td>{{$ex->order_amount}}</td>
+                <td><a href="order-details/{{$ex->id}}" title="view"><span class="badge badge-warning"><i class="fa fa-eye" aria-hidden="true"></i></span></a></td>
 
             </tr>
-            @php
-            $total = $total+$ex->expense_amount;
-            @endphp
+
 
             @endforeach
+
 
         </tbody>
 
     </table><br>
-    <div style="background-color:green;color:white;padding:5px;">Total Expense : {{$total}}</div>
+  
 </div>
+
+
+
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
 <script>
@@ -96,46 +103,10 @@
             responsive: true
         });
     });
-
-    function delete_expense(id) {
-        if (confirm('Are you sure you want to delete?')) {
-
-            $.ajax({
-                url: "{{route('deleteExpense')}}",
-                type: 'GET',
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    if (data == 1) {
-
-                        location.reload();
-                    }
-
-                }
-            });
-        } else {
-
-            console.log('Thing was not saved to the database.');
-        }
-    }
-    $('#year').change(function(e) {
-        e.preventDefault();
-        var year = $('#year').val();
-
-        $.ajax({
-            url: "{{route('allExpenses')}}",
-            type: 'GET',
-            data: {
-                year: year
-            },
-            success: function(data) {
-                location.replace('?year=' + year);
-
-            }
-        });
-
-
-    });
 </script>
+
+
+
+
+
 @endsection

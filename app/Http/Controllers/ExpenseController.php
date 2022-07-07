@@ -32,10 +32,10 @@ class ExpenseController extends Controller
     public function allExpensesReports(Request $request)
     {
         $expense['expense']=Expense::all();
-        if(isset($request->month))
-        { if($request->month!='all')
+        if(isset($request->year))
+        { if($request->year!='all')
             {
-                $expense['expense']=Expense::whereMonth('date',$request->month)->get();
+                $expense['expense']=Expense::whereYear('date',$request->year)->get();
             }
          else{
             $expense['expense']=Expense::all();
@@ -70,10 +70,10 @@ class ExpenseController extends Controller
     }
     public function allSalesReports(Request $request)
     {
-        if(isset($request->month))
-        { if($request->month!='all')
+        if(isset($request->year))
+        { if($request->year!='all')
             {
-                $data['sales']=DB::table('orders')->where('order_status',2)->whereMonth('created_at',$request->month)->get();
+                $data['sales']=DB::table('orders')->where('order_status',2)->whereYear('created_at',$request->year)->get();
             }
          else{
             $data['sales']=DB::table('orders')->where('order_status',2)->get();
@@ -91,7 +91,7 @@ class ExpenseController extends Controller
     {
         $fileName = 'salesreport.csv';
         $tasks = DB::table('orders')->where('order_status',2)
-                    ->whereMonth('created_at', '=', $request->month)
+                    ->whereYear('created_at', '=', $request->year)
                   
                     ->get();
 
@@ -129,7 +129,7 @@ class ExpenseController extends Controller
     public function exportExpensesReport(Request $request)
     {
         $fileName = 'expensereport.csv';
-        $tasks = Expense::whereMonth('date',$request->month)->get();
+        $tasks = Expense::whereYear('date',$request->year)->get();
 
         $headers = array(
             "Content-type"        => "text/csv",
@@ -162,6 +162,48 @@ class ExpenseController extends Controller
               
 
                 fputcsv($file, array($row['Date'],$row['Details'],$row['Payment Mode'], $row['Amount']));
+            }
+
+            fclose($file);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+
+    public function allClientReports()
+    {
+        $customers['customers'] = DB::table('customer_management')->get();
+        $customers['customers_reports']=DB::table('orders')->where('order_status',2)->get();
+        return view('frontend.admin.reports.clientReport',$customers);
+    }
+    public function  exportCustomerReport(Request $request)
+    {
+        $fileName = 'customerreport.csv';
+        $tasks = DB::table('orders')->where('order_status',2)->where('customer_id',$request->customer_id)->whereYear('created_at',$request->year)->get();
+    
+        $headers = array(
+            "Content-type"        => "text/csv",
+            "Content-Disposition" => "attachment; filename=$fileName",
+            "Pragma"              => "no-cache",
+            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+            "Expires"             => "0"
+        );
+
+        $columns = array('Date','Customer Name','Customer Email', 'Amount');
+
+        $callback = function () use ($tasks, $columns) {
+            $file = fopen('php://output', 'w');
+            fputcsv($file, $columns);
+
+            foreach ($tasks as $task) {
+               
+                $row['Date']  = $task->created_at;
+                $row['Customer Name']  = $task->customer_name;
+                $row['Customer Email']  = $task->customer_email;
+                $row['Amount']  = $task->order_amount;
+              
+
+                fputcsv($file, array($row['Date'],$row['Customer Name'],$row['Customer Email'], $row['Amount']));
             }
 
             fclose($file);

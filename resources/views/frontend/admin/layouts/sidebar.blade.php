@@ -265,11 +265,18 @@
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allJobPosition') }}">
+              <a class="nav-link " href="{{ route('allClientReports') }}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> Client Report </span>
               </a>
             </li>
+            <li class="nav-item ">
+              <a class="nav-link " href="{{ route('allClientReports') }}">
+                <span class="sidenav-mini-icon"> </span>
+                <span class="sidenav-normal"> KB articles </span>
+              </a>
+            </li>
+           
           </ul>
         </div>
       </li>
