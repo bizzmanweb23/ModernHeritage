@@ -381,7 +381,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    //allClientReports
    Route::get('/allClientReports', [ExpenseController::class, 'allClientReports'])->name('allClientReports');
    Route::post('/exportCustomerReport', [ExpenseController::class, 'exportCustomerReport'])->name('exportCustomerReport');
-  
+
+   // kb_articles
+   Route::get('/kb_articles', [ExpenseController::class, 'kb_articles'])->name('kb_articles');
+   Route::get('/addArticles', [ExpenseController::class, 'addArticles'])->name('addArticles');
+
+
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

@@ -271,7 +271,7 @@
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link " href="{{ route('allClientReports') }}">
+              <a class="nav-link " href="{{ route('kb_articles') }}">
                 <span class="sidenav-mini-icon"> </span>
                 <span class="sidenav-normal"> KB articles </span>
               </a>
