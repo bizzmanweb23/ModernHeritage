@@ -17,7 +17,7 @@ use DB;
 
 class InventoryController extends Controller
 {
- 
+
     public function getInventory()
     {
         return view('frontend.admin.inventory.overview');
@@ -43,9 +43,9 @@ class InventoryController extends Controller
         return view('frontend.admin.inventory.products.addproduct', $data);
     }
     public function viewProduct($id)
-    
-     {
-        $data = Product::select('products.*', 'product_categories.category_name','subcategories.sub_category')
+
+    {
+        $data = Product::select('products.*', 'product_categories.category_name', 'subcategories.sub_category')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
             ->join('subcategories', 'subcategories.id', 'products.sub_cat')
             ->where('products.id', $id)->first();
@@ -54,9 +54,6 @@ class InventoryController extends Controller
 
 
         return view('frontend.admin.inventory.products.viewproduct', $data);
-
-
-        
     }
 
     public function editProduct($id)
@@ -84,7 +81,7 @@ class InventoryController extends Controller
         $request->validate([
 
             'cat_id' => 'required',
-          
+
 
         ]);
         $unique_id = DB::table('products')->orderBy('id', 'desc')->first();
@@ -97,6 +94,14 @@ class InventoryController extends Controller
             $number = 'MHP00001';
         } else {
             $number = "MHP" . sprintf("%05d", $number + 1);
+        }
+
+        if ($request->file('image')) {
+            $file_type = $request->file('image')->extension();
+            $file_path = $request->file('image')->storeAs('images/products', time() . '.' .$file_type, 'public');
+            $request->file('image')->move(public_path('images/products'), time() . '.' .$file_type);
+        } else {
+            $file_path = '';
         }
 
         $images = $request->file('images');
@@ -126,21 +131,30 @@ class InventoryController extends Controller
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'material'=>$request->thickness,
+            'material' => $request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
-  
+
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
             'per_box' => $request->per_box . $request->unit_b,
             'pac_bags' => $request->pac_bags,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
-         
+
             'status' => $request->status,
             'description' => $request->description,
-            'product_image' => $image
+            'model' => $request->model,
+            'battery_chemistry' => $request->battery_chemistry,
+            'voltage' => $request->voltage,
+            'battery_capacity' => $request->battery_capacity,
+            'max_capacity' => $request->max_capacity,
+            'weight' => $request->weight,
+            'drilling_capacity' => $request->drilling_capacity,
+            'no_load_speed' => $request->no_load_speed,
+            'photo_gallery' => $image,
+            'product_image' => $file_path
         ]);
 
         return redirect(route('allproducts'));
@@ -150,7 +164,7 @@ class InventoryController extends Controller
         $request->validate([
 
             'cat_id' => 'required',
-          
+
 
         ]);
 
@@ -162,16 +176,14 @@ class InventoryController extends Controller
 
 
             foreach (explode(',', $data->product_image) as $img) {
-                if($img != '')
-                {
+                if ($img != '') {
                     $image_path = public_path('images/products/' . $img);
 
-               
+
                     if (file_exists($image_path)) {
                         unlink($image_path);
                     }
                 }
-             
             }
             foreach ($images as $item) {
                 $var = date_create();
@@ -196,18 +208,18 @@ class InventoryController extends Controller
             'length' => $request->length,
             'width' => $request->width,
             'height' => $request->height,
-            'material'=>$request->thickness,
+            'material' => $request->thickness,
             'price' => $request->price,
             'mrp_price' => $request->mrp_price,
             'available_quantity' => $request->available_quantity . $request->unit_1,
-         
+
             'tax' => $request->tax,
             'coverage' => $request->coverage,
             'per_pallet' => $request->per_pallet . $request->unit_p,
             'per_box' => $request->per_box . $request->unit_b,
             'pac_bags' => $request->pac_bags . $request->unit_p_b,
             'loose_per_lorry' => $request->loose_per_lorry . $request->unit_l,
-         
+
             'status' => $request->status,
             'description' => $request->description,
             'product_image' => $image
@@ -432,12 +444,12 @@ class InventoryController extends Controller
     }
     public function subCat(Request $request)
     {
-         
+
         $parent_id = $request->cat_id;
-         
-        $subcategories =  DB::table('subcategories')->where('cat_id',$parent_id)
-                          
-                              ->get();
+
+        $subcategories =  DB::table('subcategories')->where('cat_id', $parent_id)
+
+            ->get();
         return response()->json($subcategories);
     }
 }

@@ -57,7 +57,7 @@
                 ?>
                 
                 @if($c->product_image!='')
-                    <img src="{{ asset('images/products') }}/{{$img[0]}}" alt="Product" style="height: 6rem; width:6rem">
+                    <img src="../{{$c->product_image}}" alt="Product" style="height: 6rem; width:6rem">
                     @else
                     <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
                     @endif

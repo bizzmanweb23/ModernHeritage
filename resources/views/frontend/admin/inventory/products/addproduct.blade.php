@@ -27,7 +27,7 @@
                             <label>Category <span style="color:red">*</span></label>
 
                             <select name="cat_id" id="cat_id" class="form-control" required>
-                                <option>--Select--</option>
+                                <option value="">--Select--</option>
                                 @foreach($product_categories as $cat)
                                 <option value="{{ $cat->id}}">{{ $cat->category_name}}</option>
 
@@ -230,10 +230,10 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Product Images</label>
-                            <input type="file" class="form-control" name="images[]" multiple>
+                            <label>Product Image</label>
+                            <input type="file" class="form-control" name="image">
                         </div>
-                    </div>
+                    </div> 
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Description</label>
@@ -241,7 +241,61 @@
 
                         </div>
                     </div>
-
+                    <h4>Specifications</h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Model</label>
+                            <input type="text" class="form-control" name="model">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Chemistry</label>
+                            <input type="text" class="form-control" name="battery_chemistry">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Voltage</label>
+                            <input type="number" class="form-control" name="voltage">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Capacity</label>
+                            <input type="text" class="form-control" name="battery_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            <input type="text" class="form-control" name="max_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <input type="text" class="form-control" name="weight">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Drilling Capacity</label>
+                            <input type="text" class="form-control" name="drilling_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>No Load Speed</label>
+                            <input type="text" class="form-control" name="no_load_speed">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Product Images</label>
+                            <input type="file" class="form-control" name="images[]" multiple>
+                        </div>
+                    </div>
                     <div class="ms-auto text-end">
                         <button class="btn btn-primary" id="save">Save</button>
                         <a class="btn btn-info" id="back" href="{{ route('allproducts') }}">Back</a>

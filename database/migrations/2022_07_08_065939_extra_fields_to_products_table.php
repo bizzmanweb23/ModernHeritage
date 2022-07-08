@@ -15,7 +15,7 @@ class ExtraFieldsToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-            $table->string('casual_leave')->nullable();
+            $table->string('model')->nullable();
             $table->string('battery_capacity')->nullable();
             $table->string('battery_chemistry')->nullable();
             $table->string('max_capacity')->nullable();
@@ -35,7 +35,7 @@ class ExtraFieldsToProductsTable extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
             //
-            $table->dropColumn('casual_leave');
+            $table->dropColumn('model');
             $table->dropColumn('battery_capacity');
             $table->dropColumn('battery_chemistry');
             $table->dropColumn('max_capacity');
