@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Laravel\SerializableClosure\Serializers\Signed;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\InvoiceController;
@@ -34,22 +36,28 @@ use App\Http\Controllers\ExpenseController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get("/", function () {
     return view("frontend.user.home.index");
 });
 
-Route::get("/home", [HomeController::class, "index"])->name("home");
-//logout
-Route::post("/logout", [AuthController::class, "logoutUser"])->name("userLogout");
+Route::middleware('auth')->group(function () {
+    Route::get("/home", [HomeController::class, "index"])->name("home");
+    Route::get('/product', [ProductController::class, 'index'])->name('product');
+    Route::get('/productDetails', [ProductController::class, 'shop'])->name('productDetails');
+    Route::get('/productShow/{id}',[ProductController::class,'show'])->name('productShow');
+    Route::get('/shop/{id}',[ProductController::class,'shop'])->name('shop');   
 
-//register
-Route::get("/register/{path?}", [AuthController::class, "getRegister"]);
-Route::post("/register/{path?}", [AuthController::class, "register"]);
+});
 
-//login
-Route::get("/login", [AuthController::class, "login"])->name("userlogin");
-Route::post("/login", [AuthController::class, "userlogin"])->name("userlogin");
+Route::get('/logout', function () {
+Auth::logout();
+Session::flush();
+});
+
+//Backend
+
 Route::get("admin/login", [AuthController::class, "login"])->name("adminlogin");
 Route::post("/adminlogin", [AuthController::class, "adminlogin"])->name("adminLogin");
 
