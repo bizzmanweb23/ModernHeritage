@@ -211,4 +211,13 @@ class ExpenseController extends Controller
 
         return response()->stream($callback, 200, $headers);
     }
+    public function kb_articles()
+    {
+        return view('frontend.admin.reports.kbarticles');
+    }
+
+    public function  addArticles()
+    {
+        return view('frontend.admin.reports.articles');
+    }
 }
