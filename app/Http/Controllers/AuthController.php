@@ -18,25 +18,25 @@ use Illuminate\Support\Facades\URL;
 class AuthController extends Controller
 {
     //showing login page
-    // public function login(Request $request)
-    // {
-    //     if (Auth::check() && Auth::user()->isAdmin()) {
-    //         return redirect(route('admindashboard'));
-    //     }
-    //     elseif(Auth::check() && Auth::user()->isClient()){
-    //         return redirect(route('home'));
-    //     }
+    public function login(Request $request)
+    {
+        if (Auth::check() && Auth::user()->isAdmin()) {
+            return redirect(route('admindashboard'));
+        }
+        elseif(Auth::check() && Auth::user()->isClient()){
+            return redirect(route('home'));
+        }
       
 
-    //     if($request->path()=='login')
-    //     {
-    //         return view('frontend.user.auth.login');
-    //     }
-    //     else {
-    //         return view('login');
-    //     }
+        if($request->path()=='login')
+        {
+            return view('frontend.user.auth.login');
+        }
+        else {
+            return view('login');
+        }
 
-    // }
+    }
 
     // //login logic
     // public function userlogin(LoginValidation $request)
@@ -145,18 +145,18 @@ class AuthController extends Controller
     //     ]);
     // }
 
-    // //logout
-    // public function logoutUser(Request $request)
-    // {
-    //     Auth::logout();
-    //     session()->forget('FRONT_USER_LOGIN');
-    //     session()->forget('FRONT_USER_ID');
-    //     $request->session()->invalidate();
+    //logout
+    public function logoutUser(Request $request)
+    {
+        Auth::logout();
+        session()->forget('FRONT_USER_LOGIN');
+        session()->forget('FRONT_USER_ID');
+        $request->session()->invalidate();
 
-    //     $request->session()->regenerateToken();
+       // $request->session()->regenerateToken();
 
-    //     return redirect(route('userlogin'));
-    // }
+        return redirect('/');
+    }
 
     public function adminlogin(Request $request)
     {
@@ -180,4 +180,5 @@ class AuthController extends Controller
        }
  
     }
+  
 }

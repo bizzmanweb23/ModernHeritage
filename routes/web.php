@@ -66,7 +66,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     //  Route::post("/login", [AuthController::class, "userlogin"])->name("adminlogin");
 
-
+    Route::post('/userLogout', [AuthController::class, 'logoutUser'])->name('userLogout');
 
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
@@ -388,7 +388,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    Route::get('/editArticle/{id}', [ExpenseController::class, 'editArticle'])->name('editArticle');
    Route::post('/updateArticle', [ExpenseController::class, 'updateArticle'])->name('updateArticle');
   
-   
+  
    
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
