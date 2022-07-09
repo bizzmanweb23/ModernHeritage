@@ -27,17 +27,40 @@
         <thead>
             <tr>
                 <th>Sl#</th>
-                <th>Date</th>
-                <th>Details</th>
-                <th>Payment Mode</th>
-                <th>Amount</th>
+                <th>Article</th>
+                <th>Benefit</th>
+                <th>Status</th>
+      
                 <th>Action</th>
             </tr>
         </thead>
 
         <tbody>
            
-           
+        @foreach($article as $key=>$a)
+            <tr>
+                <td>{{$key+1}}</td>
+            
+
+                <td>{{$a->article}}
+                   
+                </td>
+
+                <td>{{$a->benefit}}</td>
+                   @if($a->status == 1)
+                <td> <span class="badge badge-success"> Active </span></td>
+                @else
+                <td> <span class="badge badge-danger"> Inactive </span></td>
+                @endif
+                <td>
+                    <a href="editArticle/{{$a->id}}" title="edit"><span class="badge badge-warning"><i class="fa fa-edit" aria-hidden="true"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_article(this.id)" id="{{$a->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
+                </td>
+
+            </tr>
+
+
+            @endforeach
             
         </tbody>
 
@@ -53,11 +76,11 @@
         });
     });
 
-    function delete_expense(id) {
+    function delete_article(id) {
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteExpense')}}",
+                url: "{{route('deleteArticle')}}",
                 type: 'GET',
                 data: {
                     id: id
@@ -75,24 +98,7 @@
             console.log('Thing was not saved to the database.');
         }
     }
-    $('#month').change(function(e) {
-        e.preventDefault();
-        var month = $('#month').val();
 
-        $.ajax({
-            url: "{{route('allExpenses')}}",
-            type: 'GET',
-            data: {
-                month: month
-            },
-            success: function(data) {
-                location.replace('?month=' + month);
-
-            }
-        });
-
-
-    });
 </script>
 
 

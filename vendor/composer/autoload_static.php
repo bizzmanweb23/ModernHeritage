@@ -635,6 +635,7 @@ class ComposerStaticInitcf6411120ccc29882f06d91955cb1278
         'App\\Models\\Holiday' => __DIR__ . '/../..' . '/app/Models/Holiday.php',
         'App\\Models\\InvoicePriceBreakups' => __DIR__ . '/../..' . '/app/Models/InvoicePriceBreakups.php',
         'App\\Models\\JobPosition' => __DIR__ . '/../..' . '/app/Models/JobPosition.php',
+        'App\\Models\\KBArticle' => __DIR__ . '/../..' . '/app/Models/KBArticle.php',
         'App\\Models\\Lead' => __DIR__ . '/../..' . '/app/Models/Lead.php',
         'App\\Models\\Leavestructure' => __DIR__ . '/../..' . '/app/Models/Leavestructure.php',
         'App\\Models\\LogisticDashboard' => __DIR__ . '/../..' . '/app/Models/LogisticDashboard.php',

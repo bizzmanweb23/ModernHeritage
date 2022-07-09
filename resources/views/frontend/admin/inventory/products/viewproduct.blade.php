@@ -43,11 +43,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Color -</label>
-                   
                         {{$data->color}}
-
-       
-
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -148,21 +144,7 @@
 
            
 
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Product Images-</label>
-                        <?php
-                        $pr_img = $data->product_image;
-                        $img = explode(',', $pr_img);
-                        ?>
-                        @if($data->product_image!='')
-                        @foreach($img as $p)
-                        <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
-                        @endforeach
-                        @endif
-
-                    </div>
-                </div>
+        
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Status -</label>
@@ -180,6 +162,94 @@
 
                     </div>
                 </div>
+                <div class="form-group">
+                        <label>Product Image-</label>
+                     
+                        <img src="{{ asset('images/products') }}/{{$data->product_image}}" alt="Product" style="height: 6rem; width:6rem">
+                     
+
+                    </div>
+
+                <h4>Specifications</h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Model</label>
+                            {{$data->model}}
+                          
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Chemistry</label>
+                            {{$data->battery_capacity}}
+                           
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Voltage</label>
+                            {{$data->voltage}}
+  
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Capacity</label>
+                            {{$data->battery_capacity}}
+                           
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            {{$data->max_capacity}}
+                           
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Weight</label>
+                            {{$data->weight}}
+   
+                           
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Drilling Capacity</label>
+                            {{$data->drilling_capacity}}
+                           
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>No Load Speed</label>
+                            {{$data->no_load_speed}}
+                           
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Product Gallery-</label>
+                        <?php
+                        $pr_img = $data->photo_gallery;
+                        $img = explode(',', $pr_img);
+                        ?>
+                        @if($data->photo_gallery!='')
+                        @foreach($img as $p)
+                        <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
+                        @endforeach
+                        @endif
+
+                    </div>
+                </div>
+                  
             </div>
 
         </div>

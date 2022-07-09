@@ -58,13 +58,13 @@ class InventoryController extends Controller
 
     public function editProduct($id)
     {
-        $data = Product::select('products.*', 'product_categories.category_name')
-            ->join('product_categories', 'product_categories.id', 'products.cat_id')
+        $data = Product::select('products.*')
+           
 
 
             ->where('products.id', $id)->first();
 
-
+      
 
 
         $data['product_categories'] = DB::table('product_categories')->where('status', 1)->get();
@@ -175,7 +175,7 @@ class InventoryController extends Controller
 
 
 
-            foreach (explode(',', $data->product_image) as $img) {
+            foreach (explode(',', $data->photo_gallery) as $img) {
                 if ($img != '') {
                     $image_path = public_path('images/products/' . $img);
 
@@ -194,8 +194,18 @@ class InventoryController extends Controller
             }
             $image = implode(",", $arr);
         } else {
-            $image = $request->old_images;
+            $image = $request->old_image;
         }
+
+
+        if ($request->file('image')) {
+            $file_type = $request->file('image')->extension();
+            $file_path = $request->file('image')->storeAs('images/products', time() . '.' .$file_type, 'public');
+            $request->file('image')->move(public_path('images/products'), time() . '.' .$file_type);
+        } else {
+            $file_path = $request->old_images;
+        }
+
 
         DB::table('products')->where('id', $request->id)->update([
 
@@ -222,7 +232,17 @@ class InventoryController extends Controller
 
             'status' => $request->status,
             'description' => $request->description,
-            'product_image' => $image
+            'model' => $request->model,
+            'battery_chemistry' => $request->battery_chemistry,
+            'voltage' => $request->voltage,
+            'battery_capacity' => $request->battery_capacity,
+            'max_capacity' => $request->max_capacity,
+            'weight' => $request->weight,
+            'drilling_capacity' => $request->drilling_capacity,
+            'no_load_speed' => $request->no_load_speed,
+            'photo_gallery' => $image,
+            'product_image' => $file_path,
+           
         ]);
         return redirect(route('allproducts'));
     }

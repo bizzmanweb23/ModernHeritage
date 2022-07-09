@@ -373,12 +373,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    //allClientReports
    Route::get('/allClientReports', [ExpenseController::class, 'allClientReports'])->name('allClientReports');
    Route::post('/exportCustomerReport', [ExpenseController::class, 'exportCustomerReport'])->name('exportCustomerReport');
-
-   // kb_articles
    Route::get('/kb_articles', [ExpenseController::class, 'kb_articles'])->name('kb_articles');
    Route::get('/addArticles', [ExpenseController::class, 'addArticles'])->name('addArticles');
-
-
+   Route::post('/saveArticle', [ExpenseController::class, 'saveArticle'])->name('saveArticle');
+   Route::get('/deleteArticle', [ExpenseController::class, 'deleteArticle'])->name('deleteArticle');
+   Route::get('/editArticle/{id}', [ExpenseController::class, 'editArticle'])->name('editArticle');
+   Route::post('/updateArticle', [ExpenseController::class, 'updateArticle'])->name('updateArticle');
+  
+   
+   
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\KBArticle;
 use Illuminate\Http\Request;
 use DB;
 
@@ -208,16 +209,45 @@ class ExpenseController extends Controller
 
             fclose($file);
         };
-
+ 
         return response()->stream($callback, 200, $headers);
     }
     public function kb_articles()
     {
-        return view('frontend.admin.reports.kbarticles');
+       $article['article'] = KBArticle::all();
+        return view('frontend.admin.reports.kbarticles',$article);
     }
 
     public function  addArticles()
     {
         return view('frontend.admin.reports.articles');
+    }
+    public function saveArticle(Request $request)
+    {
+      $article = new KBArticle;
+      $article->article = $request->article;
+      $article->benefit = $request->benefit;
+      $article->status = $request->status;
+      $article->save();
+      return redirect(route('kb_articles'));
+    }
+    public function deleteArticle(Request $request)
+    {
+        KBArticle::where('id',$request->id)->delete();
+        return json_encode(1);
+    }
+    public function  editArticle($id)
+    {
+        $data['data']=KBArticle::find($id);
+        return view('frontend.admin.reports.article_edit',$data);
+    }
+    public function  updateArticle(Request $request)
+    {
+        $article =  KBArticle::find($request->id);
+        $article->article = $request->article;
+        $article->benefit = $request->benefit;
+        $article->status = $request->status;
+        $article->save();
+        return redirect(route('kb_articles'));
     }
 }

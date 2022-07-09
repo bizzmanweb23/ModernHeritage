@@ -137,7 +137,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>SKU <span style="color:red">*</span></label>
-                            <input type="text" class="form-control" id="sku" name="sku" value="{{$data->sku}}" required>
+                            <input type="text" class="form-control" id="sku" name="sku" value="{{$data->sku}}" >
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -269,31 +269,86 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
-                            <label>Product Images</label>
-                            <input type="file" class="form-control" name="images[]" multiple>
+                            <label>Product Image</label>
+                            <input type="file" class="form-control" name="image">
                             <input type="hidden" class="form-control" name="old_images" value="{{$data->product_image}}">
                         </div>
 
-                        <div class="form-group">
-
-                            <?php
-                            $pr_img = $data->product_image;
-                            $img = explode(',', $pr_img);
-                            ?>
-                            @if($data->product_image!='')
-                            @foreach($img as $p)
-                            <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
-                            @endforeach
-                            @endif
-
-
-                        </div>
+                       
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label>Description</label>
                             <textarea name="description" id="description" class="form-control" rows="5">{{$data->description}}</textarea>
 
+                        </div>
+                    </div>
+                    <h4>Specifications</h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Model</label>
+                            <input type="text" class="form-control" name="model" value="{{$data->model}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Chemistry</label>
+                            <input type="text" class="form-control" name="battery_chemistry" value="{{$data->battery_capacity}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Voltage</label>
+                            <input type="number" class="form-control" name="voltage" value="{{$data->voltage}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Capacity</label>
+                            <input type="text" class="form-control" name="battery_capacity" value="{{$data->battery_capacity}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            <input type="text" class="form-control" name="max_capacity" value="{{$data->max_capacity}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <input type="text" class="form-control" name="weight" value="{{$data->weight}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Drilling Capacity</label>
+                            <input type="text" class="form-control" name="drilling_capacity" value="{{$data->drilling_capacity}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>No Load Speed</label>
+                            <input type="text" class="form-control" name="no_load_speed" value="{{$data->no_load_speed}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Product Images</label>
+                            <input type="file" class="form-control" name="images[]" multiple>
+                            <input type="hidden" class="form-control" name="old_image" value="{{$data->photo_gallery}}">
+
+                            <?php
+                         
+                            $pr_img = $data->photo_gallery;
+                            $img = explode(',', $pr_img);
+                       
+                            ?>
+                            @if($data->photo_gallery!='')
+                            @foreach($img as $p)
+                            <img src="{{ asset('images/products') }}/{{$p}}" alt="Product" style="height: 6rem; width:6rem">
+                            @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="ms-auto text-end">
