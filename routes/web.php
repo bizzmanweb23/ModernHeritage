@@ -25,6 +25,9 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\LeadController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -383,13 +386,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    Route::post('/exportCustomerReport', [ExpenseController::class, 'exportCustomerReport'])->name('exportCustomerReport');
    Route::get('/kb_articles', [ExpenseController::class, 'kb_articles'])->name('kb_articles');
    Route::get('/addArticles', [ExpenseController::class, 'addArticles'])->name('addArticles');
-   Route::post('/saveArticle', [ExpenseController::class, 'saveArticle'])->name('saveArticle');
    Route::get('/deleteArticle', [ExpenseController::class, 'deleteArticle'])->name('deleteArticle');
    Route::get('/editArticle/{id}', [ExpenseController::class, 'editArticle'])->name('editArticle');
    Route::post('/updateArticle', [ExpenseController::class, 'updateArticle'])->name('updateArticle');
-  
-  
-   
+
+
+
+
+    Route::get('/leadsManagement', [LeadController::class, 'leadsManagement'])->name('leadsManagement');
+    Route::get('/leadView/{id}', [LeadController::class, 'leadView'])->name('leadView');
+    
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
 
