@@ -395,6 +395,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     Route::get('/leadsManagement', [LeadController::class, 'leadsManagement'])->name('leadsManagement');
     Route::get('/leadView/{id}', [LeadController::class, 'leadView'])->name('leadView');
+
+    Route::post('/searchVisitor', [LeadController::class, 'searchVisitor'])->name('searchVisitor');
+
+
+    
     
     //admin--logistic
     Route::group(['prefix' => 'logistic', 'middleware' => 'admin_auth'], function () {
