@@ -250,4 +250,6 @@ class DriverController extends Controller
         return Redirect()->route('orderList');
 
     }
+
+    
 }

@@ -182,21 +182,24 @@ Home
 
 <div class="product-add-to-cart">
 <div class="input-counter">
-<span class="minus-btn">
+<span class="plus-btn">
 <i class="ri-add-line"></i>
 </span>
 <input type="text" value="1">
-<span class="plus-btn">
+<span class="minus-btn">
 <i class="ri-subtract-line"></i>
 </span>
 </div>
-<a href="#" class="default-btn">
-<i class="ri-shopping-cart-line"></i>
-Add To Cart
-</a>
+<form class="add-quantity" action="{{ route('cart.store') }}" method="POST">
+        @csrf
+        <div class="product-quantity">
+        <input type="hidden" name="id" value="{{$products->id}}">
+        </div>
+        <button type="submit" class="default-btn"><i class="ri-shopping-cart-line"></i>add to cart</button>
+</form>
 </div>
 <div class="wishlist-btn">
-<a href="#" class="default-btn">
+<a href="{{ route('wishlistShow',$products['id']) }}" class="default-btn">
 <i class="ri-heart-line"></i>
 Wishlist
 </a>

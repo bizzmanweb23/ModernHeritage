@@ -16,12 +16,16 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
+     * 
+     *
      */
+
+    protected $table = 'users';
     protected $fillable = [
         											
-        'name',
+        'user_name',
         'email',
-        'user_id',
+        'unique_id',
         'phone',
         'password',
     ];
@@ -44,4 +48,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function isAdmin()
+    {
+        return $this->role_id == 1 ? true : false;
+    }
+
+    public function isClient()
+    {
+        return $this->role_id == 2 ? true : false;
+    }
+
+    public function isInactive()
+    {
+        return $this->status == 0 ? true : false;
+    }
 }

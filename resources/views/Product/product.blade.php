@@ -197,13 +197,16 @@ Wikin
         </ul>
         <ul class="products-cart-wish-view">
         <li>
-        <a href="shopping-cart.html" class="default-btn">
-        <i class="ri-shopping-cart-line"></i>
-        Add To Cart
-        </a>
+        <form class="add-quantity" action="{{ route('cart.store') }}" method="POST">
+        @csrf
+        <div class="product-quantity">
+        <input type="hidden" name="id" value="{{$products->id}}">
+        </div>
+        <button type="submit" class="default-btn"><i class="ri-shopping-cart-line"></i>add to cart</button>
+        </form>
         </li>
         <li>
-        <a href="wishlist.html" class="wish-btn">
+        <a href="{{ route('wishlistShow',$products['id']) }}" class="wish-btn">
         <i class="ri-heart-line"></i>
         </a>
         </li>

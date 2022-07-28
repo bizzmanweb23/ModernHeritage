@@ -32,7 +32,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" id="name" name="name">
+                                        <input type="text" class="form-control @error('user_name') is-invalid @enderror" value="{{ old('user_name') }}" id="user_name" name="user_name">
                                         @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <strong style="color: red">{{ $message }}</strong>
@@ -98,7 +98,7 @@
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $('#email,#name,#password,#confirm-password').on('click', function() {
+    $('#email,#user_name,#password,#confirm-password').on('click', function() {
         $('.invalid-feedback').hide();
     });
     $('#register_refresh').on('click', function() {

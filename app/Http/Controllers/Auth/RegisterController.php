@@ -53,7 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'user_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'unique:users'],
             'email' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'confirmed'],
@@ -69,17 +69,17 @@ class RegisterController extends Controller
     {
             
             $unique_id = User::orderBy('id', 'desc')->first();
-            $number = str_replace('MHU', '', $unique_id ? $unique_id->user_id  : 0);
+            $number = str_replace('MHU', '', $unique_id ? $unique_id->unique_id  : 0);
             if ($number == 0) {
                 $number = 'MHU0000001';
             } else {
                 $number = "MHU" . sprintf("%07d", (int)$number + 1);
             }
             $user =  User::create([
-                'name' => $data['name'],
+                'user_name' => $data['user_name'],
                 'email' => $data['email'],
                 'phone' => $data['phone'],
-                'user_id' => $number,
+                'unique_id' => $number,
                 'password' => Hash::make($data['password']),
             ]);
             return $user;

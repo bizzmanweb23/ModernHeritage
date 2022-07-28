@@ -21,6 +21,11 @@ class ProductController extends Controller
         return view('Product.productDetails', compact('products'));
          
     }
+    public function cart()
+    {
+        return view('cart.index');
+         
+    }
     public function shop($id)
     {
 

@@ -6,7 +6,7 @@
                 <div class="col-lg-7">
                     <ul class="header-left-content">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('about.index') }}">
                                 About
                             </a>
                         </li>
@@ -130,20 +130,21 @@
                 <div class="col-lg-4">
                     <ul class="wish-cart">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('wish.show') }}">
                                 <span class="wish-icon">
                                     <i class="ri-heart-line"></i>
-                                    <span class="count">0</span>
+                                    <span class="count">{{ App\Models\Wishlist::where('user_id',Auth::check()?Auth::user()->id:0)->count() }}</span>
                                 </span>
                                 <span class="favorite">Favorite</span>
                                 My Wishlist
                             </a>
                         </li>
                         <li>
-                            <span class="cart" data-bs-toggle="modal" data-bs-target="#exampleModal-cart">
+                        <span class="cart" data-bs-toggle="modal" data-bs-target="#exampleModal-cart">
+                            <a href="{{ route('cart.show') }}">
                                 <span class="wish-icon">
                                     <i class="ri-shopping-cart-line"></i>
-                                    <span class="count">0</span>
+                                    <span class="count">{{ App\Models\Cart::where('user_id',Auth::check()?Auth::user()->id:0)->count() }}</span>
                                 </span>
                                 <span class="favorite">Your Cart:</span>
                                 $00.00

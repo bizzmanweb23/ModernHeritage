@@ -7,7 +7,7 @@
 <script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <div class="col-md-4">
-    <a href="{{route('addExpenses')}}" class="btn btn-primary">Expenses</a>
+    <a href="{{route('addPurchase')}}" class="btn btn-primary">Purchase Expenses</a>
 </div>
 
 
@@ -54,31 +54,25 @@
             <tr>
                 <th>Sl#</th>
                 <th>Date</th>
-                <th>Details</th>
-                <th>Payment Mode</th>
-                <th>Amount</th>
-                <th>Action</th>
+                <th>Supplier/Vendor Name</th>
+                <th>Purchase Invoice</th>
+                
             </tr>
         </thead>
 
         <tbody>
            
-            @foreach($expense as $key=>$ex)
+            @foreach($purchase as $key=>$ex)
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{date("d/m/Y", strtotime($ex->date))}}</td>
 
-                <td>{{$ex->details}}</td>
-                @if($ex->payment_mode == 1)
-                <td>CASH</td>
-                @else
-                <td>ONLINE</td>
-                @endif
-                <td>{{$ex->expense_amount}}</td>
+                <td>{{$ex->supplier_name}}</td>
+                <td>{{$ex->purchase_invoice}}</td>
                 <td>
 
 
-                    <a href="javascript:void(0)" onclick="return delete_expense(this.id)" id="{{$ex->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
+                    <a href="javascript:void(0)" onclick="return delete_purchase(this.id)" id="{{$ex->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash"></i></span></a>
 
                 </td>
             </tr>
@@ -103,7 +97,7 @@
         if (confirm('Are you sure you want to delete?')) {
 
             $.ajax({
-                url: "{{route('deleteExpense')}}",
+                url: "{{route('deletePurchase')}}",
                 type: 'GET',
                 data: {
                     id: id
@@ -126,7 +120,7 @@
         var month = $('#month').val();
 
         $.ajax({
-            url: "{{route('allExpenses')}}",
+            url: "{{route('allPurchase')}}",
             type: 'GET',
             data: {
                 month: month

@@ -1,0 +1,6 @@
+//admin--logistic--dashboard
+        // Route::get('/viewCalander1', [LogisticController::class, 'viewcalander'])->name('ViewCalander1');
+        // Route::post('/search-order/{order_no}', [LogisticController::class, 'SearchOrder'])->name('Search');
+        // Route::get('/viewDriverCalander', [LogisticController::class, 'viewdrivercalander'])->name('ViewDriverCalander');
+        // Route::get('/driver_status', [LogisticController::class, 'driver_status'])->name('driver_status');
+        // Route::post('/chekDriver', [LogisticController::class, 'chekDriver'])->name('chekDriver');

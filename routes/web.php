@@ -7,14 +7,21 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PlaceOrderController;
 use App\Http\Controllers\CrmController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\InvoiceController;
@@ -22,6 +29,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\HolidayController;
 use App\Http\Controllers\ExpenseController;
@@ -45,12 +53,35 @@ Route::get("/", function () {
     return view("frontend.user.home.index");
 });
 
+
+Route::get('/about',[AboutController::class,'index'])->name('about.index');
+Route::get('/contact',[ContactController::class,'index'])->name('contact.index');
+
+
 Route::middleware('auth')->group(function () {
     Route::get("/home", [HomeController::class, "index"])->name("home");
     Route::get('/product', [ProductController::class, 'index'])->name('product');
+    Route::get('/cart', [ProductController::class, 'cart'])->name('cart');
     Route::get('/productDetails', [ProductController::class, 'shop'])->name('productDetails');
     Route::get('/productShow/{id}',[ProductController::class,'show'])->name('productShow');
     Route::get('/shop/{id}',[ProductController::class,'shop'])->name('shop');   
+
+    Route::post('/add-to-cart',[CartController::class,'addToCart'])->name('cart.store');
+    Route::get('/cartShow',[CartController::class,'cartShow'])->name('cart.show');
+    Route::get('/removecart/{id}', [CartController::class, 'removeCart'])->name('cart.remove');
+    Route::post('/update_cart', [CartController::class, 'update_cart'])->name('cart.update');
+    Route::get('/addwish/{id}',[CartController::class,'addWish'])->name('add.wish');
+
+    //Route::get('/wishlist',[WishlistController::class,'index'])->name('wishlistShow');
+    Route::get('/wishlist/{id}',[WishlistController::class,'index'])->name('wishlistShow');
+    Route::get('/wishShow',[WishlistController::class,'wishShow'])->name('wish.show');
+    Route::get('/removewish/{id}', [WishlistController::class, 'removeWishlist'])->name('wish.remove');
+
+    Route::get('/checkout',[PlaceOrderController::class,'index'])->name('checkout');
+    Route::post('/check',[PlaceOrderController::class,'saveAddress'])->name('check.fetch');
+    Route::get('/account',[AccountController::class,'index'])->name('account');
+    Route::get('/editProfile',[AccountController::class,'edit'])->name('editProfile');
+
 
 });
 
@@ -73,6 +104,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
 
     //admin--dashboard
     Route::get("/admindashboard", [DashboardController::class, "index"])->name("admindashboard");
+
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+
 
     //admin--userManagement
     Route::get('/index', [UserController::class, 'allUser'])->name('index');
@@ -227,6 +261,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
     Route::get('/addDriver', [DriverController::class, 'addDriver'])->name('addDriver');
     Route::get('/viewDriver/{id}', [DriverController::class, 'viewDriver'])->name('viewDriver');
     Route::get('/editDriver/{id}', [DriverController::class, 'editDriver'])->name('editDriver');
+
 
     //color
     Route::get('/colors', [ColorController::class, 'index'])->name('colors');
@@ -391,8 +426,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
    Route::post('/updateArticle', [ExpenseController::class, 'updateArticle'])->name('updateArticle');
 
 
+//Purchase Management
+Route::get('/allPurchase', [PurchaseController::class, 'allPurchase'])->name('allPurchase');
+Route::get('/addPurchase', [PurchaseController::class, 'addPurchase'])->name('addPurchase');
+Route::post('/savePurchase', [PurchaseController::class, 'savePurchase'])->name('savePurchase');
+Route::get('/deletePurchase', [PurchaseController::class, 'deletePurchase'])->name('deletePurchase');
 
 
+
+//Lead Management
     Route::get('/leadsManagement', [LeadController::class, 'leadsManagement'])->name('leadsManagement');
     Route::get('/leadView/{id}', [LeadController::class, 'leadView'])->name('leadView');
 
@@ -429,20 +471,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin_auth'], function () {
         Route::get('/assignedleads/{salesperson_id}', [SalesController::class, 'assignedLeads'])->name('assignedleads');
 
         //admin--logistic--dashboard
-        Route::get('/viewCalander1', [LogisticController::class, 'viewcalander'])->name('ViewCalander1');
+        Route::get('/viewCalander', [LogisticController::class, 'viewcalander'])->name('ViewCalander');
         Route::post('/search-order/{order_no}', [LogisticController::class, 'SearchOrder'])->name('Search');
         Route::get('/viewDriverCalander', [LogisticController::class, 'viewdrivercalander'])->name('ViewDriverCalander');
         Route::get('/driver_status', [LogisticController::class, 'driver_status'])->name('driver_status');
         Route::post('/chekDriver', [LogisticController::class, 'chekDriver'])->name('chekDriver');
 
-
+       
 
         //Testing for Ajax
         Route::post('/assign-driver', [LogisticController::class, 'AssignDriverAjax']);
         Route::get('/driver-listing', [LogisticController::class, 'listing']);
 
 
-        Route::get('/viewCalander', [LogisticController::class, 'viewcalander1'])->name('ViewCalander');
+        // Route::get('/viewCalander', [LogisticController::class, 'viewcalander1'])->name('ViewCalander');
+        Route::post('/getLogisticLeadByUniqueId', [LogisticController::class, 'getLogisticLeadByUniqueId'])->name('getLogisticLeadByUniqueId');
 
 
         //admin--logistic--delivery_orders
