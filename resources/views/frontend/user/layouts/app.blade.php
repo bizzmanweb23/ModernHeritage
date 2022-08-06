@@ -33,10 +33,10 @@
                         <ul>
                         @auth
                                 <li>
-                                    <a href="#">My Account</a>
+                                    <a href="{{ route('account') }}">My Account</a>
                                 </li>
-                                    <li>  <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Logout</a>
+                                    <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">Logout</a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                     style="display: none;">
                                     @csrf
@@ -93,12 +93,12 @@
                                     </div>
                                 </div>
                             </li>
-                            <li> <button class="eye-btn btn btn-primary quote-btn" data-bs-toggle="modal"
+                            <!-- <li> <button class="eye-btn btn btn-primary quote-btn" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     Get a Quote
                                 </button>
 
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>

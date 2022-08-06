@@ -30,6 +30,15 @@
         .fc-time{
             font-weight: 600;   
         } 
+        .fc-time-grid-event{
+            width: 170px;
+            height: 50px; 
+        }
+        .fc-event-container
+        {
+            width: 170px;
+            height: 50px; 
+        }
         
     </style>
 <!-- <i>

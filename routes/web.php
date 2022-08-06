@@ -81,6 +81,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/check',[PlaceOrderController::class,'saveAddress'])->name('check.fetch');
     Route::get('/account',[AccountController::class,'index'])->name('account');
     Route::get('/editProfile',[AccountController::class,'edit'])->name('editProfile');
+    Route::get('/editAddress',[AccountController::class,'editAddress'])->name('editAddress');
+    Route::get('/orderHistory',[AccountController::class,'orderHistory'])->name('orderHistory');
+    Route::post('/accountUpdate',[AccountController::class,'store'])->name('update.profile');
+    Route::post('/addressUpdate',[AccountController::class,'update'])->name('update.address');
 
 
 });

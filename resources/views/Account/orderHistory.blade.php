@@ -1,7 +1,5 @@
-
 @extends('frontend.user.layouts.layout')
 @section('content')
-
 
 
 <div class="page-title-area">
@@ -13,7 +11,7 @@
 Home
 </a>
 </li>
-<li class="active">Dashboard</li>
+<li class="active">Order History</li>
 </ul>
 </div>
 </div>
@@ -44,58 +42,8 @@ Home
 </ul>
 </div>
 <div class="col-lg-8">
-<div class="profile-bar">
-<div class="row align-items-center">
-<div class="col-lg-6 col-md-6">
-<div class="profile-info">
-<img src="assets/images/profile-img.jpg" alt="Image">
-<h3>
-<a href="edit-profile.html">Doreen Mcool</a>
-</h3>
-<a href="#">yourname@mail.com</a>
-<a href="tel:+1-(514)-321-4566">+1 (514) 321-4566</a>
-</div>
-</div>
-<div class="col-lg-6 col-md-6">
-<div class="edit-profiles">
-<a href="{{ route('editProfile') }}" class="default-btn">Edit Profile</a>
-</div>
-</div>
-</div>
-</div>
-<div class="billing-address-bar">
-<div class="row align-items-center">
-<div class="col-lg-4 col-md-6">
-<h3>Billing Address</h3>
-<ul>
-<li>Doreen McCool</li>
-<li>
-<span>Address:</span>
-2491 Reel Avenue Albuquerque
-</li>
-</ul>
-</div>
-<div class="col-lg-4 col-md-6">
-<ul>
-<li>
-<span>Phone:</span>
-<a href="tel:+1-(514)-321-4566">+1 (514) 321-4566</a>
-</li>
-<li> 
-<span>Email:</span>
-<a href="#">yourname@mail.com</a>
-</li>
-</ul>
-</div>
-<div class="col-lg-4 col-md-6">
-<div class="edit-address">
-<a href="edit-address.html" class="default-btn">Edit Address</a>
-</div>
-</div>
-</div>
-</div>
 <div class="cart-area recent-order">
-<h3>Recent Order</h3>
+<h3>Order History</h3>
 <form class="cart-controller mb-0">
 <div class="cart-table table-responsive">
 <table class="table table-bordered">
@@ -133,7 +81,7 @@ Home
 <span class="subtotal-amount">$90.00</span>
 </td>
 <td class="trash">
-<a href="shopping-cart.html" class="remove">
+<a href="order-history.html" class="remove">
 <i class="ri-close-fill"></i>
 </a>
 </td>
@@ -160,7 +108,7 @@ Home
 <span class="subtotal-amount">$50.00</span>
 </td>
 <td class="trash">
-<a href="shopping-cart.html" class="remove">
+<a href="order-history.html" class="remove">
 <i class="ri-close-fill"></i>
 </a>
 </td>
@@ -187,7 +135,7 @@ Home
 <span class="subtotal-amount">$30.00</span>
 </td>
 <td class="trash">
-<a href="shopping-cart.html" class="remove">
+<a href="order-history.html" class="remove">
 <i class="ri-close-fill"></i>
 </a>
 </td>
@@ -214,7 +162,7 @@ Home
 <span class="subtotal-amount">$45.00</span>
 </td>
 <td class="trash">
-<a href="shopping-cart.html" class="remove">
+<a href="order-history.html" class="remove">
 <i class="ri-close-fill"></i>
 </a>
 </td>
@@ -228,6 +176,7 @@ Home
 </div>
 </div>
 </section>
+
 
 <div class="go-top">
 <i class="ri-arrow-up-s-fill"></i>

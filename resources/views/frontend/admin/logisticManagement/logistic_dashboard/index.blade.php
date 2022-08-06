@@ -28,6 +28,21 @@
         .fc-time{
             font-weight: 600;   
         } 
+        .fc-time-grid-event{
+            width: 200px;
+            height: 200px; 
+        }
+        .fc-view {
+            width: 1500px;
+            height:100px;   
+        }
+        /* .fc td{
+            display:none;
+        } */
+        .fc-dayGridDay-view{
+           
+        }
+        
         
     </style>
 
