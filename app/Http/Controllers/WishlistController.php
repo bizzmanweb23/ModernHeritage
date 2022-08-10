@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Product;
+use App\Models\product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Session;

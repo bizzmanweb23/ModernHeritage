@@ -5,7 +5,7 @@ use App\Models\Cart;
 use App\Models\User;
 use Session;
 use DB;
-use App\Models\Product;
+use App\Models\product;
 use remove;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ class CartController extends Controller
         {
             $user_id = Auth::user()->id;
            
-            $product = Product::find($request->id);
+            $product = product::find($request->id);
             $cart = new Cart();
             $cart->product_image = $product->product_image;
             $cart->product_name = $product->product_name;
@@ -50,7 +50,7 @@ class CartController extends Controller
         else
         {
             $user_id = Auth::user()->id;
-            $product = Product::find($id);
+            $product = product::find($id);
             $cart = new Cart();
             $cart->product_image = $product->product_image;
             $cart->product_name = $product->product_name;

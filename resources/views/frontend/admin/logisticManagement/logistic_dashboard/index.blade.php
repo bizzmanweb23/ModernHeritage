@@ -23,7 +23,7 @@
             color:red;
             /* overflow-x: scroll;
             overflow-y: scroll; */
-            /* border-bottom:1px solid #000; */
+            
         } 
         .fc-time{
             font-weight: 600;   
@@ -31,17 +31,30 @@
         .fc-time-grid-event{
             width: 200px;
             height: 200px; 
+            overflow-x: scroll;
+            overflow-y: scroll;
         }
+        .fc-day-grid-event{
+            height:100px;
+            overflow-x: scroll;
+            overflow-y: scroll;
+        }  
+        .fc-row.fc-week.fc-widget-content.fc-rigid{
+        height: 300px;
+    }
+    .fc-day-grid{
+        
+    }
         .fc-view {
-            width: 1500px;
-            height:100px;   
-        }
+            width: 1400px;
+            /* height:100px;   */
+        } 
         /* .fc td{
             display:none;
         } */
-        .fc-dayGridDay-view{
+        /* .fc-dayGridDay-view{
            
-        }
+        } */
         
         
     </style>
