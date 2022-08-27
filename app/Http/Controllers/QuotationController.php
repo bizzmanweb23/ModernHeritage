@@ -10,7 +10,7 @@ use App\Models\GST;
 use App\Models\User;
 use App\Models\Quotation;
 use App\Models\Quotation_product;
-use App\Models\Product;
+use App\Models\product;
 use App\Models\Tax;
 
 class QuotationController extends Controller
@@ -20,7 +20,7 @@ class QuotationController extends Controller
         $lead = Lead::findOrFail($id);
         $gst = GST::get();
         $tax = Tax::get();
-        $product = Product::get();
+        $product = product::get();
         return view('frontend.admin.quotation.addquotation',['lead' => $lead, 'gst' => $gst, 'tax' => $tax, 'product' => $product]);   
     }
 
@@ -80,7 +80,7 @@ class QuotationController extends Controller
             $quotation_product->tax = json_encode($tax_arr);
             $quotation_product->save();
 
-            $product = Product::where('unique_id', $request->$req_product_id)
+            $product = product::where('unique_id', $request->$req_product_id)
                                 ->first();
             $product->available_quantity =  intval($product->available_quantity) - intval($request->$req_quantity);
             $product->save();
@@ -91,7 +91,7 @@ class QuotationController extends Controller
 
     public function searchProduct(Request $request)
     {
-        $product = Product::where('product_name', 'LIKE', '%'.$request->term.'%')
+        $product = product::where('product_name', 'LIKE', '%'.$request->term.'%')
                             ->get();
         if ($product->count() > 0) {
             foreach ($product as $item) {

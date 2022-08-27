@@ -427,7 +427,7 @@ class LogisticController extends Controller
                    'Driver Name   : '.$value->emp_name.PHP_EOL.
                    'Customer Name : '.$value->client_name.PHP_EOL.
                    'PickUp From   : '. $value->pickup_from.PHP_EOL.
-                  'PickUp Address: '.$value->pickup_add_1.PHP_EOL.
+                   'PickUp Address: '.$value->pickup_add_1.PHP_EOL.
                    'PickUp Pin    : '. $value->pickup_pin.PHP_EOL.
                    'Delivered To  : '.$value->delivered_to.PHP_EOL.
                    'Delivery_Add  : '.$value->delivery_add_1.PHP_EOL.

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\product;
 use App\Models\ProductCategory;
 use App\Models\Attributes;
 use App\Models\Service;
@@ -24,7 +24,7 @@ class InventoryController extends Controller
     }
     public function allproducts(Request $request)
     {
-        $products_p = Product::select('products.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'products.cat_id');
+        $products_p = product::select('products.*', 'product_categories.category_name')->join('product_categories', 'product_categories.id', 'products.cat_id');
 
         if (isset($request->type)) {
             $products['products'] = $products_p->where('products.cat_id', $request->type)->get();
@@ -45,7 +45,7 @@ class InventoryController extends Controller
     public function viewProduct($id)
 
     {
-        $data = Product::select('products.*', 'product_categories.category_name', 'subcategories.sub_category')
+        $data = product::select('products.*', 'product_categories.category_name', 'subcategories.sub_category')
             ->join('product_categories', 'product_categories.id', 'products.cat_id')
             ->join('subcategories', 'subcategories.id', 'products.sub_cat')
             ->where('products.id', $id)->first();
@@ -58,7 +58,7 @@ class InventoryController extends Controller
 
     public function editProduct($id)
     {
-        $data = Product::select('products.*')
+        $data = product::select('products.*')
            
 
 

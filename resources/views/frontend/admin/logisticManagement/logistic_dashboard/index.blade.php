@@ -14,51 +14,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <style>
-        .fc-agendaWeek-button{
-            display:none;
-        }
-        .fc-title{
-            font-weight: 600;  
-            color:red;
-            /* overflow-x: scroll;
-            overflow-y: scroll; */
-            
-        } 
-        .fc-time{
-            font-weight: 600;   
-        } 
-        .fc-time-grid-event{
-            width: 200px;
-            height: 200px; 
-            overflow-x: scroll;
-            overflow-y: scroll;
-        }
-        .fc-day-grid-event{
-            height:100px;
-            overflow-x: scroll;
-            overflow-y: scroll;
-        }  
-        .fc-row.fc-week.fc-widget-content.fc-rigid{
-        height: 300px;
-    }
-    .fc-day-grid{
-        
-    }
-        .fc-view {
-            width: 1400px;
-            /* height:100px;   */
-        } 
-        /* .fc td{
-            display:none;
-        } */
-        /* .fc-dayGridDay-view{
-           
-        } */
-        
-        
-    </style>
-
 <!-- Extra Modal -->
 <div class="modal" id="ExtraModal">
     <div class="modal-dialog">
@@ -287,7 +242,7 @@ $(document).ready(function() {
         $('#product_row_count').val(window.count);
         $('tbody').append(`
                             <tr>
-                                 <td><input type="text" class="form-control" name="product_name${window.count}" id="product_name${window.count}" ></td>
+                                <td><input type="text" class="form-control" name="product_name${window.count}" id="product_name${window.count}" ></td>
                                 <td><input type="text" class="form-control" name="dimension${window.count}" id="dimension${window.count}"></td>
                                 <td><input type="number" class="form-control" name="quantity${window.count}" id="quantity${window.count}" min="1" ></td>
                                 <td><input type="text" class="form-control" name="uom${window.count}" id="uom${window.count}" ></td>
@@ -384,30 +339,6 @@ $(document).ready(function() {
 </script>
 <script>
 $(document).ready(function () {
-    $(document).on('change','#driver_id',function() {
-        var driver_id = $(this).val();
-        if(driver_id != ''){
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')              
-                }
-            });
-            $.ajax({
-                type: "POST",
-                data: {
-                    "unique_id": driver_id
-                },
-                url: '{{ route("getLogisticLeadByUniqueId") }}',
-                success: function(data) {
-                //alert('success');
-                },
-                error: function() {
-                    alert('error');
-                }
-            });
-        }
-    });
-
     $('#btn_driver').on('click', function(){
         var driver_id = $('#driver_id').val();
         var logistic_leads_id = $('#lead_id').val();
@@ -431,7 +362,7 @@ $(document).ready(function () {
         $('#delivery_phone').removeAttr('required');
         $.ajaxSetup({
             headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')              
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
@@ -446,12 +377,10 @@ $(document).ready(function () {
             success: function(data) {
                 alert('success');
             },
-            url: '/admin/logistic/assign-driver/',
-            error: function(data) {
-               // alert('error');
+            error: function() {
+                alert('error');
             }
         });
-});
 });
 </script>
 @endsection

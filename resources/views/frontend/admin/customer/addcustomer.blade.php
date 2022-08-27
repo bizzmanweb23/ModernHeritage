@@ -26,7 +26,13 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-              
+                <div class="ms-auto text-end">
+                    <button class="btn btn-link text-dark px-3 mb-0" id="save"><i class="fas fa-save text-dark me-2"
+                            aria-hidden="true"></i>Save</button>
+                    <a class="btn btn-link text-dark px-3 mb-0" id="back"
+                        href="{{ route('allcustomer') }}"><i class="fas fa-arrow-left text-dark me-2"
+                            aria-hidden="true"></i>Back</a>
+                </div>
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-check">
@@ -37,10 +43,10 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-md-1">
+                    <div class="col-md-2">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="customer_type" id="customertype2"
-                                value="company" required>
+                                value="company">
                             <label class="form-check-label" for="customer_type">
                                 Company
                             </label>
@@ -50,7 +56,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="upload">
-                            <img src="{{ asset('images/products/default.jpg') }}" alt="Customer img"
+                            <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
                                 style="height: 100px; width:100px">
                             <label for="customer_image" class="edit">
                                 <i class="fas fa-pencil-alt"></i>
@@ -73,7 +79,7 @@
                             <label for="mobile">Mobile</label>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <select name="country_code_m" class="form-control" id="country_code_m" required>
+                                    <select name="country_code_m" class="form-control" id="country_code_m">
                                         <option value="">--Select--</option>
                                         @foreach($countryCodes as $c)
                                             <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
@@ -83,48 +89,47 @@
                                 </div>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="mobile" name="mobile"
-                                        placeholder="Mobile" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+                                        placeholder="Mobile" required>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="mobile">Phone</label>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <select name="country_code_p" class="form-control" id="country_code_p" required>
-                                        <option value="">--Select--</option>
-                                        @foreach($countryCodes as $c)
-                                            <option value="+{{ $c->code }}">+{{ $c->code }}({{ $c->name }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-md-9">
-                                    <input type="text" class="form-control" id="phone" name="phone"
-                                        placeholder="Phone" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Website</label>
-                            <input type="text" class="form-control" id="website" name="website" placeholder="Website"
-                             required>
                         </div>
                     </div>
                 </div>
 
                 <div class="row mt-1">
-                  
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="address"
+                                placeholder="Street Name, House No, Door No, City" required>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                             required>
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state" name="state" placeholder="State">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="zipcode">Zipcode</label>
+                            <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="Zipcode">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" class="form-control" id="country" name="country" placeholder="Country">
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -135,8 +140,6 @@
                         </div>
                     </div>
                 </div>
-
-             
 
                 <div class="row mt-1">
                     <div class="col-md-6">
@@ -151,103 +154,101 @@
                         </div>
                     </div>
                     <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Website</label>
+                            <input type="text" class="form-control" id="website" name="website" placeholder="Website">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-1">
+                    <div class="col-md-6">
                         <div class="form-group company">
                             <label for="gst_no">GST No.</label>
                             <input type="text" class="form-control" id="gst_no" name="gst_no"
                                 placeholder="Enter GST No.">
                         </div>
                     </div>
-                  
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="website">Tags</label>
+                            <select multiple="multiple" name="tag[]" id="tag" class="form-control">
+                                @foreach($tag as $t)
+                                    <option value="{{ $t->id }}">
+                                        {{ $t->tag_name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="row mt-1">
-              
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Address Line 1</label>
-                            <input type="text" class="form-control" id="delivery_address" name="delivery_address"
-                                placeholder="Address Line ">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Address Line 2</label>
-                            <input type="text" class="form-control" id="delivery_address_1" name="delivery_address_1"
-                                placeholder="Address Line 2">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">State</label>
-                            <input type="text" class="form-control" id="delivery_state" name="delivery_state"
-                                placeholder="State">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Country</label>
-                            <input type="text" class="form-control" id="delivery_country" name="delivery_country"
-                                placeholder="">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Zipcode</label>
-                            <input type="text" class="form-control" id="delivery_zipcode" name="delivery_zipcode"
-                                placeholder="Zipcode">
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="row mt-1">
-                    <h5>Billing Details</h5>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Address Line 1</label>
-                            <input type="text" class="form-control" id="billing_address" name="billing_address"
-                                placeholder="Billing address">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Address Line 2</label>
-                            <input type="text" class="form-control" id="billing_address_1" name="billing_address_1"
-                                placeholder="Billing address">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">State</label>
-                            <input type="text" class="form-control" id="billing_state" name="billing_state"
-                                placeholder="Billing state">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Country</label>
-                            <input type="text" class="form-control" id="billing_country" name="billing_country"
-                                placeholder="Billing country">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group" >
-                            <label for="gst">Zipcode</label>
-                            <input type="text" class="form-control" id="billing_zipcode" name="billing_zipcode"
-                                placeholder="Billing zipcode">
-                        </div>
-                    </div>
-                   
-                </div>
-                <div class="ms-auto text-end">
-                    <button class="btn btn-primary" id="save">Save</button>
-                    <a class="btn btn-info" id="back"
-                        href="{{ route('allcustomer') }}">Back</a>
-                </div>
-               
 
-               
+                {{-- Tab lists --}}
+                <ul class="nav nav-tabs mt-4" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#contact_address">Contact & Address</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#sales">Sales</a>
+                    </li>
+                </ul>
 
 
-               
+                {{-- Tab Panes --}}
+                <div class="tab-content mb-3">
+
+                    {{-- contact_address --}}
+                    <div id="contact_address" class="container tab-pane active"><br>
+
+                        <input type="hidden" name="address_row_count" id="address_row_count" value=0>
+                        <div id="more_address"></div>
+                        
+                        <a class="btn btn-link text-dark px-3 mb-0" id="add_more" href="#">
+                            <i class="fas fa-plus text-dark me-2" aria-hidden="true"></i>
+                            Add Address
+                        </a>
+
+                    </div>
+
+                    {{-- sales --}}
+                    <div id="sales" class="container tab-pane fade"><br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="salesperson">Salesperson:</label>
+                                <select name="salesperson" id="salesperson" class="form-control">
+                                    <option value=""> --Select-- </option>
+                                    @foreach($salesPerson as $sp)
+                                        <option value="{{ $sp->unique_id }}">{{ $sp->emp_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="deliveryMethod">Delivery Method:</label>
+                                <select name="deliveryMethod" id="deliveryMethod" class="form-control">
+                                    <option value=""> --Select-- </option>
+                                    @foreach($deliveryMethod as $dm)
+                                        <option value="{{ $dm->method_type }}">{{ $dm->method_type }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="paymentTerms">Payment Terms:</label>
+                                <select name="paymentTerms" id="paymentTerms" class="form-control">
+                                    <option value=""> --Select-- </option>
+                                    @foreach($paymentTerms as $pt)
+                                        <option value="{{ $pt->terms_of_payment }}">{{ $pt->terms_of_payment }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

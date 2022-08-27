@@ -1,127 +1,112 @@
-@extends('frontend.admin.layouts.master')
+@extends('frontend.admin.fleet.index')
 
-@section('content')
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" />
+@section('page')
+  <h6 class="font-weight-bolder mb-0">Brands</h6>
+@endsection
 
-<script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@section('fleet_content')
+<style>
+    .upload {
+        height: 100px;
+        width: 100px;
+        position: relative;
+    }
 
-<div class="col-md-4">
-    <a href="{{route('addBrands')}}" class="btn btn-primary">Add Brands</a>
-</div>
+    .upload:hover>.edit {
+        display: block;
+    }
 
+    .edit {
+        display: none;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        cursor: pointer;
+    }
 
-
-    @if(Session::has('message'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong> {{ Session::get('message') }}</strong>
-
-    </div>
-    @endif
-    <div class="container card" style="padding:15px;">
-
-        <form>
-            <div class="col-md-6">
-                <div class="form-group">
-
-
-                    <div class="col-md-4">
-                        <select name="customer_type" class="form-control" id="customer_type">
-                            <option value="all">All</option>
-                            <option value="individual" @if(isset($_GET['type']) && $_GET['type']=='individual' )selected @endif>Individual</option>
-                            <option value="company" @if(isset($_GET['type']) && $_GET['type']=='company' )selected @endif>Company</option>
-                        </select>
-                    </div>
-
-
+</style>
+<form action="" method="GET">
+    @csrf
+    <div class="row">
+        <div class="col-md-4">
+            <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addBrandModal">Add Brands</a>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-5">
+            <div style="display: flex; flex-wrap: no-wrap">
+                <input type="text" class="form-control mr-1" id="brand_name" placeholder="Search..."
+                    name="brand_name">
+                <div>
+                    <button type="submit" style="border-radius: 10px">
+                        <i class="fas fa-search fa-2x"></i>
+                    </button>
                 </div>
             </div>
-        </form>
-
-        <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
-            <thead>
-                <tr>
-                    <th>Sl#</th>
-                    <th>Image</th>
-                    <th>Brand Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            @foreach($brands as $key=>$b )
-                <tr>
-                    <td style="text-align:center">{{$key+1}}</td>
-                    <td> @if(isset($b->brand_image))
-                        <img src="{{ asset($b->brand_image) }}" alt="Brand" style="height: 6rem; width:6rem">
-                        @else
-                        <img src="{{ asset('images/products/default.jpg') }}" alt="Product" style="height: 5rem; width:5rem">
-                        @endif
-                    </td>
-                    <td>{{$b->brand_name}}</td>
-                  
-                    <td>
-                        <a href="editBrand/{{$b->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                        <a href="javascript:void(0)" onclick="return delete_brand(this.id)" id="{{$b->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
-                    </td>
-
-
-                </tr>
-                @endforeach
-
-
-            </tbody>
-        </table>
-
+        </div>
     </div>
-    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
-    <script>
-    function delete_brand(id) {
-        if (confirm('Are you sure you want to delete?')) {
-
-            $.ajax({
-            url: "{{route('deleteBrand')}}",
-            type: 'GET',
-            data: {
-                id: id
-            },
-            success: function(data) {
-           if(data == 1){
-
-            location.reload();
-           }
-
-            }
-        });
-        } else {
-
-            console.log('Thing was not saved to the database.');
-        }
-    }
-    $(function() {
-        $('#tableId').DataTable({
-            responsive: true
-        });
-    });
-
-    $('#customer_type').change(function(e) {
-        e.preventDefault();
-        var type = $('#customer_type').val();
-
-        $.ajax({
-            url: "{{route('allcustomer')}}",
-            type: 'GET',
-            data: {
-                type: type
-            },
-            success: function(data) {
-                location.replace('?type=' + type);
-
-            }
-        });
-
-
-    });
-</script>
-
-    @endsection
+</form>
+<!-- The Brand Modal -->
+<div class="modal" id="addBrandModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('saveBrands') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">New Brand</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-7">
+                            <label for="brand_name">Brand Name:</label>
+                            <input type="text" class="form-control" id="brand_name" name="brand_name" required>
+                        </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            <div class="upload">
+                                <img src="{{ asset('images/products/default.jpg') }}" alt="Product"
+                                    style="height: 100px; width:100px">
+                                <label for="brand_image" class="edit">
+                                    <i class="fas fa-pencil-alt"></i>
+                                    <input id="brand_image" type="file" style="display: none" name="brand_image">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class= "d-flex flex-row flex-wrap">
+    @foreach($brands as $b )
+        <div class="card m-2" style="width: 15rem">
+            <a href="#">
+                <div class="card-body p-2">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @if(isset($b->brand_image))
+                                <img src="{{ asset($b->brand_image) }}" alt="Product"
+                                    style="height: 4rem; width:4rem">
+                            @else
+                                <img src="{{ asset('images/products/default.jpg') }}"
+                                    alt="Product" style="height: 4rem; width: 4rem">
+                            @endif
+                        </div>
+                        <div class="col-md-8">
+                            <p class="mb-0">{{ $b->brand_name }}</p>
+                            <p class="mb-0"> {{ $b->count }} MODELS</p>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    @endforeach
+</div
+@endsection

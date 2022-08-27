@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2022 at 07:22 AM
+-- Generation Time: Aug 16, 2022 at 07:11 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.0.15
 
@@ -106,7 +106,9 @@ INSERT INTO `carts` (`id`, `product_image`, `product_name`, `price`, `quantity`,
 (122, 'images/product-10.jpg', 'Cordless Drill Professional Combo Drill And Screwdriver', '0.00', 1, '0.00', '2022-07-13 23:56:22.000000', '2022-07-13 23:56:22.000000', 81, '3'),
 (123, 'images/product-2.jpg', 'DFMALB 20V Max XX Oscillating Multi Tool Variable Speed Tool', '0.00', 1, '0.00', '2022-07-14 02:00:42.000000', '2022-07-14 02:00:42.000000', 40, '1'),
 (124, 'images/product-2.jpg', 'DFMALB 20V Max XX Oscillating Multi Tool Variable Speed Tool', '0.00', 1, '0.00', '2022-07-14 02:01:11.000000', '2022-07-14 02:01:11.000000', 40, '4'),
-(128, 'images/product-4.jpg', 'Power Tools Set Chinese Manufacturer Production 50V Lithu Battery', '200.00', NULL, '0.00', '2022-07-19 08:13:30.000000', '2022-07-19 08:13:30.000000', 42, '2');
+(128, 'images/product-4.jpg', 'Power Tools Set Chinese Manufacturer Production 50V Lithu Battery', '200.00', NULL, '0.00', '2022-07-19 08:13:30.000000', '2022-07-19 08:13:30.000000', 42, '2'),
+(129, 'images/product-4.jpg', 'Power Tools Set Chinese Manufacturer Production 50V Lithu Battery', '200.00', 0, '0.00', '2022-08-08 01:01:25.000000', '2022-08-08 00:55:02.000000', 43, '2'),
+(130, 'images/product-10.jpg', 'Cordless Drill Professional Combo Drill And Screwdriver', '5.00', NULL, '0.00', '2022-08-08 08:13:48.000000', '2022-08-08 08:13:48.000000', 43, '3');
 
 -- --------------------------------------------------------
 
@@ -1000,7 +1002,17 @@ INSERT INTO `logistic_dashboards` (`id`, `driver_id`, `start_time`, `end_time`, 
 (70, 'MHE00009', '2022-08-09T06:00', '2022-08-09T09:15', '2022-08-04 03:09:43', '2022-08-04 03:09:43'),
 (71, 'MHE00009', '2022-08-09T06:00', '2022-08-09T09:15', '2022-08-04 03:09:44', '2022-08-04 03:09:44'),
 (72, 'MHE00007', '2022-08-08T12:20', '2022-08-08T04:15', '2022-08-04 03:15:58', '2022-08-04 03:15:58'),
-(73, 'MHE00007', '2022-08-08T12:20', '2022-08-08T04:15', '2022-08-04 03:15:58', '2022-08-04 03:15:58');
+(73, 'MHE00007', '2022-08-08T12:20', '2022-08-08T04:15', '2022-08-04 03:15:58', '2022-08-04 03:15:58'),
+(74, 'MHE00007', '2022-08-14T03:00', '2022-08-14T06:30', '2022-08-10 07:42:58', '2022-08-10 07:42:58'),
+(75, 'MHE00007', '2022-08-14T03:00', '2022-08-14T06:30', '2022-08-10 07:42:58', '2022-08-10 07:42:58'),
+(76, 'MHE00008', '2022-08-14T08:45', '2022-08-14T10:45', '2022-08-10 07:44:17', '2022-08-10 07:44:17'),
+(77, 'MHE00008', '2022-08-14T08:45', '2022-08-14T10:45', '2022-08-10 07:44:17', '2022-08-10 07:44:17'),
+(78, 'MHE00009', '2022-08-14T13:00', '2022-08-14T15:00', '2022-08-10 07:45:44', '2022-08-10 07:45:44'),
+(79, 'MHE00009', '2022-08-14T13:00', '2022-08-14T15:00', '2022-08-10 07:45:45', '2022-08-10 07:45:45'),
+(80, 'MHE00010', '2022-08-16T12:45', '2022-08-16T15:45', '2022-08-15 23:38:06', '2022-08-15 23:38:06'),
+(81, 'MHE00010', '2022-08-16T12:45', '2022-08-16T15:45', '2022-08-15 23:38:07', '2022-08-15 23:38:07'),
+(82, 'MHE00008', '2022-08-16T14:30', '2022-08-16T16:00', '2022-08-15 23:40:30', '2022-08-15 23:40:30'),
+(83, 'MHE00008', '2022-08-16T14:30', '2022-08-16T16:00', '2022-08-15 23:40:30', '2022-08-15 23:40:30');
 
 -- --------------------------------------------------------
 
@@ -1065,7 +1077,16 @@ INSERT INTO `logistic_leads` (`id`, `stage_id`, `unique_id`, `client_id`, `clien
 (49, '1', 'MHL000048', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'Faizel', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '9788675454', 'MHE00009', '2022-08-10 06:45:00', '2022-08-10 10:00:00', '2022-08-03 21:22:08', '2022-08-03 21:22:08', NULL, NULL),
 (50, '1', 'MHL000049', 'NULL', 'new customer', 'NULL', NULL, 'vv', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'nandhu@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'vzcvz', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '+919090987654', 'MHE00009', '2022-08-10 08:45:00', '2022-08-10 11:15:00', '2022-08-03 21:23:47', '2022-08-03 21:23:47', NULL, NULL),
 (51, '1', 'MHL000050', 'NULL', 'Test1', 'NULL', NULL, 'jesus', 'test address', NULL, NULL, '700016', 'Tamilnadu', 'India', NULL, 'demo@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'Test', 'Raniganj, N.S.B road', NULL, NULL, '713320', 'West Bengal', 'India', NULL, 'demouser123@gmail.com', '9788675454', 'MHE00009', '2022-08-10 06:00:00', '2022-08-10 09:15:00', '2022-08-03 21:39:44', '2022-08-03 21:39:44', NULL, NULL),
-(52, '1', 'MHL000051', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '+919800767654', 'NULL', '9585618794', NULL, 'Test', 'Raniganj, N.S.B road', NULL, NULL, 'zvzc', 'West Bengal', 'zvzv', NULL, 'demouser@gmail.com', '+919090987654', 'MHE00007', '2022-08-10 12:20:00', '2022-08-10 04:15:00', '2022-08-03 21:45:58', '2022-08-03 21:45:58', NULL, NULL);
+(52, '1', 'MHL000051', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '+919800767654', 'NULL', '9585618794', NULL, 'Test', 'Raniganj, N.S.B road', NULL, NULL, 'zvzc', 'West Bengal', 'zvzv', NULL, 'demouser@gmail.com', '+919090987654', 'MHE00007', '2022-08-10 12:20:00', '2022-08-10 04:15:00', '2022-08-03 21:45:58', '2022-08-03 21:45:58', NULL, NULL),
+(53, '1', 'MHL000052', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demo@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'Test', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'nandhu@gmail.com', '9809876543', 'MHE00007', '2022-08-14 03:00:00', '2022-08-14 06:30:00', '2022-08-10 07:42:58', '2022-08-10 07:42:58', NULL, NULL),
+(54, '1', 'MHL000053', 'NULL', 'new customer', 'NULL', NULL, 'Test', 'test address', NULL, NULL, '876543', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '8878787867', 'NULL', '9585618794', NULL, 'Test', 'Raniganj, N.S.B road', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '9788675454', 'MHE00008', '2022-08-14 08:45:00', '2022-08-14 10:45:00', '2022-08-10 07:44:17', '2022-08-10 07:44:17', NULL, NULL),
+(55, '1', 'MHL000054', 'NULL', 'Test1', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '8878787867', 'NULL', '9585618794', NULL, 'Faizel', 'Test address', NULL, NULL, '713320', 'West Bengal', 'India', NULL, 'thamil@gmail.com', '+919090987654', 'MHE00009', '2022-08-14 13:00:00', '2022-08-14 15:00:00', '2022-08-10 07:45:45', '2022-08-10 07:45:45', NULL, NULL),
+(56, '1', 'MHL000055', 'NULL', 'new1', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'new1@gmail.com', '9876543218', 'NULL', '9956413074', NULL, 'new1', 'test address', NULL, NULL, '888001', 'Tamilnadu', 'India', NULL, 'new1@gmail.com', '9788675454', 'MHE00010', '2022-08-03 11:10:00', '2022-08-03 14:10:00', '2022-08-01 23:32:44', '2022-08-01 23:32:44', NULL, NULL),
+(57, '1', 'MHL000056', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'Faizel', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '9788675454', 'MHE00009', '2022-08-03 09:45:00', '2022-08-03 12:45:00', '2022-08-03 21:22:08', '2022-08-03 21:22:08', NULL, NULL),
+(58, '1', 'MHL000057', 'NULL', 'new customer', 'NULL', NULL, 'vv', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'nandhu@gmail.com', '9800767654', 'NULL', '9585618794', NULL, 'vzcvz', 'test address', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'thamil@gmail.com', '+919090987654', 'MHE00009', '2022-08-08 15:45:00', '2022-08-08 18:15:00', '2022-08-03 21:23:47', '2022-08-03 21:23:47', NULL, NULL),
+(59, '1', 'MHL000058', 'NULL', 'new1', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'new1@gmail.com', '9876543218', 'NULL', '9956413074', NULL, 'new1', 'test address', NULL, NULL, '888001', 'Tamilnadu', 'India', NULL, 'new1@gmail.com', '9788675454', 'MHE00010', '2022-08-02 11:10:00', '2022-08-02 14:10:00', '2022-08-01 23:32:44', '2022-08-01 23:32:44', NULL, NULL),
+(60, '1', 'MHL000059', 'NULL', 'demo', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'Tamilnadu', 'India', NULL, 'demouser123@gmail.com', '8878787867', 'NULL', '9585618794', NULL, 'Faizel', 'Raniganj, N.S.B road', NULL, NULL, '638455', 'Karnataka', 'India', NULL, 'demouser@gmail.com', '+919090987654', 'MHE00010', '2022-08-16 12:45:00', '2022-08-16 15:45:00', '2022-08-15 23:38:07', '2022-08-15 23:38:07', NULL, NULL),
+(61, '1', 'MHL000060', 'NULL', 'new customer', 'NULL', NULL, 'Test', 'Chittaranjan, 35 street', NULL, NULL, '713320', 'West Bengal', 'India', NULL, 'nandhu@gmail.com', '+919800767654', 'NULL', '9956413074', NULL, 'Test', 'Test address', NULL, NULL, '638455', 'Tamilnadu', 'India', NULL, 'nandhu@gmail.com', '+919800767654', 'MHE00008', '2022-08-16 14:30:00', '2022-08-16 16:00:00', '2022-08-15 23:40:30', '2022-08-15 23:40:30', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1099,7 +1120,17 @@ INSERT INTO `logistic_leads_drivers` (`id`, `driver_id`, `logistic_lead_id`, `cr
 (63, 'MHE00009', NULL, '2022-08-04 03:09:43', '2022-08-04 03:09:43'),
 (64, 'MHE00009', '47', '2022-08-04 03:09:44', '2022-08-04 03:09:44'),
 (65, 'MHE00007', NULL, '2022-08-04 03:15:58', '2022-08-04 03:15:58'),
-(66, 'MHE00007', '48', '2022-08-04 03:15:58', '2022-08-04 03:15:58');
+(66, 'MHE00007', '48', '2022-08-04 03:15:58', '2022-08-04 03:15:58'),
+(67, 'MHE00007', NULL, '2022-08-10 07:42:58', '2022-08-10 07:42:58'),
+(68, 'MHE00007', '53', '2022-08-10 07:42:58', '2022-08-10 07:42:58'),
+(69, 'MHE00008', NULL, '2022-08-10 07:44:17', '2022-08-10 07:44:17'),
+(70, 'MHE00008', '54', '2022-08-10 07:44:17', '2022-08-10 07:44:17'),
+(71, 'MHE00009', NULL, '2022-08-10 07:45:44', '2022-08-10 07:45:44'),
+(72, 'MHE00009', '55', '2022-08-10 07:45:45', '2022-08-10 07:45:45'),
+(73, 'MHE00010', NULL, '2022-08-15 23:38:06', '2022-08-15 23:38:06'),
+(74, 'MHE00010', '60', '2022-08-15 23:38:07', '2022-08-15 23:38:07'),
+(75, 'MHE00008', NULL, '2022-08-15 23:40:30', '2022-08-15 23:40:30'),
+(76, 'MHE00008', '61', '2022-08-15 23:40:30', '2022-08-15 23:40:30');
 
 -- --------------------------------------------------------
 
@@ -2326,7 +2357,8 @@ INSERT INTO `users` (`id`, `unique_id`, `role_id`, `user_name`, `email`, `passwo
 (39, 'MHU00022', 4, 'red warehouse', 'redwarehouse@gmail.com', '$2y$10$Ncd/2eOTpFkqbPfOBDHwLex3ODDJpl5FDGRq3hNshYEmO/8XT1wZm', 1, NULL, '2022-06-28 19:18:36', '2022-06-28 19:18:36', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'images/users/MHU00022.jpg'),
 (40, NULL, NULL, NULL, 'new@gmail.com', '$2y$10$wVrmSnUFbG8hA/dge5Du8.GUyqDgWVOjmVPDu51l8F0xR3gF0AE2G', NULL, NULL, '2022-07-12 00:34:04', '2022-07-12 00:34:04', NULL, 9788671878, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (41, NULL, NULL, NULL, 'demo@gmail.com', '$2y$10$gOsyQsrEFvq0sM6JdePKn.FU1bf.IJby71usEaD9fahg/U7X1H2Oq', NULL, NULL, '2022-07-14 02:05:19', '2022-07-14 02:05:19', NULL, 7676545434, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(42, 'MHU0000001', NULL, 'testnew', 'testnew@gmail.com', '$2y$10$o6ujjAChBW3JbGHszlLHMu0hkN2arNDUDdqp6cVucMwFKufIIpUVq', NULL, NULL, '2022-07-14 02:12:18', '2022-07-14 02:12:18', NULL, 9090909090, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(42, 'MHU0000001', NULL, 'testnew', 'testnew@gmail.com', '$2y$10$o6ujjAChBW3JbGHszlLHMu0hkN2arNDUDdqp6cVucMwFKufIIpUVq', NULL, NULL, '2022-07-14 02:12:18', '2022-07-14 02:12:18', NULL, 9090909090, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(43, 'MHU0000002', NULL, 'test456', 'test456@gmail.com', '$2y$10$oVakTQ3.3hGBc7hiZlQAIeGQF63gPMGPLYNRoi3K4XVrMNU.h9lyO', NULL, NULL, '2022-08-08 00:53:02', '2022-08-08 00:53:02', NULL, 9754124723, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3054,7 +3086,7 @@ ALTER TABLE `billing_addresses`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT for table `chk_drivers`
@@ -3210,19 +3242,19 @@ ALTER TABLE `leavestructures`
 -- AUTO_INCREMENT for table `logistic_dashboards`
 --
 ALTER TABLE `logistic_dashboards`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `logistic_leads`
 --
 ALTER TABLE `logistic_leads`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `logistic_leads_drivers`
 --
 ALTER TABLE `logistic_leads_drivers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `logistic_leads_invoices`
@@ -3438,7 +3470,7 @@ ALTER TABLE `uom_categories`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `user_address`

@@ -37,9 +37,9 @@
                         <div class="col-md-4"><label for="salesPerson_name">SalesPerson Name</label></div>
                         <div class="col-md-7">
                             <input type="hidden" class="form-control modal_input" id="salesPerson_id" name="salesPerson_id"
-                                value="" required>
+                                value="{{ $salesperson->salesperson_id }}" required>
                             <input type="text" class="form-control modal_input" id="salesPerson_name" name="salesPerson_name"
-                                value="" required>
+                                value="{{ $salesperson->salesperson_name }}" required>
                         </div>
                     </div>
                     <!-- Modal footer -->

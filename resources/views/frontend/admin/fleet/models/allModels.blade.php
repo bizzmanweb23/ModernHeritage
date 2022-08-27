@@ -1,132 +1,130 @@
-@extends('frontend.admin.layouts.master')
-@section('content')
+@extends('frontend.admin.fleet.index')
 
-<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="http://cdn.datatables.net/responsive/1.0.2/css/dataTables.responsive.css" />
+@section('page')
+  <h6 class="font-weight-bolder mb-0">Models</h6>
+@endsection
 
-<script src="https://ajax.googleapis.com//ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@section('fleet_content')
+<style>
+    .upload {
+        height: 100px;
+        width: 100px;
+        position: relative;
+    }
 
+    .upload:hover>.edit {
+        display: block;
+    }
 
-<div class="row">
-    <div class="col-md-4">
-        <a href="{{route('addModels')}}" class="btn btn-primary">Add Model</a>
-    </div>
+    .edit {
+        display: none;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        cursor: pointer;
+    }
 
-
-</div>
-
-<div class="container card" style="padding:15px;">
-
-    <form>
-        <div class="col-md-6">
-            <div class="form-group">
-
-
-                <div class="col-md-4">
-                    <select name="status" class="form-control" id="status">
-                        <option value="all">All</option>
-                        <option value="Active" @if(isset($_GET['type']) && $_GET['type']=='individual' )selected @endif>Active</option>
-                        <option value="Inactive" @if(isset($_GET['type']) && $_GET['type']=='company' )selected @endif>Inactive</option>
-                    </select>
+</style>
+<form action="" method="GET">
+    @csrf
+    <div class="row">
+        <div class="col-md-4">
+            <a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addModelModal">Add Model</a>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-5">
+            <div style="display: flex; flex-wrap: no-wrap">
+                <input type="text" class="form-control mr-1" id="brand_name" placeholder="Search..."
+                    name="brand_name">
+                <div>
+                    <button type="submit" style="border-radius: 10px">
+                        <i class="fas fa-search fa-2x"></i>
+                    </button>
                 </div>
-
-
             </div>
         </div>
-    </form>
-    @if(Session::has('message'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong> {{ Session::get('message') }}</strong>
-
     </div>
-    @endif
-    <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%" id="tableId">
-        <thead>
-            <tr>
-                <th>Sl#</th>
-                <th>Model name</th>
-                <th>Brand</th>
-                <th>Vehicle Type</th>
+</form>
 
-                <th>Action</th>
-
-
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($models as $key=>$m )
-            <tr>
-                <td style="text-align:center">{{$key+1}}</td>
-                <td>{{$m->model_name}}</td>
-                <td>{{$m->brand_name}}</td>
-                <td>{{$m->vehicle_type}}</td>
-                <td>
-                    <a href="editModel/{{$m->id}}" title="edit"><span class="badge badge-info"><i class="fas fa-edit"></i></span></a>
-                    <a href="javascript:void(0)" onclick="return delete_model(this.id)" id="{{$m->id}}" title="delete"><span class="badge badge-danger"><i class="fa fa-trash" aria-hidden="true"></i></span></a>
-                </td>
-            </tr>
-            @endforeach
-
-
-        </tbody>
-    </table>
-
+<!-- The Model Modal -->
+<div class="modal" id="addModelModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('saveModels') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <!-- Modal header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">New Model</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label for="model_name">Model Name:</label>
+                            <input type="text" class="form-control" id="model_name" name="model_name" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="brand_id">Brand:</label>
+                            <select class="form-control" id="brand_id" name="brand_id" required>
+                                <option value="">Select Brand</option>
+                                @foreach ($brands as $b)
+                                    <option value="{{ $b->id }}">{{ $b->brand_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="vehicle_type">Vehicle Type:</label>
+                            <select class="form-control" id="vehicle_type" name="vehicle_type" required>
+                                <option value="">Select type</option>
+                                <option value="car">Car</option>
+                                <option value="bike">Bike</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.js"></script>
-<script>
-    function delete_model(id) {
-        if (confirm('Are you sure you want to delete?')) {
 
-            $.ajax({
-                url: "{{route('deleteModel')}}",
-                type: 'GET',
-                data: {
-                    id: id
-                },
-                success: function(data) {
-                    if (data == 1) {
-
-                        location.reload();
-                    }
-
-                }
-            });
-        } else {
-
-            console.log('Thing was not saved to the database.');
-        }
-    }
-    $(function() {
-        $('#tableId').DataTable({
-            responsive: true
-        });
-    });
-
-    $('#customer_type').change(function(e) {
-        e.preventDefault();
-        var type = $('#customer_type').val();
-
-        $.ajax({
-            url: "{{route('allcustomer')}}",
-            type: 'GET',
-            data: {
-                type: type
-            },
-            success: function(data) {
-                location.replace('?type=' + type);
-
-            }
-        });
-
-
-    });
-</script>
-
-
-
-
-
+<div class="accordion" id="modelsaccordion">
+    @foreach ($brands as $b)
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="panelsStayOpen-heading{{ $b->id }}" style="{{ $b->id % 2 == 0 ? 'background-color: lightgrey' : 'background-color: bisque' }}">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{ $b->id }}" aria-expanded="true" aria-controls="panelsStayOpen-collapse{{ $b->id }}">
+            <strong>{{ $b->brand_name }} ({{ count($b->models) }})</strong>
+          </button>
+        </h2>
+        <div id="panelsStayOpen-collapse{{ $b->id }}" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-heading{{ $b->id }}">
+          <div class="accordion-body">
+            <div class= "d-flex flex-row flex-wrap">
+                @foreach($b->models as $m )
+                    <div class="card m-2" style="width: 15rem">
+                        <a href="#">
+                            <div class="card-body p-2">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <p class="mb-0">{{ $m->model_name }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach 
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
+</div>
 @endsection
+
