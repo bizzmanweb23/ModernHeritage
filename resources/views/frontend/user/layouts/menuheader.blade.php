@@ -6,7 +6,7 @@
                 <div class="col-lg-7">
                     <ul class="header-left-content">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('about.index') }}">
                                 About
                             </a>
                         </li>
@@ -31,15 +31,28 @@
                 <div class="col-lg-5">
                     <div class="header-right-content">
                         <ul>
-                            @if(Auth::check() && Auth::user()->isClient())
+                        @auth
                                 <li>
-                                    <a href="#">My Account</a>
+                                    <a href="{{ route('account') }}">My Account</a>
                                 </li>
-                            @else
-                                <li>
-                                    <a href="{{ route('userlogin') }}">Login/SignUp</a>
-                                </li>
-                            @endif
+                                    <li>  <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">Logout</a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+								</li>
+                                @endauth
+                               @guest
+                               <li>
+                               <a href="{{ route('login') }}">Login/</a>
+                               <a href="{{ route('register') }}">SignUp</a>
+                            </li>
+                        @endguest
+                                
+                                   
+                                
+                            
                             <li>
                                 <div class="usd">
                                     <select>
@@ -80,12 +93,12 @@
                                     </div>
                                 </div>
                             </li>
-                            <li> <button class="eye-btn btn btn-primary quote-btn" data-bs-toggle="modal"
+                            <!-- <li> <button class="eye-btn btn btn-primary quote-btn" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     Get a Quote
                                 </button>
 
-                            </li>
+                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -117,24 +130,27 @@
                 <div class="col-lg-4">
                     <ul class="wish-cart">
                         <li>
-                            <a href="#">
+                            <a href="{{ route('wish.show') }}">
                                 <span class="wish-icon">
                                     <i class="ri-heart-line"></i>
-                                    <span class="count">0</span>
+                                    <span class="count">{{ App\Models\Wishlist::where('user_id',Auth::check()?Auth::user()->id:0)->count() }}</span>
                                 </span>
                                 <span class="favorite">Favorite</span>
                                 My Wishlist
                             </a>
                         </li>
                         <li>
+                        
                             <span class="cart" data-bs-toggle="modal" data-bs-target="#exampleModal-cart">
+                            <a href="{{ route('cart.show') }}">
                                 <span class="wish-icon">
                                     <i class="ri-shopping-cart-line"></i>
-                                    <span class="count">0</span>
+                                    <span class="count">{{ App\Models\Cart::where('user_id',Auth::check()?Auth::user()->id:0)->count() }}</span>
                                 </span>
                                 <span class="favorite">Your Cart:</span>
                                 $00.00
                             </span>
+</a>
                         </li>
                     </ul>
                 </div>
@@ -256,30 +272,18 @@
 
                             </li>
                             <li class="nav-item mega-menu">
-                                <a href="#" class="nav-link">
+                                <a href="{{ route('about.index') }}" class="nav-link">
                                     About
 
                                 </a>
 
                             </li>
                             <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    Products
-                                    <i class="ri-arrow-down-s-line"></i>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Product 1</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">Product 2</a>
-                                    </li>
-                                </ul>
+                                <a href="{{route('product')}}" class="nav-link">Product</a>
                             </li>
 
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Contact</a>
+                                <a href="{{ route('contact.index') }}" class="nav-link">Contact</a>
                             </li>
                         </ul>
                         <div class="others-options">

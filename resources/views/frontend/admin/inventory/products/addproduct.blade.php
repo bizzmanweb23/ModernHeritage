@@ -1,79 +1,352 @@
-@extends('frontend.admin.inventory.index')
+@extends('frontend.admin.layouts.master')
 
-@section('inventory_content')
-<h4 class="font-weight-bolder mb-2 mt-2">New Product</h4>
-<form action="#" method="post" enctype="multipart/form-data">
-    <div class="card-body pt-4 p-3">
-        <div class="row">
-            <div class="col-md-8">
-                <span class="mb-2 ">Product Name:
-                    <input type="text" name="product_name" id="product_name"
-                        value="" placeholder="Add Product Name"  class="form-control" required/>
-                </span>
-            </div>
-            <div class="col-md-4">
-                <span class="mb-2 ">Product Image:
-                <input type="file" name="product_image" id="product_image" class="form-control">
-                </span>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-4 align-content-center">
-                <input type="checkbox" name="sold" id="sold" >
-                <span class="text-dark font-weight-bold ms-sm-2">
-                    Can be sold
-                </span>
-            </div>
-        </div>
-        <div class="row mt-1">
-            <div class="col-md-4 align-content-center">
-                <input type="checkbox" name="purchased" id="purchased" >
-                <span class="text-dark font-weight-bold ms-sm-2">
-                    Can be purchased
-                </span>
-            </div>
-        </div>
-        <div class="row mt-1">
-            <div class="col-md-4 align-content-center">
-                <input type="checkbox" name="expensed" id="expensed" >
-                <span class="text-dark font-weight-bold ms-sm-2">
-                    Can be expensed
-                </span>
-            </div>
-        </div>
+@section('content')
 
-        <ul class="nav nav-tabs mt-4" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#general_information">General Information</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#variants">Variants</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#sales">Sales</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#ecommerce">eCommerce</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#purchase">Purchase</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#inventory">Inventory</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#parameter">Parameter</a>
-            </li>
-        </ul>
+<form action="{{ route('saveProduct') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <div class="container">
+        <div class="card">
 
-        <div class="tab-content mb-3">
-            <div id="general_information" class="container tab-pane active">
-                @include('frontend.admin.inventory.products.general_information')
-            </div>
-            <div id="sales" class="container tab-pane">
-                @include('frontend.admin.inventory.products.sales')
+            <div class="card-body">
+                <h5>Add New Product</h5>
+                <div class="row mt-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Product Name <span style="color:red">*</span></label>
+                            <input type="text" class="form-control" id="product_name" name="product_name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Brand </label>
+                            <input type="text" class="form-control" id="brand" name="brand">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Category <span style="color:red">*</span></label>
+
+                            <select name="cat_id" id="cat_id" class="form-control" required>
+                                <option value="">--Select--</option>
+                                @foreach($product_categories as $cat)
+                                <option value="{{ $cat->id}}">{{ $cat->category_name}}</option>
+
+                                @endforeach
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Sub Category</label>
+
+                            <select name="subcategory" id="subcategory" class="form-control">
+
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Color </label>
+                            <input type="text" class="form-control" id="color" name="color">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Size</label>
+
+                            <input type="text" class="form-control" id="size" name="size">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Length</label>
+
+                            <input type="text" class="form-control" id="length" name="length">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Width</label>
+
+                            <input type="text" class="form-control" id="width" name="width">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Height</label>
+
+                            <input type="text" class="form-control" id="height" name="height">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Thickness</label>
+
+                            <input type="text" class="form-control" id="thicknee" name="thickness">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Price <span style="color:red">*</span></label>
+
+                            <input type="number" class="form-control" id="price" name="price" required>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>MRP Price <span style="color:red">*</span></label>
+                            <input type="number" class="form-control" id="mrp_price" name="mrp_price" required>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Available Quantity <span style="color:red">*</span></label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="available_quantity" name="available_quantity" >
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit_1" class="form-control" id="unit_1" >
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label>SKU <span style="color:red">*</span></label>
+                            <input type="text" class="form-control" id="sku" name="sku" required>
+                        </div>
+                    </div> -->
+                    <div class="col-md-6">
+                        <div class="form-group" id="gst">
+                            <label>Tax %</label>
+                            <input type="number" class="form-control" id="tax" name="tax" value="0">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Coverage</label>
+                            <input type="text" class="form-control" id="coverage" name="coverage">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Per Pallet</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="per_pallet" name="per_pallet">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_p">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Per Box</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="per_box" name="per_box">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_b">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Packing in bags</label>
+
+                            <input type="text" class="form-control" id="pac_bags" name="pac_bags">
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="mobile">Loose, Per Lorry</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="number" class="form-control" id="loose_per_lorry" name="loose_per_lorry">
+                                </div>
+                                <div class="col-md-3">
+                                    <select name="unit" class="form-control" id="unit_l">
+                                        <option value="">--Select--</option>
+                                        @foreach($unit as $u)
+                                        <option value="{{ $u->unit }}">{{ $u->unit }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Supplier Code</label>
+                            <input type="text" class="form-control" id="supplier_code" name="supplier_code">
+                        </div>
+                    </div> -->
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select name="status" id="status" class="form-control" required>
+
+                                <option value="1">Active</option>
+                                <option value="0">Inactive</option>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Product Image</label>
+                            <input type="file" class="form-control" name="image">
+                        </div>
+                    </div> 
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" id="description" class="form-control" rows="5"></textarea>
+
+                        </div>
+                    </div>
+                    <h4>Specifications</h4>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Model</label>
+                            <input type="text" class="form-control" name="model">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Chemistry</label>
+                            <input type="text" class="form-control" name="battery_chemistry">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Voltage</label>
+                            <input type="number" class="form-control" name="voltage">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Battery Capacity</label>
+                            <input type="text" class="form-control" name="battery_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Max Capacity</label>
+                            <input type="text" class="form-control" name="max_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Weight</label>
+                            <input type="text" class="form-control" name="weight">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Drilling Capacity</label>
+                            <input type="text" class="form-control" name="drilling_capacity">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>No Load Speed</label>
+                            <input type="text" class="form-control" name="no_load_speed">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Product Images</label>
+                            <input type="file" class="form-control" name="images[]" multiple>
+                        </div>
+                    </div>
+                    <div class="ms-auto text-end">
+                        <button class="btn btn-primary" id="save">Save</button>
+                        <a class="btn btn-info" id="back" href="{{ route('allproducts') }}">Back</a>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div> 
+    </div>
 </form>
+<script>
+    @if($errors -> any())
+    @foreach($errors -> all() as $error)
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true
+    }
+    toastr.success("{{ $error }}");
+    @endforeach
+    @endif
+    $('#color').select2({
+        width: '100%',
+        placeholder: "Select a Color",
+        allowClear: true
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#cat_id').on('change', function(e) {
+            var cat_id = e.target.value;
+            $.ajax({
+                url: "{{ route('subCat') }}",
+                type: "GET",
+                data: {
+                    cat_id: cat_id
+                },
+                success: function(data) {
+
+
+                    if (data) {
+                        $('#subcategory').empty();
+                        $('#subcategory').append('<option hidden>Choose Sub Category</option>');
+                        $.each(data, function(key, subcat) {
+                            $('select[name="subcategory"]').append('<option value="' + subcat.id + '">' + subcat.sub_category + '</option>');
+                        });
+                    } else {
+                        $('#subcategory').empty();
+                    }
+                }
+            })
+        });
+    });
+</script>
 @endsection

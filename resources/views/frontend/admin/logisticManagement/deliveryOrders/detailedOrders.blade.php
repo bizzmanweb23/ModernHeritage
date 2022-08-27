@@ -90,7 +90,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-5">
                                 <label class="mb-2">Phone No:</label>
-                                    <span class="text-dark ms-sm-2 font-weight-bold hide_span" 
+                                    <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="delivery_phone_span">{{ $lead->delivery_phone }}</span>
                             </div>
                         </div>
@@ -190,8 +190,7 @@
                             <div class="row mb-2">
                                 <div class="col-md-5">
                                     <label class="mb-2">Country:</label>
-                                    <script>  
-                                    <span class="text-dark ms-sm-2 font-weight-bold hide_span"
+                                        <span class="text-dark ms-sm-2 font-weight-bold hide_span"
                                         id="pickup_country_span">{{ $lead->pickup_country }}</span>
                                  </div>
                                 <div class="col-md-1"></div>

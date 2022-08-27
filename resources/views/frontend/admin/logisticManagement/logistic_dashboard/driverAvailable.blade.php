@@ -15,6 +15,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<style>
+        .fc-agendaWeek-button{
+            display:none;
+        }
+        .fc-title{
+            font-weight: 600;  
+            color:black;
+            /* overflow-x: scroll;
+            overflow-y: scroll; */
+            /* border-bottom:1px solid #000; */
+        } 
+        .fc-time{
+            font-weight: 600;   
+        } 
+        .fc-time-grid-event{
+            width: 170px;
+            height: 50px; 
+        }
+        .fc-event-container
+        {
+            width: 170px;
+            height: 50px; 
+        }
+        
+    </style>
 <!-- <i>
       <h3 id="current_date" class="text-center"></h3>
     </i> -->

@@ -2,22 +2,33 @@
 
 @section('content')
 
-<div class="content-wrapper">
+<div class="content-wrapper card">
     <div class="content-header row">
     </div>
-    <div class="content-body">
+    <div class="content-body card-body">
         <form action="{{route('saveRole')}}" method="POST">
             @csrf
-            <div class="form-group">
-                <label for="role_name">Role Name</label>
-                <input type="text" class="form-control" id="role_name" name="role_name"  placeholder="Enter a role name" required>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="role_name">Role Name</label>
+                    <input type="text" class="form-control" id="role_name" name="role_name" placeholder="Enter a role name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="role_name">Status</label>
+
+                      <select name="status" id="status" class="form-control">
+             
+                                <option value="1"> Active </option>
+                                <option value="0"> Inactive </option>
+                            </select>
+                </div>
+                <br> <br>
+                <div class="ms-auto text-end">
+                    <button type="submit" class="btn btn-primary">Save</button>
+
+                    <a href="{{route('roles')}}" class="btn btn-primary">Back</a>
+                </div>
             </div>
-            <br> <br>
-
-            <button type="submit" class="btn btn-primary">Save</button>
-
-            <a href="{{route('users')}}" class="btn btn-primary">Back</a>
-            
         </form>
     </div>
 </div>
